@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1457863282 source:e:\programming\pixel world - duel mode v2 - launcher\library.cpp
+	"library.h"
+
+1457863322 e:\programming\pixel world - duel mode v2 - launcher\library.h
+	"SDL/SDL.h"
+	"SDL/SDL_ttf.h"
+	"SDL/SDL_mixer.h"
+
+1457866928 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
+	"menu.h"
+	<cstdio>
+
+1457867042 e:\programming\pixel world - duel mode v2 - launcher\menu.h
+	"SDL/SDL.h"
+	"SDL/SDL_ttf.h"
+	"SDL/SDL_mixer.h"
+	"library.h"
+	<cstring>
+
+1457867054 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
+	"menu.h"
+	<cstring>
+
