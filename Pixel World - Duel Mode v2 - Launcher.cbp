@@ -13,12 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="../../SDL/SDL2-2.0.4/i686-w64-mingw32/include/SDL2" />
 				</Compiler>
-				<Linker>
-					<Add option="-lmingw32 -lSDL2main -lSDL2" />
-					<Add directory="../../SDL/SDL2-2.0.4/i686-w64-mingw32/lib" />
-				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/Pixel World - Duel Mode v2 - Launcher" prefix_auto="1" extension_auto="1" />
@@ -35,12 +30,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add directory="../../SDL/SDL2-2.0.4/i686-w64-mingw32/include/SDL2" />
 		</Compiler>
-		<Linker>
-			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_mixer -lSDL2_image" />
-			<Add directory="../../SDL/SDL2-2.0.4/i686-w64-mingw32/lib" />
-		</Linker>
 		<Unit filename="library.cpp" />
 		<Unit filename="library.h" />
 		<Unit filename="main.cpp" />

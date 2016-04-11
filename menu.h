@@ -7,12 +7,13 @@
 #include "SDL/SDL_mixer.h"
 //LIBRARY
 #include "library.h"
+#include "load_images.h"
 //CSTRING
 #include<cstring>
 
 const int TEXT_LENGHT_MAX=100,NUMBER_OF_OPTIONS_MAX=10;
 
-class Option
+class Menu_Option
 {
  private:
  char text[TEXT_LENGHT_MAX],font_name[TEXT_LENGHT_MAX];
@@ -37,11 +38,11 @@ class Menu
 {
  private:
  int number_of_options,selector_position,click_position;
- Option options[NUMBER_OF_OPTIONS_MAX];
+ Menu_Option options[NUMBER_OF_OPTIONS_MAX];
  public:
  void Load(const char *filename);
  void Set_number_of_options(int _noptions);
- void Set_option(int _pos,Option _x);
+ void Set_option(int _pos,Menu_Option _x);
  void Print_options(SDL_Surface *_screen);
  int Start(SDL_Surface *_screen);
 };

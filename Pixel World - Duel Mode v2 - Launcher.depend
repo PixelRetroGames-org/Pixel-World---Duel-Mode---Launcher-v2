@@ -1,24 +1,43 @@
 # depslib dependency file v1.0
-1457863282 source:e:\programming\pixel world - duel mode v2 - launcher\library.cpp
+1460377964 source:e:\programming\pixel world - duel mode v2 - launcher\library.cpp
 	"library.h"
-
-1457863322 e:\programming\pixel world - duel mode v2 - launcher\library.h
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_mixer.h"
 
-1457866928 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
+1460378962 e:\programming\pixel world - duel mode v2 - launcher\library.h
+	"SDL/SDL.h"
+	"SDL/SDL_ttf.h"
+	"SDL/SDL_mixer.h"
+	<cstring>
+	<string>
+
+1460378774 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
 	"menu.h"
 	<cstdio>
 
-1457867042 e:\programming\pixel world - duel mode v2 - launcher\menu.h
+1460377027 e:\programming\pixel world - duel mode v2 - launcher\menu.h
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_mixer.h"
 	"library.h"
+	"load_images.h"
 	<cstring>
 
-1457867054 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
+1460378952 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
 	"menu.h"
 	<cstring>
+
+1460378226 e:\programming\pixel world - duel mode v2 - launcher\load_images.h
+	"library.h"
+	"big_background.h"
+
+1460378289 source:e:\programming\pixel world - duel mode v2 - launcher\load_images.cpp
+	"load_images.h"
+
+1460378647 e:\programming\pixel world - duel mode v2 - launcher\big_background.h
+	"library.h"
+
+1460378849 source:e:\programming\pixel world - duel mode v2 - launcher\big_background.cpp
+	"big_background.h"
 
