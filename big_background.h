@@ -8,7 +8,7 @@ class Big_Background
  private:
  SDL_Surface *image=NULL;
  SDL_Rect image_position;
- int number_of_frames=3;
+ int number_of_frames=1;
  int actual_frame=0;
 
  public:

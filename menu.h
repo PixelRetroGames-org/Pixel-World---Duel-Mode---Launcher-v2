@@ -11,7 +11,11 @@
 //CSTRING
 #include<cstring>
 
-const int TEXT_LENGHT_MAX=100,NUMBER_OF_OPTIONS_MAX=10;
+#ifndef TEXT_LENGHT_MAX_DEFINED
+const int TEXT_LENGHT_MAX=101;
+#define TEXT_LENGHT_MAX_DEFINED
+#endif // TEXT_LENGHT_MAX_DEFINED
+const int NUMBER_OF_OPTIONS_MAX=10;
 
 class Menu_Option
 {
@@ -19,18 +23,14 @@ class Menu_Option
  char text[TEXT_LENGHT_MAX],font_name[TEXT_LENGHT_MAX];
  SDL_Color color;
  int font_size;
- SDL_Rect screen_pos,background_pos;
+ SDL_Rect screen_pos;
  public:
  void Load(FILE *where);
  void Set_text(char *_text);
- void Set_screen_pos(int x,int y);
- void Set_background_pos(int x,int y);
  void Set_color(Uint8 r,Uint8 g,Uint8 b);
  void Set_font_name(char *_font_name);
  void Set_font_size(int _size);
- void Set_size();
  SDL_Rect Get_screen_pos();
- SDL_Rect Get_background_pos();
  void Print_text(SDL_Surface *_screen,bool selected,bool click);
 };
 

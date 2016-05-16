@@ -1,15 +1,43 @@
 #ifndef LOAD_IMAGES_H
 #define LOAD_IMAGES_H
 
+//SDL
+#include "SDL/SDL.h"
+#include "SDL/SDL_ttf.h"
+#include "SDL/SDL_mixer.h"
+//Library
 #include "library.h"
+
 #include "big_background.h"
 
+///GLOBAL
+extern SDL_Surface *COIN,*HEART,*MANA;
+void Load_global_images();
+
+///LAUNCHER
 extern Big_Background LAUNCHER_BBACKGROUND;
-
 extern SDL_Surface *MENU_background,*MENU_background_click,*MENU_background_selected;
-
 extern SDL_Rect MENU_big_background_image_position;
+void Load_menu_images();
 
-void Load_Menu_images();
+///SHOP
+extern SDL_Surface *SHOP_title_clear,*SHOP_title_background_line,*SHOP_title_background_click;
+extern SDL_Surface *SHOP_title_background_click_right_frame,*SHOP_title_background_right_frame;
+extern SDL_Surface *SHOP_title_background_selected,*SHOP_title_background,*SHOP_shop_page_background;
+extern SDL_Surface *SHOP_shop_rope,*SHOP_shop_background,*SHOP_shop_background_selected,*SHOP_description_background;
+void Load_shop_images();
 
-#endif //LOAD_IMAGES_H
+///PLAYER
+extern SDL_Surface *PLAYER_name_background,*PLAYER_name_background_right_layer,*PLAYER_details_background,*PLAYER_experience_background,*PLAYER_money_background;
+extern SDL_Surface *SHOP_inventory_background,*SHOP_item_background_selected,*SHOP_item_background;
+extern SDL_Surface *PLAYER_HP_background,*PLAYER_MANA_background;
+void Load_player_images();
+
+///SETTINGS
+extern SDL_Surface *SETTINGS_option_background,*SETTINGS_option_background_selected,*SETTINGS_background,*SETTINGS_name;
+void Load_settings_images();
+
+///ALL
+void Load_all_images();
+
+#endif // LOAD_IMAGES_H

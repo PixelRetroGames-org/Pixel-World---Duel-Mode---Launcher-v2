@@ -5,18 +5,19 @@
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_mixer.h"
 
-1460378962 e:\programming\pixel world - duel mode v2 - launcher\library.h
+1463425585 e:\programming\pixel world - duel mode v2 - launcher\library.h
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_mixer.h"
 	<cstring>
 	<string>
 
-1460378774 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
+1463426185 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
 	"menu.h"
+	"settings.h"
 	<cstdio>
 
-1460377027 e:\programming\pixel world - duel mode v2 - launcher\menu.h
+1463424095 e:\programming\pixel world - duel mode v2 - launcher\menu.h
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_mixer.h"
@@ -24,20 +25,32 @@
 	"load_images.h"
 	<cstring>
 
-1460378952 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
+1463426236 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
 	"menu.h"
+	"settings.h"
 	<cstring>
 
-1460378226 e:\programming\pixel world - duel mode v2 - launcher\load_images.h
+1463423082 e:\programming\pixel world - duel mode v2 - launcher\load_images.h
+	"SDL/SDL.h"
+	"SDL/SDL_ttf.h"
+	"SDL/SDL_mixer.h"
 	"library.h"
 	"big_background.h"
 
-1460378289 source:e:\programming\pixel world - duel mode v2 - launcher\load_images.cpp
+1463423087 source:e:\programming\pixel world - duel mode v2 - launcher\load_images.cpp
 	"load_images.h"
 
-1460378647 e:\programming\pixel world - duel mode v2 - launcher\big_background.h
+1463426321 e:\programming\pixel world - duel mode v2 - launcher\big_background.h
 	"library.h"
 
 1460378849 source:e:\programming\pixel world - duel mode v2 - launcher\big_background.cpp
 	"big_background.h"
+
+1463425556 e:\programming\pixel world - duel mode v2 - launcher\settings.h
+	"library.h"
+	"load_images.h"
+
+1463425490 source:e:\programming\pixel world - duel mode v2 - launcher\settings.cpp
+	"settings.h"
+	<cstdio>
 

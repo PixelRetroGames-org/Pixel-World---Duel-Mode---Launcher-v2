@@ -31,11 +31,17 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="big_background.cpp" />
+		<Unit filename="big_background.h" />
 		<Unit filename="library.cpp" />
 		<Unit filename="library.h" />
+		<Unit filename="load_images.cpp" />
+		<Unit filename="load_images.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="menu.cpp" />
 		<Unit filename="menu.h" />
+		<Unit filename="settings.cpp" />
+		<Unit filename="settings.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
