@@ -13,6 +13,7 @@ class Big_Background
 
  public:
  Big_Background();
+ void Update_size();
  void Update_image_frame();
  void Update_image_position();
  void Print_image(int x,int y,SDL_Surface *_screen);

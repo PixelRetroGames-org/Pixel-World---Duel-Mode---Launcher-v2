@@ -1,11 +1,35 @@
 #include "big_background.h"
+#include "settings.h"
+
+#ifndef TEXT_LENGHT_MAX_DEFINED
+const int TEXT_LENGHT_MAX=101;
+#define TEXT_LENGHT_MAX_DEFINED
+#endif // TEXT_LENGHT_MAX_DEFINED
 
 Big_Background::Big_Background()
 {
- image=SDL_LoadBMP("images/launcher/animation test.bmp");
+ char path[TEXT_LENGHT_MAX]={NULL},aux[TEXT_LENGHT_MAX]={NULL};
+ strcpy(path,"images/launcher/animation test");
+ itoa(RESOLUTION,aux);
+ strcat(path,aux);
+ strcat(path,".bmp");
+ image=SDL_LoadBMP(path);
  image_position.x=image_position.y=0;
- image_position.h=1366;
- image_position.w=768;
+ image_position.h=RESOLUTION_X;
+ image_position.w=RESOLUTION_Y;
+}
+
+void Big_Background::Update_size()
+{
+ char path[TEXT_LENGHT_MAX]={NULL},aux[TEXT_LENGHT_MAX]={NULL};
+ strcpy(path,"images/launcher/animation test");
+ itoa(RESOLUTION,aux);
+ strcat(path,aux);
+ strcat(path,".bmp");
+ image=SDL_LoadBMP(path);
+ image_position.x=image_position.y=0;
+ image_position.h=RESOLUTION_X;
+ image_position.w=RESOLUTION_Y;
 }
 
 void Big_Background::Update_image_frame()
@@ -17,10 +41,10 @@ void Big_Background::Update_image_frame()
 
 void Big_Background::Update_image_position()
 {
- image_position.x=actual_frame*1366;
+ image_position.x=actual_frame*RESOLUTION_X;
  image_position.y=0;
- image_position.h=1366;
- image_position.w=768;
+ image_position.h=RESOLUTION_X;
+ image_position.w=RESOLUTION_Y;
 }
 
 void Big_Background::Print_image(int x,int y,SDL_Surface *_screen)

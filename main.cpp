@@ -9,13 +9,13 @@ int main( int argc, char* args[] )
 {
  SDL_Init(SDL_INIT_EVERYTHING);
  TTF_Init();
+ Load_Settings();
  screen=SDL_SetVideoMode(RESOLUTION_X,RESOLUTION_Y,32,DISPLAY_MODE);
  Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
  SDL_Flip(screen);
  Menu menu;
  Load_menu_images();
  Load_settings_images();
- Load_Settings();
  menu.Load("menu/main_menu.pwm");
  int option=menu.Start(screen);
  while(option!=-2)
@@ -30,6 +30,7 @@ int main( int argc, char* args[] )
                        };
                 case 2:{Graphic_Settings(screen);
                         Save_Settings();
+                        LAUNCHER_BBACKGROUND.Update_size();
                         menu.Load("menu/main_menu.pwm");
                         break;
                        };

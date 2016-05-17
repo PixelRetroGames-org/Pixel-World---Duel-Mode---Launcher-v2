@@ -12,7 +12,7 @@
 	<cstring>
 	<string>
 
-1463426185 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
+1463467131 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
 	"menu.h"
 	"settings.h"
 	<cstdio>
@@ -25,7 +25,7 @@
 	"load_images.h"
 	<cstring>
 
-1463426236 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
+1463466563 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
 	"menu.h"
 	"settings.h"
 	<cstring>
@@ -40,11 +40,12 @@
 1463423087 source:e:\programming\pixel world - duel mode v2 - launcher\load_images.cpp
 	"load_images.h"
 
-1463426321 e:\programming\pixel world - duel mode v2 - launcher\big_background.h
+1463466856 e:\programming\pixel world - duel mode v2 - launcher\big_background.h
 	"library.h"
 
-1460378849 source:e:\programming\pixel world - duel mode v2 - launcher\big_background.cpp
+1463467021 source:e:\programming\pixel world - duel mode v2 - launcher\big_background.cpp
 	"big_background.h"
+	"settings.h"
 
 1463425556 e:\programming\pixel world - duel mode v2 - launcher\settings.h
 	"library.h"
