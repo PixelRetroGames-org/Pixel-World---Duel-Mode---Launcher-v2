@@ -1,26 +1,26 @@
-5
-Single Player
+4 1
+Play
 pixel.ttf
 40
-255 165 0
+255 255 255
 0 400
-Duel Mode
+Settings
 pixel.ttf
 40
-255 165 0
-0 480
-Options
-pixel.ttf
-40
-255 165 0
-0 560
+255 255 255
+0 465
 Credits
 pixel.ttf
 40
-255 165 0
-0 640
+255 255 255
+0 530
 Quit
 pixel.ttf
 40
-255 165 0
-0 680
+255 255 255
+0 595
+Quit
+pixel.ttf
+40
+255 255 255
+0 655
