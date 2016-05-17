@@ -72,7 +72,24 @@ void Menu_Option::Print_text(SDL_Surface *_screen,bool selected=false,bool click
 void Menu::Load(const char *filename)
 {
  FILE *where=fopen(filename,"r");
- fscanf(where,"%d ",&number_of_options);
+ fscanf(where,"%d %d ",&number_of_options,&is_main_menu);
+ if(!is_main_menu)
+    {
+     char path[TEXT_LENGHT_MAX]={NULL},background_name[TEXT_LENGHT_MAX]={NULL};
+     fgets(background_name,sizeof background_name,where);
+     if(background_name[strlen(background_name)-1]=='\n')
+        background_name[strlen(background_name)-1]=NULL;
+     strcpy(path,"images/menu/");
+     strcat(path,background_name);
+     strcat(path,".bmp");
+     background=SDL_LoadBMP(path);
+     fgets(path,sizeof path,where);
+     if(path[strlen(path)-1]=='\n')
+        path[strlen(path)-1]=NULL;
+     TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",40);
+     title=TTF_RenderText_Solid(font,path,SDL_Color{255,255,255});
+     fscanf(where,"%d %d ",&title_position.x,&title_position.y);
+    }
  for(int i=0;i<number_of_options;i++)
      options[i].Load(where);
 }
@@ -89,8 +106,16 @@ void Menu::Set_option(int _pos,Menu_Option _x)
 
 void Menu::Print_options(SDL_Surface *_screen)
 {
- LAUNCHER_BBACKGROUND.Print_image(0,0,_screen);
- LAUNCHER_BBACKGROUND.Update_image_frame();
+ if(is_main_menu)
+    {
+     LAUNCHER_BBACKGROUND.Print_image(0,0,_screen);
+     LAUNCHER_BBACKGROUND.Update_image_frame();
+    }
+ else
+    {
+     apply_surface(0,0,background,_screen);
+     apply_surface((RESOLUTION_X-title->w)/2+title_position.x,title_position.y,title,_screen);
+    }
  for(int i=0;i<number_of_options;i++)
      options[i].Print_text(_screen,i==selector_position,i==click_position);
  SDL_Flip(_screen);

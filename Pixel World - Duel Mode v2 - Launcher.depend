@@ -5,19 +5,20 @@
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_mixer.h"
 
-1463425585 e:\programming\pixel world - duel mode v2 - launcher\library.h
+1463478546 e:\programming\pixel world - duel mode v2 - launcher\library.h
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_mixer.h"
 	<cstring>
 	<string>
 
-1463467131 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
+1463480644 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
 	"menu.h"
 	"settings.h"
+	"script_interpreter.h"
 	<cstdio>
 
-1463424095 e:\programming\pixel world - duel mode v2 - launcher\menu.h
+1463471437 e:\programming\pixel world - duel mode v2 - launcher\menu.h
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_mixer.h"
@@ -25,19 +26,19 @@
 	"load_images.h"
 	<cstring>
 
-1463466563 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
+1463479885 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
 	"menu.h"
 	"settings.h"
 	<cstring>
 
-1463423082 e:\programming\pixel world - duel mode v2 - launcher\load_images.h
+1463476806 e:\programming\pixel world - duel mode v2 - launcher\load_images.h
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_mixer.h"
 	"library.h"
 	"big_background.h"
 
-1463423087 source:e:\programming\pixel world - duel mode v2 - launcher\load_images.cpp
+1463477166 source:e:\programming\pixel world - duel mode v2 - launcher\load_images.cpp
 	"load_images.h"
 
 1463466856 e:\programming\pixel world - duel mode v2 - launcher\big_background.h
@@ -47,11 +48,21 @@
 	"big_background.h"
 	"settings.h"
 
-1463425556 e:\programming\pixel world - duel mode v2 - launcher\settings.h
+1463469905 e:\programming\pixel world - duel mode v2 - launcher\settings.h
 	"library.h"
 	"load_images.h"
 
-1463425490 source:e:\programming\pixel world - duel mode v2 - launcher\settings.cpp
+1463474784 source:e:\programming\pixel world - duel mode v2 - launcher\settings.cpp
 	"settings.h"
 	<cstdio>
+
+1462820523 e:\programming\pixel world - duel mode v2 - launcher\script_interpreter.h
+	"library.h"
+	"load_images.h"
+	<algorithm>
+	<stack>
+
+1463507262 source:e:\programming\pixel world - duel mode v2 - launcher\script_interpreter.cpp
+	"script_interpreter.h"
+	<cstring>
 

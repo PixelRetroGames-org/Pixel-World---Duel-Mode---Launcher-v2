@@ -116,8 +116,6 @@ void Graphic_Change_Resolution(int x,int y,SDL_Surface *_screen,SDL_Event *event
  itoa(RESOLUTION_Y,aux);
  strcat(text," x ");
  strcat(text,aux);
- image=make_it_transparent("images/settings/settings_option_background.bmp");
- apply_surface(x+20,y+10,image,_screen);
  image=TTF_RenderText_Solid(font,text,settings_color);
  apply_surface(x+20,y+10,image,_screen);
  SDL_FreeSurface(image);

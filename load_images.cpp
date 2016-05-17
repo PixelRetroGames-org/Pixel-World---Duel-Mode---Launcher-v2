@@ -22,6 +22,9 @@ SDL_Surface *PLAYER_HP_background,*PLAYER_MANA_background;
 ///SETTINGS
 SDL_Surface *SETTINGS_option_background,*SETTINGS_option_background_selected,*SETTINGS_background,*SETTINGS_name;
 
+///SCRIPT
+SDL_Surface *SCRIPT_default_background_image;
+
 void Load_shop_images()
 {
  SHOP_title_clear=SDL_LoadBMP("images/shop/title_clear.bmp");
@@ -76,6 +79,11 @@ void Load_menu_images()
  MENU_background_selected=SDL_LoadBMP("images/menu/menu_background_selected.bmp");
 }
 
+void Load_script_images()
+{
+ SCRIPT_default_background_image=make_it_transparent("images/script/default_background_image.bmp");
+}
+
 void Load_all_images()
 {
  Load_global_images();
@@ -83,4 +91,5 @@ void Load_all_images()
  Load_shop_images();
  Load_player_images();
  Load_settings_images();
+ Load_script_images();
 }

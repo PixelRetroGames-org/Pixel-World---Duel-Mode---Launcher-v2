@@ -39,6 +39,9 @@ class Menu
  private:
  int number_of_options,selector_position,click_position;
  Menu_Option options[NUMBER_OF_OPTIONS_MAX];
+ SDL_Surface *background=NULL,*title=NULL;
+ SDL_Rect title_position;
+ bool is_main_menu=false;
  public:
  void Load(const char *filename);
  void Set_number_of_options(int _noptions);

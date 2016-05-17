@@ -1,0 +1,10 @@
+<l > 12345 <c 214 101 21> abcd </c > 678 <c 100 400 150> aaa</c > 9 </l >
+<ba bck.wav >
+<sleep 2000 >
+<la hit.wav > 
+<wla >
+<la hit.wav >
+<l > alabala <c 214 101 21> portocala </c > </l >
+<sleep 5000 >
+<l > Press any key to continue... </l >
+<we >

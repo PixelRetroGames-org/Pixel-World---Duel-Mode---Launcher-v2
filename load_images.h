@@ -37,6 +37,10 @@ void Load_player_images();
 extern SDL_Surface *SETTINGS_option_background,*SETTINGS_option_background_selected,*SETTINGS_background,*SETTINGS_name;
 void Load_settings_images();
 
+///SCRIPT
+extern SDL_Surface *SCRIPT_default_background_image;
+void Load_script_images();
+
 ///ALL
 void Load_all_images();
 
