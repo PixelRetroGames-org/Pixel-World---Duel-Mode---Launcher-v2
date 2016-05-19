@@ -9,7 +9,7 @@ const int TEXT_LENGHT_MAX=101;
 Big_Background::Big_Background()
 {
  char path[TEXT_LENGHT_MAX]={NULL},aux[TEXT_LENGHT_MAX]={NULL};
- strcpy(path,"images/launcher/animation test");
+ strcpy(path,"images/launcher/launcher background");
  itoa(RESOLUTION,aux);
  strcat(path,aux);
  strcat(path,".bmp");
@@ -22,7 +22,7 @@ Big_Background::Big_Background()
 void Big_Background::Update_size()
 {
  char path[TEXT_LENGHT_MAX]={NULL},aux[TEXT_LENGHT_MAX]={NULL};
- strcpy(path,"images/launcher/animation test");
+ strcpy(path,"images/launcher/launcher background");
  itoa(RESOLUTION,aux);
  strcat(path,aux);
  strcat(path,".bmp");
