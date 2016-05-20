@@ -156,6 +156,7 @@ void Graphic_Change_Volume(int x,int y,SDL_Surface *_screen,SDL_Event *event)
      VOL%=NUMBER_OF_AVAILABLE_VOLUMES;
      VOLUME=available_volumes[VOL];
      Mix_Volume(-1,MIX_MAX_VOLUME*VOLUME/100);
+     Mix_VolumeMusic(MIX_MAX_VOLUME*VOLUME/100);
      SDL_Delay(75);
     }
  TTF_Font *font;

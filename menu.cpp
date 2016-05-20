@@ -4,7 +4,7 @@
 //CSTRING
 #include<cstring>
 
-const int FRAMES_PER_SECOND=30;
+const int FRAMES_PER_SECOND_BACKGROUND=30,FRAMES_PER_SECOND_FIRE=15;
 
 void Menu_Option::Load(FILE *where)
 {
@@ -126,7 +126,8 @@ int Menu::Start(SDL_Surface *_screen)
  SDL_Event event;
  bool quit=false,done=false;
  int x,y;
- Timer fps;
+ Timer fps,fps1;
+ fps1.start();
  while(!quit && !done)
        {
         fps.start();
@@ -176,9 +177,14 @@ int Menu::Start(SDL_Surface *_screen)
                quit=true;
            }
         Print_options(_screen);
-        if(fps.get_ticks()<1000/FRAMES_PER_SECOND)
+        if(fps1.get_ticks()>=1000/FRAMES_PER_SECOND_FIRE)
            {
-            SDL_Delay((1000/FRAMES_PER_SECOND)-fps.get_ticks());
+            LAUNCHER_BBACKGROUND.Update_fire_frame();
+            fps1.start();
+           }
+        if(fps.get_ticks()<1000/FRAMES_PER_SECOND_BACKGROUND)
+           {
+            SDL_Delay((1000/FRAMES_PER_SECOND_BACKGROUND)-fps.get_ticks());
            }
        }
  if(done)

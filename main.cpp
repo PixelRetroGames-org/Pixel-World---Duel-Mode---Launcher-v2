@@ -6,10 +6,13 @@ SDL_Surface *screen;
 
 Script_interpreter script_interpreter;
 
+Mix_Music *background_music=NULL;
+
 int main( int argc, char* args[] )
 {
  SDL_Init(SDL_INIT_EVERYTHING);
  TTF_Init();
+ Mix_Init(MIX_INIT_MP3);
  SDL_WM_SetCaption("Pixel World",NULL);
  Set_icon("images/icon.bmp");
  Load_Settings();
@@ -24,6 +27,10 @@ int main( int argc, char* args[] )
  gamemode_menu.Load("menu/gamemode.pwm");
  LAUNCHER_BBACKGROUND.Update_size();
  LAUNCHER_BBACKGROUND.Load_Logo();
+ background_music=Mix_LoadMUS("audio/Pixel World The Cursed Dungeon Theme.mp3");
+ Mix_Volume(-1,MIX_MAX_VOLUME*VOLUME/100);
+ Mix_VolumeMusic(MIX_MAX_VOLUME*VOLUME/100);
+ Mix_PlayMusic(background_music,-1);
  int option=-1;
  while(option!=-2)
        {
