@@ -10,6 +10,8 @@ int main( int argc, char* args[] )
 {
  SDL_Init(SDL_INIT_EVERYTHING);
  TTF_Init();
+ SDL_WM_SetCaption("Pixel World",NULL);
+ Set_icon("images/icon.bmp");
  Load_Settings();
  screen=SDL_SetVideoMode(RESOLUTION_X,RESOLUTION_Y,32,DISPLAY_MODE);
  Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
