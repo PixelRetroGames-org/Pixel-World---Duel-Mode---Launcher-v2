@@ -21,6 +21,7 @@ int main( int argc, char* args[] )
  main_menu.Load("menu/main_menu.pwm");
  gamemode_menu.Load("menu/gamemode.pwm");
  LAUNCHER_BBACKGROUND.Update_size();
+ LAUNCHER_BBACKGROUND.Load_Logo();
  int option=-1;
  while(option!=-2)
        {

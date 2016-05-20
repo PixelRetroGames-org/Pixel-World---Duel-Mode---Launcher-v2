@@ -6,13 +6,13 @@
 class Big_Background
 {
  private:
- SDL_Surface *image=NULL;
- SDL_Rect image_position;
- int number_of_frames=1;
+ SDL_Surface *image[101],*background=NULL,*adventure_image=NULL;
+ int number_of_frames=42,count=0;
  int actual_frame=0;
 
  public:
  Big_Background();
+ void Load_Logo();
  void Update_size();
  void Update_image_frame();
  void Update_image_position();
