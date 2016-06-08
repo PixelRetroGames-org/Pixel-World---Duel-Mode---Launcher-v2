@@ -27,7 +27,7 @@ int main( int argc, char* args[] )
  gamemode_menu.Load("menu/gamemode.pwm");
  LAUNCHER_BBACKGROUND.Update_size();
  LAUNCHER_BBACKGROUND.Load_Logo();
- background_music=Mix_LoadMUS("audio/Pixel World The Cursed Dungeon Theme.mp3");
+ background_music=Mix_LoadMUS("audio/Hallowed Be Thy Name.mp3");
  Mix_Volume(-1,MIX_MAX_VOLUME*VOLUME/100);
  Mix_VolumeMusic(MIX_MAX_VOLUME*VOLUME/100);
  Mix_PlayMusic(background_music,-1);

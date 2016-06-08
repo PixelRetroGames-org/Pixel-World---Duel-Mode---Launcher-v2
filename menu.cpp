@@ -4,7 +4,7 @@
 //CSTRING
 #include<cstring>
 
-const int FRAMES_PER_SECOND_BACKGROUND=30,FRAMES_PER_SECOND_FIRE=15;
+const int FRAMES_PER_SECOND_BACKGROUND=30,FRAMES_PER_SECOND_FIRE=25;
 
 void Menu_Option::Load(FILE *where)
 {
