@@ -23,7 +23,7 @@ void Load_menu_images();
 ///SHOP
 extern SDL_Surface *SHOP_title_clear,*SHOP_title_background_line,*SHOP_title_background_click;
 extern SDL_Surface *SHOP_title_background_click_right_frame,*SHOP_title_background_right_frame;
-extern SDL_Surface *SHOP_title_background_selected,*SHOP_title_background,*SHOP_shop_page_background;
+extern SDL_Surface *SHOP_title_background_selected,*SHOP_title_background,*SHOP_shop_page_background,*SHOP_shop_big_background;
 extern SDL_Surface *SHOP_shop_rope,*SHOP_shop_background,*SHOP_shop_background_selected,*SHOP_description_background;
 void Load_shop_images();
 
