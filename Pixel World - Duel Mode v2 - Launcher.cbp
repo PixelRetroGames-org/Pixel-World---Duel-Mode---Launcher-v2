@@ -33,6 +33,10 @@
 		</Compiler>
 		<Unit filename="big_background.cpp" />
 		<Unit filename="big_background.h" />
+		<Unit filename="buff.cpp" />
+		<Unit filename="buff.h" />
+		<Unit filename="item.cpp" />
+		<Unit filename="item.h" />
 		<Unit filename="library.cpp" />
 		<Unit filename="library.h" />
 		<Unit filename="load_images.cpp" />
@@ -40,10 +44,16 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="menu.cpp" />
 		<Unit filename="menu.h" />
+		<Unit filename="player.cpp" />
+		<Unit filename="player.h" />
 		<Unit filename="script_interpreter.cpp" />
 		<Unit filename="script_interpreter.h" />
 		<Unit filename="settings.cpp" />
 		<Unit filename="settings.h" />
+		<Unit filename="shop.cpp" />
+		<Unit filename="shop.h" />
+		<Unit filename="shop_page.cpp" />
+		<Unit filename="shop_page.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

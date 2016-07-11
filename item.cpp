@@ -14,7 +14,7 @@ Item::Item()
  id=cost=0;
  image=NULL;
  name[0]=description[0]=NULL;
- attack=defense=extra_money=fire_damage=fire_resistance=mana=hp=0;
+ attack=defense=extra_money=fire_damage=fire_resistance=mana=hp=movement_speed=0;
 }
 
 int Item::Get_id()
@@ -61,12 +61,15 @@ int Item::Load()
  if(where==NULL)
     return true;
  fscanf(where,"%d ",&cost);
- fgets(name,TEXT_LENGHT_MAX,where);
+ fgets(name,sizeof name,where);
  if(name[strlen(name)-1]=='\n')
     name[strlen(name)-1]=NULL;
- fgets(description,TEXT_LENGHT_MAX,where);
+ fgets(description,sizeof description,where);
  description[strlen(description)-1]=NULL;
- fscanf(where,"%d %d %d %d %d %d %d %d",&attack,&defense,&extra_money,&fire_damage,&fire_resistance,&mana,&hp,&type);
+ int buff_id;
+ fscanf(where,"%d %d %d %d %d %d %d %d %d %d",&attack,&defense,&extra_money,&fire_damage,&fire_resistance,&mana,&hp,&movement_speed,&type,&buff_id);
+ buff.Set_id(buff_id);
+ buff.Load();
  strcpy(path,"shop/items/images/");
  strcat(path,name);
  strcat(path,".bmp");

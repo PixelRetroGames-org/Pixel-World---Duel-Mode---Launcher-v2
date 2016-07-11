@@ -3,6 +3,7 @@
 
 #include "load_images.h"
 #include "library.h"
+#include "buff.h"
 ///SDL
 #include "SDL/SDL.h"
 #include "SDL/SDL_ttf.h"
@@ -24,9 +25,10 @@ class Item
  private:
  int id,cost;
  SDL_Surface *image,*name_image,*inventory_image;
- char name[TEXT_LENGHT_MAX],description[TEXT_LENGHT_MAX];
- int attack,defense,extra_money,fire_damage,fire_resistance,mana,hp;
+ char name[TEXT_LENGHT_MAX],description[4*TEXT_LENGHT_MAX];
+ int attack,defense,extra_money,fire_damage,fire_resistance,mana,hp,movement_speed;
  int type;
+ Buff buff;
 
  public:
  Item();

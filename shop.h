@@ -35,8 +35,8 @@ class Shop_Screen
  public:
  void Set_filename(char *_filename);
  void Open(char *filename);
- void Start(SDL_Surface *screen);
- void Start(SDL_Surface *screen,char *filename);
+ int Start(SDL_Surface *screen);
+ int Start(SDL_Surface *screen,char *filename);
 };
 
 #endif //SHOP_H

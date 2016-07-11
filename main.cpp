@@ -22,11 +22,12 @@ int main( int argc, char* args[] )
  screen=SDL_SetVideoMode(RESOLUTION_X,RESOLUTION_Y,32,DISPLAY_MODE);
  Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
  SDL_Flip(screen);
- Menu main_menu,gamemode_menu,shop_menu;
+ Menu main_menu,gamemode_menu,story_menu,duel_menu;
  Load_all_images();
  main_menu.Load("menu/main_menu.pwm");
  gamemode_menu.Load("menu/gamemode.pwm");
- shop_menu.Load("menu/shop_menu.pwm");
+ story_menu.Load("menu/story_menu.pwm");
+ duel_menu.Load("menu/duel_menu.pwm");
  LAUNCHER_BBACKGROUND.Update_size();
  LAUNCHER_BBACKGROUND.Load_Logo();
  background_music=Mix_LoadMUS("audio/Hallowed Be Thy Name.wav");
@@ -39,6 +40,7 @@ int main( int argc, char* args[] )
         option=main_menu.Start(screen);
         switch(option)
                {
+                case -2:{return 0;};
                 case -1:{break;};
                 case 0:{
                         int _option=-1;
@@ -48,22 +50,25 @@ int main( int argc, char* args[] )
                                option=-2;
                                switch(_option)
                                       {
+                                       case -2:{return 0;};
                                        case -1:{break;};
                                        case 0:{
                                                //Story Mode
                                                int __option;
                                                while(__option!=-2)
                                                      {
-                                                      __option=shop_menu.Start(screen);
+                                                      __option=story_menu.Start(screen);
                                                       switch(__option)
                                                              {
+                                                              case -2:{return 0;};
                                                               case -1:{break;};
                                                               case 0:{//Launch Story Mode
                                                                       _option=-2;
                                                                       break;
                                                                      };
                                                               case 1:{
-                                                                      shop_screen.Start(screen,"Timy");
+                                                                      if(shop_screen.Start(screen,"Timy")==-1)
+                                                                         return 0;
                                                                       break;
                                                                      };
                                                               case 2:{
@@ -79,17 +84,20 @@ int main( int argc, char* args[] )
                                                int __option;
                                                while(__option!=-2)
                                                      {
-                                                      __option=shop_menu.Start(screen);
+                                                      __option=duel_menu.Start(screen);
                                                       switch(__option)
                                                              {
+                                                              case -2:{return 0;};
                                                               case -1:{break;};
                                                               case 0:{//Launch Duel Mode
                                                                       _option=-2;
                                                                       break;
                                                                      };
                                                               case 1:{
-                                                                      shop_screen.Start(screen,"Player1");
-                                                                      shop_screen.Start(screen,"Player2");
+                                                                      if(shop_screen.Start(screen,"Player1")==-1)
+                                                                         return 0;
+                                                                      if(shop_screen.Start(screen,"Player2")==-1)
+                                                                         return 0;
                                                                       break;
                                                                      };
                                                               case 2:{
@@ -113,6 +121,8 @@ int main( int argc, char* args[] )
                         LAUNCHER_BBACKGROUND.Update_size();
                         main_menu.Load("menu/main_menu.pwm");
                         gamemode_menu.Load("menu/gamemode.pwm");
+                        story_menu.Load("menu/story_menu.pwm");
+                        duel_menu.Load("menu/duel_menu.pwm");
                         break;
                        };
                 case 2:{

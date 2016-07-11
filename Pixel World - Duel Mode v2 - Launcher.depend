@@ -12,7 +12,7 @@
 	<cstring>
 	<string>
 
-1466685054 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
+1466705414 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
 	"menu.h"
 	"settings.h"
 	"script_interpreter.h"
@@ -71,16 +71,17 @@
 	"item.h"
 	<cstring>
 
-1463743724 e:\programming\pixel world - duel mode v2 - launcher\item.h
+1468238973 e:\programming\pixel world - duel mode v2 - launcher\item.h
 	"load_images.h"
 	"library.h"
+	"buff.h"
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_image.h"
 	<cstring>
 	<cstdio>
 
-1466681278 e:\programming\pixel world - duel mode v2 - launcher\shop.h
+1466704905 e:\programming\pixel world - duel mode v2 - launcher\shop.h
 	"load_images.h"
 	"shop_page.h"
 	"settings.h"
@@ -108,11 +109,18 @@
 	"SDL/SDL_mixer.h"
 	<cstring>
 
-1466681274 source:e:\programming\pixel world - duel mode v2 - launcher\shop.cpp
+1468238762 source:e:\programming\pixel world - duel mode v2 - launcher\shop.cpp
 	"shop.h"
 	<cstring>
 
 1463843012 source:e:\programming\pixel world - duel mode v2 - launcher\shop_page.cpp
 	"shop_page.h"
+	<cstring>
+
+1468238996 e:\programming\pixel world - duel mode v2 - launcher\buff.h
+	"library.h"
+
+1468239009 source:e:\programming\pixel world - duel mode v2 - launcher\buff.cpp
+	"buff.h"
 	<cstring>
 

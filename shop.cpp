@@ -111,7 +111,7 @@ void Shop_Screen::Open(char *filename)
 
 SDL_Color MESSAGE_COLOR={255,255,255};
 
-void Shop_Screen::Start(SDL_Surface *screen)
+int Shop_Screen::Start(SDL_Surface *screen)
 {
  player.Set_PLAYER_INFO_LAST_POSX(RESOLUTION_X);
  player.Set_PLAYER_INFO_POSX(RESOLUTION_X-480-70);
@@ -178,10 +178,13 @@ void Shop_Screen::Start(SDL_Surface *screen)
         //SDL_Delay(16);
        }
  player.Update();
+ if(event.type==SDL_QUIT)
+    return -1;
+ return 0;
 }
 
-void Shop_Screen::Start(SDL_Surface *screen,char *filename)
+int Shop_Screen::Start(SDL_Surface *screen,char *filename)
 {
  Set_filename(filename);
- Start(screen);
+ return Start(screen);
 }
