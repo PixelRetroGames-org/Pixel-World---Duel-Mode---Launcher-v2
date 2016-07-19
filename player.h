@@ -21,7 +21,7 @@ class Player
  Item equipped_items[10];
  int inventory_item_selected,inventory_item_click;
  int pos_last_y;
- int basic_attack=5,basic_defense=0,basic_spell_damage=10,basic_spell_resistance=0;
+ int basic_attack=5,basic_defense=0,basic_spell_damage=0,basic_spell_resistance=0,basic_movement_speed=10;
  SDL_Rect skin_image_position;
  public:
  int PLAYER_INFO_POSX=760,PLAYER_INFO_LAST_POSX=1240,SKIN_POSX=1130;

@@ -123,6 +123,8 @@ void Menu::Print_options(SDL_Surface *_screen)
 
 int Menu::Start(SDL_Surface *_screen)
 {
+ selector_position=-1;
+ click_position=-1;
  SDL_Event event;
  bool quit=false,done=false;
  int x,y;

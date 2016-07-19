@@ -70,6 +70,9 @@ void Player::Load()
      inventory_number_of_items=7;
      equipped_items[8].Set_type(8);
      equipped_items[8].Load();
+     skin_image_position.w=40;
+     skin_image_position.h=40;
+     basic_attack=5,basic_defense=0,basic_spell_damage=0,basic_spell_resistance=0,basic_movement_speed=10;
      Update();
      return;
     }
@@ -91,7 +94,7 @@ void Player::Load()
       equipped_items[i].Set_type(i);
       equipped_items[i].Load();
      }
- fscanf(where,"%d %d %d %d ",&basic_attack,&basic_defense,&basic_spell_damage,&basic_spell_resistance);
+ fscanf(where,"%d %d %d %d %d",&basic_attack,&basic_defense,&basic_spell_damage,&basic_spell_resistance,&basic_movement_speed);
  int w,h;
  fscanf(where,"%d %d ",&w,&h);
  skin_image_position.w=w;
@@ -114,7 +117,7 @@ void Player::Update()
      }
  for(int i=0;i<9;i++)
      fprintf(where,"%d ",equipped_items_ids[i]);
- fprintf(where,"\n%d %d %d %d\n",basic_attack,basic_defense,basic_spell_damage,basic_spell_resistance);
+ fprintf(where,"\n%d %d %d %d %d\n",basic_attack,basic_defense,basic_spell_damage,basic_spell_resistance,basic_movement_speed);
  fprintf(where,"%d %d ",skin_image_position.w,skin_image_position.h);
  fclose(where);
 }

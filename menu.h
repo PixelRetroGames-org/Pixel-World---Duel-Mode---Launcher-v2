@@ -37,7 +37,7 @@ class Menu_Option
 class Menu
 {
  private:
- int number_of_options,selector_position,click_position;
+ int number_of_options,selector_position=-1,click_position=-1;
  Menu_Option options[NUMBER_OF_OPTIONS_MAX];
  SDL_Surface *background=NULL,*title=NULL;
  SDL_Rect title_position;
