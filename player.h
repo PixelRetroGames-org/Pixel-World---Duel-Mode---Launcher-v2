@@ -26,6 +26,7 @@ class Player
  public:
  int PLAYER_INFO_POSX=760,PLAYER_INFO_LAST_POSX=1240,SKIN_POSX=1130;
  Player();
+ void Clear();
  void Set_PLAYER_INFO_POSX(int _x);
  void Set_PLAYER_INFO_LAST_POSX(int _x);
  void Set_SKIN_POSX(int _x);

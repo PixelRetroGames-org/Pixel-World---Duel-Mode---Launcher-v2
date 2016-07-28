@@ -19,6 +19,22 @@ Player::Player()
  memset(number_of_items_bought,0,sizeof number_of_items_bought);
 }
 
+void Player::Clear()
+{
+ memset(name,0,sizeof name);
+ money=experience=number_of_items=inventory_number_of_items=0;
+ memset(number_of_items_bought,0,sizeof number_of_items_bought);
+
+ //Item items_bought[NUMBER_OF_ITEMS_IDS];
+ memset(items_bought,0,sizeof items_bought);
+ memset(equipped_items_ids,0,sizeof equipped_items_ids);
+ //Item equipped_items[10];
+ memset(equipped_items,0,sizeof equipped_items);
+ inventory_item_selected=inventory_item_click=pos_last_y=0;
+ basic_attack=5,basic_defense=0,basic_spell_damage=0,basic_spell_resistance=0,basic_movement_speed=10;
+ skin_image_position.h=skin_image_position.w=skin_image_position.x=skin_image_position.y=0;
+}
+
 void Player::Set_PLAYER_INFO_POSX(int _x)
 {
  PLAYER_INFO_POSX=_x;
@@ -118,7 +134,7 @@ void Player::Update()
  for(int i=0;i<9;i++)
      fprintf(where,"%d ",equipped_items_ids[i]);
  fprintf(where,"\n%d %d %d %d %d\n",basic_attack,basic_defense,basic_spell_damage,basic_spell_resistance,basic_movement_speed);
- fprintf(where,"%d %d ",skin_image_position.w,skin_image_position.h);
+ fprintf(where,"%d %d ",(int)skin_image_position.w,(int)skin_image_position.h);
  fclose(where);
 }
 

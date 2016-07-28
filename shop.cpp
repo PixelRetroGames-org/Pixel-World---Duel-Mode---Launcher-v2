@@ -126,6 +126,7 @@ int Shop_Screen::Start(SDL_Surface *screen)
      shop.Set_POSX(20);
      shop.Set_LAST_POSX(20+4*180+20);
     }
+ player.Clear();
  Open(filename);
  shop.Load();
  shop.Print(screen);
