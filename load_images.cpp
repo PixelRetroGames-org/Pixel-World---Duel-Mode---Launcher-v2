@@ -13,6 +13,8 @@ SDL_Surface *SHOP_title_clear,*SHOP_title_background_line,*SHOP_title_background
 SDL_Surface *SHOP_title_background_click_right_frame,*SHOP_title_background_right_frame;
 SDL_Surface *SHOP_title_background_selected,*SHOP_title_background,*SHOP_shop_page_background,*SHOP_shop_big_background;
 SDL_Surface *SHOP_shop_rope,*SHOP_shop_background,*SHOP_shop_background_selected,*SHOP_description_background;
+SDL_Surface *INVENTORY_EQUIP,*INVENTORY_EQUIPPED,*INVENTORY_SELL;
+const SDL_Color EQUIP_COLOR={15,30,90},BUY_COLOR={40,80,160},EQUIPPED_COLOR={255,128,0};
 
 ///PLAYER
 SDL_Surface *PLAYER_name_background,*PLAYER_name_background_right_layer,*PLAYER_details_background,*PLAYER_experience_background,*PLAYER_money_background;
@@ -47,6 +49,10 @@ void Load_shop_images()
  SHOP_inventory_background=make_it_transparent("images/shop/inventory_background.bmp");
  SHOP_item_background_selected=SDL_LoadBMP("images/shop/item_background_selected.bmp");
  SHOP_item_background=SDL_LoadBMP("images/shop/item_background.bmp");
+ TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",15);
+ INVENTORY_EQUIP=TTF_RenderText_Solid(font,"Equip",EQUIP_COLOR);
+ INVENTORY_EQUIPPED=TTF_RenderText_Solid(font,"Equipped",EQUIPPED_COLOR);
+ INVENTORY_SELL=TTF_RenderText_Solid(font,"Sell",BUY_COLOR);
 }
 
 void Load_player_images()

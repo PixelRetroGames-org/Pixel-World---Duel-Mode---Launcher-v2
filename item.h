@@ -18,13 +18,19 @@ const int TEXT_LENGHT_MAX=101;
 #define TEXT_LENGHT_MAX_DEFINED
 #endif // TEXT_LENGHT_MAX_DEFINED
 
+#ifndef DESCRIPTION_LINES_MAX_DEFINED
+const int DESCRIPTION_LINES_MAX=8;
+#define DESCRIPTION_LINES_MAX_DEFINED
+#endif // DESCRIPTION_LINES_MAX_DEFINED
+
 extern const char *type_name[10];
 
 class Item
 {
  private:
  int id,cost;
- SDL_Surface *image,*name_image,*inventory_image;
+ SDL_Surface *image,*inventory_image,*name_image,*price_image,*description_image[DESCRIPTION_LINES_MAX];
+ int description_lines=0;
  char name[TEXT_LENGHT_MAX],description[4*TEXT_LENGHT_MAX];
  int attack,defense,extra_money,fire_damage,fire_resistance,mana,hp,movement_speed;
  int type;
@@ -32,6 +38,7 @@ class Item
 
  public:
  Item();
+ void Clear();
  int Get_id();
  int Get_cost();
  int Get_type();

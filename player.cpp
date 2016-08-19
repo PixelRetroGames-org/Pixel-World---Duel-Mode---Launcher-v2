@@ -300,7 +300,7 @@ void Player::Print_Inventory(int x,int y,SDL_Surface *_screen)
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",15);
  char message[TEXT_LENGHT_MAX]={'x',NULL};
  SDL_Surface *_image=SHOP_inventory_background;
- SDL_Surface *sell_image=TTF_RenderText_Solid(font,"Sell",BUY_COLOR),*equip_image=TTF_RenderText_Solid(font,"Equip",EQUIP_COLOR);;
+ SDL_Surface *sell_image=INVENTORY_SELL,*equip_image=INVENTORY_EQUIP;
  apply_surface(x,y,_image,_screen);
  int _x=x,_y=y;
  for(int i=0;i<=NUMBER_OF_ITEMS_IDS;i++)
@@ -324,7 +324,7 @@ void Player::Print_Inventory(int x,int y,SDL_Surface *_screen)
                  apply_surface(_x+40,_y+2,equip_image,_screen);
               else
                  {
-                  _image=TTF_RenderText_Solid(font,"Equipped",EQUIPPED_COLOR);
+                  _image=INVENTORY_EQUIPPED;
                   apply_surface(_x+40,_y+2,_image,_screen);
                  }
              }
@@ -334,33 +334,35 @@ void Player::Print_Inventory(int x,int y,SDL_Surface *_screen)
              _x=x,_y+=60;
          }
      }
+ TTF_CloseFont(font);
 }
 
 int Player::Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event)
 {
- TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",15);
- SDL_Surface *sell_image=TTF_RenderText_Solid(font,"Sell",BUY_COLOR),*equip_image=TTF_RenderText_Solid(font,"Equip",EQUIP_COLOR);
- inventory_item_selected=inventory_item_click=-1;
+ SDL_Surface *sell_image=INVENTORY_SELL,*equip_image=INVENTORY_EQUIP;
+ inventory_item_click=-1;
  int _x=x,_y=y;
  int mouse_x=event->button.x,mouse_y=event->button.y;
- bool _sell=false,_equip=false;
- for(int i=0;i<=NUMBER_OF_ITEMS_IDS;i++)
-     {
-      if(number_of_items_bought[i]!=0)
+ bool _sell,_equip;
+ if(event->type==SDL_MOUSEMOTION || event->type==SDL_MOUSEBUTTONDOWN)
+    {
+     inventory_item_selected=-1;
+     for(int i=0;i<=NUMBER_OF_ITEMS_IDS;i++)
          {
-          if(items_bought[i].Load() /*|| items_bought[i].Get_type()<6*/)
-             continue;
-          if(mouse_x>=_x && mouse_x<_x+80 && mouse_y>=_y && mouse_y<_y+60)
-             inventory_item_selected=i;
-          if(mouse_x>=_x+40 && mouse_x<=_x+40+equip_image->w && mouse_y>=_y+2 && mouse_y<=_y+2+equip_image->h)
-             _equip=true;
-          if(mouse_x>=_x+42 && mouse_x<=_x+42+equip_image->w && mouse_y>=_y+15 && mouse_y<=_y+15+equip_image->h)
-             _sell=true;
-          _x+=110;
-          if(_x+110>PLAYER_INFO_LAST_POSX)
-             _x=x,_y+=60;
+          if(number_of_items_bought[i]!=0)
+             {
+              if(mouse_x>=_x && mouse_x<_x+80 && mouse_y>=_y && mouse_y<_y+60)
+                 inventory_item_selected=i,_sell=false,_equip=false;
+              if(mouse_x>=_x+40 && mouse_x<=_x+40+equip_image->w && mouse_y>=_y+2 && mouse_y<=_y+2+equip_image->h)
+                 _equip=true;
+              if(mouse_x>=_x+42 && mouse_x<=_x+42+equip_image->w && mouse_y>=_y+15 && mouse_y<=_y+15+equip_image->h)
+                 _sell=true;
+              _x+=110;
+              if(_x+110>PLAYER_INFO_LAST_POSX)
+                 _x=x,_y+=60;
+             }
          }
-     }
+    }
  if(event->type==SDL_MOUSEBUTTONDOWN)
     inventory_item_click=inventory_item_selected;
  if(inventory_item_click!=-1)

@@ -4,13 +4,29 @@
 
 SDL_Color NAME_COLOR={255,255,255};
 SDL_Color MONEY_COLOR={236,242,4};
-SDL_Color DESCRIPION_COLOR={50,70,90};
+SDL_Color DESCRIPTION_COLOR={50,70,90};
 
 const char *type_name[10]={"Helmet","Chestplate","Trousers","Boots","Weapon","Shield","Amulet","Ring","Timy Skin","Potions"};
 
 Item::Item()
 {
+ inventory_image=image=name_image=price_image=NULL;
+ for(int i=0;i<DESCRIPTION_LINES_MAX;i++)
+     description_image[i]=NULL;
+ description_lines=0;
+ id=cost=0;
+ image=NULL;
+ name[0]=description[0]=NULL;
+ attack=defense=extra_money=fire_damage=fire_resistance=mana=hp=movement_speed=0;
+}
+
+void Item::Clear()
+{
  inventory_image=image=name_image=NULL;
+ for(int i=0;i<DESCRIPTION_LINES_MAX;i++)
+     if(description_image[i]!=NULL)
+        description_image[i]=NULL;
+ description_lines=0;
  id=cost=0;
  image=NULL;
  name[0]=description[0]=NULL;
@@ -45,12 +61,17 @@ void Item::Set_id(int _id)
 int Item::Load()
 {
  char path[TEXT_LENGHT_MAX]={NULL},aux[TEXT_LENGHT_MAX]={NULL};
+ TTF_Font *font=NULL;
  if(id==0)
     {
      strcpy(path,"shop/items/images/");
      strcat(path,type_name[type]);
      strcat(path,".bmp");
      image=make_it_transparent(path);
+     font=TTF_OpenFont("fonts/pixel.ttf",15);
+     strcpy(name,type_name[type]);
+     name_image=TTF_RenderText_Solid(font,name,NAME_COLOR);
+     TTF_CloseFont(font);
      return false;
     }
  itoa(id,aux);
@@ -74,74 +95,33 @@ int Item::Load()
  strcat(path,name);
  strcat(path,".bmp");
  image=make_it_transparent(path);
- TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",20);
+ font=TTF_OpenFont("fonts/pixel.ttf",15);
  name_image=TTF_RenderText_Solid(font,name,NAME_COLOR);
+ TTF_CloseFont(font);
+ itoa(cost,aux);
+ font=TTF_OpenFont("fonts/pixel.ttf",15);
+ price_image=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
  TTF_CloseFont(font);
  strcpy(path,"shop/items/inventory/images/");
  strcat(path,name);
  strcat(path,".bmp");
  inventory_image=make_it_transparent(path);
  fclose(where);
- return false;
-}
-
-void Item::Print(int x,int y,SDL_Surface *_screen,bool selected=false)
-{
- TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",15);
+ //Create description image
  SDL_Surface *message=NULL;
- if(!selected)
-    message=SHOP_shop_background;
- else
-    message=SHOP_shop_background_selected;
- apply_surface(x,y,message,_screen);
- if(id==0)
-    {
-     strcpy(name,type_name[type]);
-    }
- message=TTF_RenderText_Solid(font,name,NAME_COLOR);
- apply_surface(x+((180-message->w)/2),y+3,message,_screen);
- apply_surface(x+10,y+30,image,_screen);
- char aux[TEXT_LENGHT_MAX]={NULL};
- itoa(cost,aux);
- TTF_CloseFont(font);
- font=TTF_OpenFont("fonts/pixel.ttf",15);
- if(id!=0)
-    {
-     message=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
-     apply_surface(x+100,y+30,message,_screen);
-     apply_surface(x+100,y+60,COIN,_screen);
-    }
- if(selected && id!=0)
-    Print_description(x,y,_screen,true);
- TTF_CloseFont(font);
- SDL_FreeSurface(message);
-}
-
-void Item::Print_description(int x,int y,SDL_Surface *_screen,bool selected=false)
-{
- SDL_Surface *_image=NULL;
- _image=SHOP_shop_rope;
- SDL_Surface *message=NULL;
- TTF_Font *font=TTF_OpenFont("fonts/pixel3.ttf",25);
+ font=TTF_OpenFont("fonts/pixel3.ttf",25);
  if(font==NULL)
     exit(100);
- int _x=x,_y=y;
- _y=y+120;
- if(_y>768-160)
-    _y=y-160;
  int N=strlen(description);
- char aux[TEXT_LENGHT_MAX]={NULL};
- apply_surface(_x,_y,SHOP_description_background,_screen);
- _x+=10,_y+=0;
+ memset(aux,0,sizeof aux);
  int j=0;
  for(int i=0;i<N;i++)
      {
       if(description[i]=='~')
          {
           aux[j+1]=NULL;
-          message=TTF_RenderText_Solid(font,aux,DESCRIPION_COLOR);
-          apply_surface(_x,_y,message,_screen);
-          _y+=20;
+          message=TTF_RenderText_Solid(font,aux,DESCRIPTION_COLOR);
+          description_image[description_lines++]=message;
           j=0;
           memset(aux,0,sizeof aux);
          }
@@ -149,10 +129,47 @@ void Item::Print_description(int x,int y,SDL_Surface *_screen,bool selected=fals
          aux[j++]=description[i];
      }
  aux[j]=NULL;
- message=TTF_RenderText_Solid(font,aux,DESCRIPION_COLOR);
- apply_surface(_x,_y,message,_screen);
- SDL_FreeSurface(message);
+ message=TTF_RenderText_Solid(font,aux,DESCRIPTION_COLOR);
+ description_image[description_lines++]=message;
  TTF_CloseFont(font);
+ return false;
+}
+
+void Item::Print(int x,int y,SDL_Surface *_screen,bool selected=false)
+{
+ SDL_Surface *message=NULL;
+ if(!selected)
+    message=SHOP_shop_background;
+ else
+    message=SHOP_shop_background_selected;
+ apply_surface(x,y,message,_screen);
+ apply_surface(x+((180-name_image->w)/2),y+3,name_image,_screen);
+ Print_image(x+10,y+30,_screen);
+ if(id!=0)
+    {
+     apply_surface(x+100,y+30,price_image,_screen);
+     apply_surface(x+100,y+60,COIN,_screen);
+    }
+ if(selected && id!=0)
+    Print_description(x,y,_screen,true);
+}
+
+void Item::Print_description(int x,int y,SDL_Surface *_screen,bool selected=false)
+{
+ SDL_Surface *_image=NULL;
+ _image=SHOP_shop_rope;
+ int _x=x,_y=y;
+ _y=y+120;
+ if(_y>768-160)
+    _y=y-160;
+ apply_surface(_x,_y,SHOP_description_background,_screen);
+ _x+=10,_y+=0;
+ for(int i=0;i<description_lines;i++)
+     {
+      if(description_image[i]!=NULL)
+         apply_surface(_x,_y,description_image[i],_screen);
+      _y+=20;
+     }
 }
 
 void Item::Print_image(int x,int y,SDL_Surface *_screen)

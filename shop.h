@@ -11,7 +11,7 @@ class Shop
 {
  private:
  char name[TEXT_LENGHT_MAX];
- int number_of_pages,page_selected,page_click;
+ int number_of_pages,page_selected,page_click=0;
  int POSX=0,LAST_POSX=0;
  std::vector<Shop_Page> pages;
 

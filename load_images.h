@@ -25,6 +25,7 @@ extern SDL_Surface *SHOP_title_clear,*SHOP_title_background_line,*SHOP_title_bac
 extern SDL_Surface *SHOP_title_background_click_right_frame,*SHOP_title_background_right_frame;
 extern SDL_Surface *SHOP_title_background_selected,*SHOP_title_background,*SHOP_shop_page_background,*SHOP_shop_big_background;
 extern SDL_Surface *SHOP_shop_rope,*SHOP_shop_background,*SHOP_shop_background_selected,*SHOP_description_background;
+extern SDL_Surface *INVENTORY_EQUIP,*INVENTORY_EQUIPPED,*INVENTORY_SELL;
 void Load_shop_images();
 
 ///PLAYER

@@ -41,6 +41,7 @@ void Shop_Page::Load()
      {
       fscanf(where,"%d ",&_id);
       item_ids[number_of_items]=_id;
+      aux.Clear();
       aux.Set_id(_id);
       aux.Load();
       items[i]=aux;
@@ -135,17 +136,20 @@ int Shop_Page::Start(SDL_Surface *_screen,SDL_Event *event)
  SDL_Surface *_image=NULL;
  _image=SHOP_shop_rope;
  int _x=POSX,_y=60,x,y;
- x=event->button.x;
- y=event->button.y;
- item_selected=item_click=-1;
- for(int i=0;i<number_of_items;i++)
-     {
-      if((i)%number_of_columns==0 && i!=0)
-         _y+=120+_image->h,_x=20;
-      if(x>=_x && x<=_x+180 && y>=_y+_image->h && y<=_y+120+_image->h)
-         item_selected=i;
-      _x+=180;
-     }
+ if(event->type==SDL_MOUSEMOTION)
+    {
+     x=event->button.x;
+     y=event->button.y;
+     item_selected=item_click=-1;
+     for(int i=0;i<number_of_items;i++)
+         {
+          if((i)%number_of_columns==0 && i!=0)
+             _y+=120+_image->h,_x=20;
+          if(x>=_x && x<=_x+180 && y>=_y+_image->h && y<=_y+120+_image->h)
+             item_selected=i;
+          _x+=180;
+         }
+    }
  if(event->type==SDL_MOUSEBUTTONDOWN)
     {
      item_click=item_selected;

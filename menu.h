@@ -22,6 +22,7 @@ class Menu_Option
  private:
  char text[TEXT_LENGHT_MAX],font_name[TEXT_LENGHT_MAX];
  SDL_Color color;
+ SDL_Surface *text_image=NULL;
  int font_size;
  SDL_Rect screen_pos;
  public:

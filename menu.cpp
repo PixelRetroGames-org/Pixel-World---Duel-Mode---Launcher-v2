@@ -21,6 +21,12 @@ void Menu_Option::Load(FILE *where)
  screen_pos.x+=(RESOLUTION_X-MENU_background->w)/2;
  screen_pos.h=MENU_background->h;
  screen_pos.w=MENU_background->w;
+ //Create text image
+ char font_path[TEXT_LENGHT_MAX]={NULL};
+ strcat(font_path,"fonts/");
+ strcat(font_path,font_name);
+ TTF_Font *font=TTF_OpenFont(font_path,font_size);
+ text_image=TTF_RenderText_Solid(font,text,color);
 }
 
 void Menu_Option::Set_text(char *_text)
@@ -52,10 +58,6 @@ SDL_Rect Menu_Option::Get_screen_pos()
 
 void Menu_Option::Print_text(SDL_Surface *_screen,bool selected=false,bool click=false)
 {
- char font_path[TEXT_LENGHT_MAX]={NULL};
- strcat(font_path,"fonts/");
- strcat(font_path,font_name);
- TTF_Font *font=TTF_OpenFont(font_path,font_size);
  SDL_Surface *image=NULL;
  if(!selected && !click)
     image=MENU_background;
@@ -65,8 +67,7 @@ void Menu_Option::Print_text(SDL_Surface *_screen,bool selected=false,bool click
     else
        image=MENU_background_selected;
  apply_surface(screen_pos.x,screen_pos.y,image,_screen);
- image=TTF_RenderText_Solid(font,text,color);
- apply_surface(screen_pos.x+(screen_pos.w-image->w)/2,screen_pos.y+10,image,_screen);
+ apply_surface(screen_pos.x+(screen_pos.w-text_image->w)/2,screen_pos.y+10,text_image,_screen);
 }
 
 void Menu::Load(const char *filename)

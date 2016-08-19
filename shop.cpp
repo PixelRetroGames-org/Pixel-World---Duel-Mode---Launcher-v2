@@ -67,14 +67,18 @@ void Shop::Print(SDL_Surface *_screen)
 
 int Shop::Start(SDL_Surface *_screen,SDL_Event *event)
 {
- int _x=0,_y=0,mouse_x=event->button.x,mouse_y=event->button.y;
- page_selected=-1;
- for(int i=0;i<number_of_pages;i++)
-     {
-      if(mouse_x>=_x && mouse_x<=_x+pages[i].Get_title_size() && mouse_y>=_y && mouse_y<=_y+40)
-         page_selected=i;
-      _x+=pages[i].Get_title_size();
-     }
+ int _x=0,_y=0,mouse_x=0,mouse_y=0;
+ if(event->type==SDL_MOUSEMOTION)
+    {
+     mouse_x=event->button.x,mouse_y=event->button.y;
+     page_selected=-1;
+     for(int i=0;i<number_of_pages;i++)
+         {
+          if(mouse_x>=_x && mouse_x<=_x+pages[i].Get_title_size() && mouse_y>=_y && mouse_y<=_y+40)
+             page_selected=i;
+          _x+=pages[i].Get_title_size();
+         }
+    }
  if(event->type==SDL_MOUSEBUTTONDOWN && page_selected!=-1)
     {
      page_click=page_selected;
@@ -110,6 +114,7 @@ void Shop_Screen::Open(char *filename)
 }
 
 SDL_Color MESSAGE_COLOR={255,255,255};
+const int FRAMES_PER_SECOND=27;
 
 int Shop_Screen::Start(SDL_Surface *screen)
 {
@@ -133,6 +138,7 @@ int Shop_Screen::Start(SDL_Surface *screen)
  player.Load();
  player.Print_Character(player.Get_PLAYER_INFO_POSX(),0,screen);
  player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen);
+ SDL_Flip(screen);
  bool quit=false;
  SDL_Event event;
  TTF_Font *font=NULL;
@@ -140,10 +146,13 @@ int Shop_Screen::Start(SDL_Surface *screen)
  SDL_Surface *not_enough_money=NULL,*not_enough_space=NULL,*not_enough_background=NULL;
  not_enough_money=TTF_RenderText_Solid(font,"You don't have enough money to buy this!",MESSAGE_COLOR);
  not_enough_space=TTF_RenderText_Solid(font,"Not enough space, sell some items!",MESSAGE_COLOR);
+ TTF_CloseFont(font);
  not_enough_background=SDL_LoadBMP("images/shop/not_enough_background.bmp");
  int message=0,nr=0;
+ Timer fps;
  while(!quit)
        {
+        fps.start();
         if(SDL_PollEvent(&event) && !quit)
               {
                int _item_id=shop.Start(screen,&event);
@@ -158,7 +167,7 @@ int Shop_Screen::Start(SDL_Surface *screen)
                    player.Print_Character(player.Get_PLAYER_INFO_POSX(),0,screen);
                    player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen);
                   }
-               _item_id=player.Start_inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,&event);
+               //_item_id=player.Start_inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,&event);
                if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.sym==SDLK_ESCAPE))
                   quit=true;
                switch(message)
@@ -175,6 +184,10 @@ int Shop_Screen::Start(SDL_Surface *screen)
                   message=0,nr=0;
                SDL_Flip(screen);
               }
+        if(fps.get_ticks()<1000/FRAMES_PER_SECOND)
+           {
+            SDL_Delay((1000/FRAMES_PER_SECOND)-fps.get_ticks());
+           }
         //SDL_Flip(screen);
         //SDL_Delay(16);
        }
