@@ -240,38 +240,37 @@ void Player::Print_Character(int x,int y,SDL_Surface *_screen)
 
  equipped_items[8].Print(SKIN_POSX,y,_screen,false);
 
- _image=PLAYER_name_background;
- apply_surface(x,y,_image,_screen);
+ apply_surface(x,y,PLAYER_name_background,_screen);
  strcpy(message,name);
  _image=TTF_RenderText_Solid(font,message,NAME_COLOR);
  apply_surface(x+(SKIN_POSX-x+1-_image->w+10)/2,y,_image,_screen);
  y+=_image->h+20;
+ SDL_FreeSurface(_image);
 
- _image=PLAYER_details_background;
- apply_surface(x,y-10,_image,_screen);
+ apply_surface(x,y-10,PLAYER_details_background,_screen);
 
- _image=PLAYER_experience_background;
- apply_surface(x,y,_image,_screen);
+ apply_surface(x,y,PLAYER_experience_background,_screen);
  itoa(experience,aux);
  strcpy(message,"Experience: ");
  strcat(message,aux);
  _image=TTF_RenderText_Solid(font,message,EXPERIENCE_COLOR);
  apply_surface(x+10,y,_image,_screen);
  y+=_image->h;
+ SDL_FreeSurface(_image);
 
- _image=PLAYER_money_background;
- apply_surface(x,y,_image,_screen);
+ apply_surface(x,y,PLAYER_money_background,_screen);
  strcpy(message,"Money: ");
  _image=TTF_RenderText_Solid(font,message,MONEY_COLOR);
  apply_surface(x+10,y+10,_image,_screen);
  _x=x+_image->w+10,_y=y+10;
+ SDL_FreeSurface(_image);
  itoa(money,aux);
  _image=TTF_RenderText_Solid(font,aux,MONEY_COLOR1);
  apply_surface(_x,_y,_image,_screen);
  _x+=_image->w,_y=y;
- _image=COIN;
- apply_surface(_x,_y+5,_image,_screen);
- y+=_image->h+20;
+ SDL_FreeSurface(_image);
+ apply_surface(_x,_y+5,COIN,_screen);
+ y+=COIN->h+20;
 
  equipped_items[0].Print(x,y,_screen,false);
  //item.Print_description(x+190,y,_screen,false);
@@ -299,9 +298,8 @@ void Player::Print_Inventory(int x,int y,SDL_Surface *_screen)
 {
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",15);
  char message[TEXT_LENGHT_MAX]={'x',NULL};
- SDL_Surface *_image=SHOP_inventory_background;
- SDL_Surface *sell_image=INVENTORY_SELL,*equip_image=INVENTORY_EQUIP;
- apply_surface(x,y,_image,_screen);
+ SDL_Surface *_image=NULL;
+ apply_surface(x,y,SHOP_inventory_background,_screen);
  int _x=x,_y=y;
  for(int i=0;i<=NUMBER_OF_ITEMS_IDS;i++)
      {
@@ -310,25 +308,24 @@ void Player::Print_Inventory(int x,int y,SDL_Surface *_screen)
           if(items_bought[i].Get_id()==0/* || items_bought[i].Get_type()<6*/)
              continue;
           if(inventory_item_selected==i)
-             _image=SHOP_item_background_selected;
+             apply_surface(_x,_y,SHOP_item_background_selected,_screen);
           else
-             _image=SHOP_item_background;
-          apply_surface(_x,_y,_image,_screen);
+             apply_surface(_x,_y,SHOP_item_background,_screen);
           items_bought[i].Print_inventory_image(_x,_y,_screen);
           itoa(number_of_items_bought[i],message+1);
           _image=TTF_RenderText_Solid(font,message,NUMBER_OF_ITEMS_COLOR);
           apply_surface(_x+42,_y+25,_image,_screen);
+          SDL_FreeSurface(_image);
           if(!Is_potion(i))
              {
               if(equipped_items_ids[items_bought[i].Get_type()]!=i)
-                 apply_surface(_x+40,_y+2,equip_image,_screen);
+                 apply_surface(_x+40,_y+2,INVENTORY_EQUIP,_screen);
               else
                  {
-                  _image=INVENTORY_EQUIPPED;
-                  apply_surface(_x+40,_y+2,_image,_screen);
+                  apply_surface(_x+40,_y+2,INVENTORY_EQUIPPED,_screen);
                  }
              }
-          apply_surface(_x+42,_y+15,sell_image,_screen);
+          apply_surface(_x+42,_y+15,INVENTORY_SELL,_screen);
           _x+=110;
           if(_x+110>PLAYER_INFO_LAST_POSX)
              _x=x,_y+=60;
@@ -339,11 +336,10 @@ void Player::Print_Inventory(int x,int y,SDL_Surface *_screen)
 
 int Player::Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event)
 {
- SDL_Surface *sell_image=INVENTORY_SELL,*equip_image=INVENTORY_EQUIP;
  inventory_item_click=-1;
  int _x=x,_y=y;
  int mouse_x=event->button.x,mouse_y=event->button.y;
- bool _sell,_equip;
+ bool _sell=false,_equip=false;
  if(event->type==SDL_MOUSEMOTION || event->type==SDL_MOUSEBUTTONDOWN)
     {
      inventory_item_selected=-1;
@@ -353,9 +349,9 @@ int Player::Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event)
              {
               if(mouse_x>=_x && mouse_x<_x+80 && mouse_y>=_y && mouse_y<_y+60)
                  inventory_item_selected=i,_sell=false,_equip=false;
-              if(mouse_x>=_x+40 && mouse_x<=_x+40+equip_image->w && mouse_y>=_y+2 && mouse_y<=_y+2+equip_image->h)
+              if(mouse_x>=_x+40 && mouse_x<=_x+40+INVENTORY_EQUIP->w && mouse_y>=_y+2 && mouse_y<=_y+2+INVENTORY_EQUIP->h)
                  _equip=true;
-              if(mouse_x>=_x+42 && mouse_x<=_x+42+equip_image->w && mouse_y>=_y+15 && mouse_y<=_y+15+equip_image->h)
+              if(mouse_x>=_x+42 && mouse_x<=_x+42+INVENTORY_EQUIP->w && mouse_y>=_y+15 && mouse_y<=_y+15+INVENTORY_EQUIP->h)
                  _sell=true;
               _x+=110;
               if(_x+110>PLAYER_INFO_LAST_POSX)

@@ -44,6 +44,7 @@ void Big_Background::Update_size()
  //itoa(RESOLUTION,aux);
  //strcat(path,aux);
  strcat(path,".bmp");
+ SDL_FreeSurface(background);
  background=SDL_LoadBMP(path);
 }
 

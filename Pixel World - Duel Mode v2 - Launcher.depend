@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1463737506 source:e:\programming\pixel world - duel mode v2 - launcher\library.cpp
+1471858492 source:e:\programming\pixel world - duel mode v2 - launcher\library.cpp
 	"library.h"
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
@@ -27,7 +27,7 @@
 	"load_images.h"
 	<cstring>
 
-1471592715 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
+1471854984 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
 	"menu.h"
 	"settings.h"
 	<cstring>
@@ -45,7 +45,7 @@
 1463764919 e:\programming\pixel world - duel mode v2 - launcher\big_background.h
 	"library.h"
 
-1463764907 source:e:\programming\pixel world - duel mode v2 - launcher\big_background.cpp
+1471855043 source:e:\programming\pixel world - duel mode v2 - launcher\big_background.cpp
 	"big_background.h"
 	"settings.h"
 
@@ -53,7 +53,7 @@
 	"library.h"
 	"load_images.h"
 
-1463761824 source:e:\programming\pixel world - duel mode v2 - launcher\settings.cpp
+1471854356 source:e:\programming\pixel world - duel mode v2 - launcher\settings.cpp
 	"settings.h"
 	<cstdio>
 
@@ -81,13 +81,13 @@
 	<cstring>
 	<cstdio>
 
-1471603974 e:\programming\pixel world - duel mode v2 - launcher\shop.h
+1471857163 e:\programming\pixel world - duel mode v2 - launcher\shop.h
 	"load_images.h"
 	"shop_page.h"
 	"settings.h"
 	<vector>
 
-1465292886 e:\programming\pixel world - duel mode v2 - launcher\shop_page.h
+1471856489 e:\programming\pixel world - duel mode v2 - launcher\shop_page.h
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_image.h"
@@ -102,18 +102,18 @@
 	"library.h"
 	"item.h"
 
-1471606663 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
+1471859699 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
 	"player.h"
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_mixer.h"
 	<cstring>
 
-1471607930 source:e:\programming\pixel world - duel mode v2 - launcher\shop.cpp
+1471860288 source:e:\programming\pixel world - duel mode v2 - launcher\shop.cpp
 	"shop.h"
 	<cstring>
 
-1471603897 source:e:\programming\pixel world - duel mode v2 - launcher\shop_page.cpp
+1471858621 source:e:\programming\pixel world - duel mode v2 - launcher\shop_page.cpp
 	"shop_page.h"
 	<cstring>
 

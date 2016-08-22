@@ -27,6 +27,7 @@ void Menu_Option::Load(FILE *where)
  strcat(font_path,font_name);
  TTF_Font *font=TTF_OpenFont(font_path,font_size);
  text_image=TTF_RenderText_Solid(font,text,color);
+ TTF_CloseFont(font);
 }
 
 void Menu_Option::Set_text(char *_text)
@@ -83,12 +84,14 @@ void Menu::Load(const char *filename)
      strcpy(path,"images/menu/");
      strcat(path,background_name);
      strcat(path,".bmp");
+     SDL_FreeSurface(background);
      background=SDL_LoadBMP(path);
      fgets(path,sizeof path,where);
      if(path[strlen(path)-1]=='\n')
         path[strlen(path)-1]=NULL;
      TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",40);
      title=TTF_RenderText_Solid(font,path,SDL_Color{255,255,255});
+     TTF_CloseFont(font);
      fscanf(where,"%d %d ",&title_position.x,&title_position.y);
     }
  for(int i=0;i<number_of_options;i++)

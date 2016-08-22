@@ -19,7 +19,7 @@ class Shop_Page
  private:
  int POSX=0,LAST_POSX=0;
  char name[TEXT_LENGHT_MAX];
- SDL_Surface *image=NULL;
+ SDL_Surface *image=NULL,*name_image=NULL;
  int item_ids[100];
  Item items[100];
  int item_selected,item_click;

@@ -33,10 +33,12 @@ void Make_Fullscreen(SDL_Surface *_screen,bool *fullscreen)
 
 void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination )
 {
- SDL_Rect offset;
- offset.x=x;
- offset.y=y;
- SDL_BlitSurface(source,NULL,destination,&offset);
+ SDL_Rect *offset;
+ offset=new SDL_Rect;
+ offset->x=x;
+ offset->y=y;
+ SDL_BlitSurface(source,NULL,destination,offset);
+ delete offset;
  #ifdef DEBUG
  SDL_Flip(destination);
  #endif // DEBUG
@@ -44,13 +46,17 @@ void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination 
 
 void apply_surface( int x, int y,int w,int h, SDL_Surface* source, SDL_Surface* destination )
 {
- SDL_Rect offset,enlarge;
- offset.x=x;
- offset.y=y;
- enlarge.x=enlarge.y=0;
- enlarge.w=w;
- enlarge.h=h;
- SDL_BlitSurface(source,&enlarge,destination,&offset);
+ SDL_Rect *offset,*enlarge;
+ offset=new SDL_Rect;
+ enlarge=new SDL_Rect;
+ offset->x=x;
+ offset->y=y;
+ enlarge->x=enlarge->y=0;
+ enlarge->w=w;
+ enlarge->h=h;
+ SDL_BlitSurface(source,enlarge,destination,offset);
+ delete offset;
+ delete enlarge;
  #ifdef DEBUG
  SDL_Flip(destination);
  #endif // DEBUG
@@ -58,14 +64,18 @@ void apply_surface( int x, int y,int w,int h, SDL_Surface* source, SDL_Surface* 
 
 void apply_surface(int xImage,int yImage,int xScreen,int yScreen,int w,int h,SDL_Surface *source,SDL_Surface *destination)
 {
- SDL_Rect offset,enlarge;
- offset.x=xScreen;
- offset.y=yScreen;
- enlarge.x=xImage;
- enlarge.y=yImage;
- enlarge.w=w;
- enlarge.h=h;
- SDL_BlitSurface(source,&enlarge,destination,&offset);
+ SDL_Rect *offset,*enlarge;
+ offset=new SDL_Rect;
+ enlarge=new SDL_Rect;
+ offset->x=xScreen;
+ offset->y=yScreen;
+ enlarge->x=xImage;
+ enlarge->y=yImage;
+ enlarge->w=w;
+ enlarge->h=h;
+ SDL_BlitSurface(source,enlarge,destination,offset);
+ delete offset;
+ delete enlarge;
  #ifdef DEBUG
  SDL_Flip(destination);
  #endif // DEBUG

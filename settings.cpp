@@ -117,6 +117,7 @@ void Graphic_Change_Resolution(int x,int y,SDL_Surface *_screen,SDL_Event *event
  strcat(text," x ");
  strcat(text,aux);
  image=TTF_RenderText_Solid(font,text,settings_color);
+ TTF_CloseFont(font);
  apply_surface(x+20,y+10,image,_screen);
  SDL_FreeSurface(image);
 }
@@ -143,6 +144,7 @@ void Graphic_Change_Display_Mode(int x,int y,SDL_Surface *_screen,SDL_Event *eve
  else
     image1=TTF_RenderText_Solid(font,"OFF",settings_color);
  apply_surface(x+image->w+20,y+10,image1,_screen);
+ TTF_CloseFont(font);
  SDL_FreeSurface(image1);
  SDL_FreeSurface(image);
 }
@@ -166,6 +168,7 @@ void Graphic_Change_Volume(int x,int y,SDL_Surface *_screen,SDL_Event *event)
  apply_surface(x+20,y+10,image,_screen);
  image1=TTF_RenderText_Solid(font,available_volumes_names[VOL],settings_color);
  apply_surface(x+image->w+20,y+10,image1,_screen);
+ TTF_CloseFont(font);
  SDL_FreeSurface(image1);
  SDL_FreeSurface(image);
 }
@@ -182,6 +185,7 @@ bool Graphic_Back(int x,int y,SDL_Surface *_screen,SDL_Event *event)
  SDL_Surface *image=NULL;
  image=TTF_RenderText_Solid(font,"Back",settings_color);
  apply_surface(x+20,y+10,image,_screen);
+ TTF_CloseFont(font);
  SDL_FreeSurface(image);
  return false;
 }

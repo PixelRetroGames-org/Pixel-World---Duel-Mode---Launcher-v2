@@ -7,7 +7,7 @@ const SDL_Color ITEM_NAME_COLOR={27,100,250};
 Shop_Page::Shop_Page()
 {
  name[0]=NULL;
- image=NULL;
+ image=name_image=NULL;
  item_selected=item_click=-1;
  number_of_items=number_of_lines=number_of_columns=title_size=0;
 }
@@ -51,6 +51,8 @@ void Shop_Page::Load()
  strcat(path,name);
  strcat(path,".bmp");
  image=make_it_transparent(path);
+ TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",36);
+ name_image=TTF_RenderText_Solid(font,name,ITEM_NAME_COLOR);
 }
 
 int Shop_Page::Get_title_size()
@@ -60,37 +62,29 @@ int Shop_Page::Get_title_size()
 
 void Shop_Page::Print_Title(int x,int y,SDL_Surface *_screen,bool selected=false,bool click=false)
 {
- SDL_Surface *_image=NULL,*right_frame=NULL;
- TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",36);
- if(click)
-    {
-     _image=SHOP_title_background_click;
-     right_frame=SHOP_title_background_click_right_frame;
-    }
- else
-    {
-     right_frame=SHOP_title_background_right_frame;
-     if(selected)
-        _image=SHOP_title_background_selected;
-     else
-        _image=SHOP_title_background;
-    }
  title_size=image->w;
  if(click)
     {
-     SDL_Surface *__image=TTF_RenderText_Solid(font,name,ITEM_NAME_COLOR);
-     title_size+=__image->w+10;
-     SDL_FreeSurface(__image);
+     title_size+=name_image->w+10;
     }
  else
     title_size+=-5;
- apply_surface(x,y,title_size+20,50,_image,_screen);
+ if(click)
+    {
+     apply_surface(x,y,title_size+20,50,SHOP_title_background_click,_screen);
+    }
+ else
+    {
+     if(selected)
+        apply_surface(x,y,title_size+20,50,SHOP_title_background_selected,_screen);
+     else
+        apply_surface(x,y,title_size+20,50,SHOP_title_background,_screen);
+    }
  //apply_surface(x,y,_image,_screen);
  if(click)
     {
-     _image=TTF_RenderText_Solid(font,name,ITEM_NAME_COLOR);
-     title_size=_image->w;
-     apply_surface(x+10,y+8,_image,_screen);
+     title_size=name_image->w;
+     apply_surface(x+10,y+8,name_image,_screen);
      apply_surface(x+title_size+20,y+5,image,_screen);
      title_size+=20+image->w;
      Print(POSX,y+60,_screen);
@@ -101,42 +95,40 @@ void Shop_Page::Print_Title(int x,int y,SDL_Surface *_screen,bool selected=false
      title_size=image->w+5;
     }
  title_size+=20;
- apply_surface(x+title_size-10,y,right_frame,_screen);
- TTF_CloseFont(font);
+ if(click)
+    apply_surface(x+title_size-10,y,SHOP_title_background_click_right_frame,_screen);
+ else
+    apply_surface(x+title_size-10,y,SHOP_title_background_right_frame,_screen);
 }
 
 void Shop_Page::Print(int x,int y,SDL_Surface *_screen)
 {
- SDL_Surface *_image=NULL;
- _image=SHOP_shop_page_background;
- apply_surface(x,y-10,LAST_POSX-x,900,_image,_screen);
- _image=SHOP_shop_rope;
+ apply_surface(x,y-10,LAST_POSX-x,900,SHOP_shop_page_background,_screen);
  int _x=x,_y=y;
  for(int i=0;i<number_of_items;i++)
      {
       if((i)%number_of_columns==0 && i!=0)
-         _y+=120+_image->h,_x=x;
-      apply_surface(_x,_y,_image,_screen);
-      items[i].Print(_x,_y+_image->h,_screen,i==item_selected);
+         _y+=120+SHOP_shop_rope->h,_x=x;
+      apply_surface(_x,_y,SHOP_shop_rope,_screen);
+      items[i].Print(_x,_y+SHOP_shop_rope->h,_screen,i==item_selected);
       _x+=180;
      }
  _x=x,_y=y;
  for(int i=0;i<number_of_items;i++)
      {
       if((i)%number_of_columns==0 && i!=0)
-         _y+=120+_image->h,_x=x;
+         _y+=120+SHOP_shop_rope->h,_x=x;
       if(i==item_selected)
-         items[i].Print(_x,_y+_image->h,_screen,i==item_selected);
+         items[i].Print(_x,_y+SHOP_shop_rope->h,_screen,i==item_selected);
       _x+=180;
      }
 }
 
 int Shop_Page::Start(SDL_Surface *_screen,SDL_Event *event)
 {
- SDL_Surface *_image=NULL;
- _image=SHOP_shop_rope;
  int _x=POSX,_y=60,x,y;
- if(event->type==SDL_MOUSEMOTION)
+ item_click=-1;
+ if(event->type==SDL_MOUSEMOTION || event->type==SDL_MOUSEBUTTONDOWN)
     {
      x=event->button.x;
      y=event->button.y;
@@ -144,8 +136,8 @@ int Shop_Page::Start(SDL_Surface *_screen,SDL_Event *event)
      for(int i=0;i<number_of_items;i++)
          {
           if((i)%number_of_columns==0 && i!=0)
-             _y+=120+_image->h,_x=20;
-          if(x>=_x && x<=_x+180 && y>=_y+_image->h && y<=_y+120+_image->h)
+             _y+=120+SHOP_shop_rope->h,_x=20;
+          if(x>=_x && x<=_x+180 && y>=_y+SHOP_shop_rope->h && y<=_y+120+SHOP_shop_rope->h)
              item_selected=i;
           _x+=180;
          }

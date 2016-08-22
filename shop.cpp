@@ -65,11 +65,11 @@ void Shop::Print(SDL_Surface *_screen)
  apply_surface(_x,45,LAST_POSX-_x,45,SHOP_title_background_line,_screen);
 }
 
-int Shop::Start(SDL_Surface *_screen,SDL_Event *event)
+inline int Shop::Start(SDL_Surface *_screen,SDL_Event *event)
 {
- int _x=0,_y=0,mouse_x=0,mouse_y=0;
- if(event->type==SDL_MOUSEMOTION)
+ if(event->type==SDL_MOUSEMOTION || event->type==SDL_MOUSEBUTTONDOWN)
     {
+     int _x=0,_y=0,mouse_x=0,mouse_y=0;
      mouse_x=event->button.x,mouse_y=event->button.y;
      page_selected=-1;
      for(int i=0;i<number_of_pages;i++)
@@ -167,7 +167,7 @@ int Shop_Screen::Start(SDL_Surface *screen)
                    player.Print_Character(player.Get_PLAYER_INFO_POSX(),0,screen);
                    player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen);
                   }
-               //_item_id=player.Start_inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,&event);
+               _item_id=player.Start_inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,&event);
                if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.sym==SDLK_ESCAPE))
                   quit=true;
                switch(message)

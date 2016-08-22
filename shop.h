@@ -22,7 +22,7 @@ class Shop
  void Set_name(char *_name);
  void Load();
  void Print(SDL_Surface *_screen);
- int Start(SDL_Surface *_screen,SDL_Event *event);
+ inline int Start(SDL_Surface *_screen,SDL_Event *event);
 };
 
 class Shop_Screen
