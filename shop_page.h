@@ -35,6 +35,7 @@ class Shop_Page
  int Get_title_size();
  void Print(int x,int y,SDL_Surface *_screen);
  void Print_Title(int x,int y,SDL_Surface *_screen,bool selected,bool click);
+ void Reset();
  int Start(SDL_Surface *_screen,SDL_Event *event);
 };
 

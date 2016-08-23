@@ -124,6 +124,11 @@ void Shop_Page::Print(int x,int y,SDL_Surface *_screen)
      }
 }
 
+void Shop_Page::Reset()
+{
+ item_click=item_selected=0;
+}
+
 int Shop_Page::Start(SDL_Surface *_screen,SDL_Event *event)
 {
  int _x=POSX,_y=60,x,y;

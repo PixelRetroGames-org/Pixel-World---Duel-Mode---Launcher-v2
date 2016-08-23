@@ -22,6 +22,7 @@ class Shop
  void Set_name(char *_name);
  void Load();
  void Print(SDL_Surface *_screen);
+ void Reset();
  inline int Start(SDL_Surface *_screen,SDL_Event *event);
 };
 
@@ -35,6 +36,7 @@ class Shop_Screen
  public:
  void Set_filename(char *_filename);
  void Open(char *filename);
+ void Reset();
  int Start(SDL_Surface *screen);
  int Start(SDL_Surface *screen,char *filename);
 };

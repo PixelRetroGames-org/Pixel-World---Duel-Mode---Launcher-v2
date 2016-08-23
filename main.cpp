@@ -69,6 +69,7 @@ int main( int argc, char* args[] )
                                                               case 1:{
                                                                       if(shop_screen.Start(screen,"Timy")==-1)
                                                                          return 0;
+                                                                      shop_screen.Reset();
                                                                       break;
                                                                      };
                                                               case 2:{
@@ -96,8 +97,10 @@ int main( int argc, char* args[] )
                                                               case 1:{
                                                                       if(shop_screen.Start(screen,"Player1")==-1)
                                                                          return 0;
+                                                                      shop_screen.Reset();
                                                                       if(shop_screen.Start(screen,"Player2")==-1)
                                                                          return 0;
+                                                                      shop_screen.Reset();
                                                                       break;
                                                                      };
                                                               case 2:{

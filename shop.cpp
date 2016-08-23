@@ -65,6 +65,12 @@ void Shop::Print(SDL_Surface *_screen)
  apply_surface(_x,45,LAST_POSX-_x,45,SHOP_title_background_line,_screen);
 }
 
+void Shop::Reset()
+{
+ pages[page_click].Reset();
+ page_click=page_selected=0;
+}
+
 inline int Shop::Start(SDL_Surface *_screen,SDL_Event *event)
 {
  if(event->type==SDL_MOUSEMOTION || event->type==SDL_MOUSEBUTTONDOWN)
@@ -111,6 +117,11 @@ void Shop_Screen::Open(char *filename)
        name[strlen(name)-1]=NULL;
  shop.Set_name(name);
  fclose(in);
+}
+
+void Shop_Screen::Reset()
+{
+ shop.Reset();
 }
 
 SDL_Color MESSAGE_COLOR={255,255,255};
@@ -192,6 +203,9 @@ int Shop_Screen::Start(SDL_Surface *screen)
         //SDL_Delay(16);
        }
  player.Update();
+ SDL_FreeSurface(not_enough_money);
+ SDL_FreeSurface(not_enough_space);
+ SDL_FreeSurface(not_enough_background);
  if(event.type==SDL_QUIT)
     return -1;
  return 0;
