@@ -54,7 +54,7 @@ int main( int argc, char* args[] )
                                        case -1:{break;};
                                        case 0:{
                                                //Story Mode
-                                               int __option;
+                                               int __option=-1;
                                                while(__option!=-2)
                                                      {
                                                       __option=story_menu.Start(screen);
@@ -82,7 +82,7 @@ int main( int argc, char* args[] )
                                                break;
                                               };
                                        case 1:{//Launch Duel Mode
-                                               int __option;
+                                               int __option=-1;
                                                while(__option!=-2)
                                                      {
                                                       __option=duel_menu.Start(screen);

@@ -12,7 +12,7 @@
 	<cstring>
 	<string>
 
-1471954881 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
+1472035765 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
 	"menu.h"
 	"settings.h"
 	"script_interpreter.h"
@@ -49,11 +49,11 @@
 	"big_background.h"
 	"settings.h"
 
-1463469905 e:\programming\pixel world - duel mode v2 - launcher\settings.h
+1472034979 e:\programming\pixel world - duel mode v2 - launcher\settings.h
 	"library.h"
 	"load_images.h"
 
-1471854356 source:e:\programming\pixel world - duel mode v2 - launcher\settings.cpp
+1472035145 source:e:\programming\pixel world - duel mode v2 - launcher\settings.cpp
 	"settings.h"
 	<cstdio>
 
@@ -109,11 +109,11 @@
 	"SDL/SDL_mixer.h"
 	<cstring>
 
-1471954814 source:e:\programming\pixel world - duel mode v2 - launcher\shop.cpp
+1471955045 source:e:\programming\pixel world - duel mode v2 - launcher\shop.cpp
 	"shop.h"
 	<cstring>
 
-1471954711 source:e:\programming\pixel world - duel mode v2 - launcher\shop_page.cpp
+1472035820 source:e:\programming\pixel world - duel mode v2 - launcher\shop_page.cpp
 	"shop_page.h"
 	<cstring>
 

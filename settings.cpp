@@ -12,6 +12,7 @@ const SDL_Color settings_color={255,255,255};
 int RESOLUTION_X=1366,RESOLUTION_Y=768,RESOLUTION=2;
 int DISPLAY_MODE=SDL_SWSURFACE;
 int VOLUME,VOL=2;
+bool POWER_SAVER=false;
 
 void Load_Settings()
 {
@@ -22,7 +23,7 @@ void Load_Settings()
      return;
     }
  int dm=0;
- fscanf(where,"%d %d %d ",&RESOLUTION,&dm,&VOL);
+ fscanf(where,"%d %d %d %d",&RESOLUTION,&dm,&VOL,&POWER_SAVER);
  RESOLUTION_X=available_resolution_x[RESOLUTION];
  RESOLUTION_Y=available_resolution_y[RESOLUTION];
  DISPLAY_MODE=dm==0?SDL_FULLSCREEN:SDL_SWSURFACE;
@@ -34,7 +35,7 @@ void Save_Settings()
 {
  FILE *where=fopen("settings/settings.set","w");
  int dm=0;
- fprintf(where,"%d %d %d ",RESOLUTION,DISPLAY_MODE==SDL_FULLSCREEN?0:1,VOL);
+ fprintf(where,"%d %d %d %d",RESOLUTION,DISPLAY_MODE==SDL_FULLSCREEN?0:1,VOL,POWER_SAVER);
  fclose(where);
 }
 
@@ -70,6 +71,7 @@ void Graphic_Settings(SDL_Surface *_screen)
         Graphic_Change_Resolution((RESOLUTION_X-SETTINGS_option_background->w)/2,120,_screen,&event);
         Graphic_Change_Display_Mode((RESOLUTION_X-SETTINGS_option_background->w)/2,160,_screen,&event);
         Graphic_Change_Volume((RESOLUTION_X-SETTINGS_option_background->w)/2,200,_screen,&event);
+        Graphic_Power_Saver((RESOLUTION_X-SETTINGS_option_background->w)/2,240,_screen,&event);
         quit=Graphic_Back((RESOLUTION_X-SETTINGS_option_background->w)/2,400,_screen,&event);
         SDL_Flip(_screen);
         SDL_PollEvent(&event);
@@ -83,14 +85,17 @@ void Graphic_Settings(SDL_Surface *_screen,SDL_Event *event)
 {
  bool quit=false;
  SDL_PumpEvents();
- _screen=SDL_SetVideoMode(RESOLUTION_X,RESOLUTION_Y,32,DISPLAY_MODE);
  while(!quit)
        {
-        Graphic_Change_Resolution(0,0,_screen,event);
-        Graphic_Change_Display_Mode(0,101,_screen,event);
+        Print_Settings_Background(_screen);
+        Graphic_Change_Resolution((RESOLUTION_X-SETTINGS_option_background->w)/2,120,_screen,event);
+        Graphic_Change_Display_Mode((RESOLUTION_X-SETTINGS_option_background->w)/2,160,_screen,event);
+        Graphic_Change_Volume((RESOLUTION_X-SETTINGS_option_background->w)/2,200,_screen,event);
+        Graphic_Power_Saver((RESOLUTION_X-SETTINGS_option_background->w)/2,240,_screen,event);
+        quit=Graphic_Back((RESOLUTION_X-SETTINGS_option_background->w)/2,400,_screen,event);
         SDL_Flip(_screen);
         SDL_PollEvent(event);
-        SDL_Delay(50);
+        SDL_Delay(40);
         if(event->type==SDL_QUIT || (event->type==SDL_KEYDOWN && event->key.keysym.sym==SDLK_ESCAPE))
            quit=true;
        }
@@ -167,6 +172,29 @@ void Graphic_Change_Volume(int x,int y,SDL_Surface *_screen,SDL_Event *event)
  image=TTF_RenderText_Solid(font,"Volume:",settings_color);
  apply_surface(x+20,y+10,image,_screen);
  image1=TTF_RenderText_Solid(font,available_volumes_names[VOL],settings_color);
+ apply_surface(x+image->w+20,y+10,image1,_screen);
+ TTF_CloseFont(font);
+ SDL_FreeSurface(image1);
+ SDL_FreeSurface(image);
+}
+
+void Graphic_Power_Saver(int x,int y,SDL_Surface *_screen,SDL_Event *event)
+{
+ apply_surface(x,y,SETTINGS_option_background,_screen);
+ if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
+    {
+     POWER_SAVER=!POWER_SAVER;
+     SDL_Delay(75);
+    }
+ TTF_Font *font;
+ font=TTF_OpenFont("fonts/pixel.ttf",20);
+ SDL_Surface *image=NULL,*image1=NULL;
+ image=TTF_RenderText_Solid(font,"Power Saver:",settings_color);
+ apply_surface(x+20,y+10,image,_screen);
+ if(POWER_SAVER)
+    image1=TTF_RenderText_Solid(font,"ON",settings_color);
+ else
+    image1=TTF_RenderText_Solid(font,"OFF",settings_color);
  apply_surface(x+image->w+20,y+10,image1,_screen);
  TTF_CloseFont(font);
  SDL_FreeSurface(image1);
