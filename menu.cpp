@@ -6,11 +6,16 @@
 
 const int FRAMES_PER_SECOND_BACKGROUND=30,FRAMES_PER_SECOND_FIRE=25;
 
+void Menu_Option::Clear()
+{
+ SDL_FreeSurface(text_image);
+}
+
 void Menu_Option::Load(FILE *where)
 {
  int _r,_g,_b;
  fgets(text,sizeof text,where);
- if(text[strlen(text)-1]='\n')
+ if(text[strlen(text)-1]=='\n')
     text[strlen(text)-1]=NULL;
  fscanf(where,"%s %d",font_name,&font_size);
  fscanf(where,"%d %d %d ",&_r,&_g,&_b);
@@ -71,6 +76,14 @@ void Menu_Option::Print_text(SDL_Surface *_screen,bool selected=false,bool click
  apply_surface(screen_pos.x+(screen_pos.w-text_image->w)/2,screen_pos.y+10,text_image,_screen);
 }
 
+void Menu::Clear()
+{
+ SDL_FreeSurface(background);
+ SDL_FreeSurface(title);
+ for(int i=0;i<number_of_options;i++)
+     options[i].Clear();
+}
+
 void Menu::Load(const char *filename)
 {
  FILE *where=fopen(filename,"r");
@@ -85,7 +98,7 @@ void Menu::Load(const char *filename)
      strcat(path,background_name);
      strcat(path,".bmp");
      SDL_FreeSurface(background);
-     background=SDL_LoadBMP(path);
+     background=load_image(path);
      fgets(path,sizeof path,where);
      if(path[strlen(path)-1]=='\n')
         path[strlen(path)-1]=NULL;
@@ -134,6 +147,7 @@ int Menu::Start(SDL_Surface *_screen)
  int x,y;
  Timer fps,fps1;
  fps1.start();
+ while(SDL_PollEvent(&event));
  while(!quit && !done)
        {
         fps.start();

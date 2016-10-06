@@ -2,12 +2,15 @@
 #include "settings.h"
 #include "script_interpreter.h"
 #include "shop.h"
+#include "level.h"
 #include<cstdio>
 SDL_Surface *screen;
 
 Script_interpreter script_interpreter;
 
 Shop_Screen shop_screen;
+
+Level level;
 
 Mix_Music *background_music=NULL;
 
@@ -32,8 +35,10 @@ int main( int argc, char* args[] )
  LAUNCHER_BBACKGROUND.Load_Logo();
  background_music=Mix_LoadMUS("audio/Hallowed Be Thy Name.wav");
  Mix_Volume(-1,MIX_MAX_VOLUME*VOLUME/100);
+ Mix_Volume(2,MIX_MAX_VOLUME*VOLUME/100);
+ Mix_Volume(3,MIX_MAX_VOLUME*VOLUME/100);
  Mix_VolumeMusic(MIX_MAX_VOLUME*VOLUME/100);
- Mix_PlayMusic(background_music,-1);
+ //Mix_PlayMusic(background_music,-1);
  int option=-1;
  while(option!=-2)
        {
@@ -91,6 +96,9 @@ int main( int argc, char* args[] )
                                                               case -2:{return 0;};
                                                               case -1:{break;};
                                                               case 0:{//Launch Duel Mode
+                                                                      level.Set_screen(screen);
+                                                                      level.Setup("Test2");
+                                                                      level.Start(screen);
                                                                       _option=-2;
                                                                       break;
                                                                      };

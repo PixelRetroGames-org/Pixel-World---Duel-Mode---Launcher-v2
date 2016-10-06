@@ -31,6 +31,19 @@ void Make_Fullscreen(SDL_Surface *_screen,bool *fullscreen)
  (*fullscreen)=x;
 }
 
+SDL_Surface *load_image(std::string filename)
+{
+ SDL_Surface *loadedImage=NULL;
+ SDL_Surface *optimizedImage=NULL;
+ loadedImage=SDL_LoadBMP(filename.c_str());
+ if(loadedImage!=NULL)
+    {
+     optimizedImage=SDL_DisplayFormat(loadedImage);
+     SDL_FreeSurface(loadedImage);
+    }
+ return optimizedImage;
+}
+
 void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination )
 {
  SDL_Rect *offset;
@@ -73,7 +86,7 @@ void apply_surface(int xImage,int yImage,int xScreen,int yScreen,int w,int h,SDL
  enlarge->y=yImage;
  enlarge->w=w;
  enlarge->h=h;
- SDL_BlitSurface(source,enlarge,destination,offset);
+ int rtn=SDL_BlitSurface(source,enlarge,destination,offset);
  delete offset;
  delete enlarge;
  #ifdef DEBUG
@@ -81,14 +94,14 @@ void apply_surface(int xImage,int yImage,int xScreen,int yScreen,int w,int h,SDL
  #endif // DEBUG
 }
 
-SDL_Surface *make_it_transparent( std::string filename )
+SDL_Surface *make_it_transparent( char *filename )
 {
  //The image that's loaded
  SDL_Surface *loadedImage=NULL;
  //The optimized image that will be used
  SDL_Surface *optimizedImage=NULL;
  //Load the image
- loadedImage=SDL_LoadBMP(filename.c_str());
+ loadedImage=SDL_LoadBMP(filename);
  //If the image loaded
  if(loadedImage!=NULL)
     {

@@ -26,6 +26,7 @@ class Menu_Option
  int font_size;
  SDL_Rect screen_pos;
  public:
+ void Clear();
  void Load(FILE *where);
  void Set_text(char *_text);
  void Set_color(Uint8 r,Uint8 g,Uint8 b);
@@ -44,6 +45,7 @@ class Menu
  SDL_Rect title_position;
  bool is_main_menu=false;
  public:
+ void Clear();
  void Load(const char *filename);
  void Set_number_of_options(int _noptions);
  void Set_option(int _pos,Menu_Option _x);

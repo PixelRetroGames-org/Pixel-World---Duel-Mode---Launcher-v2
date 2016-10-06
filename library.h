@@ -6,7 +6,7 @@
 ///DEBUG
 
 ///AUDIO
-//#define AUDIO
+#define AUDIO
 ///
 
 //SDL
@@ -27,10 +27,11 @@ void itoa(int n, char s[]);
 void reverse(char s[]);
 void Set_icon(char *filename);
 void Make_Fullscreen(SDL_Surface *_screen,bool *fullscreen);
+SDL_Surface *load_image(std::string filename);
 void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination );
 void apply_surface( int x, int y,int w,int h, SDL_Surface* source, SDL_Surface* destination );
 void apply_surface(int xImage,int yImage,int xScreen,int yScreen,int w,int h,SDL_Surface *source,SDL_Surface *destination);
-SDL_Surface *make_it_transparent( std::string filename );
+SDL_Surface *make_it_transparent( char *filename );
 class Timer
 {
  private:

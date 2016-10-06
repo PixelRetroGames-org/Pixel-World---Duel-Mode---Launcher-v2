@@ -6,21 +6,32 @@
 //CSTRING
 #include<cstring>
 
-const SDL_Color NAME_COLOR={27,100,250},EXPERIENCE_COLOR={235,20,20},MONEY_COLOR={125,125,125},MONEY_COLOR1={236,242,4},NUMBER_OF_ITEMS_COLOR={255,128,0};
+const SDL_Color NAME_COLOR={255,255,255},EXPERIENCE_COLOR={235,20,20},MONEY_COLOR={125,125,125},MONEY_COLOR1={236,242,4},NUMBER_OF_ITEMS_COLOR={255,128,0};
 const SDL_Color EQUIP_COLOR={15,30,90},BUY_COLOR={40,80,160},EQUIPPED_COLOR={255,128,0},SKIN_COLOR={193,20,20};
+const SDL_Color HP_COLOR={255,255,255},MANA_COLOR={255,255,255};
 
-const int INVENTORY_MAX_NUMBER_OF_ITEMS=10;
+const int INVENTORY_MAX_NUMBER_OF_ITEMS=8;
 
 Player::Player()
 {
- skin_image_position.w=skin_image_position.h=40;
+ skin_image_position.x=skin_image_position.y=0;
+ skin_image_position.h=skin_image_position.w=40;
  money=experience=number_of_items=0;
  name[0]=NULL;
  memset(number_of_items_bought,0,sizeof number_of_items_bought);
 }
 
-void Player::Clear()
+void Player::Clear(bool _delete)
 {
+ if(_delete)
+    {
+     SDL_FreeSurface(skin);
+     SDL_FreeSurface(name_image);
+     SDL_FreeSurface(hp_image);
+     SDL_FreeSurface(mana_image);
+     skin=name_image=hp_image=mana_image=NULL;
+    }
+
  memset(name,0,sizeof name);
  money=experience=number_of_items=inventory_number_of_items=0;
  memset(number_of_items_bought,0,sizeof number_of_items_bought);
@@ -31,8 +42,22 @@ void Player::Clear()
  //Item equipped_items[10];
  memset(equipped_items,0,sizeof equipped_items);
  inventory_item_selected=inventory_item_click=pos_last_y=0;
- basic_attack=5,basic_defense=0,basic_spell_damage=0,basic_spell_resistance=0,basic_movement_speed=10;
+ basic_attack=5,basic_defense=0,basic_spell_damage=0,basic_spell_resistance=0,basic_movement_speed=10,basic_life_steal=0;
  skin_image_position.h=skin_image_position.w=skin_image_position.x=skin_image_position.y=0;
+ for(std::vector<Buff>::iterator i=active_buffs.begin();i!=active_buffs.end();i++)
+     i->Clear(_delete);
+ active_buffs.clear();
+ for(int i=0;i<10;i++)
+     equipped_items[i].Clear(_delete);
+ for(int i=0;i<NUMBER_OF_ITEMS_IDS;i++)
+     items_bought[i].Clear(_delete);
+ printable_item_buffs_id.clear();
+ map_positionX=map_positionY=-10;
+}
+
+void Player::Set_name(char *_name)
+{
+ strcpy(name,_name);
 }
 
 void Player::Set_PLAYER_INFO_POSX(int _x)
@@ -50,13 +75,21 @@ void Player::Set_SKIN_POSX(int _x)
  SKIN_POSX=_x;
 }
 
-void Player::Set_name(char *_name)
+void Player::Set_money(int _money)
 {
- strcpy(name,_name);
+ money=_money;
+}
+
+void Player::Set_experience(int _experience)
+{
+ experience=_experience;
 }
 
 void Player::Load()
 {
+ TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
+ name_image=TTF_RenderText_Solid(font,name,NAME_COLOR);
+ TTF_CloseFont(font);
  char path[TEXT_LENGHT_MAX]={NULL};
  strcpy(path,"saves/players/");
  strcat(path,name);
@@ -86,10 +119,8 @@ void Player::Load()
      inventory_number_of_items=7;
      equipped_items[8].Set_type(8);
      equipped_items[8].Load();
-     skin_image_position.w=40;
-     skin_image_position.h=40;
-     basic_attack=5,basic_defense=0,basic_spell_damage=0,basic_spell_resistance=0,basic_movement_speed=10;
      Update();
+     Load_skin();
      return;
     }
  fscanf(where,"%d %d %d",&money,&experience,&number_of_items);
@@ -110,12 +141,33 @@ void Player::Load()
       equipped_items[i].Set_type(i);
       equipped_items[i].Load();
      }
- fscanf(where,"%d %d %d %d %d",&basic_attack,&basic_defense,&basic_spell_damage,&basic_spell_resistance,&basic_movement_speed);
+ fscanf(where,"%d %d %d",&basic_hp,&basic_mana,&basic_mental_health);
+ fscanf(where,"%d %d %d %d %d %d",&basic_attack,&basic_defense,&basic_spell_damage,&basic_spell_resistance,&basic_movement_speed,&basic_life_steal);
  int w,h;
  fscanf(where,"%d %d ",&w,&h);
  skin_image_position.w=w;
  skin_image_position.h=h;
+ original_skin_image_position=skin_image_position;
+ attack=basic_attack;
+ defense=basic_defense;
+ spell_damage=basic_spell_damage;
+ spell_resistance=basic_spell_resistance;
+ movement_speed=basic_movement_speed;
+ life_steal=basic_life_steal;
+ fscanf(where,"%d ",&number_of_spells);
+ for(int i=0;i<number_of_spells;i++)
+     {
+      int spell_id;
+      fscanf(where,"%d ",&spell_id);
+      spells[i].Set_id(spell_id);
+      spells[i].Load();
+     }
  fclose(where);
+ Equip_items();
+ Load_skin();
+ Set_hp(basic_hp);
+ Set_mana(basic_mana);
+ Set_mental_health(mental_health);
 }
 
 void Player::Update()
@@ -133,8 +185,15 @@ void Player::Update()
      }
  for(int i=0;i<9;i++)
      fprintf(where,"%d ",equipped_items_ids[i]);
- fprintf(where,"\n%d %d %d %d %d\n",basic_attack,basic_defense,basic_spell_damage,basic_spell_resistance,basic_movement_speed);
- fprintf(where,"%d %d ",(int)skin_image_position.w,(int)skin_image_position.h);
+ fprintf(where,"\n%d %d %d\n",basic_hp,basic_mana,basic_mental_health);
+ fprintf(where,"%d %d %d %d %d %d\n",basic_attack,basic_defense,basic_spell_damage,basic_spell_resistance,basic_movement_speed,basic_life_steal);
+ int w=skin_image_position.w,h=skin_image_position.h;
+ fprintf(where,"%d %d\n",w,h);
+ fprintf(where,"%d\n",number_of_spells);
+ for(int i=0;i<number_of_spells;i++)
+     {
+      fprintf(where,"%d\n",spells[i].Get_id());
+     }
  fclose(where);
 }
 
@@ -178,7 +237,7 @@ int Player::Buy(int _item_id)
  _item.Load();
  if(money<_item.Get_cost())
     return 1;
- if(inventory_number_of_items>=INVENTORY_MAX_NUMBER_OF_ITEMS && !Is_bought(_item_id))
+ if(inventory_number_of_items>=INVENTORY_MAX_NUMBER_OF_ITEMS && (!Is_bought(_item_id) && !Is_potion(_item_id)))
     return 2;
  number_of_items_bought[_item_id]++,money-=_item.Get_cost();
  if(number_of_items_bought[_item_id]==1)
@@ -211,6 +270,11 @@ void Player::Sell(int _item_id)
     }
 }
 
+int Player::Get_pos_last_y()
+{
+ return pos_last_y;
+}
+
 int Player::Get_PLAYER_INFO_POSX()
 {
  return PLAYER_INFO_POSX;
@@ -221,14 +285,14 @@ int Player::Get_PLAYER_INFO_LAST_POSX()
  return PLAYER_INFO_LAST_POSX;
 }
 
-int Player::Get_SKIN_POSX()
+int Player::Get_money()
 {
- return SKIN_POSX;
+ return money;
 }
 
-int Player::Get_pos_last_y()
+int Player::Get_experience()
 {
- return pos_last_y;
+ return experience;
 }
 
 void Player::Print_Character(int x,int y,SDL_Surface *_screen)
@@ -294,7 +358,31 @@ void Player::Print_Character(int x,int y,SDL_Surface *_screen)
  pos_last_y=y;
 }
 
-void Player::Print_Inventory(int x,int y,SDL_Surface *_screen)
+void Player::Print_items(int x,int y,SDL_Surface *_screen)
+{
+  equipped_items[0].Print_image(x,y,_screen);
+ //item.Print_description(x+190,y,_screen,false);
+ y+=100;
+
+
+ equipped_items[1].Print_image(x,y,_screen);
+ //item.Print_description(x+190,y,_screen,false);
+ equipped_items[4].Print_image(x+90,y,_screen);
+ //item.Print_description(x+190,y,_screen,false);
+ y+=100;
+
+ equipped_items[2].Print_image(x,y,_screen);
+ //item.Print_description(x+190,y,_screen,false);
+ equipped_items[5].Print_image(x+90,y,_screen);
+ y+=100;
+
+ equipped_items[3].Print_image(x,y,_screen);
+ //item.Print_description(x+190,y,_screen,false);
+ y+=100;
+ pos_last_y=y;
+}
+
+void Player::Print_Inventory(int x,int y,SDL_Surface *_screen,bool options)
 {
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",15);
  char message[TEXT_LENGHT_MAX]={'x',NULL};
@@ -316,6 +404,60 @@ void Player::Print_Inventory(int x,int y,SDL_Surface *_screen)
           _image=TTF_RenderText_Solid(font,message,NUMBER_OF_ITEMS_COLOR);
           apply_surface(_x+42,_y+25,_image,_screen);
           SDL_FreeSurface(_image);
+          if(!options)
+             {
+              _x+=60;
+              if(_x>PLAYER_INFO_LAST_POSX)
+                 _x=x,_y+=60;
+              continue;
+             }
+          if(!Is_potion(i))
+             {
+              if(equipped_items_ids[items_bought[i].Get_type()]!=i)
+                 apply_surface(_x+40,_y+2,INVENTORY_EQUIP,_screen);
+              else
+                 {
+                  apply_surface(_x+40,_y+2,INVENTORY_EQUIPPED,_screen);
+                 }
+             }
+          apply_surface(_x+42,_y+15,INVENTORY_SELL,_screen);
+          _x+=110;
+          if(_x+110>PLAYER_INFO_LAST_POSX)
+             _x=x,_y+=60;
+         }
+     }
+ TTF_CloseFont(font);
+}
+
+void Player::Print_Inventory_equipped_items(int x,int y,SDL_Surface *_screen,bool options)
+{
+ TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",15);
+ char message[TEXT_LENGHT_MAX]={'x',NULL};
+ SDL_Surface *_image=NULL;
+ apply_surface(x,y,SHOP_inventory_background,_screen);
+ int _x=x,_y=y;
+ for(int i=0;i<=NUMBER_OF_ITEMS_IDS;i++)
+     {
+      if(number_of_items_bought[i]!=0)
+         {
+          if(items_bought[i].Get_id()==0 || (equipped_items_ids[items_bought[i].Get_type()]==i && (items_bought[i].Get_type()!=6 && items_bought[i].Get_type()!=9))/* || items_bought[i].Get_type()<6*/)
+             continue;
+          if(inventory_item_selected==i)
+             apply_surface(_x,_y,SHOP_item_background_selected,_screen);
+          else
+             apply_surface(_x,_y,SHOP_item_background,_screen);
+          items_bought[i].Print_inventory_image(_x,_y,_screen);
+          itoa(number_of_items_bought[i],message+1);
+          _image=TTF_RenderText_Solid(font,message,NUMBER_OF_ITEMS_COLOR);
+          apply_surface(_x+42,_y+25,_image,_screen);
+          SDL_FreeSurface(_image);
+          if(!options)
+             {
+              _x+=60;
+              if(_x>PLAYER_INFO_LAST_POSX)
+                 _x=x,_y+=60;
+              continue;
+             }
           if(!Is_potion(i))
              {
               if(equipped_items_ids[items_bought[i].Get_type()]!=i)
@@ -375,4 +517,507 @@ int Player::Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event)
  if(_equip)
     return -inventory_item_click;
  return 0;
+}
+
+///Game
+
+void Player::Set_hp(int _hp)
+{
+ hp=_hp;
+ TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
+ char aux[TEXT_LENGHT_MAX]={NULL};
+ itoa(hp,aux);
+ SDL_FreeSurface(hp_image);
+ hp_image=TTF_RenderText_Solid(font,aux,HP_COLOR);
+ TTF_CloseFont(font);
+}
+
+void Player::Set_mana(int _mana)
+{
+ mana=_mana;
+ TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
+ SDL_Surface *_image=NULL;
+ char aux[TEXT_LENGHT_MAX]={NULL};
+ itoa(mana,aux);
+ SDL_FreeSurface(mana_image);
+ mana_image=TTF_RenderText_Solid(font,aux,MANA_COLOR);
+ TTF_CloseFont(font);
+}
+
+void Player::Set_mental_health(int _mental_health)
+{
+ mental_health=_mental_health;
+}
+
+void Player::Set_map_position(int x,int y)
+{
+ map_positionX=x;
+ map_positionY=y;
+}
+
+void Player::Set_skin_image_position(int x,int y)
+{
+ skin_image_position.x=x;
+ skin_image_position.y=y;
+ skin_image_position.h=skin_size_h;
+ skin_image_position.w=skin_size_w;
+}
+
+void Player::Set_skin_image_position(SDL_Rect _skin_image_position)
+{
+ skin_image_position=_skin_image_position;
+ skin_size_h=_skin_image_position.h;
+ skin_size_w=_skin_image_position.w;
+}
+
+void Player::Reset_skin_image_position()
+{
+ skin_image_position=original_skin_image_position;
+ skin_size_h=skin_image_position.h;
+ skin_size_w=skin_image_position.w;
+}
+
+void Player::Set_velocityX(int _velocityX)
+{
+ velocityX=_velocityX;
+}
+
+void Player::Set_velocityY(int _velocityY)
+{
+ velocityY=_velocityY;
+}
+
+void Player::Block()
+{
+ is_blocked=true;
+}
+
+void Player::Block_attack()
+{
+ can_attack=false;
+}
+
+void Player::Unblock()
+{
+ is_blocked=false;
+}
+
+void Player::Unblock_attack()
+{
+ can_attack=true;
+}
+
+int Player::Get_hp()
+{
+ return hp;
+}
+
+int Player::Get_mana()
+{
+ return mana;
+}
+
+int Player::Get_attack()
+{
+ return attack;
+}
+
+int Player::Get_defense()
+{
+ return defense;
+}
+
+int Player::Get_extra_money()
+{
+ return extra_money;
+}
+
+int Player::Get_spell_damage()
+{
+ return spell_damage;
+}
+
+int Player::Get_spell_resistance()
+{
+ return spell_resistance;
+}
+
+int Player::Get_movement_speed()
+{
+ return movement_speed;
+}
+
+int Player::Get_life_steal()
+{
+ return life_steal;
+}
+
+int Player::Get_map_positionX()
+{
+ return map_positionX;
+}
+
+int Player::Get_map_positionY()
+{
+ return map_positionY;
+}
+
+int Player::Get_velocityX()
+{
+ return velocityX;
+}
+
+int Player::Get_velocityY()
+{
+ return velocityY;
+}
+
+int Player::Get_skinW()
+{
+ return skin_image_position.w;
+}
+
+int Player::Get_skinH()
+{
+ return skin_image_position.h;
+}
+
+void Player::Set_skin(char *_skin_name)
+{
+ char where[TEXT_LENGHT_MAX]={NULL};
+ strcpy(where,"shop/skins/");
+ strcat(where,_skin_name);
+ strcat(where,".bmp");
+ skin=make_it_transparent(where);
+}
+
+void Player::Load_skin()
+{
+ if(equipped_items_ids[8]==0)
+    skin=make_it_transparent("shop/skins/timy skin.bmp");
+ else
+    skin=equipped_items[8].Get_skin();
+}
+
+void Player::Update_skin_image_position()
+{
+ switch(velocityX)
+        {
+         case 1:{skin_image_position.x=0;break;};
+         case -1:{skin_image_position.x=skin_image_position.h;break;};
+         case 0:{break;};
+        }
+}
+
+void Player::Print_name(int x,int y,SDL_Surface *_screen)
+{
+ //apply_surface(x,y,PLAYER_name_background,_screen);
+ //apply_surface(x,y,PLAYER_CASE_front,_screen);
+ x-=name_image->w/2;
+ apply_surface(x+(x+200-x+1-name_image->w+10)/2,y+name_image->h/4,name_image,_screen);
+}
+
+void Player::Print_name(SDL_Surface *_screen)
+{
+ apply_surface(PLAYER_INFO_POSX,0,PLAYER_name_background,_screen);
+ apply_surface(PLAYER_INFO_POSX,0,PLAYER_CASE_front,_screen);
+ apply_surface(PLAYER_INFO_POSX+(PLAYER_INFO_LAST_POSX-PLAYER_INFO_POSX+1-name_image->w+10)/2,name_image->h/4,name_image,_screen);
+}
+
+void Player::Print_hp(int x,int y,SDL_Surface *_screen)
+{
+ apply_surface(x,y,PLAYER_CASE_background,_screen);
+ apply_surface(x,y,PLAYER_HP_background->w*hp/basic_hp,PLAYER_HP_background->h,PLAYER_HP_background,_screen);
+ apply_surface(x,y,PLAYER_CASE_front,_screen);
+ apply_surface(x,(y+hp_image->h)/2,hp_image,_screen);
+}
+
+void Player::Print_hp(SDL_Surface *_screen)
+{
+ apply_surface(PLAYER_INFO_POSX,40,PLAYER_CASE_background,_screen);
+ apply_surface(PLAYER_INFO_POSX,40,PLAYER_HP_background->w*hp/basic_hp,PLAYER_HP_background->h,PLAYER_HP_background,_screen);
+ apply_surface(PLAYER_INFO_POSX,40,PLAYER_CASE_front,_screen);
+ apply_surface(PLAYER_INFO_POSX+(PLAYER_INFO_LAST_POSX-PLAYER_INFO_POSX+1-hp_image->w+10)/2,40+(40-hp_image->h)/2,hp_image,_screen);
+}
+
+void Player::Print_mana(int x,int y,SDL_Surface *_screen)
+{
+ apply_surface(x,y,PLAYER_CASE_background,_screen);
+ apply_surface(x,y,PLAYER_MANA_background->w*mana/basic_mana,PLAYER_MANA_background->h,PLAYER_MANA_background,_screen);
+ apply_surface(x,y,PLAYER_CASE_front,_screen);
+ apply_surface(x,y,mana_image,_screen);
+ apply_surface(x+mana_image->w+10,y,MANA,_screen);
+}
+
+void Player::Print_mana(SDL_Surface *_screen)
+{
+ apply_surface(PLAYER_INFO_POSX,80,PLAYER_CASE_background,_screen);
+ apply_surface(PLAYER_INFO_POSX,80,PLAYER_MANA_background->w*mana/basic_mana,PLAYER_MANA_background->h,PLAYER_MANA_background,_screen);
+ apply_surface(PLAYER_INFO_POSX,80,PLAYER_CASE_front,_screen);
+ apply_surface(PLAYER_INFO_POSX+(PLAYER_INFO_LAST_POSX-PLAYER_INFO_POSX+1-mana_image->w+10)/2,80+(40-mana_image->h)/2,mana_image,_screen);
+}
+
+void Player::Print_skin(int x,int y,SDL_Surface *_screen)
+{
+ apply_surface(skin_image_position.x,skin_image_position.y,x+map_positionX*40,y+map_positionY*40,skin_image_position.w,skin_image_position.h,skin,_screen);
+}
+
+void Player::Print_skin_free(int x,int y,SDL_Surface *_screen)
+{
+ apply_surface(skin_image_position.x,skin_image_position.y,x,y,skin_image_position.w,skin_image_position.h,skin,_screen);
+}
+
+void Player::Equip_items()
+{
+ for(int i=0;i<9;i++)
+     {
+      attack+=equipped_items[i].Get_attack();
+      defense+=equipped_items[i].Get_defense();
+      extra_money+=equipped_items[i].Get_extra_money();
+      spell_damage+=equipped_items[i].Get_spell_damage();
+      spell_resistance+=equipped_items[i].Get_spell_resistance();
+      movement_speed+=equipped_items[i].Get_movement_speed();
+      if(equipped_items[i].Get_buff_id()!=0)
+         printable_item_buffs_id.push_back(i);
+     }
+}
+
+bool Player::Is_blocked()
+{
+ return is_blocked;
+}
+
+bool Player::Can_attack()
+{
+ return can_attack;
+}
+
+void Player::Move_X()
+{
+ map_positionX+=velocityX;
+}
+
+void Player::Move_Y()
+{
+ map_positionY+=velocityY;
+}
+
+void Player::Use_hp_potion()
+{
+ if(number_of_items_bought[15]>0)
+    {
+     Set_hp(hp+items_bought[15].Get_hp());
+     number_of_items_bought[15]--;
+     if(number_of_items_bought[15]==0)
+        number_of_items--;
+    }
+}
+
+void Player::Use_mana_potion()
+{
+ if(number_of_items_bought[16]>0)
+    {
+     Set_mana(mana+items_bought[16].Get_mana());
+     number_of_items_bought[16]--;
+     if(number_of_items_bought[16]==0)
+        number_of_items--;
+    }
+}
+
+///Game
+
+///Buffs
+void Player::Apply_buff(Buff *_buff)
+{
+ switch(_buff->Get_type())
+        {
+         ///TRANSMITTED
+         case 1:_buff->Set_transmitted_buff_id(((rand()%100)<=_buff->Get_chance())?_buff->Get_transmissible_buff_id():0);
+                break;
+         ///HP
+         case 2:if(_buff->Get_damage()<0)
+                   hp+=(_buff->Get_damage())-(_buff->Get_damage()/100)*Get_spell_resistance();
+                else
+                   hp+=_buff->Get_damage();
+                Set_hp(std::min(basic_hp,hp));
+                break;
+         ///MANA
+         case 3:mana+=_buff->Get_mana();
+                Set_mana(std::min(basic_mana,mana));
+                break;
+         ///SELF BUFF
+         case 4:if(_buff->Get_remaining_duration()<_buff->Get_duration())
+                   break;
+                attack+=_buff->Get_attack();
+                defense+=_buff->Get_defense();
+                spell_damage+=_buff->Get_spell_damage();
+                spell_resistance+=_buff->Get_spell_resistance();
+                movement_speed+=_buff->Get_movement_speed();
+                life_steal+=_buff->Get_life_steal();
+                break;
+         ///SHAPESHIFT
+         case 5:if(_buff->Get_remaining_duration()<_buff->Get_duration())
+                   break;
+                Set_skin_image_position(_buff->Get_skin_image_position());
+                Set_skin(_buff->Get_skin_name());
+                break;
+         default:break;
+        }
+ _buff->Decrease_remaining_duration();
+}
+
+void Player::Remove_buff(Buff *_buff)
+{
+ switch(_buff->Get_type())
+        {
+         case 4:attack-=_buff->Get_attack();
+                defense-=_buff->Get_defense();
+                spell_damage-=_buff->Get_spell_damage();
+                spell_resistance-=_buff->Get_spell_resistance();
+                movement_speed-=_buff->Get_movement_speed();
+                life_steal-=_buff->Get_life_steal();
+                break;
+         case 5:Load_skin();
+                Reset_skin_image_position();
+                break;
+         default:break;
+        }
+}
+
+void Player::Apply_all_buffs()
+{
+ Apply_item_buffs();
+ Apply_active_buffs();
+}
+
+void Player::Apply_new_active_buff()
+{
+ Apply_buff(&active_buffs[active_buffs.size()-1]);
+}
+
+void Player::Apply_active_buffs()
+{
+ for(std::vector<Buff>::iterator i=active_buffs.begin();i!=active_buffs.end();i)
+     {
+      Apply_buff(&(*i));
+      if((*i).Is_done())
+         {
+          Buff x=*i;
+          Remove_buff(&(*i));
+          active_buffs.erase(i);
+         }
+      else
+         i++;
+     }
+}
+
+void Player::Apply_item_buffs()
+{
+ Buff aux;
+ for(int i=0;i<9;i++)
+     {
+      Apply_buff(&(aux=equipped_items[i].Get_Buff()));
+      equipped_items[i].Set_Buff(aux);
+     }
+}
+
+void Player::Add_buff(Buff _buff)
+{
+ for(std::vector<Buff>::iterator i=active_buffs.begin();i!=active_buffs.end();i++)
+     if(_buff.Get_id()==(*i).Get_id())
+        {
+         (*i).Reset();
+         return;
+        }
+ active_buffs.push_back(_buff);
+}
+
+void Player::Get_transmitted_buffs(std::vector<Buff> *_buffs)
+{
+ Buff _copy,aux;
+ for(int i=0;i<9;i++)
+     {
+      _copy=equipped_items[i].Get_Buff();
+      if(_copy.Get_id()!=0 && _copy.Is_transmissible())
+         {
+          aux.Set_id(_copy.Get_transmitted_buff_id());
+          if(aux.Get_id()!=0)
+             {
+              aux.Load();
+              _buffs->push_back(aux);
+             }
+         }
+     }
+ for(std::vector<Buff>::iterator i=active_buffs.begin();i!=active_buffs.end();i++)
+     {
+      _copy=*i;
+      if(_copy.Get_id()!=0 && _copy.Is_transmissible())
+         {
+          aux.Set_id(_copy.Get_transmitted_buff_id());
+          if(aux.Get_id()!=0)
+             {
+              aux.Load();
+              _buffs->push_back(aux);
+             }
+         }
+     }
+}
+
+void Player::Print_buffs(int x,int y,SDL_Surface *_screen)
+{
+ Buff aux;
+ for(std::vector<int>::iterator i=printable_item_buffs_id.begin();i!=printable_item_buffs_id.end();i++)
+     {
+      aux=equipped_items[*i].Get_Buff();
+      if(aux.Get_id()!=0)
+         {
+          aux.Print_image(x,y,_screen);
+          x+=40;
+         }
+     }
+ for(std::vector<Buff>::iterator i=active_buffs.begin();i!=active_buffs.end();i++)
+     {
+      if((*i).Get_id()!=0)
+         {
+          (*i).Print_image(x,y,_screen);
+          x+=40;
+         }
+     }
+}
+
+///Spells
+
+bool Player::Pay_Spell(int spell_pos)
+{
+ bool rtn=spells[spell_pos].Pay(&mana,&hp,&mental_health);
+ Set_mana(mana);
+ Set_hp(hp);
+ //Set_mental_health(mental_health);
+ return rtn;
+}
+
+Spell Player::Get_Spell(int spell_pos)
+{
+ return spells[spell_pos];
+}
+
+void Player::Block_Spell(int spell_pos)
+{
+ spells[spell_pos].Block();
+}
+
+void Player::Decrease_Spell_time_blocked(int spell_pos)
+{
+ spells[spell_pos].Decrease_time_blocked();
+}
+
+void Player::Decrease_all_Spells_time_blocked()
+{
+ for(int i=0;i<4;i++)
+     Decrease_Spell_time_blocked(i);
+}
+
+bool Player::Spell_Is_blocked(int spell_pos)
+{
+ return spells[spell_pos].Is_blocked();
 }

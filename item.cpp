@@ -6,7 +6,7 @@ SDL_Color NAME_COLOR={255,255,255};
 SDL_Color MONEY_COLOR={236,242,4};
 SDL_Color DESCRIPTION_COLOR={50,70,90};
 
-const char *type_name[10]={"Helmet","Chestplate","Trousers","Boots","Weapon","Shield","Amulet","Ring","Timy Skin","Potions"};
+const char *type_name[10]={"Helmet","Chestplate","Trousers","Boots","Sword","Shield","Amulet","Ring","Timy Skin","Potions"};
 
 Item::Item()
 {
@@ -17,12 +17,18 @@ Item::Item()
  id=cost=0;
  image=NULL;
  name[0]=description[0]=NULL;
- attack=defense=extra_money=fire_damage=fire_resistance=mana=hp=movement_speed=0;
+ attack=defense=extra_money=spell_damage=spell_resistance=mana=hp=movement_speed=0;
 }
 
-void Item::Clear()
+void Item::Clear(bool _delete)
 {
- inventory_image=image=name_image=NULL;
+ if(_delete)
+    {
+     SDL_FreeSurface(inventory_image);
+     SDL_FreeSurface(image);
+     SDL_FreeSurface(name_image);
+     inventory_image=image=name_image=NULL;
+    }
  for(int i=0;i<DESCRIPTION_LINES_MAX;i++)
      if(description_image[i]!=NULL)
         description_image[i]=NULL;
@@ -30,7 +36,8 @@ void Item::Clear()
  id=cost=0;
  image=NULL;
  name[0]=description[0]=NULL;
- attack=defense=extra_money=fire_damage=fire_resistance=mana=hp=movement_speed=0;
+ attack=defense=extra_money=spell_damage=spell_resistance=mana=hp=movement_speed=0;
+ buff.Clear();
 }
 
 int Item::Get_id()
@@ -46,6 +53,69 @@ int Item::Get_type()
 int Item::Get_cost()
 {
  return cost;
+}
+
+int Item::Get_attack()
+{
+ return attack;
+}
+
+int Item::Get_defense()
+{
+ return defense;
+}
+
+int Item::Get_extra_money()
+{
+ return extra_money;
+}
+
+int Item::Get_spell_damage()
+{
+ return spell_damage;
+}
+
+int Item::Get_spell_resistance()
+{
+ return spell_resistance;
+}
+
+int Item::Get_movement_speed()
+{
+ return movement_speed;
+}
+
+int Item::Get_mana()
+{
+ return mana;
+}
+
+int Item::Get_hp()
+{
+ return hp;
+}
+
+SDL_Surface* Item::Get_image()
+{
+ return image;
+}
+
+SDL_Surface *Item::Get_inventory_image()
+{
+ return inventory_image;
+}
+
+SDL_Surface *Item::Get_skin()
+{
+ if(type!=8)
+    return NULL;
+ SDL_Surface *_skin;
+ char path[TEXT_LENGHT_MAX]={NULL};
+ strcpy(path,"shop/skins/");
+ strcat(path,name);
+ strcat(path,".bmp");
+ _skin=make_it_transparent(path);
+ return _skin;
 }
 
 void Item::Set_type(int _type)
@@ -88,7 +158,7 @@ int Item::Load()
  fgets(description,sizeof description,where);
  description[strlen(description)-1]=NULL;
  int buff_id;
- fscanf(where,"%d %d %d %d %d %d %d %d %d %d",&attack,&defense,&extra_money,&fire_damage,&fire_resistance,&mana,&hp,&movement_speed,&type,&buff_id);
+ fscanf(where,"%d %d %d %d %d %d %d %d %d %d",&attack,&defense,&extra_money,&spell_damage,&spell_resistance,&mana,&hp,&movement_speed,&type,&buff_id);
  buff.Set_id(buff_id);
  buff.Load();
  strcpy(path,"shop/items/images/");
@@ -180,6 +250,38 @@ void Item::Print_image(int x,int y,SDL_Surface *_screen)
 void Item::Print_inventory_image(int x,int y,SDL_Surface *_screen)
 {
  apply_surface(x,y,inventory_image,_screen);
+}
+
+//BUFFS
+int Item::Get_buff_id()
+{
+ return buff.Get_id();
+}
+
+Buff Item::Get_Buff()
+{
+ return buff;
+}
+
+void Item::Set_Buff(Buff _buff)
+{
+ buff=_buff;
+}
+
+void Item::Buff_decrease_remaining_duration()
+{
+ buff.Decrease_remaining_duration();
+}
+
+void Item::Buff_Reset()
+{
+ if(Buff_Is_done())
+    buff.Reset();
+}
+
+bool Item::Buff_Is_done()
+{
+ return buff.Is_done();
 }
 
 const int NUMBER_OF_POTIONS=2,POTIONS[]={15,16};

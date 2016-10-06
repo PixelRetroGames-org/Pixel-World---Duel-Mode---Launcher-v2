@@ -35,13 +35,25 @@
 		<Unit filename="big_background.h" />
 		<Unit filename="buff.cpp" />
 		<Unit filename="buff.h" />
+		<Unit filename="darkness.cpp" />
+		<Unit filename="darkness.h" />
+		<Unit filename="interactive_map_texture.cpp" />
+		<Unit filename="interactive_map_texture.h" />
 		<Unit filename="item.cpp" />
 		<Unit filename="item.h" />
+		<Unit filename="level.cpp" />
+		<Unit filename="level.h" />
 		<Unit filename="library.cpp" />
 		<Unit filename="library.h" />
+		<Unit filename="load_audio_effects.cpp" />
+		<Unit filename="load_audio_effects.h" />
 		<Unit filename="load_images.cpp" />
 		<Unit filename="load_images.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="map.cpp" />
+		<Unit filename="map.h" />
+		<Unit filename="map_texture.cpp" />
+		<Unit filename="map_texture.h" />
 		<Unit filename="menu.cpp" />
 		<Unit filename="menu.h" />
 		<Unit filename="player.cpp" />
@@ -54,6 +66,8 @@
 		<Unit filename="shop.h" />
 		<Unit filename="shop_page.cpp" />
 		<Unit filename="shop_page.h" />
+		<Unit filename="spell.cpp" />
+		<Unit filename="spell.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

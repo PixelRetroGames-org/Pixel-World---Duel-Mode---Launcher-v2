@@ -31,8 +31,13 @@ void Load_shop_images();
 ///PLAYER
 extern SDL_Surface *PLAYER_name_background,*PLAYER_name_background_right_layer,*PLAYER_details_background,*PLAYER_experience_background,*PLAYER_money_background;
 extern SDL_Surface *SHOP_inventory_background,*SHOP_item_background_selected,*SHOP_item_background;
-extern SDL_Surface *PLAYER_HP_background,*PLAYER_MANA_background;
+extern SDL_Surface *PLAYER_HP_background,*PLAYER_MANA_background,*PLAYER_CASE_background,*PLAYER_CASE_front;
 void Load_player_images();
+
+///LEVEL
+extern SDL_Surface *LEVEL_background_image,*LEVEL_loading_image;
+extern SDL_Surface *LEVEL_WINNER,*LEVEL_LOSER,*LEVEL_MONEY,*LEVEL_XP,*LEVEL_LINE;
+void Load_level_images();
 
 ///SETTINGS
 extern SDL_Surface *SETTINGS_option_background,*SETTINGS_option_background_selected,*SETTINGS_background,*SETTINGS_name;
