@@ -139,8 +139,8 @@ int Shop_Screen::Start(SDL_Surface *screen)
      player.Set_PLAYER_INFO_POSX(RESOLUTION_X-(RESOLUTION_X-4*180-480-70)/2-480-70);
      player.Set_SKIN_POSX(RESOLUTION_X-(RESOLUTION_X-4*180-480-70)/2-190);
      shop.Set_LAST_POSX(player.Get_PLAYER_INFO_POSX()-10);
-     shop.Set_POSX(20);
-     shop.Set_LAST_POSX(20+4*180+20);
+     shop.Set_POSX(5);
+     shop.Set_LAST_POSX(5+4*180+20);
     }
  player.Clear();
  Open(filename);
