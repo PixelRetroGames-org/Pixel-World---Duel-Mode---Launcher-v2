@@ -3,6 +3,7 @@
 #include "script_interpreter.h"
 #include "shop.h"
 #include "level.h"
+#include "load_audio_effects.h"
 #include<cstdio>
 SDL_Surface *screen;
 
@@ -27,6 +28,7 @@ int main( int argc, char* args[] )
  SDL_Flip(screen);
  Menu main_menu,gamemode_menu,story_menu,duel_menu;
  Load_all_images();
+ Load_Duel_Mode_effects();
  main_menu.Load("menu/main_menu.pwm");
  gamemode_menu.Load("menu/gamemode.pwm");
  story_menu.Load("menu/story_menu.pwm");
@@ -36,9 +38,9 @@ int main( int argc, char* args[] )
  background_music=Mix_LoadMUS("audio/Hallowed Be Thy Name.wav");
  Mix_Volume(-1,MIX_MAX_VOLUME*VOLUME/100);
  Mix_Volume(2,MIX_MAX_VOLUME*VOLUME/100);
- Mix_Volume(3,MIX_MAX_VOLUME*VOLUME/100);
+ Mix_Volume(3,MIX_MAX_VOLUME*(VOLUME/24)/100);
  Mix_VolumeMusic(MIX_MAX_VOLUME*VOLUME/100);
- //Mix_PlayMusic(background_music,-1);
+ Mix_PlayMusic(background_music,-1);
  int option=-1;
  while(option!=-2)
        {
@@ -68,6 +70,11 @@ int main( int argc, char* args[] )
                                                               case -2:{return 0;};
                                                               case -1:{break;};
                                                               case 0:{//Launch Story Mode
+                                                                      Mix_HaltMusic();
+                                                                      level.Set_screen(screen);
+                                                                      level.Setup("Test6");
+                                                                      level.Start(screen);
+                                                                      Mix_PlayMusic(background_music,-1);
                                                                       _option=-2;
                                                                       break;
                                                                      };
@@ -96,9 +103,11 @@ int main( int argc, char* args[] )
                                                               case -2:{return 0;};
                                                               case -1:{break;};
                                                               case 0:{//Launch Duel Mode
+                                                                      Mix_HaltMusic();
                                                                       level.Set_screen(screen);
                                                                       level.Setup("Test2");
                                                                       level.Start(screen);
+                                                                      Mix_PlayMusic(background_music,-1);
                                                                       _option=-2;
                                                                       break;
                                                                      };
@@ -134,6 +143,10 @@ int main( int argc, char* args[] )
                         gamemode_menu.Load("menu/gamemode.pwm");
                         story_menu.Load("menu/story_menu.pwm");
                         duel_menu.Load("menu/duel_menu.pwm");
+                        Mix_Volume(-1,MIX_MAX_VOLUME*VOLUME/100);
+                        Mix_Volume(2,MIX_MAX_VOLUME*VOLUME/100);
+                        Mix_Volume(3,MIX_MAX_VOLUME*(VOLUME/24)/100);
+                        Mix_VolumeMusic(MIX_MAX_VOLUME*VOLUME/100);
                         break;
                        };
                 case 2:{

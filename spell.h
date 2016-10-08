@@ -20,6 +20,7 @@ class Spell
 
  public:
  Spell();
+ void Clear(bool _delete=false);
  void Load();
  void Set_id(int _id);
  int Get_id();

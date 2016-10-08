@@ -13,6 +13,7 @@ void Texture::Clear()
      SDL_FreeSurface(image);
      image=NULL;
     }
+ id=0;
  buff.Clear();
 }
 

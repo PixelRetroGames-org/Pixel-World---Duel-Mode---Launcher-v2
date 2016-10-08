@@ -8,7 +8,7 @@
 #include<vector>
 #include<algorithm>
 
-const int NUMBER_OF_ITEMS_IDS=44;
+const int NUMBER_OF_ITEMS_IDS=45;
 
 extern const int INVENTORY_MAX_NUMBER_OF_ITEMS;
 

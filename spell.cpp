@@ -6,9 +6,23 @@ Spell::Spell()
 {
  type=id=0;
  memset(name,0,sizeof name);
+ memset(map_name,0,sizeof map_name);
  mana_cost=health_cost=mental_health_cost=0;
  range=0;
- buffs.clear();
+ //buffs.clear();
+}
+
+void Spell::Clear(bool _delete)
+{
+ type=id=0;
+ memset(name,0,sizeof name);
+ memset(map_name,0,sizeof map_name);
+ mana_cost=health_cost=mental_health_cost=0;
+ range=mana_cost=health_cost=mental_health_cost=cooldown=time_blocked=0;
+ for(int i=0;i<buffs.size();i++)
+     buffs[i].Clear(_delete);
+ std::vector<Buff>().swap(buffs);
+ //buffs.clear();
 }
 
 void Spell::Load()
@@ -25,14 +39,14 @@ void Spell::Load()
     name[strlen(name)-1]=NULL;
  int number_of_buffs=0;
  fscanf(where,"%d ",&number_of_buffs);
+ Buff aux_buff;
  for(int i=0;i<number_of_buffs;i++)
      {
       int buff_id;
-      Buff aux;
       fscanf(where,"%d ",&buff_id);
-      aux.Set_id(buff_id);
-      aux.Load();
-      buffs.push_back(aux);
+      aux_buff.Set_id(buff_id);
+      aux_buff.Load();
+      buffs.push_back(aux_buff);
      }
  fscanf(where,"%d %d %d %d %d ",&range,&mana_cost,&health_cost,&mental_health_cost,&cooldown);
  fgets(map_name,sizeof map_name,where);

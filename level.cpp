@@ -396,7 +396,7 @@ void Level::Player_basic_attack(int _player)
              player[Other_player(_player)].Add_buff(*i);
          }
      #ifdef AUDIO
-     Mix_PlayChannel(3,DUEL_MODE_hit,0);
+     Mix_PlayChannel(3,DUEL_MODE_hit[rand()%3],0);
      #endif // AUDIO
     }
 }

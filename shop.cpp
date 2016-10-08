@@ -206,6 +206,7 @@ int Shop_Screen::Start(SDL_Surface *screen)
  SDL_FreeSurface(not_enough_money);
  SDL_FreeSurface(not_enough_space);
  SDL_FreeSurface(not_enough_background);
+ player.Clear(true);
  if(event.type==SDL_QUIT)
     return -1;
  return 0;

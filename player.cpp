@@ -36,22 +36,23 @@ void Player::Clear(bool _delete)
  money=experience=number_of_items=inventory_number_of_items=0;
  memset(number_of_items_bought,0,sizeof number_of_items_bought);
 
- //Item items_bought[NUMBER_OF_ITEMS_IDS];
  memset(items_bought,0,sizeof items_bought);
  memset(equipped_items_ids,0,sizeof equipped_items_ids);
- //Item equipped_items[10];
  memset(equipped_items,0,sizeof equipped_items);
  inventory_item_selected=inventory_item_click=pos_last_y=0;
  basic_attack=5,basic_defense=0,basic_spell_damage=0,basic_spell_resistance=0,basic_movement_speed=10,basic_life_steal=0;
+ attack=defense=spell_damage=spell_resistance=movement_speed=life_steal=0;
  skin_image_position.h=skin_image_position.w=skin_image_position.x=skin_image_position.y=0;
- for(std::vector<Buff>::iterator i=active_buffs.begin();i!=active_buffs.end();i++)
-     i->Clear(_delete);
+ for(int i=0;!active_buffs.empty() && i<active_buffs.size();i++)
+     active_buffs[i].Clear(_delete);
  active_buffs.clear();
  for(int i=0;i<10;i++)
      equipped_items[i].Clear(_delete);
  for(int i=0;i<NUMBER_OF_ITEMS_IDS;i++)
      items_bought[i].Clear(_delete);
  printable_item_buffs_id.clear();
+ for(int i=0;i<4;i++)
+     spells[i].Clear(_delete);
  map_positionX=map_positionY=-10;
 }
 

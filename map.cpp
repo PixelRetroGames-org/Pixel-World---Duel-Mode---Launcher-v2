@@ -3,13 +3,13 @@
 
 void Map::Clear()
 {
- /*map_textures[20].Clear();
+ map_textures[20].Clear();
  map_textures[0].Clear();
  for(int i=0;i<NUMBER_OF_TEXTURES_IDS;i++)
      {
       if(map_textures[i].Get_id()!=0 && map_textures[i].Get_id()!=20)
          map_textures[i].Clear();
-     }*/
+     }
  for(int i=0;i<=1;i++)
      for(int j=0;j<=1;j++)
          {
