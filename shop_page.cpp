@@ -141,7 +141,7 @@ int Shop_Page::Start(SDL_Surface *_screen,SDL_Event *event)
      for(int i=0;i<number_of_items;i++)
          {
           if((i)%number_of_columns==0 && i!=0)
-             _y+=120+SHOP_shop_rope->h,_x=20;
+             _y+=120+SHOP_shop_rope->h,_x=POSX;
           if(x>=_x && x<=_x+180 && y>=_y+SHOP_shop_rope->h && y<=_y+120+SHOP_shop_rope->h)
              item_selected=i;
           _x+=180;
