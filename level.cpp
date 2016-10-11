@@ -660,21 +660,6 @@ void Level::Trigger_around_player_map(int _player)
 }
 
 //Start
-SDL_Surface *static_screen;
-int Level::Loading_image(void *data)
-{
- int frame=0;
- while(true)
-       {
-        apply_surface(0,0,LEVEL_background_image,static_screen);
-        apply_surface(160*frame,0,((static_screen->w)-160)/2,((static_screen->h)-LEVEL_loading_image->h)/2,160,LEVEL_loading_image->h,LEVEL_loading_image,static_screen);
-        SDL_Flip(static_screen);
-        SDL_Delay(100);
-        frame++;
-        frame%=2;
-       }
-}
-
 void Level::Pause_Menu()
 {
  Menu menu;
@@ -727,10 +712,14 @@ void Level::Duel_Mode_Finish_Screen(int _player_winner)
 {
  bool quit=false;
  Print_Duel_Mode_Finish_Screen(_player_winner);
+ SDL_Event event;
+ SDL_Delay(500);
+ while(SDL_PollEvent(&event));
  while(!quit)
        {
-        SDL_PumpEvents();
-        quit=keystates[SDLK_RETURN] || keystates[SDLK_ESCAPE] || ((keystates[SDLK_RALT] || keystates[SDLK_LALT]) && keystates[SDLK_F4]);
+        SDL_PollEvent(&event);
+        if(event.type==SDL_KEYDOWN)
+           quit=true;
         SDL_Delay(100);
        }
  quit=false;
@@ -816,6 +805,10 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
  int a=player[1].Get_experience(),b=player[2].Get_experience();
  player[1].Set_experience(player[1].Get_experience()+20*b/100+200);
  player[2].Set_experience(player[2].Get_experience()+20*a/100+200);
+
+ player_money=TTF_RenderText_Solid(font,"Press any key to continue!",{255,255,255});
+ apply_surface((_screen->w-player_money->w)/2,_screen->h/2+(_screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,_screen);
+
  TTF_CloseFont(font);
  SDL_Flip(_screen);
 }
@@ -833,7 +826,7 @@ void Level::Setup(char *_level_name)
  SDL_Thread *_loading_image=NULL;
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Load();
- //SDL_Delay(5000);
+ //SDL_Delay(1000);
  SDL_KillThread(_loading_image);
  player_time_blocked[1]=player_time_blocked[2]=0;
  player[1].Unblock();

@@ -129,6 +129,9 @@ const int FRAMES_PER_SECOND=27;
 
 int Shop_Screen::Start(SDL_Surface *screen)
 {
+ SDL_Thread *_loading_image=NULL;
+ static_screen=screen;
+ _loading_image=SDL_CreateThread(Loading_image,NULL);
  player.Set_PLAYER_INFO_LAST_POSX(RESOLUTION_X);
  player.Set_PLAYER_INFO_POSX(RESOLUTION_X-480-70);
  player.Set_SKIN_POSX(RESOLUTION_X-190);
@@ -145,8 +148,9 @@ int Shop_Screen::Start(SDL_Surface *screen)
  player.Clear();
  Open(filename);
  shop.Load();
- shop.Print(screen);
  player.Load();
+ SDL_KillThread(_loading_image);
+ shop.Print(screen);
  player.Print_Character(player.Get_PLAYER_INFO_POSX(),0,screen);
  player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen);
  SDL_Flip(screen);

@@ -305,7 +305,7 @@ void Player::Print_Character(int x,int y,SDL_Surface *_screen)
 
  equipped_items[8].Print(SKIN_POSX,y,_screen,false);
 
- apply_surface(x,y,PLAYER_name_background,_screen);
+ apply_surface(x,y,PLAYER_name_background_shop,_screen);
  strcpy(message,name);
  _image=TTF_RenderText_Solid(font,message,NAME_COLOR);
  apply_surface(x+(SKIN_POSX-x+1-_image->w+10)/2,y,_image,_screen);

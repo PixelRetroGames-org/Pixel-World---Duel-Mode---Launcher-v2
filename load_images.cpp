@@ -20,6 +20,7 @@ const SDL_Color EQUIP_COLOR={15,30,90},BUY_COLOR={40,80,160},EQUIPPED_COLOR={255
 SDL_Surface *PLAYER_name_background,*PLAYER_name_background_right_layer,*PLAYER_details_background,*PLAYER_experience_background,*PLAYER_money_background;
 SDL_Surface *SHOP_inventory_background,*SHOP_item_background_selected,*SHOP_item_background;
 SDL_Surface *PLAYER_HP_background,*PLAYER_MANA_background,*PLAYER_CASE_background,*PLAYER_CASE_front;
+SDL_Surface *PLAYER_name_background_shop;
 
 ///LEVEL
 SDL_Surface *LEVEL_background_image,*LEVEL_loading_image;
@@ -67,6 +68,7 @@ void Load_player_images()
  #endif // PLAYER_IMAGES_LOADED
  #define PLAYER_IMAGES_LOADED
  PLAYER_name_background=make_it_transparent("images/player/name_background.bmp");
+ PLAYER_name_background_shop=make_it_transparent("images/player/name_background_shop.bmp");
  PLAYER_name_background_right_layer=load_image("images/player/name_background_right_layer.bmp");
  PLAYER_details_background=load_image("images/player/details_background.bmp");
  PLAYER_experience_background=load_image("images/player/experience_background.bmp");
@@ -148,4 +150,19 @@ void Load_all_images()
  Load_level_images();
  Load_settings_images();
  Load_script_images();
+}
+
+SDL_Surface *static_screen;
+int Loading_image(void *data)
+{
+ int frame=0;
+ while(true)
+       {
+        apply_surface(0,0,LEVEL_background_image,static_screen);
+        apply_surface(160*frame,0,((static_screen->w)-160)/2,((static_screen->h)-LEVEL_loading_image->h)/2,160,LEVEL_loading_image->h,LEVEL_loading_image,static_screen);
+        SDL_Flip(static_screen);
+        SDL_Delay(100);
+        frame++;
+        frame%=8;
+       }
 }

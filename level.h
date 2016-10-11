@@ -103,7 +103,6 @@ class Level
 
  ///Start
  void Set_screen(SDL_Surface *screen);
- static int Loading_image(void *data);
  void Pause_Menu();
  void Duel_Mode_Finish_Screen(int _player_winner);
  void Print_Duel_Mode_Finish_Screen(int _player_winner);
