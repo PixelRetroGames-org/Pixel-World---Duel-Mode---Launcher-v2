@@ -101,6 +101,8 @@ void Level::Load()
  player[1].Set_map_position(x,y);
  player[1].Load();
 
+ player[2].Set_map_position(-5,-5);
+
  if(type==2)
     {
      fgets(player_name[2],sizeof player_name[2],where);

@@ -525,6 +525,8 @@ int Player::Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event)
 void Player::Set_hp(int _hp)
 {
  hp=_hp;
+ if(hp<0)
+    hp=0;
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
  char aux[TEXT_LENGHT_MAX]={NULL};
  itoa(hp,aux);
@@ -536,6 +538,8 @@ void Player::Set_hp(int _hp)
 void Player::Set_mana(int _mana)
 {
  mana=_mana;
+ if(mana<0)
+    mana=0;
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
  SDL_Surface *_image=NULL;
  char aux[TEXT_LENGHT_MAX]={NULL};
