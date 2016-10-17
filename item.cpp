@@ -6,7 +6,7 @@ SDL_Color NAME_COLOR={255,255,255};
 SDL_Color MONEY_COLOR={236,242,4};
 SDL_Color DESCRIPTION_COLOR={50,70,90};
 
-const char *type_name[10]={"Helmet","Chestplate","Trousers","Boots","Sword","Shield","Amulet","Ring","Timy Skin","Potions"};
+const char *type_name[11]={"Helmet","Chestplate","Trousers","Boots","Sword","Shield","Amulet","Ring","Timy Skin","Potion","Spell"};
 
 Item::Item()
 {
@@ -38,6 +38,11 @@ void Item::Clear(bool _delete)
  name[0]=description[0]=NULL;
  attack=defense=extra_money=spell_damage=spell_resistance=mana=hp=movement_speed=0;
  buff.Clear();
+}
+
+int Item::Get_spell_id()
+{
+ return spell_id;
 }
 
 int Item::Get_id()
@@ -151,7 +156,7 @@ int Item::Load()
  FILE *where=fopen(path,"r");
  if(where==NULL)
     return true;
- fscanf(where,"%d ",&cost);
+ fscanf(where,"%d %d ",&cost,&spell_id);
  fgets(name,sizeof name,where);
  if(name[strlen(name)-1]=='\n')
     name[strlen(name)-1]=NULL;

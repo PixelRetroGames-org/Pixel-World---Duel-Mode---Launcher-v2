@@ -10,6 +10,11 @@ Shop::Shop()
  page_selected=page_click=0;
 }
 
+int Shop::Get_shop_page_type()
+{
+ return pages[page_click].Get_type();
+}
+
 void Shop::Set_POSX(int _x)
 {
  POSX=_x;
@@ -152,7 +157,7 @@ int Shop_Screen::Start(SDL_Surface *screen)
  SDL_KillThread(_loading_image);
  shop.Print(screen);
  player.Print_Character(player.Get_PLAYER_INFO_POSX(),0,screen);
- player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen);
+ player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,true,shop.Get_shop_page_type());
  SDL_Flip(screen);
  bool quit=false;
  SDL_Event event;
@@ -174,15 +179,18 @@ int Shop_Screen::Start(SDL_Surface *screen)
                if(_item_id!=-1)
                   {
                    if(player.Is_bought(_item_id) && !Is_potion(_item_id))
-                      player.Equip(_item_id);
+                      {
+                       if(shop.Get_shop_page_type()==1)
+                          player.Equip(_item_id);
+                      }
                    else
                       {
                        message=player.Buy(_item_id);
                       }
                    player.Print_Character(player.Get_PLAYER_INFO_POSX(),0,screen);
-                   player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen);
+                   player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,true,shop.Get_shop_page_type());
                   }
-               _item_id=player.Start_inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,&event);
+               _item_id=player.Start_inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,&event,shop.Get_shop_page_type());
                if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.sym==SDLK_ESCAPE))
                   quit=true;
                switch(message)

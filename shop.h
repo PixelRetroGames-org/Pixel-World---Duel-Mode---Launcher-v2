@@ -11,12 +11,14 @@ class Shop
 {
  private:
  char name[TEXT_LENGHT_MAX];
+ bool changed_page=false;
  int number_of_pages,page_selected,page_click=0;
  int POSX=0,LAST_POSX=0;
  std::vector<Shop_Page> pages;
 
  public:
  Shop();
+ int Get_shop_page_type();
  void Set_POSX(int _x);
  void Set_LAST_POSX(int _x);
  void Set_name(char *_name);

@@ -34,6 +34,7 @@ void Shop_Page::Load()
  strcat(path,name);
  strcat(path,".pwsp");
  FILE *where=fopen(path,"r");
+ fscanf(where,"%d ",&type);
  fscanf(where,"%d %d %d ",&number_of_items,&number_of_lines,&number_of_columns);
  int _id;
  Item aux;
@@ -58,6 +59,11 @@ void Shop_Page::Load()
 int Shop_Page::Get_title_size()
 {
  return title_size;
+}
+
+int Shop_Page::Get_type()
+{
+ return type;
 }
 
 void Shop_Page::Print_Title(int x,int y,SDL_Surface *_screen,bool selected=false,bool click=false)

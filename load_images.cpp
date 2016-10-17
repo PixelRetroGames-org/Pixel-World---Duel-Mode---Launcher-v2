@@ -13,12 +13,14 @@ SDL_Surface *SHOP_title_clear,*SHOP_title_background_line,*SHOP_title_background
 SDL_Surface *SHOP_title_background_click_right_frame,*SHOP_title_background_right_frame;
 SDL_Surface *SHOP_title_background_selected,*SHOP_title_background,*SHOP_shop_page_background,*SHOP_shop_big_background;
 SDL_Surface *SHOP_shop_rope,*SHOP_shop_background,*SHOP_shop_background_selected,*SHOP_description_background;
+SDL_Surface *SHOP_inventory_background,*SHOP_item_background_selected,*SHOP_item_background;
+SDL_Surface *SHOP_inventory_spell_background,*SHOP_inventory_spell_background_equipped;
 SDL_Surface *INVENTORY_EQUIP,*INVENTORY_EQUIPPED,*INVENTORY_SELL;
+SDL_Surface *INVENTORY_spell_position[4];
 const SDL_Color EQUIP_COLOR={15,30,90},BUY_COLOR={40,80,160},EQUIPPED_COLOR={255,128,0};
 
 ///PLAYER
 SDL_Surface *PLAYER_name_background,*PLAYER_name_background_right_layer,*PLAYER_details_background,*PLAYER_experience_background,*PLAYER_money_background;
-SDL_Surface *SHOP_inventory_background,*SHOP_item_background_selected,*SHOP_item_background;
 SDL_Surface *PLAYER_HP_background,*PLAYER_MANA_background,*PLAYER_CASE_background,*PLAYER_CASE_front;
 SDL_Surface *PLAYER_name_background_shop;
 
@@ -54,10 +56,17 @@ void Load_shop_images()
  SHOP_inventory_background=make_it_transparent("images/shop/inventory_background.bmp");
  SHOP_item_background_selected=load_image("images/shop/item_background_selected.bmp");
  SHOP_item_background=load_image("images/shop/item_background.bmp");
+ SHOP_inventory_spell_background=load_image("images/shop/spell_background.bmp");
+ SHOP_inventory_spell_background_equipped=load_image("images/shop/spell_background_equipped.bmp");
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",15);
+ SDL_Color color{65,105,225};
  INVENTORY_EQUIP=TTF_RenderText_Solid(font,"Equip",EQUIP_COLOR);
  INVENTORY_EQUIPPED=TTF_RenderText_Solid(font,"Equipped",EQUIPPED_COLOR);
  INVENTORY_SELL=TTF_RenderText_Solid(font,"Sell",BUY_COLOR);
+ INVENTORY_spell_position[0]=TTF_RenderText_Solid(font,"1",color);
+ INVENTORY_spell_position[1]=TTF_RenderText_Solid(font,"2",color);
+ INVENTORY_spell_position[2]=TTF_RenderText_Solid(font,"3",color);
+ INVENTORY_spell_position[3]=TTF_RenderText_Solid(font,"4",color);
  TTF_CloseFont(font);
 }
 

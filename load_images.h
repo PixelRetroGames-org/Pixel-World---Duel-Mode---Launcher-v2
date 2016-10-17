@@ -25,12 +25,14 @@ extern SDL_Surface *SHOP_title_clear,*SHOP_title_background_line,*SHOP_title_bac
 extern SDL_Surface *SHOP_title_background_click_right_frame,*SHOP_title_background_right_frame;
 extern SDL_Surface *SHOP_title_background_selected,*SHOP_title_background,*SHOP_shop_page_background,*SHOP_shop_big_background;
 extern SDL_Surface *SHOP_shop_rope,*SHOP_shop_background,*SHOP_shop_background_selected,*SHOP_description_background;
+extern SDL_Surface *SHOP_inventory_background,*SHOP_item_background_selected,*SHOP_item_background;
+extern SDL_Surface *SHOP_inventory_spell_background,*SHOP_inventory_spell_background_equipped;
 extern SDL_Surface *INVENTORY_EQUIP,*INVENTORY_EQUIPPED,*INVENTORY_SELL;
+extern SDL_Surface *INVENTORY_spell_position[4];
 void Load_shop_images();
 
 ///PLAYER
 extern SDL_Surface *PLAYER_name_background,*PLAYER_name_background_right_layer,*PLAYER_details_background,*PLAYER_experience_background,*PLAYER_money_background;
-extern SDL_Surface *SHOP_inventory_background,*SHOP_item_background_selected,*SHOP_item_background;
 extern SDL_Surface *PLAYER_HP_background,*PLAYER_MANA_background,*PLAYER_CASE_background,*PLAYER_CASE_front;
 extern SDL_Surface *PLAYER_name_background_shop;
 void Load_player_images();

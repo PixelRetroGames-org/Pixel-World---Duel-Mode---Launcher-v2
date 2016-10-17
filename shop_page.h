@@ -18,6 +18,7 @@ class Shop_Page
 {
  private:
  int POSX=0,LAST_POSX=0;
+ int type=0;
  char name[TEXT_LENGHT_MAX];
  SDL_Surface *image=NULL,*name_image=NULL;
  int item_ids[100];
@@ -33,6 +34,7 @@ class Shop_Page
  void Set_name(char *_name);
  void Load();
  int Get_title_size();
+ int Get_type();
  void Print(int x,int y,SDL_Surface *_screen);
  void Print_Title(int x,int y,SDL_Surface *_screen,bool selected,bool click);
  void Reset();

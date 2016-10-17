@@ -24,12 +24,12 @@ const int DESCRIPTION_LINES_MAX=8;
 #define DESCRIPTION_LINES_MAX_DEFINED
 #endif // DESCRIPTION_LINES_MAX_DEFINED
 
-extern const char *type_name[10];
+extern const char *type_name[11];
 
 class Item
 {
  private:
- int id,cost;
+ int id,cost,spell_id;
  SDL_Surface *image,*inventory_image,*name_image,*price_image,*description_image[DESCRIPTION_LINES_MAX];
  int description_lines=0;
  char name[TEXT_LENGHT_MAX],description[4*TEXT_LENGHT_MAX];
@@ -40,6 +40,7 @@ class Item
  public:
  Item();
  void Clear(bool _delete=false);
+ int Get_spell_id();
  int Get_id();
  int Get_cost();
  int Get_type();

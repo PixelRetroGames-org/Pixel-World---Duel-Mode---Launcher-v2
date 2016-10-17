@@ -8,7 +8,7 @@
 #include<vector>
 #include<algorithm>
 
-const int NUMBER_OF_ITEMS_IDS=45;
+const int NUMBER_OF_ITEMS_IDS=100;
 
 extern const int INVENTORY_MAX_NUMBER_OF_ITEMS;
 
@@ -69,9 +69,9 @@ class Player
  int Get_experience();
  void Print_Character(int x,int y,SDL_Surface *_screen);
  void Print_items(int x,int y,SDL_Surface *_screen);
- void Print_Inventory(int x,int y,SDL_Surface *_screen,bool options=true);
- void Print_Inventory_equipped_items(int x,int y,SDL_Surface *_screen,bool options=true);
- int Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event);
+ void Print_Inventory(int x,int y,SDL_Surface *_screen,bool options=true,int type=0);
+ void Print_Inventory_equipped_items(int x,int y,SDL_Surface *_screen,bool options=true,int type=0);
+ int Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event,int type=0);
 
  ///Game
  void Set_hp(int _hp);
