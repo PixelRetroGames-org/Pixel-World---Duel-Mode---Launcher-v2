@@ -70,7 +70,7 @@ class Player
  void Print_Character(int x,int y,SDL_Surface *_screen);
  void Print_items(int x,int y,SDL_Surface *_screen);
  void Print_Inventory(int x,int y,SDL_Surface *_screen,bool options=true,int type=0);
- void Print_Inventory_equipped_items(int x,int y,SDL_Surface *_screen,bool options=true,int type=0);
+ void Print_Inventory_equipped_items(int x,int y,SDL_Surface *_screen,bool options=true,int type=1);
  int Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event,int type=0);
 
  ///Game

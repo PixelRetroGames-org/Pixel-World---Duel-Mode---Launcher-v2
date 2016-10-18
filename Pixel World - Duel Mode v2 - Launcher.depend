@@ -99,7 +99,7 @@
 	"item.h"
 	"player.h"
 
-1476739706 e:\programming\pixel world - duel mode v2 - launcher\player.h
+1476780226 e:\programming\pixel world - duel mode v2 - launcher\player.h
 	"load_images.h"
 	"library.h"
 	"item.h"
@@ -107,7 +107,7 @@
 	<vector>
 	<algorithm>
 
-1476740221 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
+1476780155 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
 	"player.h"
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
