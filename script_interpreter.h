@@ -10,13 +10,15 @@
 #define TEXT_LENGHT_MAX 100
 #endif // TEXT_LENGHT_MAX
 
-extern const char *command_names[10];
+const int number_of_commands=11,LINE_HEIGHT=40;
+extern const char *command_names[number_of_commands+1];
 
 class Script_interpreter
 {
  private:
  char script_name[TEXT_LENGHT_MAX]={NULL};
- SDL_Surface *screen=NULL,*background_image=SCRIPT_default_background_image;
+ SDL_Surface *screen=NULL,*background_image=SCRIPT_default_background_image,*buffer;
+ int bufferW=0;
  int text_pos_x=0,text_pos_y=0;
  Mix_Chunk *chunk=NULL;
  Mix_Music *music=NULL;
@@ -30,7 +32,9 @@ class Script_interpreter
  void Pause_background_audio();
  void Unpause_background_audio();
  void Stop_background_audio();
- void Print_line(int &x,int y,char *_line);
+ void Print_line(int &x,int y,char *_line,bool on_screen=false);
+ void Print_image(int &x,int y,char *_name);
+ void Set_background_image(char *_name);
 
  public:
  Script_interpreter();

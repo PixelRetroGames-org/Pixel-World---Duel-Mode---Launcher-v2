@@ -737,12 +737,19 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
      apply_surface(_screen->w/2+(_screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,_screen);
      player[2].Print_name(_screen->w/2+(_screen->w/2-LEVEL_LOSER->w)/2,5+LEVEL_LOSER->h,_screen);
     }
- else
+ if(_player_winner==2)
     {
      apply_surface((_screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,_screen);
      player[1].Print_name((_screen->w/2-LEVEL_LOSER->w)/2,5+LEVEL_LOSER->h,_screen);
      apply_surface(_screen->w/2+(_screen->w/2-LEVEL_WINNER->w)/2,5,LEVEL_WINNER,_screen);
       player[2].Print_name(_screen->w/2+(_screen->w/2-LEVEL_WINNER->w)/2,5+LEVEL_WINNER->h,_screen);
+    }
+ if(_player_winner==0)
+    {
+     apply_surface((_screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,_screen);
+     player[1].Print_name((_screen->w/2-LEVEL_LOSER->w)/2,5+LEVEL_LOSER->h,_screen);
+     apply_surface(_screen->w/2+(_screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,_screen);
+     player[2].Print_name(_screen->w/2+(_screen->w/2-LEVEL_LOSER->w)/2,5+LEVEL_LOSER->h,_screen);
     }
  SDL_Surface *player_xp,*player_money,*player_xp_gain,*player_money_gain;
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
@@ -918,8 +925,15 @@ void Level::Start(SDL_Surface *screen)
  if(quit)
     {
      Pause_music();
-     Duel_Mode_Finish_Screen(player[1].Get_hp()<=0?2:1);
+     if(player[1].Get_hp()<=0 && player[2].Get_hp()<=0)
+        Duel_Mode_Finish_Screen(0);
+     else
+        Duel_Mode_Finish_Screen(player[1].Get_hp()<=0?2:1);
     }
+ for(int _player_pos=1;_player_pos<=2;_player_pos++)
+     {
+      player[_player_pos].Update();
+     }
  Clear();
 }
 
