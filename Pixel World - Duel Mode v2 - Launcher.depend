@@ -12,7 +12,7 @@
 	<cstring>
 	<string>
 
-1475870862 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
+1476864648 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
 	"menu.h"
 	"settings.h"
 	"script_interpreter.h"
@@ -99,7 +99,7 @@
 	"item.h"
 	"player.h"
 
-1476780226 e:\programming\pixel world - duel mode v2 - launcher\player.h
+1476864474 e:\programming\pixel world - duel mode v2 - launcher\player.h
 	"load_images.h"
 	"library.h"
 	"item.h"
@@ -107,7 +107,7 @@
 	<vector>
 	<algorithm>
 
-1476780155 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
+1476865501 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
 	"player.h"
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"

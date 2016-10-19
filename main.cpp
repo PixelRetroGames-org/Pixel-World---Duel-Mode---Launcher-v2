@@ -105,7 +105,7 @@ int main( int argc, char* args[] )
                                                               case 0:{//Launch Duel Mode
                                                                       Mix_HaltMusic();
                                                                       level.Set_screen(screen);
-                                                                      level.Setup("Test2");
+                                                                      level.Setup("Duel Mode");
                                                                       level.Start(screen);
                                                                       Mix_PlayMusic(background_music,-1);
                                                                       _option=-2;

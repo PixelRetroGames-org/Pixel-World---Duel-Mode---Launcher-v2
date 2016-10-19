@@ -40,6 +40,7 @@ void Player::Clear(bool _delete)
  memset(equipped_items_ids,0,sizeof equipped_items_ids);
  memset(equipped_items,0,sizeof equipped_items);
  inventory_item_selected=inventory_item_click=pos_last_y=0;
+ basic_hp=1000,basic_mana=100,basic_mental_health=100;
  basic_attack=5,basic_defense=0,basic_spell_damage=0,basic_spell_resistance=0,basic_movement_speed=10,basic_life_steal=0;
  attack=defense=spell_damage=spell_resistance=movement_speed=life_steal=0;
  skin_image_position.h=skin_image_position.w=skin_image_position.x=skin_image_position.y=0;
@@ -120,8 +121,15 @@ void Player::Load()
      inventory_number_of_items=7;
      equipped_items[8].Set_type(8);
      equipped_items[8].Load();
-     Update();
+     number_of_spells=4;
+     for(int spell_pos=0;spell_pos<number_of_spells;spell_pos++)
+         spells[spell_pos].Set_id(0);
      Load_skin();
+     Set_hp(basic_hp);
+     Set_mana(basic_mana);
+     Set_mental_health(basic_mental_health);
+     Update();
+     //Load();
      return;
     }
  fscanf(where,"%d %d %d",&money,&experience,&number_of_items);
@@ -170,7 +178,7 @@ void Player::Load()
  Load_skin();
  Set_hp(basic_hp);
  Set_mana(basic_mana);
- Set_mental_health(mental_health);
+ Set_mental_health(basic_mental_health);
 }
 
 void Player::Update()
@@ -568,7 +576,7 @@ int Player::Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event,in
                                      }
                                  for(int spell_pos=0;spell_pos<4;spell_pos++)
                                      {
-                                      if(mouse_x-_x-40>spell_pos*SHOP_inventory_spell_background->w && mouse_x-_x-40<(spell_pos+1)*SHOP_inventory_spell_background->w)
+                                      if(mouse_x-_x-40>=spell_pos*SHOP_inventory_spell_background->w && mouse_x-_x-40<(spell_pos+1)*SHOP_inventory_spell_background->w)
                                          {
                                           spells[spell_pos].Set_id(items_bought[i].Get_spell_id());
                                           spells[spell_pos].Load();
