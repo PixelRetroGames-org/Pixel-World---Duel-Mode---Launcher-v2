@@ -150,6 +150,7 @@ int main( int argc, char* args[] )
                         break;
                        };
                 case 2:{
+                        //script_interpreter.Start(screen,"Credits");
                         script_interpreter.Start(screen,"Credits");
                         break;
                        };

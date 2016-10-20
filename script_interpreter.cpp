@@ -4,9 +4,24 @@
 const char *command_names[number_of_commands+1]={"set","line","color","la","ba","sleep","wla","we","bckimg","img","page"};
 const SDL_Color default_text_color={255,255,255};
 
-Script_interpreter::Script_interpreter()
+//Script_interpreter::Script_interpreter();
+
+Script_interpreter::~Script_interpreter()
 {
- text_color.push(default_text_color);
+ while(!text_color.empty())
+       text_color.pop();
+ SDL_FreeSurface(buffer);
+ if(background_image!=SCRIPT_default_background_image)
+    SDL_FreeSurface(background_image);
+}
+
+void Script_interpreter::Clear()
+{
+ while(!text_color.empty())
+       text_color.pop();
+ SDL_FreeSurface(buffer);
+ if(background_image!=SCRIPT_default_background_image)
+    SDL_FreeSurface(background_image);
 }
 
 void Script_interpreter::Start_line_audio(Mix_Chunk *line_audio)
@@ -140,8 +155,11 @@ void Script_interpreter::Start()
                {
                 switch(Get_command_id(command+1))
                        {
-                        case 1: Print_line(x,y,script_line,true),memset(script_line,0,sizeof script_line),line=false; break;
-                        case 2: Print_line(x,y,script_line),memset(script_line,0,sizeof script_line),text_color.pop(); break;
+                        case 1: Print_line(x,y,script_line,true),memset(script_line,0,sizeof script_line),line=false; x=text_pos_x,y+=LINE_HEIGHT; break;
+                        case 2: Print_line(x,y,script_line),memset(script_line,0,sizeof script_line);
+                                if(text_color.size()>1)
+                                   text_color.pop();
+                                break;
                         case 3: Stop_line_audio(); Mix_FreeChunk(chunk); break;
                         case 4: Stop_background_audio(); Mix_FreeMusic(music);break;
                         case 10:apply_surface(text_pos_x,text_pos_y,background_image,screen);
@@ -190,7 +208,8 @@ void Script_interpreter::Start()
                         case 6: while(Mix_Playing(2))
                                       SDL_Delay(10);
                                 break;
-                        case 7: while(SDL_PollEvent(&event));
+                        case 7: SDL_Delay(200);
+                                while(SDL_PollEvent(&event));
                                 aux2=1;
                                 SDL_PollEvent(&event);
                                 while(event.type!=SDL_KEYDOWN && event.type!=SDL_MOUSEBUTTONDOWN)
@@ -231,9 +250,11 @@ void Script_interpreter::Start()
 
 void Script_interpreter::Start(SDL_Surface *_screen,char *_script_name)
 {
+ text_color.push(default_text_color);
  Set_screen(_screen);
  Set_script_name(_script_name);
  Start();
+ Clear();
 }
 
 int Get_command_id(char *_command)

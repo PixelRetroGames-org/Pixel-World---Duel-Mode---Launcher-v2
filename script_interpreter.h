@@ -10,7 +10,7 @@
 #define TEXT_LENGHT_MAX 100
 #endif // TEXT_LENGHT_MAX
 
-const int number_of_commands=11,LINE_HEIGHT=40;
+const int number_of_commands=11,LINE_HEIGHT=23;
 extern const char *command_names[number_of_commands+1];
 
 class Script_interpreter
@@ -37,7 +37,9 @@ class Script_interpreter
  void Set_background_image(char *_name);
 
  public:
- Script_interpreter();
+ //Script_interpreter();
+ ~Script_interpreter();
+ void Clear();
  void Set_script_name(char *_script_name);
  void Set_screen(SDL_Surface *_screen);
  void Start();
