@@ -77,22 +77,28 @@ void Map_texture_id::Update_frame(int _number_of_frames)
 ///Interactive map texture
 Interactive_map_texture::Interactive_map_texture()
 {
- target_map_position.clear();
- map_textures_ids.clear();
+ std::vector<std::pair<int,int> >().swap(target_map_position);
+ //target_map_position.clear();
+ std::vector<Map_texture_id>().swap(map_textures_ids);
+ //map_textures_ids.clear();
  current_map_texture_id_position=number_of_map_textures_ids_positions=0;
 }
 
 Interactive_map_texture::~Interactive_map_texture()
 {
- target_map_position.clear();
- map_textures_ids.clear();
+ std::vector<std::pair<int,int> >().swap(target_map_position);
+ //target_map_position.clear();
+ std::vector<Map_texture_id>().swap(map_textures_ids);
+ //map_textures_ids.clear();
  current_map_texture_id_position=number_of_map_textures_ids_positions=0;
 }
 
 void Interactive_map_texture::Clear()
 {
- target_map_position.clear();
- map_textures_ids.clear();
+ std::vector<std::pair<int,int> >().swap(target_map_position);
+ //target_map_position.clear();
+ std::vector<Map_texture_id>().swap(map_textures_ids);
+ //map_textures_ids.clear();
  current_map_texture_id_position=number_of_map_textures_ids_positions=0;
  id=0;
 }

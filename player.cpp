@@ -33,7 +33,7 @@ void Player::Clear(bool _delete)
     }
 
  memset(name,0,sizeof name);
- money=experience=number_of_items=inventory_number_of_items=0;
+ money=experience=number_of_items=inventory_number_of_items=inventory_number_of_spells=0;
  memset(number_of_items_bought,0,sizeof number_of_items_bought);
 
  memset(items_bought,0,sizeof items_bought);
@@ -46,12 +46,14 @@ void Player::Clear(bool _delete)
  skin_image_position.h=skin_image_position.w=skin_image_position.x=skin_image_position.y=0;
  for(int i=0;!active_buffs.empty() && i<active_buffs.size();i++)
      active_buffs[i].Clear(_delete);
- active_buffs.clear();
+ //active_buffs.clear();
+ std::vector<Buff>().swap(active_buffs);
  for(int i=0;i<10;i++)
      equipped_items[i].Clear(_delete);
  for(int i=0;i<NUMBER_OF_ITEMS_IDS;i++)
      items_bought[i].Clear(_delete);
- printable_item_buffs_id.clear();
+ //printable_item_buffs_id.clear();
+ std::vector<int>().swap(printable_item_buffs_id);
  for(int i=0;i<4;i++)
      spells[i].Clear(_delete);
  map_positionX=map_positionY=-10;
@@ -248,7 +250,9 @@ int Player::Buy(int _item_id)
  _item.Load();
  if(money<_item.Get_cost())
     return 1;
- if(inventory_number_of_items>=INVENTORY_MAX_NUMBER_OF_ITEMS && (!Is_bought(_item_id) && !Is_potion(_item_id)))
+ if(_item.Get_type()==10 && inventory_number_of_spells>=INVENTORY_MAX_NUMBER_OF_ITEMS)
+    return 2;
+ if(inventory_number_of_items>=INVENTORY_MAX_NUMBER_OF_ITEMS && (!Is_bought(_item_id) && !Is_potion(_item_id) && _item.Get_type()!=10))
     return 2;
  number_of_items_bought[_item_id]++,money-=_item.Get_cost();
  if(number_of_items_bought[_item_id]==1)
@@ -256,6 +260,8 @@ int Player::Buy(int _item_id)
      number_of_items++;
      if(_item.Get_type()!=10)
         inventory_number_of_items++;
+     else
+        inventory_number_of_spells++;
      items_bought[_item_id]=_item;
     }
  //_item.Clear(true);
@@ -1086,6 +1092,8 @@ void Player::Print_buffs(int x,int y,SDL_Surface *_screen)
 
 bool Player::Pay_Spell(int spell_pos)
 {
+ if(spells[spell_pos].Get_id()==0)
+    return false;
  bool rtn=spells[spell_pos].Pay(&mana,&hp,&mental_health);
  Set_mana(mana);
  Set_hp(hp);

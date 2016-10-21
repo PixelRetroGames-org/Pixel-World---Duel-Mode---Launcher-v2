@@ -94,7 +94,7 @@ class Level
  void Apply_player_buffs(int _player);
  void Apply_all_players_buffs();
  ///Spells
- void Cast_Spell(int _player,int spell_pos);
+ bool Cast_Spell(int _player,int spell_pos);
  void Decrease_all_Spells_time_blocked(int _player);
  ///Interaction with map
  void Trigger_player_map(int _player);

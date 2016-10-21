@@ -19,7 +19,7 @@ class Player
  private:
  char name[TEXT_LENGHT_MAX];
  int money,experience;
- int number_of_items,inventory_number_of_items;
+ int number_of_items,inventory_number_of_items,inventory_number_of_spells;
  int number_of_items_bought[NUMBER_OF_ITEMS_IDS];
  Item items_bought[NUMBER_OF_ITEMS_IDS];
  int equipped_items_ids[10]={0,0,0,0,0,0,NULL,NULL,0,NULL};
@@ -43,6 +43,7 @@ class Player
  std::vector<int> printable_item_buffs_id;
  int number_of_spells=0;
  Spell spells[4];
+ int other_player_spell_damage=0;
  ///Game
 
  public:

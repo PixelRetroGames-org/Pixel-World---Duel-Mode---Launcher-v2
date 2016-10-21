@@ -490,8 +490,8 @@ void Level::Handle_Event(int _player)
      {
       if(keystates[player_keys[keys][i+6]] && !player[_player].Spell_Is_blocked(i-1)/*&& !player[_player].Is_blocked()*/)
          {
-          Cast_Spell(_player,i-1);
-          player[_player].Block(),player_time_blocked[_player]=10;
+          if(Cast_Spell(_player,i-1))
+             player[_player].Block(),player_time_blocked[_player]=10;
          }
      }
 
@@ -569,10 +569,10 @@ void Level::Apply_all_players_buffs()
  Apply_player_buffs(2);
 }
 
-void Level::Cast_Spell(int _player,int spell_pos)
+bool Level::Cast_Spell(int _player,int spell_pos)
 {
  if(!player[_player].Pay_Spell(spell_pos))
-    return;
+    return false;
  player[_player].Block_Spell(spell_pos);
  Spell _spell=player[_player].Get_Spell(spell_pos);
  std::vector<Buff> _buffs;
@@ -623,6 +623,7 @@ void Level::Cast_Spell(int _player,int spell_pos)
          default:break;
         }
  _buffs.clear();
+ return true;
 }
 
 void Level::Decrease_all_Spells_time_blocked(int _player)
