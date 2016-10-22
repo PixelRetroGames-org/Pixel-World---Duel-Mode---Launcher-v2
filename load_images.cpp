@@ -79,7 +79,7 @@ void Load_player_images()
  PLAYER_name_background=make_it_transparent("images/player/name_background.bmp");
  PLAYER_name_background_shop=make_it_transparent("images/player/name_background_shop.bmp");
  PLAYER_name_background_right_layer=load_image("images/player/name_background_right_layer.bmp");
- PLAYER_details_background=load_image("images/player/details_background.bmp");
+ PLAYER_details_background=make_it_transparent("images/player/details_background.bmp");
  PLAYER_experience_background=load_image("images/player/experience_background.bmp");
  PLAYER_money_background=load_image("images/player/money_background.bmp");
  PLAYER_HP_background=make_it_transparent("images/player/hp_background.bmp");

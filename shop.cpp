@@ -167,7 +167,7 @@ int Shop_Screen::Start(SDL_Surface *screen)
  not_enough_money=TTF_RenderText_Solid(font,"You don't have enough money to buy this!",MESSAGE_COLOR);
  not_enough_space=TTF_RenderText_Solid(font,"Not enough space, sell some items!",MESSAGE_COLOR);
  TTF_CloseFont(font);
- not_enough_background=load_image("images/shop/not_enough_background.bmp");
+ not_enough_background=make_it_transparent("images/shop/not_enough_background.bmp");
  int message=0,nr=0;
  Timer fps;
  while(!quit)

@@ -289,6 +289,11 @@ bool Item::Buff_Is_done()
  return buff.Is_done();
 }
 
+bool Item::Buff_Is_printable()
+{
+ return buff.Is_printable();
+}
+
 const int NUMBER_OF_POTIONS=2,POTIONS[]={15,16};
 
 bool Is_potion(Item _item)

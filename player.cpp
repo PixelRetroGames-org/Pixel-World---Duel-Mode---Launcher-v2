@@ -880,7 +880,7 @@ void Player::Equip_items()
       spell_damage+=equipped_items[i].Get_spell_damage();
       spell_resistance+=equipped_items[i].Get_spell_resistance();
       movement_speed+=equipped_items[i].Get_movement_speed();
-      if(equipped_items[i].Get_buff_id()!=0)
+      if(equipped_items[i].Buff_Is_printable())
          printable_item_buffs_id.push_back(i);
      }
 }

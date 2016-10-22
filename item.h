@@ -70,6 +70,7 @@ class Item
  void Buff_decrease_remaining_duration();
  void Buff_Reset();
  bool Buff_Is_done();
+ bool Buff_Is_printable();
 };
 
 bool Is_potion(Item _item);
