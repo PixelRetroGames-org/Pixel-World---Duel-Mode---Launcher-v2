@@ -240,7 +240,7 @@ bool Level::Move_player_X(int _player)
  if(move_possible && player[_player].Get_velocityX()!=0)
     {
      player[_player].Move_X();
-     player_time_blocked[_player]=3-4*player[_player].Get_movement_speed()/100;
+     player_time_blocked[_player]=5-5*player[_player].Get_movement_speed()/100;
      player[_player].Block();
      return true;
     }
@@ -281,7 +281,7 @@ bool Level::Move_player_Y(int _player)
  if(move_possible && player[_player].Get_velocityY()!=0)
     {
      player[_player].Move_Y();
-     player_time_blocked[_player]=3-4*player[_player].Get_movement_speed()/100;
+     player_time_blocked[_player]=5-5*player[_player].Get_movement_speed()/100;
      player[_player].Block();
      return true;
     }
@@ -541,10 +541,6 @@ void Level::Handle_Event(int _player)
 
 void Level::Handle_Events(SDL_Surface *_screen)
 {
- /*Set_player_velocityY(1,0);
- Set_player_velocityX(1,0);
- Set_player_velocityY(2,0);
- Set_player_velocityX(2,0);*/
  Handle_Event(1);
  Handle_Event(2);
 
@@ -946,10 +942,9 @@ void Level::Start(SDL_Surface *screen)
      else
         Duel_Mode_Finish_Screen(player[1].Get_hp()<=0?2:1);
     }
- for(int _player_pos=1;_player_pos<=2;_player_pos++)
-     {
-      player[_player_pos].Update();
-     }
+ player[1].Update();
+ if(type==2)
+    player[2].Update();
  Clear();
 }
 

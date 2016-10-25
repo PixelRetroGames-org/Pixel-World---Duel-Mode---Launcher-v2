@@ -41,9 +41,10 @@ void Player::Clear(bool _delete)
  memset(equipped_items,0,sizeof equipped_items);
  inventory_item_selected=inventory_item_click=pos_last_y=0;
  basic_hp=1000,basic_mana=100,basic_mental_health=100;
- basic_attack=5,basic_defense=0,basic_spell_damage=0,basic_spell_resistance=0,basic_movement_speed=10,basic_life_steal=0;
+ basic_attack=5,basic_defense=0,basic_spell_damage=10,basic_spell_resistance=0,basic_movement_speed=0,basic_life_steal=0;
  attack=defense=spell_damage=spell_resistance=movement_speed=life_steal=0;
- skin_image_position.h=skin_image_position.w=skin_image_position.x=skin_image_position.y=0;
+ skin_image_position.h=skin_image_position.w=40;
+ skin_image_position.x=skin_image_position.y=0;
  for(int i=0;!active_buffs.empty() && i<active_buffs.size();i++)
      active_buffs[i].Clear(_delete);
  //active_buffs.clear();
@@ -130,6 +131,13 @@ void Player::Load()
      Set_hp(basic_hp);
      Set_mana(basic_mana);
      Set_mental_health(basic_mental_health);
+     original_skin_image_position=skin_image_position;
+     attack=basic_attack;
+     defense=basic_defense;
+     spell_damage=basic_spell_damage;
+     spell_resistance=basic_spell_resistance;
+     movement_speed=basic_movement_speed;
+     life_steal=basic_life_steal;
      Update();
      //Load();
      return;
@@ -491,9 +499,10 @@ void Player::Print_Inventory_equipped_items(int x,int y,SDL_Surface *_screen,boo
      {
       if(number_of_items_bought[i]!=0)
          {
-          if(items_bought[i].Get_id()==0 || (equipped_items_ids[items_bought[i].Get_type()]==i && (items_bought[i].Get_type()!=6 && items_bought[i].Get_type()!=9))/* || items_bought[i].Get_type()<6*/)
+          if(items_bought[i].Get_id()==0 || ((items_bought[i].Get_type()<6 || items_bought[i].Get_type()>9))/* || items_bought[i].Get_type()<6*/)
              continue;
-
+          if(equipped_items_ids[i]!=i)
+             continue;
           switch(type)
                  {
                   case 1:if(items_bought[i].Get_type()==10)
@@ -1026,6 +1035,8 @@ void Player::Apply_item_buffs()
 
 void Player::Add_buff(Buff _buff)
 {
+ if(_buff.Get_id()==0)
+    return;
  for(std::vector<Buff>::iterator i=active_buffs.begin();i!=active_buffs.end();i++)
      if(_buff.Get_id()==(*i).Get_id())
         {
