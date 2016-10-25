@@ -384,7 +384,15 @@ void Level::Player_basic_attack(int _player)
  if(Players_can_attack(_player))
     {
      player[_player].Set_velocityX(player[_player].Get_map_positionX()>player[Other_player(_player)].Get_map_positionX()?-1:1);
+     if(player[_player].Get_map_positionX()==player[Other_player(_player)].Get_map_positionX())
+        player[_player].Set_velocityX(0);
      player[Other_player(_player)].Set_velocityX(player[Other_player(_player)].Get_map_positionX()>player[_player].Get_map_positionX()?-1:1);
+     if(player[_player].Get_map_positionX()==player[Other_player(_player)].Get_map_positionX())
+        player[Other_player(_player)].Set_velocityX(0);
+     player[_player].Update_skin_image_position();
+     player[Other_player(_player)].Update_skin_image_position();
+     player[_player].Set_velocityX(0);
+     player[Other_player(_player)].Set_velocityX(0);
 
      player[_player].Set_hp(std::min(1000,player[_player].Get_hp()+player[_player].Get_life_steal()*((std::max(player[_player].Get_attack()-player[Other_player(_player)].Get_defense()*3/8,50))/10)/100));
      player[Other_player(_player)].Set_hp(player[Other_player(_player)].Get_hp()-(std::max(player[_player].Get_attack()-player[Other_player(_player)].Get_defense()*3/8,50))/10);
@@ -498,6 +506,9 @@ void Level::Handle_Event(int _player)
          }
      }
 
+ player[_player].Set_velocityX(0);
+ player[_player].Set_velocityY(0);
+
  if(keystates[player_keys[keys][0]])
     Set_player_velocityY(_player,-1);
  if(keystates[player_keys[keys][1]])
@@ -530,10 +541,10 @@ void Level::Handle_Event(int _player)
 
 void Level::Handle_Events(SDL_Surface *_screen)
 {
- Set_player_velocityY(1,0);
+ /*Set_player_velocityY(1,0);
  Set_player_velocityX(1,0);
  Set_player_velocityY(2,0);
- Set_player_velocityX(2,0);
+ Set_player_velocityX(2,0);*/
  Handle_Event(1);
  Handle_Event(2);
 
