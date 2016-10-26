@@ -329,6 +329,11 @@ bool Level::Move_player(int _player)
  bool player_moved_x=Move_player_X(_player),player_moved_y=Move_player_Y(_player);
  player_moved_x=player_moved_x || player_moved_y;
  player[_player].Update_skin_image_position();
+ while(player[_player].Get_map_positionX()+player[_player].Get_skinW()/40>arena.Get_number_of_columns())
+       player[_player].Set_map_position(player[_player].Get_map_positionX()-1,player[_player].Get_map_positionY());
+
+ while(player[_player].Get_map_positionY()+player[_player].Get_skinH()/40>arena.Get_number_of_lines())
+       player[_player].Set_map_position(player[_player].Get_map_positionX(),player[_player].Get_map_positionY()-1);
  return player_moved_x;
 }
 
@@ -437,7 +442,11 @@ void Level::Players_time_pass()
 
 bool Level::Player_is_on_light(int _player)
 {
- return arena.Is_light(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
+ bool rtn=arena.Is_light(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
+ for(int x=player[_player].Get_map_positionX();x<arena.Get_number_of_columns() && x<player[_player].Get_map_positionX()+(player[_player].Get_skinW())/40;x++)
+     for(int y=player[_player].Get_map_positionY();y<arena.Get_number_of_lines() && y<player[_player].Get_map_positionY()+(player[_player].Get_skinH())/40;y++)
+         rtn=(rtn || arena.Is_light(y,x));
+ return rtn;
 }
 
 void Level::Print_Map(int x,int y,SDL_Surface *_screen)

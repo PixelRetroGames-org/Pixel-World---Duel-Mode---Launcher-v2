@@ -970,6 +970,12 @@ void Player::Apply_buff(Buff *_buff)
          ///SHAPESHIFT
          case 5:if(_buff->Get_remaining_duration()<_buff->Get_duration())
                    break;
+                attack+=_buff->Get_attack();
+                defense+=_buff->Get_defense();
+                spell_damage+=_buff->Get_spell_damage();
+                spell_resistance+=_buff->Get_spell_resistance();
+                movement_speed+=_buff->Get_movement_speed();
+                life_steal+=_buff->Get_life_steal();
                 Set_skin_image_position(_buff->Get_skin_image_position());
                 Set_skin(_buff->Get_skin_name());
                 break;
@@ -989,7 +995,13 @@ void Player::Remove_buff(Buff *_buff)
                 movement_speed-=_buff->Get_movement_speed();
                 life_steal-=_buff->Get_life_steal();
                 break;
-         case 5:Load_skin();
+         case 5:attack-=_buff->Get_attack();
+                defense-=_buff->Get_defense();
+                spell_damage-=_buff->Get_spell_damage();
+                spell_resistance-=_buff->Get_spell_resistance();
+                movement_speed-=_buff->Get_movement_speed();
+                life_steal-=_buff->Get_life_steal();
+                Load_skin();
                 Reset_skin_image_position();
                 break;
          default:break;
