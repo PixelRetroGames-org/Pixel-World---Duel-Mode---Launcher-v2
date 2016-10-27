@@ -94,6 +94,11 @@ void Buff::Set_name(char *_name)
  strcpy(name,_name);
 }
 
+void Buff::Set_damage(int _damage)
+{
+ damage=_damage;
+}
+
 void Buff::Set_transmitted_buff_id(int _id)
 {
  transmitted_buff_id=_id;

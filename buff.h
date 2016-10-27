@@ -34,6 +34,7 @@ class Buff
  void Set_duration(int _duration);
  void Set_type(int _type);
  void Set_name(char *_name);
+ void Set_damage(int _damage);
  void Set_transmitted_buff_id(int _id);
 
  int Get_id();

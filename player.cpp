@@ -208,7 +208,7 @@ void Player::Update()
      fprintf(where,"%d ",equipped_items_ids[i]);
  fprintf(where,"\n%d %d %d\n",basic_hp,basic_mana,basic_mental_health);
  fprintf(where,"%d %d %d %d %d %d\n",basic_attack,basic_defense,basic_spell_damage,basic_spell_resistance,basic_movement_speed,basic_life_steal);
- int w=skin_image_position.w,h=skin_image_position.h;
+ int w=original_skin_image_position.w,h=original_skin_image_position.h;
  fprintf(where,"%d %d\n",w,h);
  fprintf(where,"%d\n",number_of_spells);
  for(int i=0;i<number_of_spells;i++)
@@ -948,7 +948,7 @@ void Player::Apply_buff(Buff *_buff)
                 break;
          ///HP
          case 2:if(_buff->Get_damage()<0)
-                   hp+=(_buff->Get_damage())-(_buff->Get_damage()/100)*Get_spell_resistance();
+                   hp+=(_buff->Get_damage())-_buff->Get_damage()*Get_spell_resistance()/100;
                 else
                    hp+=_buff->Get_damage();
                 Set_hp(std::min(basic_hp,hp));

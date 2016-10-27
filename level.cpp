@@ -290,8 +290,15 @@ bool Level::Move_player_Y(int _player)
 
 bool Level::Move_player(int _player)
 {
- player[_player].Add_buff(arena.Get_map_texture_Buff(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()));
- player[_player].Add_buff(effects.Get_map_texture_Buff(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()));
+ Buff aux;
+ aux=arena.Get_map_texture_Buff(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
+ aux.Set_damage(aux.Get_damage()+((aux.Get_damage()/100)*player[Other_player(_player)].Get_spell_damage()));
+ player[_player].Add_buff(aux);
+
+ aux=effects.Get_map_texture_Buff(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
+ aux.Set_damage(aux.Get_damage()+(aux.Get_damage()*player[Other_player(_player)].Get_spell_damage()/100));
+ player[_player].Add_buff(aux);
+ aux.Clear(false);
 
  int x,y,x1,y1,velocityX,velocityY;
  char _map_name[TEXT_LENGHT_MAX]={NULL};
@@ -620,6 +627,7 @@ bool Level::Cast_Spell(int _player,int spell_pos)
                    break;
                 for(std::vector<Buff>::iterator i=_buffs.begin();i!=_buffs.end();i++)
                     {
+                     i->Set_damage(i->Get_damage()+(i->Get_damage()*player[_player].Get_spell_damage()/100));
                      player[Other_player(_player)].Add_buff(*i);
                      player[Other_player(_player)].Apply_new_active_buff();
                     }
