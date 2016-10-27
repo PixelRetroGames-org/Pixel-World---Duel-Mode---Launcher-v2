@@ -44,11 +44,11 @@ class Map
  bool Is_done();
  void Load();
  void Copy(int x,int y,Map *source);
- void Print(int x,int y,SDL_Surface *_screen,bool before_player,bool lights=false);
- void Print_Animations(int x,int y,SDL_Surface *_screen,bool before_player,bool lights=false);
- void Print_background(int x,int y,SDL_Surface *_screen,bool before_player,bool lights=false);
- void Print_background_Animations(int x,int y,SDL_Surface *_screen,bool before_player,bool lights=false);
- void Print_image(int x,int y,SDL_Surface *_screen,Interactive_map_texture *source);
+ void Print(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights=false);
+ void Print_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights=false);
+ void Print_background(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights=false);
+ void Print_background_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights=false);
+ void Print_image(int screen_x,int screen_y,SDL_Surface *_screen,Interactive_map_texture *source);
 
  void Trigger(int x,int y);
 };

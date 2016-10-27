@@ -271,37 +271,41 @@ void Map::Load()
  fclose(where);
 }
 
-void Map::Print(int x,int y,SDL_Surface *_screen,bool before_player,bool lights)
+const int MAP_IMAGE_HEIGHT=840,MAP_IMAGE_WEIGHT=680;
+
+void Map::Print(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights)
 {
- apply_surface(x,y,map_image[before_player][lights],_screen);
+ //apply_surface(screen_x,screen_y,map_image[before_player][lights],_screen);
+ apply_surface(map_x*40,map_y*40,screen_x,screen_y,MAP_IMAGE_HEIGHT,MAP_IMAGE_WEIGHT,map_image[before_player][lights],_screen);
 }
 
-void Map::Print_Animations(int x,int y,SDL_Surface *_screen,bool before_player,bool lights)
+void Map::Print_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights)
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_map_textures_animations[before_player][lights].begin();it!=fast_access_map_textures_animations[before_player][lights].end();it++)
      {
-      if(!map_textures_ids[it->first][it->second].Is_done())
-         Print_image(it->second*40+x,it->first*40+y,_screen,&map_textures_ids[it->first][it->second]);
+      if(!map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y)
+         Print_image((it->second-map_x)*40+screen_x,(it->first-map_y)*40+screen_y,_screen,&map_textures_ids[it->first][it->second]);
      }
 }
 
-void Map::Print_background(int x,int y,SDL_Surface *_screen,bool before_player,bool lights)
+void Map::Print_background(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights)
 {
- apply_surface(x,y,background_map_image[before_player][lights],_screen);
+ //apply_surface(screen_x,screen_y,background_map_image[before_player][lights],_screen);
+ apply_surface(map_x*40,map_y*40,screen_x,screen_y,MAP_IMAGE_HEIGHT,MAP_IMAGE_WEIGHT,background_map_image[before_player][lights],_screen);
 }
 
-void Map::Print_background_Animations(int x,int y,SDL_Surface *_screen,bool before_player,bool lights)
+void Map::Print_background_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights)
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_background_map_textures_animations[before_player][lights].begin();it!=fast_access_background_map_textures_animations[before_player][lights].end();it++)
      {
-      if(!background_map_textures_ids[it->first][it->second].Is_done())
-         Print_image(it->second*40+x,it->first*40+y,_screen,&background_map_textures_ids[it->first][it->second]);
+      if(!background_map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y)
+         Print_image((it->second-map_x)*40+screen_x,(it->first-map_y)*40+screen_y,_screen,&background_map_textures_ids[it->first][it->second]);
      }
 }
 
-void Map::Print_image(int x,int y,SDL_Surface *_screen,Interactive_map_texture *source)
+void Map::Print_image(int screen_x,int screen_y,SDL_Surface *_screen,Interactive_map_texture *source)
 {
- map_textures[source->Get_texture_id()].Print_image(x,y,_screen,source->Get_texture_frame());
+ map_textures[source->Get_texture_id()].Print_image(screen_x,screen_y,_screen,source->Get_texture_frame());
 }
 
 void Map::Trigger(int x,int y)

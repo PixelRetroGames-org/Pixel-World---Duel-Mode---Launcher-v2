@@ -458,30 +458,30 @@ bool Level::Player_is_on_light(int _player)
 
 void Level::Print_Map(int x,int y,SDL_Surface *_screen)
 {
- arena.Print_background(x,y,_screen,true,false);
- arena.Print_background_Animations(x,y,_screen,true,false);
- arena.Print(x,y,_screen,true,false);
- arena.Print_Animations(x,y,_screen,true,false);
+ arena.Print_background(x,y,0,0,_screen,true,false);
+ arena.Print_background_Animations(x,y,0,0,_screen,true,false);
+ arena.Print(x,y,0,0,_screen,true,false);
+ arena.Print_Animations(x,y,0,0,_screen,true,false);
  player[1].Print_skin(x,y,_screen);
  player[2].Print_skin(x,y,_screen);
- arena.Print_background(x,y,_screen,false);
- arena.Print_background_Animations(x,y,_screen,false);
- arena.Print(x,y,_screen,false);
- arena.Print_Animations(x,y,_screen,false);
+ arena.Print_background(x,y,0,0,_screen,false);
+ arena.Print_background_Animations(x,y,0,0,_screen,false);
+ arena.Print(x,y,0,0,_screen,false);
+ arena.Print_Animations(x,y,0,0,_screen,false);
  darkness.Enshroud(arena_size,_screen);
- arena.Print_background(x,y,_screen,true,true);
- arena.Print_background_Animations(x,y,_screen,true,true);
- arena.Print(x,y,_screen,true,true);
- arena.Print_Animations(x,y,_screen,true,true);
+ arena.Print_background(x,y,0,0,_screen,true,true);
+ arena.Print_background_Animations(x,y,0,0,_screen,true,true);
+ arena.Print(x,y,0,0,_screen,true,true);
+ arena.Print_Animations(x,y,0,0,_screen,true,true);
  if(Player_is_on_light(1))
     player[1].Print_skin(x,y,_screen);
  if(type==2 && Player_is_on_light(2))
     player[2].Print_skin(x,y,_screen);
- arena.Print_background(x,y,_screen,false,true);
- arena.Print_background_Animations(x,y,_screen,false,true);
- arena.Print(x,y,_screen,false,true);
- arena.Print_Animations(x,y,_screen,false,true);
- effects.Print_Animations(x,y,_screen,false,true);
+ arena.Print_background(x,y,0,0,_screen,false,true);
+ arena.Print_background_Animations(x,y,0,0,_screen,false,true);
+ arena.Print(x,y,0,0,_screen,false,true);
+ arena.Print_Animations(x,y,0,0,_screen,false,true);
+ effects.Print_Animations(x,y,0,0,_screen,false,true);
  //effects.Print(x,y,_screen,false);
 }
 
