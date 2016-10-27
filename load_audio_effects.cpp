@@ -8,4 +8,3 @@ void Load_Duel_Mode_effects()
  DUEL_MODE_hit[1]=Mix_LoadWAV("audio/effects/hit1.wav");
  DUEL_MODE_hit[2]=Mix_LoadWAV("audio/effects/hit2.wav");
 }
-

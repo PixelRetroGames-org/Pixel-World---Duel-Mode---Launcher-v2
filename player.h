@@ -112,7 +112,7 @@ class Player
  void Print_hp(SDL_Surface *_screen);
  void Print_mana(int x,int y,SDL_Surface *_screen);
  void Print_mana(SDL_Surface *_screen);
- void Print_skin(int x,int y,SDL_Surface *_screen);
+ void Print_skin(int x,int y,int mapX,int mapY,SDL_Surface *_screen);
  void Print_skin_free(int x,int y,SDL_Surface *_screen);
  void Equip_items();
  bool Is_blocked();

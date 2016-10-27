@@ -869,9 +869,9 @@ void Player::Print_mana(SDL_Surface *_screen)
  apply_surface(PLAYER_INFO_POSX+(PLAYER_INFO_LAST_POSX-PLAYER_INFO_POSX+1-mana_image->w+10)/2,80+(40-mana_image->h)/2,mana_image,_screen);
 }
 
-void Player::Print_skin(int x,int y,SDL_Surface *_screen)
+void Player::Print_skin(int x,int y,int mapX,int mapY,SDL_Surface *_screen)
 {
- apply_surface(skin_image_position.x,skin_image_position.y,x+map_positionX*40,y+map_positionY*40,skin_image_position.w,skin_image_position.h,skin,_screen);
+ apply_surface(skin_image_position.x,skin_image_position.y,x+(map_positionX-mapX)*40,y+(map_positionY-mapY)*40,skin_image_position.w,skin_image_position.h,skin,_screen);
 }
 
 void Player::Print_skin_free(int x,int y,SDL_Surface *_screen)

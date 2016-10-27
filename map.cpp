@@ -55,6 +55,8 @@ void Map::Set_map_texture_id(int x,int y,Interactive_map_texture _map_texture_id
 
 bool Map::Is_obstacle(int x,int y)
 {
+ if(y>=number_of_columns || x>=number_of_lines)
+    return false;
  return map_textures[map_textures_ids[x][y].Get_texture_id()].Is_obstacle();
 }
 

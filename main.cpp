@@ -35,7 +35,7 @@ int main( int argc, char* args[] )
  duel_menu.Load("menu/duel_menu.pwm");
  LAUNCHER_BBACKGROUND.Update_size();
  LAUNCHER_BBACKGROUND.Load_Logo();
- background_music=Mix_LoadMUS("audio/Hallowed Be Thy Name.wav");
+ background_music=Mix_LoadMUS("audio/Hallowed Be Thy Name.mp3");
  Mix_Volume(-1,MIX_MAX_VOLUME*VOLUME/100);
  Mix_Volume(2,MIX_MAX_VOLUME*VOLUME/100);
  Mix_Volume(3,MIX_MAX_VOLUME*(VOLUME/24)/100);

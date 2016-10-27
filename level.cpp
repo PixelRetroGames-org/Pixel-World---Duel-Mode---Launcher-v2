@@ -145,7 +145,7 @@ void Level::Load()
          background_music_name[strlen(background_music_name)-1]=NULL;
       strcpy(path,"audio/");
       strcat(path,background_music_name);
-      strcat(path,".wav");
+      strcat(path,".mp3");
       background_music[i]=Mix_LoadMUS(path);
      }
 
@@ -295,10 +295,13 @@ bool Level::Move_player(int _player)
  aux.Set_damage(aux.Get_damage()+((aux.Get_damage()/100)*player[Other_player(_player)].Get_spell_damage()));
  player[_player].Add_buff(aux);
 
- aux=effects.Get_map_texture_Buff(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
- aux.Set_damage(aux.Get_damage()+(aux.Get_damage()*player[Other_player(_player)].Get_spell_damage()/100));
- player[_player].Add_buff(aux);
- aux.Clear(false);
+ if(type==2)
+    {
+     aux=effects.Get_map_texture_Buff(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
+     aux.Set_damage(aux.Get_damage()+(aux.Get_damage()*player[Other_player(_player)].Get_spell_damage()/100));
+     player[_player].Add_buff(aux);
+     aux.Clear(false);
+    }
 
  int x,y,x1,y1,velocityX,velocityY;
  char _map_name[TEXT_LENGHT_MAX]={NULL};
@@ -456,32 +459,48 @@ bool Level::Player_is_on_light(int _player)
  return rtn;
 }
 
+const int MAP_IMAGE_HEIGHT=21,MAP_IMAGE_WEIGHT=17;
+
 void Level::Print_Map(int x,int y,SDL_Surface *_screen)
 {
- arena.Print_background(x,y,0,0,_screen,true,false);
- arena.Print_background_Animations(x,y,0,0,_screen,true,false);
- arena.Print(x,y,0,0,_screen,true,false);
- arena.Print_Animations(x,y,0,0,_screen,true,false);
- player[1].Print_skin(x,y,_screen);
- player[2].Print_skin(x,y,_screen);
- arena.Print_background(x,y,0,0,_screen,false);
- arena.Print_background_Animations(x,y,0,0,_screen,false);
- arena.Print(x,y,0,0,_screen,false);
- arena.Print_Animations(x,y,0,0,_screen,false);
- darkness.Enshroud(arena_size,_screen);
- arena.Print_background(x,y,0,0,_screen,true,true);
- arena.Print_background_Animations(x,y,0,0,_screen,true,true);
- arena.Print(x,y,0,0,_screen,true,true);
- arena.Print_Animations(x,y,0,0,_screen,true,true);
+ int mapX=0,mapY=0;
+ if(type==1)
+    {
+     mapX=std::min(std::max(0,player[1].Get_map_positionX()-(MAP_IMAGE_HEIGHT-1)/2),arena.Get_number_of_columns()-(MAP_IMAGE_HEIGHT));
+     mapY=std::min(std::max(0,player[1].Get_map_positionY()-(MAP_IMAGE_WEIGHT-1)/2),arena.Get_number_of_lines()-(MAP_IMAGE_WEIGHT));
+    }
+ arena.Print_background(x,y,mapX,mapY,_screen,true,false);
+ arena.Print_background_Animations(x,y,mapX,mapY,_screen,true,false);
+ arena.Print(x,y,mapX,mapY,_screen,true,false);
+ arena.Print_Animations(x,y,mapX,mapY,_screen,true,false);
+ player[1].Print_skin(x,y,mapX,mapY,_screen);
+ player[2].Print_skin(x,y,mapX,mapY,_screen);
+ arena.Print_background(x,y,mapX,mapY,_screen,false);
+ arena.Print_background_Animations(x,y,mapX,mapY,_screen,false);
+ arena.Print(x,y,mapX,mapY,_screen,false);
+ arena.Print_Animations(x,y,mapX,mapY,_screen,false);
+
+ SDL_Rect _area=arena_size;
+ /*_area.h=MAP_IMAGE_HEIGHT*40-mapY*40;
+ _area.w=MAP_IMAGE_WEIGHT*40-mapX*40;
+ _area.x=x+mapX*40;
+ _area.y=y+mapY*40;*/
+ darkness.Enshroud(_area,_screen);
+
+ arena.Print_background(x,y,mapX,mapY,_screen,true,true);
+ arena.Print_background_Animations(x,y,mapX,mapY,_screen,true,true);
+ arena.Print(x,y,mapX,mapY,_screen,true,true);
+ arena.Print_Animations(x,y,mapX,mapY,_screen,true,true);
  if(Player_is_on_light(1))
-    player[1].Print_skin(x,y,_screen);
+    player[1].Print_skin(x,y,mapX,mapY,_screen);
  if(type==2 && Player_is_on_light(2))
-    player[2].Print_skin(x,y,_screen);
- arena.Print_background(x,y,0,0,_screen,false,true);
- arena.Print_background_Animations(x,y,0,0,_screen,false,true);
- arena.Print(x,y,0,0,_screen,false,true);
- arena.Print_Animations(x,y,0,0,_screen,false,true);
- effects.Print_Animations(x,y,0,0,_screen,false,true);
+    player[2].Print_skin(x,y,mapX,mapY,_screen);
+ arena.Print_background(x,y,mapX,mapY,_screen,false,true);
+ arena.Print_background_Animations(x,y,mapX,mapY,_screen,false,true);
+ arena.Print(x,y,mapX,mapY,_screen,false,true);
+ arena.Print_Animations(x,y,mapX,mapY,_screen,false,true);
+ if(type==2)
+    effects.Print_Animations(x,y,mapX,mapY,_screen,false,true);
  //effects.Print(x,y,_screen,false);
 }
 
