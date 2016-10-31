@@ -294,6 +294,7 @@ bool Level::Move_player(int _player)
  aux=arena.Get_map_texture_Buff(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
  aux.Set_damage(aux.Get_damage()+((aux.Get_damage()/100)*player[Other_player(_player)].Get_spell_damage()));
  player[_player].Add_buff(aux);
+ player[_player].Add_key(arena.Get_map_texture_key_id(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()));
 
  if(type==2)
     {
@@ -305,10 +306,10 @@ bool Level::Move_player(int _player)
 
  int x,y,x1,y1,velocityX,velocityY;
  char _map_name[TEXT_LENGHT_MAX]={NULL};
+ x=player[_player].Get_map_positionX(),y=player[_player].Get_map_positionY();
  switch(arena.Get_map_texture_type(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()))
         {
-         case 2:x=player[_player].Get_map_positionX(),y=player[_player].Get_map_positionY();
-                if((arena.Get_map_texture_map_name(y,x))[0]==NULL)
+         case 2:if((arena.Get_map_texture_map_name(y,x))[0]==NULL)
                    break;
                 player[_player].Set_map_position(arena.Get_map_texture_player_pos_x(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()),arena.Get_map_texture_player_pos_y(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()));
                 arena.Set_name(arena.Get_map_texture_map_name(y,x));
@@ -318,7 +319,8 @@ bool Level::Move_player(int _player)
                 effects.Set_name("Empty");
                 effects.Load(player[1].Get_keys());
                 break;
-         case 3:x=player[_player].Get_map_positionX(),y=player[_player].Get_map_positionY();
+         case 3:if((arena.Get_map_texture_map_name(y,x))[0]==NULL)
+                   break;
                 x1=arena.Get_map_texture_player_pos_x(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()),y1=arena.Get_map_texture_player_pos_y(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
                 velocityX=player[_player].Get_velocityX(),velocityY=player[_player].Get_velocityY();
                 strcpy(_map_name,name);

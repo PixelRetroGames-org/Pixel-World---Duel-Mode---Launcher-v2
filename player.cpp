@@ -349,11 +349,6 @@ int Player::Get_experience()
  return experience;
 }
 
-std::bitset<NUMBER_OF_MAX_KEYS> Player::Get_keys()
-{
- return keys;
-}
-
 void Player::Print_Character(int x,int y,SDL_Surface *_screen)
 {
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
@@ -1171,4 +1166,24 @@ void Player::Decrease_all_Spells_time_blocked()
 bool Player::Spell_Is_blocked(int spell_pos)
 {
  return spells[spell_pos].Is_blocked();
+}
+
+///Keys
+void Player::Add_key(int _key_id)
+{
+ if(_key_id==0)
+    return;
+ keys[_key_id]=true;
+}
+
+void Player::Remove_key(int _key_id)
+{
+ if(_key_id==0)
+    return;
+ keys[_key_id]=false;
+}
+
+std::bitset<NUMBER_OF_MAX_KEYS> Player::Get_keys()
+{
+ return keys;
 }

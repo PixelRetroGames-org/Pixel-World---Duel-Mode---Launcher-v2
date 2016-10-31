@@ -17,6 +17,7 @@ class Map_texture_id
  int frame=0;
  char map_name[TEXT_LENGHT_MAX]={NULL};
  int player_map_pos_x,player_map_pos_y;
+ int key_id=0;
 
  public:
  Map_texture_id();
@@ -25,11 +26,13 @@ class Map_texture_id
  void Set_frame(int _frame);
  void Set_player_map_pos(int x,int y);
  void Set_map_name(char *_map_name);
+ void Set_key_id(int _key_id);
  int Get_id();
  int Get_frame();
  int Get_player_map_pos_x();
  int Get_player_map_pos_y();
  char *Get_map_name();
+ int Get_key_id();
  bool Is_done();
  void Decrease_remaining_duration();
  void Update_frame(int _number_of_frames);
@@ -54,12 +57,15 @@ class Interactive_map_texture
  void Set_texture_frame(int _frame);
  void Set_texture_player_map_pos(int _texture,int x,int y);
  void Set_texture_map_name(int _texture,char *_map_name);
+ void Set_key_id(int _texture,int _key_id);
+ int Get_id();
  int Get_texture_id();
  void Get_all_textures_ids(std::vector<Map_texture_id> &textures_ids);
  void Get_all_targets_map_positions(std::vector<std::pair<int,int> > &_target_map_position);
  int Get_texture_frame();
  int Get_texture_player_map_pos_x();
  int Get_texture_player_map_pos_y();
+ int Get_key_id();
  char *Get_texture_map_name();
  bool Is_done();
  void Decrease_remaining_duration();

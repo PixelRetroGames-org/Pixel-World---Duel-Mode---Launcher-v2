@@ -69,7 +69,6 @@ class Player
  int Get_PLAYER_INFO_LAST_POSX();
  int Get_money();
  int Get_experience();
- std::bitset<NUMBER_OF_MAX_KEYS> Get_keys();
  void Print_Character(int x,int y,SDL_Surface *_screen);
  void Print_items(int x,int y,SDL_Surface *_screen);
  void Print_Inventory(int x,int y,SDL_Surface *_screen,bool options=true,int type=0);
@@ -143,6 +142,10 @@ class Player
  void Decrease_Spell_time_blocked(int spell_pos);
  void Decrease_all_Spells_time_blocked();
  bool Spell_Is_blocked(int spell_pos);
+ ///Keys
+ void Add_key(int _key_id);
+ void Remove_key(int _key_id);
+ std::bitset<NUMBER_OF_MAX_KEYS> Get_keys();
 };
 
 #endif //PLAYER_H

@@ -120,6 +120,11 @@ char *Map::Get_map_texture_map_name(int x,int y)
  return map_textures_ids[x][y].Get_texture_map_name();
 }
 
+int Map::Get_map_texture_key_id(int x,int y)
+{
+ return map_textures_ids[x][y].Get_key_id();
+}
+
 void Map::Copy(int x,int y,Map *source)
 {
  for(int i=0;i<source->Get_number_of_lines();i++)
@@ -210,7 +215,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> _keys)
           {
            int __id;
            fscanf(where,"%d ",&__id);
-           if(map_textures_ids[i][j].Get_texture_id()!=0)
+           if(map_textures_ids[i][j].Get_id()!=0)
               map_textures_ids[i][j].Load();
            else
               map_textures_ids[i][j].Load(__id);
@@ -282,6 +287,14 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> _keys)
          map_name[strlen(map_name)-1]=NULL;
       map_textures_ids[x][y].Set_texture_player_map_pos(_texture,x1,y1);
       map_textures_ids[x][y].Set_texture_map_name(_texture,map_name);
+     }
+ int number_of_keys=0;
+ fscanf(where,"%d ",&number_of_keys);
+ for(int i=0;i<number_of_locks;i++)
+     {
+      int x,y,key_id,_texture;
+      fscanf(where,"%d %d %d %d ",&_texture,&x,&y,&key_id);
+      map_textures_ids[x][y].Set_key_id(_texture,key_id);
      }
  fclose(where);
 }

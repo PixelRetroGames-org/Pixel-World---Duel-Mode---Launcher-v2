@@ -32,6 +32,11 @@ void Map_texture_id::Set_map_name(char *_map_name)
  strcpy(map_name,_map_name);
 }
 
+void Map_texture_id::Set_key_id(int _key_id)
+{
+ key_id=_key_id;
+}
+
 int Map_texture_id::Get_id()
 {
  return id;
@@ -55,6 +60,11 @@ int Map_texture_id::Get_player_map_pos_y()
 char *Map_texture_id::Get_map_name()
 {
  return map_name;
+}
+
+int Map_texture_id::Get_key_id()
+{
+ return key_id;
 }
 
 bool Map_texture_id::Is_done()
@@ -123,6 +133,11 @@ void Interactive_map_texture::Set_texture_map_name(int _texture,char *_map_name)
  map_textures_ids[_texture].Set_map_name(_map_name);
 }
 
+void Interactive_map_texture::Set_key_id(int _texture,int _key_id)
+{
+ map_textures_ids[_texture].Set_key_id(_key_id);
+}
+
 void Interactive_map_texture::Load()
 {
  if(id==0)
@@ -153,6 +168,11 @@ void Interactive_map_texture::Load(int _id)
 {
  Set_id(_id);
  Load();
+}
+
+int Interactive_map_texture::Get_id()
+{
+ return id;
 }
 
 int Interactive_map_texture::Get_texture_id()
@@ -188,6 +208,11 @@ int Interactive_map_texture::Get_texture_player_map_pos_y()
 char *Interactive_map_texture::Get_texture_map_name()
 {
  return map_textures_ids[current_map_texture_id_position].Get_map_name();
+}
+
+int Interactive_map_texture::Get_key_id()
+{
+ return map_textures_ids[current_map_texture_id_position].Get_key_id();
 }
 
 bool Interactive_map_texture::Is_done()
