@@ -708,6 +708,12 @@ void Level::Trigger_around_player_map(int _player)
       if(arena.Get_type(y,x)!=1)
          continue;
       arena.Trigger(y,x);
+      int x,y,x1,y1,velocityX,velocityY;
+      char _map_name[TEXT_LENGHT_MAX]={NULL};
+      switch(arena.Get_map_texture_type(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()))
+             {
+              case 4:break;
+             }
      }
 }
 
