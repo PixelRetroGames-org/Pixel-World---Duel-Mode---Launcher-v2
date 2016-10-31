@@ -177,7 +177,7 @@ bool Map::Is_done()
  return (current_number_of_updates>number_of_updates && number_of_updates>0);
 }
 
-void Map::Load()
+void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> _keys)
 {
  for(int i=0;i<=1;i++)
      for(int j=0;j<=1;j++)
@@ -192,6 +192,16 @@ void Map::Load()
  FILE *where=fopen(path,"r");
  fscanf(where,"%d %d %d ",&number_of_updates,&number_of_lines,&number_of_columns);
 
+ int number_of_locks=0;
+ fscanf(where,"%d ",&number_of_locks);
+ for(int i=0;i<number_of_locks;i++)
+     {
+      int x,y,key_id,texture_id;
+      fscanf(where,"%d %d %d %d ",&x,&y,&key_id,&texture_id);
+      if(_keys[key_id])
+         map_textures_ids[x][y].Set_id(texture_id);
+     }
+
  std::vector<Map_texture_id> textures_ids;
 
  for(int i=0;i<number_of_lines;i++)
@@ -200,7 +210,10 @@ void Map::Load()
           {
            int __id;
            fscanf(where,"%d ",&__id);
-           map_textures_ids[i][j].Load(__id);
+           if(map_textures_ids[i][j].Get_texture_id()!=0)
+              map_textures_ids[i][j].Load();
+           else
+              map_textures_ids[i][j].Load(__id);
 
            map_textures_ids[i][j].Get_all_textures_ids(textures_ids);
 

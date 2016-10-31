@@ -151,9 +151,9 @@ void Level::Load()
 
  fclose(where);
  arena.Set_name(arena_name);
- arena.Load();
+ arena.Load(player[1].Get_keys());
  effects.Set_name("Empty");
- effects.Load();
+ effects.Load(player[1].Get_keys());
 }
 
 void Level::Change(char *_level_name)
@@ -313,10 +313,10 @@ bool Level::Move_player(int _player)
                 player[_player].Set_map_position(arena.Get_map_texture_player_pos_x(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()),arena.Get_map_texture_player_pos_y(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()));
                 arena.Set_name(arena.Get_map_texture_map_name(y,x));
                 arena.Clear();
-                arena.Load();
+                arena.Load(player[1].Get_keys());
                 effects.Clear();
                 effects.Set_name("Empty");
-                effects.Load();
+                effects.Load(player[1].Get_keys());
                 break;
          case 3:x=player[_player].Get_map_positionX(),y=player[_player].Get_map_positionY();
                 x1=arena.Get_map_texture_player_pos_x(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()),y1=arena.Get_map_texture_player_pos_y(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
@@ -627,7 +627,7 @@ bool Level::Cast_Spell(int _player,int spell_pos)
  if((_spell.Get_map_name())[0]!=NULL)
     {
      spell_effect.Set_name(_spell.Get_map_name());
-     spell_effect.Load();
+     spell_effect.Load(player[1].Get_keys());
      effects.Copy(player[_player].Get_map_positionY()-_spell.Get_range(),player[_player].Get_map_positionX()-_spell.Get_range(),&spell_effect);
      spell_effect.Clear();
     }

@@ -4,8 +4,13 @@
 #include "map_texture.h"
 #include "interactive_map_texture.h"
 #include<vector>
+#include<bitset>
 
 const int NUMBER_OF_LINES_MAX=1000,NUMBER_OF_COLUMNS_MAX=1000,NUMBER_OF_TEXTURES_IDS=100;
+
+#ifndef PLAYER_H
+const int NUMBER_OF_MAX_KEYS=10;
+#endif // PLAYER_H
 
 class Map
 {
@@ -42,7 +47,7 @@ class Map
  void Decrease_background_map_texture_id_remaining_time(bool before_player,bool lights);
  void Update_all_frames();
  bool Is_done();
- void Load();
+ void Load(std::bitset<NUMBER_OF_MAX_KEYS> _keys);
  void Copy(int x,int y,Map *source);
  void Print(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights=false);
  void Print_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights=false);

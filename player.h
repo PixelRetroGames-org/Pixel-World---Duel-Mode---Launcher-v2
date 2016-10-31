@@ -5,14 +5,15 @@
 #include "library.h"
 #include "item.h"
 #include "spell.h"
-#include<vector>
-#include<algorithm>
+#include <vector>
+#include <algorithm>
+#include <bitset>
 
 const int NUMBER_OF_ITEMS_IDS=100;
 
 extern const int INVENTORY_MAX_NUMBER_OF_ITEMS;
 
-const int NUMBER_OF_MAX_ACTIVE_BUFFS=4;
+const int NUMBER_OF_MAX_ACTIVE_BUFFS=4,NUMBER_OF_MAX_KEYS=10;
 
 class Player
 {
@@ -43,7 +44,7 @@ class Player
  std::vector<int> printable_item_buffs_id;
  int number_of_spells=0;
  Spell spells[4];
- int other_player_spell_damage=0;
+ std::bitset<NUMBER_OF_MAX_KEYS> keys;
  ///Game
 
  public:
@@ -68,6 +69,7 @@ class Player
  int Get_PLAYER_INFO_LAST_POSX();
  int Get_money();
  int Get_experience();
+ std::bitset<NUMBER_OF_MAX_KEYS> Get_keys();
  void Print_Character(int x,int y,SDL_Surface *_screen);
  void Print_items(int x,int y,SDL_Surface *_screen);
  void Print_Inventory(int x,int y,SDL_Surface *_screen,bool options=true,int type=0);

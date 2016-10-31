@@ -19,6 +19,7 @@ Player::Player()
  money=experience=number_of_items=0;
  name[0]=NULL;
  memset(number_of_items_bought,0,sizeof number_of_items_bought);
+ keys.reset();
 }
 
 void Player::Clear(bool _delete)
@@ -58,6 +59,7 @@ void Player::Clear(bool _delete)
  for(int i=0;i<4;i++)
      spells[i].Clear(_delete);
  map_positionX=map_positionY=-10;
+ keys.reset();
 }
 
 void Player::Set_name(char *_name)
@@ -183,6 +185,15 @@ void Player::Load()
       spells[i].Set_id(spell_id);
       spells[i].Load();
      }
+ int number_of_keys=0;
+ keys.reset();
+ fscanf(where,"%d ",&number_of_keys);
+ for(int i=0;i<number_of_keys;i++)
+     {
+      int _key_id;
+      fscanf(where,"%d ",&_key_id);
+      keys[_key_id]=true;
+     }
  fclose(where);
  Equip_items();
  Load_skin();
@@ -215,6 +226,13 @@ void Player::Update()
      {
       fprintf(where,"%d\n",spells[i].Get_id());
      }
+ int number_of_keys=0;
+ for(int i=0;i<keys.size();i++)
+     number_of_keys+=keys[i];
+ fprintf(where,"%d\n",number_of_keys);
+ for(int i=0;i<keys.size();i++)
+     if(keys[i])
+        fprintf(where,"%d\n",i);
  fclose(where);
 }
 
@@ -329,6 +347,11 @@ int Player::Get_money()
 int Player::Get_experience()
 {
  return experience;
+}
+
+std::bitset<NUMBER_OF_MAX_KEYS> Player::Get_keys()
+{
+ return keys;
 }
 
 void Player::Print_Character(int x,int y,SDL_Surface *_screen)
