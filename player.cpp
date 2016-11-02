@@ -519,7 +519,7 @@ void Player::Print_Inventory_equipped_items(int x,int y,SDL_Surface *_screen,boo
          {
           if(items_bought[i].Get_id()==0 || ((items_bought[i].Get_type()<6 || items_bought[i].Get_type()>9))/* || items_bought[i].Get_type()<6*/)
              continue;
-          if(equipped_items_ids[i]!=i)
+          if(equipped_items_ids[i]!=i && items_bought[i].Get_type()!=9)
              continue;
           switch(type)
                  {
