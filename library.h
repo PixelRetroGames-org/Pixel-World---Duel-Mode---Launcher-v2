@@ -32,6 +32,7 @@ void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination 
 void apply_surface( int x, int y,int w,int h, SDL_Surface* source, SDL_Surface* destination );
 void apply_surface(int xImage,int yImage,int xScreen,int yScreen,int w,int h,SDL_Surface *source,SDL_Surface *destination);
 SDL_Surface *make_it_transparent( char *filename );
+void make_it_transparent(SDL_Surface *image);
 class Timer
 {
  private:

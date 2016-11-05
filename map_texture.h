@@ -25,7 +25,7 @@ class Texture
 
  public:
  Texture();
- void Clear();
+ void Clear(bool _delete=true);
  void Set_name(char *_name);
  void Set_type(int _type);
  void Set_id(int _id);

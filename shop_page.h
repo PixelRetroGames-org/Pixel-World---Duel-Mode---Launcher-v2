@@ -29,6 +29,7 @@ class Shop_Page
 
  public:
  Shop_Page();
+ void Clear(bool _delete=false);
  void Set_POSX(int _x);
  void Set_LAST_POSX(int _x);
  void Set_name(char *_name);

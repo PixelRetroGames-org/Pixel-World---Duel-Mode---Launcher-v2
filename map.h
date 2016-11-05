@@ -23,9 +23,11 @@ class Map
  SDL_Surface *map_image[2][2],*background_map_image[2][2];
  int number_of_updates,current_number_of_updates;
  bool map_obstacles[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX];
+ bool is_static=true;
 
  public:
- void Clear();
+ //~Map();
+ void Clear(bool _delete=false,bool _delete_all=true);
  void Set_name(char *_name);
  void Set_map_texture_id(int x,int y,Interactive_map_texture _map_texture_id);
  bool Is_obstacle(int x,int y);

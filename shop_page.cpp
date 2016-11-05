@@ -12,6 +12,23 @@ Shop_Page::Shop_Page()
  number_of_items=number_of_lines=number_of_columns=title_size=0;
 }
 
+void Shop_Page::Clear(bool _delete)
+{
+ for(int i=0;i<number_of_items;i++)
+     items[i].Clear(_delete);
+ name[0]=NULL;
+ item_selected=item_click=-1;
+ number_of_items=number_of_lines=number_of_columns=title_size=0;
+ POSX=0,LAST_POSX=0;
+ type=0;
+ if(_delete)
+    {
+     SDL_FreeSurface(image);
+     SDL_FreeSurface(name_image);
+     image=NULL,name_image=NULL;
+    }
+}
+
 void Shop_Page::Set_POSX(int _x)
 {
  POSX=_x;
@@ -54,6 +71,7 @@ void Shop_Page::Load()
  image=make_it_transparent(path);
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",36);
  name_image=TTF_RenderText_Solid(font,name,ITEM_NAME_COLOR);
+ TTF_CloseFont(font);
 }
 
 int Shop_Page::Get_title_size()

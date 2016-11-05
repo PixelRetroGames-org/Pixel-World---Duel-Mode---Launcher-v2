@@ -410,6 +410,7 @@ void Player::Print_Character(int x,int y,SDL_Surface *_screen)
  //item.Print_description(x+190,y,_screen,false);
  y+=120;
  pos_last_y=y;
+ TTF_CloseFont(font);
 }
 
 void Player::Print_items(int x,int y,SDL_Surface *_screen)
@@ -603,6 +604,7 @@ int Player::Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event,in
                                      {
                                       if(spells[spell_pos].Get_id()==items_bought[i].Get_spell_id())
                                          {
+                                          spells[spell_pos].Clear(true);
                                           spells[spell_pos].Set_id(0);
                                           spells[spell_pos].Load();
                                          }
@@ -611,6 +613,7 @@ int Player::Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event,in
                                      {
                                       if(mouse_x-_x-40>=spell_pos*SHOP_inventory_spell_background->w && mouse_x-_x-40<(spell_pos+1)*SHOP_inventory_spell_background->w)
                                          {
+                                          spells[spell_pos].Clear(true);
                                           spells[spell_pos].Set_id(items_bought[i].Get_spell_id());
                                           spells[spell_pos].Load();
                                          }
@@ -1145,6 +1148,11 @@ bool Player::Pay_Spell(int spell_pos)
 Spell Player::Get_Spell(int spell_pos)
 {
  return spells[spell_pos];
+}
+
+int Player::Get_number_of_spells()
+{
+ return number_of_spells;
 }
 
 void Player::Block_Spell(int spell_pos)

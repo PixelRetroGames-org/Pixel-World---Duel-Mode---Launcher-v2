@@ -138,6 +138,7 @@ class Player
  ///Spells
  bool Pay_Spell(int spell_pos);
  Spell Get_Spell(int spell_pos);
+ int Get_number_of_spells();
  void Block_Spell(int spell_pos);
  void Decrease_Spell_time_blocked(int spell_pos);
  void Decrease_all_Spells_time_blocked();

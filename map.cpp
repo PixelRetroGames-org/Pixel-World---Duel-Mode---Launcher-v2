@@ -1,30 +1,46 @@
 #include "map.h"
 #include "settings.h"
 
-void Map::Clear()
+/*Map::~Map()
 {
- map_textures[20].Clear();
- map_textures[0].Clear();
- for(int i=0;i<NUMBER_OF_TEXTURES_IDS;i++)
-     {
-      if(map_textures[i].Get_id()!=0 && map_textures[i].Get_id()!=20)
-         map_textures[i].Clear();
-     }
+ Clear(true);
+}*/
+
+void Map::Clear(bool _delete,bool _delete_all)
+{
+ if(_delete && _delete_all)
+    {
+     //map_textures[20].Clear();
+     //map_textures[0].Clear();
+     for(int i=0;i<NUMBER_OF_TEXTURES_IDS;i++)
+         {
+          if(map_textures[i].Get_id()!=0 && map_textures[i].Get_id()!=20)
+             map_textures[i].Clear(true);
+         }
+    }
+ else
+    {
+     for(int i=0;i<NUMBER_OF_TEXTURES_IDS;i++)
+         {
+          if(map_textures[i].Get_id()!=0 && map_textures[i].Get_id()!=20)
+             map_textures[i].Clear(false);
+         }
+    }
  for(int i=0;i<=1;i++)
      for(int j=0;j<=1;j++)
          {
-          if(map_image[i][j]!=NULL)
+          if(map_image[i][j]!=NULL && _delete)
              {
               SDL_FreeSurface(map_image[i][j]);
               map_image[i][j]=NULL;
              }
-          if(background_map_image[i][j]!=NULL)
+          if(background_map_image[i][j]!=NULL && _delete)
              {
               SDL_FreeSurface(background_map_image[i][j]);
               background_map_image[i][j]=NULL;
              }
-          fast_access_map_textures_animations[i][j].clear();
-          fast_access_background_map_textures_animations[i][j].clear();
+          std::vector<std::pair<int,int> >().swap(fast_access_map_textures_animations[i][j]);
+          std::vector<std::pair<int,int> >().swap(fast_access_background_map_textures_animations[i][j]);
          }
  for(int i=0;i<number_of_lines;i++)
      for(int j=0;j<number_of_columns;j++)
@@ -184,18 +200,19 @@ bool Map::Is_done()
 
 void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> _keys)
 {
- for(int i=0;i<=1;i++)
-     for(int j=0;j<=1;j++)
-         {
-          map_image[i][j]=make_it_transparent("images/game/empty.bmp");
-          background_map_image[i][j]=make_it_transparent("images/game/empty.bmp");
-         }
  char path[TEXT_LENGHT_MAX]={NULL};
  strcpy(path,"maps/");
  strcat(path,name);
  strcat(path,".pwm");
  FILE *where=fopen(path,"r");
- fscanf(where,"%d %d %d ",&number_of_updates,&number_of_lines,&number_of_columns);
+ fscanf(where,"%d %d %d %d ",&is_static,&number_of_updates,&number_of_lines,&number_of_columns);
+
+ for(int i=0;i<=1 && is_static;i++)
+     for(int j=0;j<=1;j++)
+         {
+          map_image[i][j]=make_it_transparent("images/game/empty.bmp");
+          background_map_image[i][j]=make_it_transparent("images/game/empty.bmp");
+         }
 
  int number_of_locks=0;
  fscanf(where,"%d ",&number_of_locks);

@@ -10,6 +10,18 @@ Shop::Shop()
  page_selected=page_click=0;
 }
 
+void Shop::Clear()
+{
+ for(int i=0;i<number_of_pages;i++)
+     pages[i].Clear(true);
+ std::vector<Shop_Page>().swap(pages);
+ name[0]=NULL;
+ number_of_pages=0;
+ page_selected=page_click=0;
+ changed_page=false;
+ POSX=LAST_POSX=0;
+}
+
 int Shop::Get_shop_page_type()
 {
  return pages[page_click].Get_type();
@@ -44,6 +56,7 @@ void Shop::Load()
       fgets(page_name,TEXT_LENGHT_MAX,where);
       if(page_name[strlen(page_name)-1]=='\n')
          page_name[strlen(page_name)-1]=NULL;
+      aux.Clear();
       aux.Set_name(page_name);
       aux.Load();
       aux.Set_POSX(POSX);
@@ -190,7 +203,7 @@ int Shop_Screen::Start(SDL_Surface *screen)
                    player.Print_Character(player.Get_PLAYER_INFO_POSX(),0,screen);
                    player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,true,shop.Get_shop_page_type());
                   }
-               _item_id=player.Start_inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,&event,shop.Get_shop_page_type());
+               _item_id=player.Start_inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,&event,shop.Get_shop_page_type());;
                if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.sym==SDLK_ESCAPE))
                   quit=true;
                switch(message)
@@ -219,6 +232,7 @@ int Shop_Screen::Start(SDL_Surface *screen)
  SDL_FreeSurface(not_enough_space);
  SDL_FreeSurface(not_enough_background);
  player.Clear(true);
+ shop.Clear();
  if(event.type==SDL_QUIT)
     return -1;
  return 0;

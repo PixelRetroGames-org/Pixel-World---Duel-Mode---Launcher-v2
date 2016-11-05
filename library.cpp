@@ -122,6 +122,16 @@ SDL_Surface *make_it_transparent( char *filename )
  return optimizedImage;
 }
 
+void make_it_transparent( SDL_Surface *image )
+{
+ if(image!=NULL)
+    {
+     //Map the color key
+     Uint32 colorkey=SDL_MapRGB(image->format,0xFF,0x0,0xE1);
+     SDL_SetColorKey(image,SDL_SRCCOLORKEY,colorkey);
+    }
+}
+
 Timer::Timer()
 {
  //Initialize the variables

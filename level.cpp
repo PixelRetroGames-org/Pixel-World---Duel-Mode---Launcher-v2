@@ -19,9 +19,14 @@ void Level::Clear()
  player[1].Clear(true);
  if(type==2)
     player[2].Clear(true);
- arena.Clear();
- effects.Clear();
+ arena.Clear(true,true);
+ effects.Clear(true,true);
  darkness.Clear();
+ //aux.Clear();
+ for(int i=0;i<spell_effects.size();i++)
+     spell_effects[i].Clear(true,true);
+ std::vector<Map>().swap(spell_effects);
+ spell_effects_ids.clear();
 }
 
 void Level::Set_arena_size()
@@ -101,6 +106,18 @@ void Level::Load()
  player[1].Set_map_position(x,y);
  player[1].Load();
 
+ for(int i=0;i<player[1].Get_number_of_spells();i++)
+     {
+      if(!spell_effects_ids.count((player[1].Get_Spell(i)).Get_id()) && ((player[1].Get_Spell(i)).Get_map_name())[0]!=NULL)
+         {
+          aux.Set_name((player[1].Get_Spell(i)).Get_map_name());
+          aux.Load(NULL);
+          spell_effects.push_back(aux);
+          spell_effects_ids[(player[1].Get_Spell(i)).Get_id()]=spell_effects.size()-1;
+          aux.Clear(false);
+         }
+     }
+
  player[2].Set_map_position(-5,-5);
 
  if(type==2)
@@ -113,6 +130,19 @@ void Level::Load()
      player[2].Set_name(player_name[2]);
      player[2].Set_map_position(x,y);
      player[2].Load();
+
+     for(int i=0;i<player[2].Get_number_of_spells();i++)
+         {
+          if(!spell_effects_ids.count((player[2].Get_Spell(i)).Get_id()) && ((player[2].Get_Spell(i)).Get_map_name())[0]!=NULL)
+             {
+              aux.Set_name((player[2].Get_Spell(i)).Get_map_name());
+              aux.Load(NULL);
+              spell_effects.push_back(aux);
+              spell_effects_ids[(player[2].Get_Spell(i)).Get_id()]=spell_effects.size()-1;
+              aux.Clear(false);
+             }
+         }
+
     }
 
  fgets(arena_name,sizeof arena_name,where);
@@ -628,10 +658,11 @@ bool Level::Cast_Spell(int _player,int spell_pos)
  ///Spell effect
  if((_spell.Get_map_name())[0]!=NULL)
     {
-     spell_effect.Set_name(_spell.Get_map_name());
+     /*spell_effect.Set_name(_spell.Get_map_name());
      spell_effect.Load(player[1].Get_keys());
      effects.Copy(player[_player].Get_map_positionY()-_spell.Get_range(),player[_player].Get_map_positionX()-_spell.Get_range(),&spell_effect);
-     spell_effect.Clear();
+     spell_effect.Clear();*/
+     effects.Copy(player[_player].Get_map_positionY()-_spell.Get_range(),player[_player].Get_map_positionX()-_spell.Get_range(),&spell_effects[spell_effects_ids[_spell.Get_id()]]);
     }
  switch(_spell.Get_type())
         {

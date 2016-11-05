@@ -6,15 +6,15 @@ Texture::Texture()
  image_position.w=40;
 }
 
-void Texture::Clear()
+void Texture::Clear(bool _delete)
 {
- if(image!=NULL)
+ if(image!=NULL && _delete)
     {
      SDL_FreeSurface(image);
      image=NULL;
     }
  id=0;
- buff.Clear();
+ buff.Clear(_delete);
 }
 
 void Texture::Set_id(int _id)

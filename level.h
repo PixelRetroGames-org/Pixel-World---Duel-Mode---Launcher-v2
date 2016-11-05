@@ -5,6 +5,7 @@
 #include "map.h"
 #include "darkness.h"
 #include<ctime>
+#include<map>
 
 #ifndef NUMBER_OF_SONGS_MAX_DEFINED
 const int NUMBER_OF_SONGS_MAX=10;
@@ -32,7 +33,9 @@ class Level
  Mix_Music *background_music[NUMBER_OF_SONGS_MAX];
  Player player[3];
  Map arena,effects;
- Map spell_effect;
+ Map aux;
+ std::vector<Map> spell_effects;
+ std::map<int,int> spell_effects_ids;
  SDL_Rect arena_size;
  Darkness darkness;
  Timer level_duration;

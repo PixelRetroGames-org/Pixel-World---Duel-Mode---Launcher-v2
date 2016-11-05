@@ -18,6 +18,7 @@ class Shop
 
  public:
  Shop();
+ void Clear();
  int Get_shop_page_type();
  void Set_POSX(int _x);
  void Set_LAST_POSX(int _x);

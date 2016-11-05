@@ -24,20 +24,29 @@ void Item::Clear(bool _delete)
 {
  if(_delete)
     {
-     SDL_FreeSurface(inventory_image);
-     SDL_FreeSurface(image);
-     SDL_FreeSurface(name_image);
-     inventory_image=image=name_image=NULL;
+     if(inventory_image!=NULL)
+        SDL_FreeSurface(inventory_image);
+     if(image!=NULL)
+        SDL_FreeSurface(image);
+     if(name_image!=NULL)
+        SDL_FreeSurface(name_image);
+     if(price_image!=NULL)
+        SDL_FreeSurface(price_image);
+     inventory_image=image=name_image=price_image=NULL;
     }
- for(int i=0;i<DESCRIPTION_LINES_MAX;i++)
+ for(int i=0;i<DESCRIPTION_LINES_MAX && _delete;i++)
      if(description_image[i]!=NULL)
-        description_image[i]=NULL;
+        {
+         SDL_FreeSurface(description_image[i]);
+         description_image[i]=NULL;
+        }
  description_lines=0;
  id=cost=0;
  image=NULL;
  name[0]=description[0]=NULL;
  attack=defense=extra_money=spell_damage=spell_resistance=mana=hp=movement_speed=0;
- buff.Clear();
+ if(buff.Get_id()!=0)
+    buff.Clear();
 }
 
 int Item::Get_spell_id()
@@ -137,6 +146,12 @@ int Item::Load()
 {
  char path[TEXT_LENGHT_MAX]={NULL},aux[TEXT_LENGHT_MAX]={NULL};
  TTF_Font *font=NULL;
+ for(int i=0;i<DESCRIPTION_LINES_MAX;i++)
+     if(description_image[i]!=NULL)
+        {
+         description_image[i]=NULL;
+        }
+ inventory_image=image=name_image=price_image=NULL;
  if(id==0)
     {
      strcpy(path,"shop/items/images/");
