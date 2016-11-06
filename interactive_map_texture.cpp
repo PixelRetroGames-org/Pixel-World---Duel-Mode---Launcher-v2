@@ -149,6 +149,17 @@ void Interactive_map_texture::Load()
  strcat(path,aux);
  strcat(path,".pwit");
  FILE *where=fopen(path,"r");
+ if(where==NULL)
+    {
+     Map_texture_id _id;
+     _id.Set_id(id);
+     _id.Set_duration(-1);
+     _id.Set_frame(0);
+     map_textures_ids.push_back(_id);
+     number_of_map_textures_ids_positions=1;
+     current_map_texture_id_position=0;
+     return;
+    }
  fscanf(where,"%d %d ",&number_of_map_textures_ids_positions,&current_map_texture_id_position);
  map_textures_ids.clear();
  Map_texture_id _id;
