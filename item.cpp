@@ -200,8 +200,6 @@ int Item::Load()
  //Create description image
  SDL_Surface *message=NULL;
  font=TTF_OpenFont("fonts/pixel3.ttf",25);
- if(font==NULL)
-    exit(100);
  int N=strlen(description);
  memset(aux,0,sizeof aux);
  int j=0;

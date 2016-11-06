@@ -328,7 +328,7 @@ void Map::Print_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Sur
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_map_textures_animations[before_player][lights].begin();it!=fast_access_map_textures_animations[before_player][lights].end();it++)
      {
-      if(!map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y)
+      if(!map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/40 && it->second<map_x+MAP_IMAGE_HEIGHT/40)
          Print_image((it->second-map_x)*40+screen_x,(it->first-map_y)*40+screen_y,_screen,&map_textures_ids[it->first][it->second]);
      }
 }
@@ -343,7 +343,7 @@ void Map::Print_background_Animations(int screen_x,int screen_y,int map_x,int ma
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_background_map_textures_animations[before_player][lights].begin();it!=fast_access_background_map_textures_animations[before_player][lights].end();it++)
      {
-      if(!background_map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y)
+      if(!background_map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/40 && it->second<map_x+MAP_IMAGE_HEIGHT/40)
          Print_image((it->second-map_x)*40+screen_x,(it->first-map_y)*40+screen_y,_screen,&background_map_textures_ids[it->first][it->second]);
      }
 }
