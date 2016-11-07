@@ -20,7 +20,7 @@ void Level::Clear()
  if(type==2)
     player[2].Clear(true);
  arena.Clear(true,true);
- effects.Clear(true,true);
+ effects.Clear(true,false);
  darkness.Clear();
  //aux.Clear();
  for(int i=0;i<spell_effects.size();i++)
@@ -335,14 +335,15 @@ bool Level::Move_player(int _player)
     }
 
  int x,y,x1,y1,velocityX,velocityY;
- char _map_name[TEXT_LENGHT_MAX]={NULL};
+ char _map_name[TEXT_LENGHT_MAX]={NULL},_aux[TEXT_LENGHT_MAX]={NULL};
  x=player[_player].Get_map_positionX(),y=player[_player].Get_map_positionY();
  switch(arena.Get_map_texture_type(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()))
         {
          case 2:if((arena.Get_map_texture_map_name(y,x))[0]==NULL)
                    break;
                 player[_player].Set_map_position(arena.Get_map_texture_player_pos_x(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()),arena.Get_map_texture_player_pos_y(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()));
-                arena.Set_name(arena.Get_map_texture_map_name(y,x));
+                strcpy(_aux,arena.Get_map_texture_map_name(y,x));
+                arena.Set_name(_aux);
                 arena.Clear();
                 arena.Load(player[1].Get_keys());
                 effects.Clear();
@@ -354,7 +355,8 @@ bool Level::Move_player(int _player)
                 x1=arena.Get_map_texture_player_pos_x(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()),y1=arena.Get_map_texture_player_pos_y(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
                 velocityX=player[_player].Get_velocityX(),velocityY=player[_player].Get_velocityY();
                 strcpy(_map_name,name);
-                Change(arena.Get_map_texture_map_name(y,x));
+                strcpy(_aux,arena.Get_map_texture_map_name(y,x));
+                Change(_aux);
                 player[_player].Set_map_position(y1,x1);
                 if(type==2)
                    {
