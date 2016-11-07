@@ -550,7 +550,8 @@ void Level::Print_player_information(int _player,SDL_Surface *_screen)
     {
      player[_player].Print_mana(_screen);
      player[_player].Print_buffs((player[_player].Get_PLAYER_INFO_POSX()+player[_player].Get_PLAYER_INFO_LAST_POSX())/2-85,120,_screen);
-     player[_player].Print_items((player[_player].Get_PLAYER_INFO_POSX()+player[_player].Get_PLAYER_INFO_LAST_POSX())/2-85,160,_screen);
+     player[_player].Print_spells((player[_player].Get_PLAYER_INFO_POSX()+player[_player].Get_PLAYER_INFO_LAST_POSX())/2-95,160,_screen);
+     player[_player].Print_items((player[_player].Get_PLAYER_INFO_POSX()+player[_player].Get_PLAYER_INFO_LAST_POSX())/2-85,200,_screen);
      player[_player].Print_Inventory_equipped_items(player[_player].Get_PLAYER_INFO_POSX(),120+100*5,_screen,false);
     }
 }
@@ -921,7 +922,8 @@ void Level::Setup(char *_level_name)
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Load();
  //SDL_Delay(1000);
- SDL_KillThread(_loading_image);
+ //while(SDL_GetThreadID(_loading_image)!=0)
+       SDL_KillThread(_loading_image);
  player_time_blocked[1]=player_time_blocked[2]=0;
  player[1].Unblock();
  player[2].Unblock();

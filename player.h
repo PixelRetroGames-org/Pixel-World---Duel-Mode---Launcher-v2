@@ -143,6 +143,7 @@ class Player
  void Decrease_Spell_time_blocked(int spell_pos);
  void Decrease_all_Spells_time_blocked();
  bool Spell_Is_blocked(int spell_pos);
+ void Print_spells(int x,int y,SDL_Surface *_screen);
  ///Keys
  void Add_key(int _key_id);
  void Remove_key(int _key_id);

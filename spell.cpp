@@ -22,6 +22,7 @@ void Spell::Clear(bool _delete)
  for(int i=0;i<buffs.size();i++)
      buffs[i].Clear(_delete);
  std::vector<Buff>().swap(buffs);
+ SDL_FreeSurface(image);
  //buffs.clear();
 }
 
@@ -37,6 +38,10 @@ void Spell::Load()
  fgets(name,sizeof name,where);
  if(name[strlen(name)-1]=='\n')
     name[strlen(name)-1]=NULL;
+ strcpy(aux,"shop/items/inventory/images/");
+ strcat(aux,name);
+ strcat(aux,".bmp");
+ image=make_it_transparent(aux);
  int number_of_buffs=0;
  fscanf(where,"%d ",&number_of_buffs);
  Buff aux_buff;
@@ -110,4 +115,16 @@ bool Spell::Pay(int *_mana,int *_health,int *_mental_health)
  (*_health)-=health_cost;
  (*_mental_health)-=mental_health_cost;
  return true;
+}
+
+bool Spell::Can_Pay(int _mana,int _health,int _mental_health)
+{
+ if((_mana)<mana_cost || (_health)<health_cost || (_mental_health)<mental_health_cost)
+    return false;
+ return true;
+}
+
+void Spell::Print_image(int x,int y,SDL_Surface *_screen)
+{
+ apply_surface(x,y,image,_screen);
 }

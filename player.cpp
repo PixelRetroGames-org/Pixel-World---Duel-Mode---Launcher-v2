@@ -1176,6 +1176,25 @@ bool Player::Spell_Is_blocked(int spell_pos)
  return spells[spell_pos].Is_blocked();
 }
 
+void Player::Print_spells(int x,int y,SDL_Surface *_screen)
+{
+ for(int spell_pos=0;spell_pos<4;spell_pos++)
+     {
+      apply_surface(x,y,PLAYER_SPELLS_background,_screen);
+      if(spells[spell_pos].Get_id()!=0)
+         {
+          spells[spell_pos].Print_image(x,y,_screen);
+          if(Spell_Is_blocked(spell_pos))
+             apply_surface(x,y,PLAYER_SPELLS_not_ready,_screen);
+          else
+             if(!spells[spell_pos].Can_Pay(mana,hp,mental_health))
+                apply_surface(x,y,PLAYER_SPELLS_no_mana,_screen);
+         }
+      apply_surface(x,y,PLAYER_SPELLS_front,_screen);
+      x+=PLAYER_SPELLS_background->w+10;
+     }
+}
+
 ///Keys
 void Player::Add_key(int _key_id)
 {

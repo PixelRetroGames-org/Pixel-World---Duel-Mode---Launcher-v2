@@ -23,6 +23,7 @@ const SDL_Color EQUIP_COLOR={15,30,90},BUY_COLOR={40,80,160},EQUIPPED_COLOR={255
 SDL_Surface *PLAYER_name_background,*PLAYER_name_background_right_layer,*PLAYER_details_background,*PLAYER_experience_background,*PLAYER_money_background;
 SDL_Surface *PLAYER_HP_background,*PLAYER_MANA_background,*PLAYER_CASE_background,*PLAYER_CASE_front;
 SDL_Surface *PLAYER_name_background_shop;
+SDL_Surface *PLAYER_SPELLS_background,*PLAYER_SPELLS_front,*PLAYER_SPELLS_no_mana,*PLAYER_SPELLS_not_ready;
 
 ///LEVEL
 SDL_Surface *LEVEL_background_image,*LEVEL_loading_image;
@@ -86,6 +87,12 @@ void Load_player_images()
  PLAYER_MANA_background=make_it_transparent("images/player/mana_background.bmp");
  PLAYER_CASE_background=make_it_transparent("images/player/case_background.bmp");
  PLAYER_CASE_front=make_it_transparent("images/player/case_front.bmp");
+ PLAYER_SPELLS_background=make_it_transparent("images/player/spells_background.bmp");
+ PLAYER_SPELLS_front=make_it_transparent("images/player/spells_front.bmp");
+ PLAYER_SPELLS_no_mana=make_it_transparent("images/player/spells_no_mana.bmp");
+ SDL_SetAlpha(PLAYER_SPELLS_no_mana,SDL_SRCALPHA,200);
+ PLAYER_SPELLS_not_ready=make_it_transparent("images/player/spells_not_ready.bmp");
+ SDL_SetAlpha(PLAYER_SPELLS_not_ready,SDL_SRCALPHA,200);
 }
 
 void Load_level_images()

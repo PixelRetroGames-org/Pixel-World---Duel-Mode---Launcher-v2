@@ -17,6 +17,7 @@ class Spell
  int range,mana_cost,health_cost,mental_health_cost,cooldown;
  int time_blocked=0;
  std::vector<Buff> buffs;
+ SDL_Surface *image=NULL;
 
  public:
  Spell();
@@ -32,6 +33,8 @@ class Spell
  void Decrease_time_blocked();
  void Block();
  bool Pay(int *_mana,int *_health,int *_mental_health);
+ bool Can_Pay(int _mana,int _health,int _mental_health);
+ void Print_image(int x,int y,SDL_Surface *_screen);
 };
 
 #endif // SPELL_H
