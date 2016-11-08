@@ -188,7 +188,10 @@ void Level::Load()
 
 void Level::Change(char *_level_name)
 {
+ SDL_Thread *_loading_image=NULL;
+ _loading_image=SDL_CreateThread(Loading_image,NULL);
  Clear();
+ SDL_KillThread(_loading_image);
  Setup(_level_name);
 }
 
@@ -349,6 +352,7 @@ bool Level::Move_player(int _player)
                 effects.Clear();
                 effects.Set_name("Empty");
                 effects.Load(player[1].Get_keys());
+                return false;
                 break;
          case 3:if((arena.Get_map_texture_map_name(y,x))[0]==NULL)
                    break;
@@ -365,6 +369,7 @@ bool Level::Move_player(int _player)
                     player[_player].Set_map_position(x-velocityX,y-velocityY);
                     Change_music(1);
                    }
+                return false;
                 break;
         }
 
@@ -1022,7 +1027,10 @@ void Level::Start(SDL_Surface *screen)
  player[1].Update();
  if(type==2)
     player[2].Update();
+ SDL_Thread *_loading_image=NULL;
+ _loading_image=SDL_CreateThread(Loading_image,NULL);
  Clear();
+ SDL_KillThread(_loading_image);
 }
 
 int Other_player(int _player)
