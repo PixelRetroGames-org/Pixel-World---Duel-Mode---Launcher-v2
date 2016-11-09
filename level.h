@@ -40,6 +40,7 @@ class Level
  Darkness darkness;
  Timer level_duration;
  SDL_Surface *_screen;
+ bool level_changed=false;
 
  public:
  Level();

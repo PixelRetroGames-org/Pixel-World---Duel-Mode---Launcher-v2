@@ -168,6 +168,7 @@ int Shop_Screen::Start(SDL_Surface *screen)
  shop.Load();
  player.Load();
  SDL_KillThread(_loading_image);
+ SDL_Flip(static_screen);
  shop.Print(screen);
  player.Print_Character(player.Get_PLAYER_INFO_POSX(),0,screen);
  player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,true,shop.Get_shop_page_type());

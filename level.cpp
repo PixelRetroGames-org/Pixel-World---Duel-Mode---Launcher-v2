@@ -188,10 +188,12 @@ void Level::Load()
 
 void Level::Change(char *_level_name)
 {
+ level_changed=true;
  SDL_Thread *_loading_image=NULL;
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Clear();
  SDL_KillThread(_loading_image);
+ SDL_Flip(static_screen);
  Setup(_level_name);
 }
 
@@ -323,6 +325,11 @@ bool Level::Move_player_Y(int _player)
 
 bool Level::Move_player(int _player)
 {
+ if(level_changed)
+    {
+     fprintf(stderr,"aaaa");
+     return false;
+    }
  Buff aux;
  aux=arena.Get_map_texture_Buff(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
  aux.Set_damage(aux.Get_damage()+((aux.Get_damage()/100)*player[Other_player(_player)].Get_spell_damage()));
@@ -483,6 +490,8 @@ void Level::Player_time_blocked_decrease(int _player)
 
 void Level::Players_time_pass()
 {
+ if(level_changed)
+    return;
  Player_time_blocked_decrease(1);
  Player_time_blocked_decrease(2);
  Decrease_all_Spells_time_blocked(1);
@@ -722,6 +731,8 @@ void Level::Decrease_all_Spells_time_blocked(int _player)
 //Interaction with map
 void Level::Trigger_player_map(int _player)
 {
+ if(level_changed)
+    return;
  if(arena.Get_type(player[_player].Get_map_positionY(),player[_player].Get_map_positionX())!=1)
     return;
  arena.Trigger(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
@@ -742,7 +753,7 @@ void Level::Trigger_around_player_map(int _player)
      {
       x=player[_player].Get_map_positionX()+dirx[i];
       y=player[_player].Get_map_positionY()+diry[i];
-      if(x<0 || x>arena.Get_number_of_columns() || y<0 || y>arena.Get_number_of_lines())
+      if(x<0 || x>=arena.Get_number_of_columns() || y<0 || y>=arena.Get_number_of_lines())
          continue;
       arena.Trigger(y,x);
       /*int x,y,x1,y1,velocityX,velocityY;
@@ -929,8 +940,8 @@ void Level::Setup(char *_level_name)
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Load();
  //SDL_Delay(1000);
- //while(SDL_GetThreadID(_loading_image)!=0)
-       SDL_KillThread(_loading_image);
+ SDL_KillThread(_loading_image);
+ SDL_Flip(static_screen);
  player_time_blocked[1]=player_time_blocked[2]=0;
  player[1].Unblock();
  player[2].Unblock();
@@ -962,6 +973,7 @@ void Level::Start(SDL_Surface *screen)
  //Start_music();
  #endif // AUDIO
  int previous_time=current_time.get_ticks(),lag=0;
+ bool bulaneala=false;
  while(!quit && !done)
        {
         fps.start();
@@ -970,13 +982,16 @@ void Level::Start(SDL_Surface *screen)
             Change_music(1);
             music_time.start();
            }
+        if(level_changed)
+           previous_time=current_time.get_ticks();
+        level_changed=false;
         int elapsed=current_time.get_ticks()-previous_time;
         previous_time=current_time.get_ticks();
         lag+=elapsed;
         SDL_PumpEvents();
         quit=keystates[SDL_QUIT] || ((keystates[SDLK_RALT] || keystates[SDLK_LALT]) && keystates[SDLK_F4]);
         Handle_Events(screen);
-        while(lag>MS_PER_UPDATE && !done)
+        while(!level_changed && lag>MS_PER_UPDATE && !done)
               {
                Players_time_pass();
                Move_all_players();
@@ -1031,6 +1046,7 @@ void Level::Start(SDL_Surface *screen)
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Clear();
  SDL_KillThread(_loading_image);
+ SDL_Flip(static_screen);
 }
 
 int Other_player(int _player)
