@@ -27,6 +27,8 @@ void Level::Clear()
      spell_effects[i].Clear(true,true);
  std::vector<Map>().swap(spell_effects);
  spell_effects_ids.clear();
+ for(int i=0;i<number_of_non_playable_characters;i++)
+     non_playable_characters[i].Clear();
 }
 
 void Level::Set_arena_size()
@@ -145,6 +147,19 @@ void Level::Load()
 
     }
 
+ if(type==1)
+    {
+     fscanf(where,"%d ",&number_of_non_playable_characters);
+     char npc_name[TEXT_LENGHT_MAX];
+     for(int i=0;i<number_of_non_playable_characters;i++)
+         {
+          fgets(npc_name,sizeof npc_name,where);
+          if(npc_name[strlen(npc_name)-1]=='\n')
+             npc_name[strlen(npc_name)-1]=NULL;
+          non_playable_characters[i].Load(npc_name,player[1].Get_keys());
+         }
+    }
+
  fgets(arena_name,sizeof arena_name,where);
  if(arena_name[strlen(arena_name)-1]=='\n')
     arena_name[strlen(arena_name)-1]=NULL;
@@ -162,6 +177,7 @@ void Level::Load()
 
  if(terrain_type!=last_terrain_type || type==2)
     {
+     last_track_played=-1;
      for(int i=0;i<number_of_background_music_tracks;i++)
          {
           Mix_FreeMusic(background_music[i]);
@@ -232,7 +248,13 @@ int Level::Change_music(bool play)
  if(Mix_PlayingMusic()==0)
     {
      if(play)
-        Mix_PlayMusic(background_music[rand()%number_of_background_music_tracks],0);
+        {
+         int x=rand()%number_of_background_music_tracks;
+         if(x==last_track_played)
+            x=(last_track_played+rand()%(number_of_background_music_tracks+1)%number_of_background_music_tracks);
+         last_track_played=x;
+         Mix_PlayMusic(background_music[x],0);
+        }
      return 1;
     }
  return 0;
@@ -268,6 +290,19 @@ bool Level::Move_player_X(int _player)
 
  if((Y1<=y && y<=LY1) || (y<=Y1 && Y1<=LY))
     collision_y=true;
+
+ for(int i=0;i<number_of_non_playable_characters;i++)
+     {
+      LX=x+player[_player].Get_skinW()/40-1,LY=y+player[_player].Get_skinH()/40-1;
+      X1=non_playable_characters[i].Get_map_positionX(),Y1=non_playable_characters[i].Get_map_positionY();
+      LX1=X1+non_playable_characters[i].Get_skinW()/40-1,LY1=Y1+non_playable_characters[i].Get_skinH()/40-1;
+
+      if((X1<=x && x<=LX1) || (x<=X1 && X1<=LX))
+         collision_x=true;
+
+      if((Y1<=y && y<=LY1) || (y<=Y1 && Y1<=LY))
+         collision_y=true;
+     }
 
  if(collision_x && collision_y)
     move_possible=false;
@@ -308,6 +343,19 @@ bool Level::Move_player_Y(int _player)
  if((Y1<=y && y<=LY1) || (y<=Y1 && Y1<=LY))
     collision_y=true;
 
+ for(int i=0;i<number_of_non_playable_characters;i++)
+     {
+      LX=x+player[_player].Get_skinW()/40-1,LY=y+player[_player].Get_skinH()/40-1;
+      X1=non_playable_characters[i].Get_map_positionX(),Y1=non_playable_characters[i].Get_map_positionY();
+      LX1=X1+non_playable_characters[i].Get_skinW()/40-1,LY1=Y1+non_playable_characters[i].Get_skinH()/40-1;
+
+      if((X1<=x && x<=LX1) || (x<=X1 && X1<=LX))
+         collision_x=true;
+
+      if((Y1<=y && y<=LY1) || (y<=Y1 && Y1<=LY))
+         collision_y=true;
+     }
+
  if(collision_x && collision_y)
     move_possible=false;
 
@@ -327,7 +375,6 @@ bool Level::Move_player(int _player)
 {
  if(level_changed)
     {
-     fprintf(stderr,"aaaa");
      return false;
     }
  Buff aux;
@@ -395,6 +442,8 @@ bool Level::Move_player(int _player)
 
 void Level::Move_all_players()
 {
+ if(type==1)
+    Move_NPC();
  bool first=Move_player(1),second=false;
  if(type==2)
     second=Move_player(2);
@@ -424,6 +473,46 @@ void Level::Unblock_all_players()
 void Level::Unblock_player(int _player)
 {
  player[_player].Unblock();
+}
+
+void Level::Move_NPC()
+{
+ int dirx[]={1,0,-1,0};
+ int diry[]={0,1,0,-1};
+ for(int i=0;i<number_of_non_playable_characters;i++)
+     {
+      if(non_playable_characters[i].Is_static() || non_playable_characters[i].Is_blocked())
+         return;
+      int x,y;
+      x=non_playable_characters[i].Get_map_positionX();
+      y=non_playable_characters[i].Get_map_positionY();
+      int z=rand()%100;
+      if(z<=non_playable_characters[i].Get_chance_to_move())
+         {
+          std::vector<int> possible_directions;
+          for(int j=0;j<4;j++)
+              {
+               if(non_playable_characters[i].Is_accessible(x+dirx[j],y+diry[j]) && (
+                  (player[1].Get_map_positionX()+player[1].Get_skinW()/40-1<x+dirx[j] ||
+                   player[1].Get_map_positionX()>x+dirx[j]+non_playable_characters[i].Get_skinW()/40-1) ||
+                  (player[1].Get_map_positionY()+player[1].Get_skinH()/40-1<y+diry[j] ||
+                   player[1].Get_map_positionY()>y+diry[j]+non_playable_characters[i].Get_skinH()/40-1)))
+                  {
+                   possible_directions.push_back(j);
+                  }
+              }
+          if(possible_directions.size()==0)
+             return;
+          int poz=rand()%(possible_directions.size());
+          x+=dirx[possible_directions[poz]];
+          y+=diry[possible_directions[poz]];
+          non_playable_characters[i].Update_skin(possible_directions[poz]);
+          non_playable_characters[i].Set_map_positionX(x);
+          non_playable_characters[i].Set_map_positionY(y);
+         }
+      non_playable_character_time_blocked[i]=40;
+      non_playable_characters[i].Block();
+     }
 }
 
 bool Level::Players_can_attack(int _player)
@@ -498,11 +587,37 @@ void Level::Players_time_pass()
  Decrease_all_Spells_time_blocked(2);
 }
 
+void Level::NPC_time_blocked_decrease()
+{
+ for(int i=0;i<number_of_non_playable_characters;i++)
+     {
+      if(non_playable_characters[i].Is_blocked())
+         non_playable_character_time_blocked[i]--;
+      if(non_playable_character_time_blocked[i]<=0)
+         non_playable_characters[i].Unblock();
+     }
+}
+
+void Level::Time_Pass()
+{
+ Players_time_pass();
+ NPC_time_blocked_decrease();
+}
+
 bool Level::Player_is_on_light(int _player)
 {
  bool rtn=arena.Is_light(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
  for(int x=player[_player].Get_map_positionX();x<arena.Get_number_of_columns() && x<player[_player].Get_map_positionX()+(player[_player].Get_skinW())/40;x++)
      for(int y=player[_player].Get_map_positionY();y<arena.Get_number_of_lines() && y<player[_player].Get_map_positionY()+(player[_player].Get_skinH())/40;y++)
+         rtn=(rtn || arena.Is_light(y,x));
+ return rtn;
+}
+
+bool Level::Non_Playable_Character_is_on_light(int _npc_pos)
+{
+ bool rtn=arena.Is_light(non_playable_characters[_npc_pos].Get_map_positionY(),non_playable_characters[_npc_pos].Get_map_positionX());
+ for(int x=non_playable_characters[_npc_pos].Get_map_positionX();x<arena.Get_number_of_columns() && x<non_playable_characters[_npc_pos].Get_map_positionX()+(non_playable_characters[_npc_pos].Get_skinW())/40;x++)
+     for(int y=non_playable_characters[_npc_pos].Get_map_positionY();y<arena.Get_number_of_lines() && y<non_playable_characters[_npc_pos].Get_map_positionY()+(non_playable_characters[_npc_pos].Get_skinH())/40;y++)
          rtn=(rtn || arena.Is_light(y,x));
  return rtn;
 }
@@ -523,6 +638,12 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
  arena.Print_Animations(x,y,mapX,mapY,_screen,true,false);
  player[1].Print_skin(x,y,mapX,mapY,_screen);
  player[2].Print_skin(x,y,mapX,mapY,_screen);
+
+ for(int i=0;i<number_of_non_playable_characters;i++)
+     {
+      non_playable_characters[i].Print_skin(x,y,mapX,mapY,_screen);
+     }
+
  arena.Print_background(x,y,mapX,mapY,_screen,false);
  arena.Print_background_Animations(x,y,mapX,mapY,_screen,false);
  arena.Print(x,y,mapX,mapY,_screen,false);
@@ -543,6 +664,11 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
     player[1].Print_skin(x,y,mapX,mapY,_screen);
  if(type==2 && Player_is_on_light(2))
     player[2].Print_skin(x,y,mapX,mapY,_screen);
+ for(int i=0;i<number_of_non_playable_characters;i++)
+     {
+      if(Non_Playable_Character_is_on_light(i))
+         non_playable_characters[i].Print_skin(x,y,mapX,mapY,_screen);
+     }
  arena.Print_background(x,y,mapX,mapY,_screen,false,true);
  arena.Print_background_Animations(x,y,mapX,mapY,_screen,false,true);
  arena.Print(x,y,mapX,mapY,_screen,false,true);
@@ -973,7 +1099,6 @@ void Level::Start(SDL_Surface *screen)
  //Start_music();
  #endif // AUDIO
  int previous_time=current_time.get_ticks(),lag=0;
- bool bulaneala=false;
  while(!quit && !done)
        {
         fps.start();
@@ -993,7 +1118,7 @@ void Level::Start(SDL_Surface *screen)
         Handle_Events(screen);
         while(!level_changed && lag>MS_PER_UPDATE && !done)
               {
-               Players_time_pass();
+               Time_Pass();
                Move_all_players();
                if(arena.get_ticks()>1000/ARENA_FRAMES_PER_SECOND)
                   {

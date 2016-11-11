@@ -198,7 +198,7 @@ bool Map::Is_done()
  return (current_number_of_updates>number_of_updates && number_of_updates>0);
 }
 
-void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> _keys)
+void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
 {
  char path[TEXT_LENGHT_MAX]={NULL};
  strcpy(path,"maps/");
@@ -220,7 +220,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> _keys)
      {
       int x,y,key_id,texture_id;
       fscanf(where,"%d %d %d %d ",&x,&y,&key_id,&texture_id);
-      if(_keys[key_id])
+      if((*_keys)[key_id])
          map_textures_ids[x][y].Set_id(texture_id);
      }
 

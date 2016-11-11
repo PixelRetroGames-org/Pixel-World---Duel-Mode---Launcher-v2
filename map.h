@@ -50,7 +50,7 @@ class Map
  void Decrease_background_map_texture_id_remaining_time(bool before_player,bool lights);
  void Update_all_frames();
  bool Is_done();
- void Load(std::bitset<NUMBER_OF_MAX_KEYS> _keys);
+ void Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys);
  void Copy(int x,int y,Map *source);
  void Print(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights=false);
  void Print_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights=false);

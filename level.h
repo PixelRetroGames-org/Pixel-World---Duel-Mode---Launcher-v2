@@ -4,6 +4,7 @@
 #include "player.h"
 #include "map.h"
 #include "darkness.h"
+#include "non_playable_character.h"
 #include<ctime>
 #include<map>
 
@@ -17,6 +18,8 @@ const int FRAMES_PER_SECOND=27,ARENA_FRAMES_PER_SECOND=16,PLAYER_MOVES_PER_SECON
 const int MS_PER_UPDATE=25;
 
 const int MUSIC_PAUSE=5000;
+
+const int NUMBER_OF_NPC_MAX=20;
 
 class Level
 {
@@ -41,6 +44,10 @@ class Level
  Timer level_duration;
  SDL_Surface *_screen;
  bool level_changed=false;
+ int last_track_played=-1;
+ int number_of_non_playable_characters=0;
+ Non_Playable_Character non_playable_characters[NUMBER_OF_NPC_MAX];
+ int non_playable_character_time_blocked[NUMBER_OF_NPC_MAX];
 
  public:
  Level();
@@ -77,14 +84,18 @@ class Level
  void Block_player(int _player);
  void Unblock_all_players();
  void Unblock_player(int _player);
+ void Move_NPC();
  ///Attack
  bool Players_can_attack(int _player);
  void Player_basic_attack(int _player);
  ///Time blocked
  void Player_time_blocked_decrease(int _player);
  void Players_time_pass();
+ void NPC_time_blocked_decrease();
+ void Time_Pass();
  ///Print
  bool Player_is_on_light(int _player);
+ bool Non_Playable_Character_is_on_light(int _npc_pos);
  void Print_Map(int x,int y,SDL_Surface *_screen);
  void Print_players_informations(SDL_Surface *_screen);
  void Print_player_information(int _player,SDL_Surface *_screen);

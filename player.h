@@ -13,7 +13,11 @@ const int NUMBER_OF_ITEMS_IDS=100;
 
 extern const int INVENTORY_MAX_NUMBER_OF_ITEMS;
 
-const int NUMBER_OF_MAX_ACTIVE_BUFFS=4,NUMBER_OF_MAX_KEYS=10;
+const int NUMBER_OF_MAX_ACTIVE_BUFFS=4;
+
+#ifndef NPC_H
+const int NUMBER_OF_MAX_KEYS=10;
+#endif // NPC_H
 
 class Player
 {
@@ -147,7 +151,7 @@ class Player
  ///Keys
  void Add_key(int _key_id);
  void Remove_key(int _key_id);
- std::bitset<NUMBER_OF_MAX_KEYS> Get_keys();
+ std::bitset<NUMBER_OF_MAX_KEYS> *Get_keys();
 };
 
 #endif //PLAYER_H

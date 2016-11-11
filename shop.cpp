@@ -112,31 +112,6 @@ inline int Shop::Start(SDL_Surface *_screen,SDL_Event *event)
 }
 
 ///SHOP_SCREEN
-void Shop_Screen::Set_filename(char *_filename)
-{
- strcpy(filename,_filename);
-}
-
-void Shop_Screen::Open(char *filename)
-{
- char path[TEXT_LENGHT_MAX]={NULL};
- strcpy(path,"shop/");
- strcat(path,filename);
- strcat(path,".pwb");
- FILE *in=fopen(path,"r");
- char name[TEXT_LENGHT_MAX]={NULL};
- fgets(name,sizeof name,in);
- while(name[strlen(name)-1]=='\n')
-       name[strlen(name)-1]=NULL;
- player.Set_name(name);
- name[0]=NULL;
- fgets(name,sizeof name,in);
- while(name[strlen(name)-1]=='\n')
-       name[strlen(name)-1]=NULL;
- shop.Set_name(name);
- fclose(in);
-}
-
 void Shop_Screen::Reset()
 {
  shop.Reset();
@@ -163,8 +138,6 @@ int Shop_Screen::Start(SDL_Surface *screen)
      shop.Set_POSX(5);
      shop.Set_LAST_POSX(5+4*180+20);
     }
- player.Clear();
- Open(filename);
  shop.Load();
  player.Load();
  SDL_KillThread(_loading_image);
@@ -239,8 +212,9 @@ int Shop_Screen::Start(SDL_Surface *screen)
  return 0;
 }
 
-int Shop_Screen::Start(SDL_Surface *screen,char *filename)
+int Shop_Screen::Start(SDL_Surface *screen,char *shop_name,char *player_name)
 {
- Set_filename(filename);
+ player.Set_name(player_name);
+ shop.Set_name(shop_name);
  return Start(screen);
 }

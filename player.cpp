@@ -1210,7 +1210,7 @@ void Player::Remove_key(int _key_id)
  keys[_key_id]=false;
 }
 
-std::bitset<NUMBER_OF_MAX_KEYS> Player::Get_keys()
+std::bitset<NUMBER_OF_MAX_KEYS> *Player::Get_keys()
 {
- return keys;
+ return &keys;
 }
