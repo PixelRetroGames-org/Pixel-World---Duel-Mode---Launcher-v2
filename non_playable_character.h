@@ -10,23 +10,24 @@ const int NUMBER_OF_MAX_KEYS=10;
 #endif // PLAYER_H
 
 #ifndef TEXT_LENGHT_MAX_DEFINED
-const int TEXT_LENGHT_MAX=101;
+const int TEXT_LENGTH_MAX=101;
 #define TEXT_LENGHT_MAX_DEFINED
 #endif // TEXT_LENGHT_MAX_DEFINED
 
 class Non_Playable_Character
 {
  private:
- char name[TEXT_LENGHT_MAX]={NULL};
+ char name[TEXT_LENGTH_MAX]={NULL};
  int map_positionX=0,map_positionY=0;
  int type=0;
- char script_name[TEXT_LENGHT_MAX],shop_name[TEXT_LENGHT_MAX];
+ char script_name[TEXT_LENGTH_MAX],shop_name[TEXT_LENGTH_MAX];
  std::vector<std::pair<int,int> > map_accessible_positions;
  int chance_to_move=0;
  SDL_Surface *skin_image=NULL;
  SDL_Rect skin_image_position;
  std::bitset<NUMBER_OF_MAX_KEYS> keys_to_give;
  bool is_blocked=false;
+ int last_dir=0;
 
  public:
  void Clear();
@@ -41,6 +42,7 @@ class Non_Playable_Character
  int Get_skinH();
  int Get_map_positionX();
  int Get_map_positionY();
+ int Get_last_dir();
  void Update_skin(int dir);
  void Block();
  void Unblock();

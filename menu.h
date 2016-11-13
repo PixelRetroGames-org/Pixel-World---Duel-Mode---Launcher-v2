@@ -12,7 +12,7 @@
 #include<cstring>
 
 #ifndef TEXT_LENGHT_MAX_DEFINED
-const int TEXT_LENGHT_MAX=101;
+const int TEXT_LENGTH_MAX=101;
 #define TEXT_LENGHT_MAX_DEFINED
 #endif // TEXT_LENGHT_MAX_DEFINED
 const int NUMBER_OF_OPTIONS_MAX=10;
@@ -20,7 +20,7 @@ const int NUMBER_OF_OPTIONS_MAX=10;
 class Menu_Option
 {
  private:
- char text[TEXT_LENGHT_MAX],font_name[TEXT_LENGHT_MAX];
+ char text[TEXT_LENGTH_MAX],font_name[TEXT_LENGTH_MAX];
  SDL_Color color;
  SDL_Surface *text_image=NULL;
  int font_size;

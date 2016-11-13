@@ -27,7 +27,7 @@ void Buff::Clear(bool _delete)
 
 void Buff::Load()
 {
- char filename[TEXT_LENGHT_MAX]={NULL},aux[TEXT_LENGHT_MAX]={NULL};
+ char filename[TEXT_LENGTH_MAX]={NULL},aux[TEXT_LENGTH_MAX]={NULL};
  itoa(id,aux);
  strcpy(filename,"buffs/ids/");
  strcat(filename,aux);

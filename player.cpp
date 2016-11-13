@@ -97,7 +97,7 @@ void Player::Load()
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
  name_image=TTF_RenderText_Solid(font,name,NAME_COLOR);
  TTF_CloseFont(font);
- char path[TEXT_LENGHT_MAX]={NULL};
+ char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"saves/players/");
  strcat(path,name);
  strcat(path,".pwp");
@@ -204,7 +204,7 @@ void Player::Load()
 
 void Player::Update()
 {
- char path[TEXT_LENGHT_MAX]={NULL};
+ char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"saves/players/");
  strcat(path,name);
  strcat(path,".pwp");
@@ -354,7 +354,7 @@ void Player::Print_Character(int x,int y,SDL_Surface *_screen)
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
  SDL_Surface *_image;
  int _x,_y;
- char message[TEXT_LENGHT_MAX]={NULL},aux[TEXT_LENGHT_MAX]={NULL};
+ char message[TEXT_LENGTH_MAX]={NULL},aux[TEXT_LENGTH_MAX]={NULL};
 
  equipped_items[8].Print(SKIN_POSX,y,_screen,false);
 
@@ -440,7 +440,7 @@ void Player::Print_items(int x,int y,SDL_Surface *_screen)
 void Player::Print_Inventory(int x,int y,SDL_Surface *_screen,bool options,int type)
 {
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",15);
- char message[TEXT_LENGHT_MAX]={'x',NULL};
+ char message[TEXT_LENGTH_MAX]={'x',NULL};
  SDL_Surface *_image=NULL;
  apply_surface(x,y,SHOP_inventory_background,_screen);
  int _x=x,_y=y;
@@ -510,7 +510,7 @@ void Player::Print_Inventory(int x,int y,SDL_Surface *_screen,bool options,int t
 void Player::Print_Inventory_equipped_items(int x,int y,SDL_Surface *_screen,bool options,int type)
 {
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",15);
- char message[TEXT_LENGHT_MAX]={'x',NULL};
+ char message[TEXT_LENGTH_MAX]={'x',NULL};
  SDL_Surface *_image=NULL;
  apply_surface(x,y,SHOP_inventory_background,_screen);
  int _x=x,_y=y;
@@ -656,7 +656,7 @@ void Player::Set_hp(int _hp)
  if(hp<0)
     hp=0;
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
- char aux[TEXT_LENGHT_MAX]={NULL};
+ char aux[TEXT_LENGTH_MAX]={NULL};
  itoa(hp,aux);
  SDL_FreeSurface(hp_image);
  hp_image=TTF_RenderText_Solid(font,aux,HP_COLOR);
@@ -670,7 +670,7 @@ void Player::Set_mana(int _mana)
     mana=0;
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
  SDL_Surface *_image=NULL;
- char aux[TEXT_LENGHT_MAX]={NULL};
+ char aux[TEXT_LENGTH_MAX]={NULL};
  itoa(mana,aux);
  SDL_FreeSurface(mana_image);
  mana_image=TTF_RenderText_Solid(font,aux,MANA_COLOR);
@@ -817,7 +817,7 @@ int Player::Get_skinH()
 
 void Player::Set_skin(char *_skin_name)
 {
- char where[TEXT_LENGHT_MAX]={NULL};
+ char where[TEXT_LENGTH_MAX]={NULL};
  strcpy(where,"shop/skins/");
  strcat(where,_skin_name);
  strcat(where,".bmp");

@@ -81,8 +81,8 @@ void Texture::Load()
 {
  if(id==0)
     return;
- char path[TEXT_LENGHT_MAX]={NULL};
- char aux[TEXT_LENGHT_MAX]={NULL};
+ char path[TEXT_LENGTH_MAX]={NULL};
+ char aux[TEXT_LENGTH_MAX]={NULL};
  itoa(id,aux);
  strcpy(path,"maps/textures/");
  strcat(path,aux);

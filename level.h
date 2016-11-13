@@ -27,11 +27,11 @@ class Level
  int type=0,terrain_type=0;
  bool done=false;
  int duration=0;
- char name[TEXT_LENGHT_MAX]={NULL};
- char darkness_image_name[TEXT_LENGHT_MAX]={NULL};
- char player_name[3][TEXT_LENGHT_MAX];
+ char name[TEXT_LENGTH_MAX]={NULL};
+ char darkness_image_name[TEXT_LENGTH_MAX]={NULL};
+ char player_name[3][TEXT_LENGTH_MAX];
  int player_type[3],player_time_blocked[3]={0,0,0},player_time_blocked_attack[3]={0,0,0};
- char arena_name[TEXT_LENGHT_MAX]={NULL},background_music_name[TEXT_LENGHT_MAX]={NULL};
+ char arena_name[TEXT_LENGTH_MAX]={NULL},background_music_name[TEXT_LENGTH_MAX]={NULL};
  int number_of_background_music_tracks;
  Mix_Music *background_music[NUMBER_OF_SONGS_MAX];
  Player player[3];

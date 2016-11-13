@@ -142,8 +142,8 @@ void Interactive_map_texture::Load()
 {
  if(id==0)
     return;
- char path[TEXT_LENGHT_MAX]={NULL};
- char aux[TEXT_LENGHT_MAX]={NULL};
+ char path[TEXT_LENGTH_MAX]={NULL};
+ char aux[TEXT_LENGTH_MAX]={NULL};
  itoa(id,aux);
  strcpy(path,"maps/interactive textures/");
  strcat(path,aux);

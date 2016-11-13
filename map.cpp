@@ -200,7 +200,7 @@ bool Map::Is_done()
 
 void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
 {
- char path[TEXT_LENGHT_MAX]={NULL};
+ char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"maps/");
  strcat(path,name);
  strcat(path,".pwm");
@@ -297,7 +297,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
  for(int i=0;i<number_of_map_changers;i++)
      {
       int x,y,x1,y1,_texture;
-      char map_name[TEXT_LENGHT_MAX];
+      char map_name[TEXT_LENGTH_MAX];
       fscanf(where,"%d %d %d %d %d ",&_texture,&x,&y,&x1,&y1);
       fgets(map_name,sizeof map_name,where);
       if(map_name[strlen(map_name)-1]=='\n')

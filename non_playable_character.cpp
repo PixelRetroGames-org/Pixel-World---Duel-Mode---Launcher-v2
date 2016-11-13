@@ -75,6 +75,11 @@ int Non_Playable_Character::Get_map_positionY()
  return map_positionY;
 }
 
+int Non_Playable_Character::Get_last_dir()
+{
+ return last_dir;
+}
+
 void Non_Playable_Character::Update_skin(int dir)
 {
  int dirx[]={1,0,-1,0};
@@ -83,6 +88,7 @@ void Non_Playable_Character::Update_skin(int dir)
     skin_image_position.x=0;
  if(dir==2)
     skin_image_position.x=skin_image_position.w;
+ last_dir=dir;
 }
 
 void Non_Playable_Character::Block()
@@ -97,7 +103,7 @@ void Non_Playable_Character::Unblock()
 
 void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key)
 {
- char path[TEXT_LENGHT_MAX]={NULL};
+ char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"NPC/");
  strcat(path,name);
  strcat(path,".pwnpc");
@@ -130,7 +136,7 @@ void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key)
  map_positionX=map_accessible_positions[0].first;
  map_positionY=map_accessible_positions[0].second;
  fscanf(where,"%d ",&chance_to_move);
- char skin_name[TEXT_LENGHT_MAX]={NULL};
+ char skin_name[TEXT_LENGTH_MAX]={NULL};
  fgets(skin_name,sizeof skin_name,where);
  if(skin_name[strlen(skin_name)-1]=='\n')
     skin_name[strlen(skin_name)-1]=NULL;

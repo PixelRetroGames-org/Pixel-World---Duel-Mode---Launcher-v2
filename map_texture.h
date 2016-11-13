@@ -6,7 +6,7 @@
 #include "buff.h"
 
 #ifndef TEXT_LENGHT_MAX_DEFINED
-const int TEXT_LENGHT_MAX=101;
+const int TEXT_LENGTH_MAX=101;
 #define TEXT_LENGHT_MAX_DEFINED
 #endif // TEXT_LENGHT_MAX_DEFINED
 
@@ -14,7 +14,7 @@ class Texture
 {
  private:
  int id=0;
- char name[TEXT_LENGHT_MAX]={NULL};
+ char name[TEXT_LENGTH_MAX]={NULL};
  SDL_Surface *image=NULL;
  SDL_Rect image_position;
  int type,damage;

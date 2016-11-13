@@ -46,7 +46,7 @@ void Shop_Page::Set_name(char *_name)
 
 void Shop_Page::Load()
 {
- char path[TEXT_LENGHT_MAX]={NULL};
+ char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"shop/shop_page/");
  strcat(path,name);
  strcat(path,".pwsp");

@@ -124,7 +124,7 @@ SDL_Surface *Item::Get_skin()
  if(type!=8)
     return NULL;
  SDL_Surface *_skin;
- char path[TEXT_LENGHT_MAX]={NULL};
+ char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"shop/skins/");
  strcat(path,name);
  strcat(path,".bmp");
@@ -144,7 +144,7 @@ void Item::Set_id(int _id)
 
 int Item::Load()
 {
- char path[TEXT_LENGHT_MAX]={NULL},aux[TEXT_LENGHT_MAX]={NULL};
+ char path[TEXT_LENGTH_MAX]={NULL},aux[TEXT_LENGTH_MAX]={NULL};
  TTF_Font *font=NULL;
  for(int i=0;i<DESCRIPTION_LINES_MAX;i++)
      if(description_image[i]!=NULL)

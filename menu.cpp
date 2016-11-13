@@ -27,7 +27,7 @@ void Menu_Option::Load(FILE *where)
  screen_pos.h=MENU_background->h;
  screen_pos.w=MENU_background->w;
  //Create text image
- char font_path[TEXT_LENGHT_MAX]={NULL};
+ char font_path[TEXT_LENGTH_MAX]={NULL};
  strcat(font_path,"fonts/");
  strcat(font_path,font_name);
  TTF_Font *font=TTF_OpenFont(font_path,font_size);
@@ -90,7 +90,7 @@ void Menu::Load(const char *filename)
  fscanf(where,"%d %d ",&number_of_options,&is_main_menu);
  if(!is_main_menu)
     {
-     char path[TEXT_LENGHT_MAX]={NULL},background_name[TEXT_LENGHT_MAX]={NULL};
+     char path[TEXT_LENGTH_MAX]={NULL},background_name[TEXT_LENGTH_MAX]={NULL};
      fgets(background_name,sizeof background_name,where);
      if(background_name[strlen(background_name)-1]=='\n')
         background_name[strlen(background_name)-1]=NULL;

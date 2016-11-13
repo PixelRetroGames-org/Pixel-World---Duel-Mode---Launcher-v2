@@ -44,7 +44,7 @@ void Shop::Set_name(char *_name)
 
 void Shop::Load()
 {
- char path[TEXT_LENGHT_MAX]={NULL},page_name[TEXT_LENGHT_MAX]={NULL};
+ char path[TEXT_LENGTH_MAX]={NULL},page_name[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"shop/");
  strcat(path,name);
  strcat(path,".pwsh");
@@ -53,7 +53,7 @@ void Shop::Load()
  Shop_Page aux;
  for(int i=0;i<number_of_pages;i++)
      {
-      fgets(page_name,TEXT_LENGHT_MAX,where);
+      fgets(page_name,TEXT_LENGTH_MAX,where);
       if(page_name[strlen(page_name)-1]=='\n')
          page_name[strlen(page_name)-1]=NULL;
       aux.Clear();

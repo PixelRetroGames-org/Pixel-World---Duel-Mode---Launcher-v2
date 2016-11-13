@@ -89,7 +89,7 @@ Mix_Music *static_background_music[NUMBER_OF_SONGS_MAX];*/
 void Level::Load()
 {
  done=false;
- char path[TEXT_LENGHT_MAX]={NULL};
+ char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"levels/");
  strcat(path,name);
  strcat(path,".pwl");
@@ -150,7 +150,7 @@ void Level::Load()
  if(type==1)
     {
      fscanf(where,"%d ",&number_of_non_playable_characters);
-     char npc_name[TEXT_LENGHT_MAX];
+     char npc_name[TEXT_LENGTH_MAX];
      for(int i=0;i<number_of_non_playable_characters;i++)
          {
           fgets(npc_name,sizeof npc_name,where);
@@ -392,7 +392,7 @@ bool Level::Move_player(int _player)
     }
 
  int x,y,x1,y1,velocityX,velocityY;
- char _map_name[TEXT_LENGHT_MAX]={NULL},_aux[TEXT_LENGHT_MAX]={NULL};
+ char _map_name[TEXT_LENGTH_MAX]={NULL},_aux[TEXT_LENGTH_MAX]={NULL};
  x=player[_player].Get_map_positionX(),y=player[_player].Get_map_positionY();
  switch(arena.Get_map_texture_type(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()))
         {
@@ -487,6 +487,7 @@ void Level::Move_NPC()
       x=non_playable_characters[i].Get_map_positionX();
       y=non_playable_characters[i].Get_map_positionY();
       int z=rand()%100;
+      int keep_direction=false;
       if(z<=non_playable_characters[i].Get_chance_to_move())
          {
           std::vector<int> possible_directions;
@@ -499,11 +500,17 @@ void Level::Move_NPC()
                    player[1].Get_map_positionY()>y+diry[j]+non_playable_characters[i].Get_skinH()/40-1)))
                   {
                    possible_directions.push_back(j);
+                   if(j==non_playable_characters[i].Get_last_dir())
+                      keep_direction=true;
                   }
               }
           if(possible_directions.size()==0)
              return;
           int poz=rand()%(possible_directions.size());
+          if(keep_direction)
+             {
+              poz=keep_direction;
+             }
           x+=dirx[possible_directions[poz]];
           y+=diry[possible_directions[poz]];
           non_playable_characters[i].Update_skin(possible_directions[poz]);
@@ -883,7 +890,7 @@ void Level::Trigger_around_player_map(int _player)
          continue;
       arena.Trigger(y,x);
       /*int x,y,x1,y1,velocityX,velocityY;
-      char _map_name[TEXT_LENGHT_MAX]={NULL};
+      char _map_name[TEXT_LENGTH_MAX]={NULL};
       switch(arena.Get_map_texture_type(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()))
              {
               case 4:break;
@@ -984,7 +991,7 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
  SDL_Surface *player_xp,*player_money,*player_xp_gain,*player_money_gain;
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
  SDL_Color xp_color={75,0,130},MONEY_COLOR={236,242,4};
- char aux[TEXT_LENGHT_MAX]={NULL};
+ char aux[TEXT_LENGTH_MAX]={NULL};
 
  itoa(player[1].Get_experience(),aux);
  strcat(aux,"  +  ");

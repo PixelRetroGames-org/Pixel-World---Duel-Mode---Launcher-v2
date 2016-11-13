@@ -6,7 +6,7 @@
 #define BUFF_PERMANENT -1
 
 #ifndef TEXT_LENGHT_MAX_DEFINED
-const int TEXT_LENGHT_MAX=101;
+const int TEXT_LENGTH_MAX=101;
 #define TEXT_LENGHT_MAX_DEFINED
 #endif // TEXT_LENGHT_MAX_DEFINED
 
@@ -19,11 +19,11 @@ class Buff
  ///SELF BUFF / CURSE
  int attack=0,defense=0,spell_damage=0,spell_resistance=0,movement_speed=0,life_steal=0;
  ///SHAPESHIFT
- char skin_name[TEXT_LENGHT_MAX]={NULL};
+ char skin_name[TEXT_LENGTH_MAX]={NULL};
  SDL_Rect skin_image_position;
  int id,duration,type;
  int remaining_duration;
- char name[TEXT_LENGHT_MAX]={NULL};
+ char name[TEXT_LENGTH_MAX]={NULL};
  SDL_Surface *image=NULL;
 
  public:

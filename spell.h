@@ -5,7 +5,7 @@
 #include<vector>
 
 #ifndef TEXT_LENGHT_MAX_DEFINED
-const int TEXT_LENGHT_MAX=101;
+const int TEXT_LENGTH_MAX=101;
 #define TEXT_LENGHT_MAX_DEFINED
 #endif // TEXT_LENGHT_MAX_DEFINED
 
@@ -13,7 +13,7 @@ class Spell
 {
  private:
  int type,id;
- char name[TEXT_LENGHT_MAX],map_name[TEXT_LENGHT_MAX];
+ char name[TEXT_LENGTH_MAX],map_name[TEXT_LENGTH_MAX];
  int range,mana_cost,health_cost,mental_health_cost,cooldown;
  int time_blocked=0;
  std::vector<Buff> buffs;

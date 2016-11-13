@@ -116,7 +116,7 @@ void Graphic_Change_Resolution(int x,int y,SDL_Surface *_screen,SDL_Event *event
  TTF_Font *font;
  font=TTF_OpenFont("fonts/pixel.ttf",20);
  SDL_Surface *image=NULL;
- char text[TEXT_LENGHT_MAX]={NULL},aux[TEXT_LENGHT_MAX]={NULL};
+ char text[TEXT_LENGTH_MAX]={NULL},aux[TEXT_LENGTH_MAX]={NULL};
  itoa(RESOLUTION_X,text);
  itoa(RESOLUTION_Y,aux);
  strcat(text," x ");

@@ -5,7 +5,7 @@
 #include<vector>
 
 #ifndef TEXT_LENGHT_MAX_DEFINED
-const int TEXT_LENGHT_MAX=101;
+const int TEXT_LENGTH_MAX=101;
 #define TEXT_LENGHT_MAX_DEFINED
 #endif // TEXT_LENGHT_MAX_DEFINED
 
@@ -15,7 +15,7 @@ class Map_texture_id
  int id;
  int duration=0,remaining_duration=0;
  int frame=0;
- char map_name[TEXT_LENGHT_MAX]={NULL};
+ char map_name[TEXT_LENGTH_MAX]={NULL};
  int player_map_pos_x,player_map_pos_y;
  int key_id=0;
 

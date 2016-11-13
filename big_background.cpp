@@ -2,13 +2,13 @@
 #include "settings.h"
 
 #ifndef TEXT_LENGHT_MAX_DEFINED
-const int TEXT_LENGHT_MAX=101;
+const int TEXT_LENGTH_MAX=101;
 #define TEXT_LENGHT_MAX_DEFINED
 #endif // TEXT_LENGHT_MAX_DEFINED
 
 Big_Background::Big_Background()
 {
- char path[TEXT_LENGHT_MAX]={NULL},aux[TEXT_LENGHT_MAX]={NULL};
+ char path[TEXT_LENGTH_MAX]={NULL},aux[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"images/launcher/launcher background");
  //itoa(RESOLUTION,aux);
  //strcat(path,aux);
@@ -23,7 +23,7 @@ void Big_Background::Set_max_count(int _max_count)
 
 void Big_Background::Load_Logo()
 {
- char path[TEXT_LENGHT_MAX]={NULL},aux[TEXT_LENGHT_MAX]={NULL};
+ char path[TEXT_LENGTH_MAX]={NULL},aux[TEXT_LENGTH_MAX]={NULL};
  for(int i=0;i<=number_of_frames;i++)
      {
       strcpy(path,"images/launcher/logo animation/logo");
@@ -39,7 +39,7 @@ void Big_Background::Load_Logo()
 
 void Big_Background::Update_size()
 {
- char path[TEXT_LENGHT_MAX]={NULL},aux[TEXT_LENGHT_MAX]={NULL};
+ char path[TEXT_LENGTH_MAX]={NULL},aux[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"images/launcher/launcher background");
  //itoa(RESOLUTION,aux);
  //strcat(path,aux);

@@ -15,7 +15,7 @@ const int NUMBER_OF_MAX_KEYS=10;
 class Map
 {
  private:
- char name[TEXT_LENGHT_MAX]={NULL};
+ char name[TEXT_LENGTH_MAX]={NULL};
  int number_of_lines=0,number_of_columns=0;
  Texture map_textures[NUMBER_OF_TEXTURES_IDS];
  Interactive_map_texture map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX],background_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX];

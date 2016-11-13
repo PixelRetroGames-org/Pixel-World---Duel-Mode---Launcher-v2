@@ -23,7 +23,7 @@ void Darkness::Set_image_name(char *_image_name)
 
 void Darkness::Load_image()
 {
- char path[TEXT_LENGHT_MAX]={NULL};
+ char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"images/darkness/");
  strcat(path,image_name);
  strcat(path,".bmp");

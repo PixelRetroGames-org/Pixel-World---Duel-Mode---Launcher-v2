@@ -98,7 +98,7 @@ void Script_interpreter::Print_line(int &x,int y,char *_line,bool on_screen)
 
 void Script_interpreter::Print_image(int &x,int y,char *_name)
 {
- char aux[TEXT_LENGHT_MAX]={NULL};
+ char aux[TEXT_LENGTH_MAX]={NULL};
  strcpy(aux,"script/images/");
  strcat(aux,_name);
  strcat(aux,".bmp");
@@ -110,7 +110,7 @@ void Script_interpreter::Print_image(int &x,int y,char *_name)
 
 void Script_interpreter::Set_background_image(char *_name)
 {
- char aux[TEXT_LENGHT_MAX]={NULL};
+ char aux[TEXT_LENGTH_MAX]={NULL};
  strcpy(aux,"script/images/");
  strcat(aux,_name);
  strcat(aux,".bmp");
@@ -129,7 +129,7 @@ void Script_interpreter::Set_screen(SDL_Surface *_screen)
 
 void Script_interpreter::Start()
 {
- char path[TEXT_LENGHT_MAX]={NULL};
+ char path[TEXT_LENGTH_MAX]={NULL};
  //system("cd \\script");
  strcpy(path,"script\\");
  strcat(path,script_name);
@@ -139,7 +139,7 @@ void Script_interpreter::Start()
  std::FILE *in=std::fopen(path,"r");
  //system("cd ..");
  bool quit=false,line=false;
- char ch=NULL,command[TEXT_LENGHT_MAX]={NULL},script_line[TEXT_LENGHT_MAX]={NULL};
+ char ch=NULL,command[TEXT_LENGTH_MAX]={NULL},script_line[TEXT_LENGTH_MAX]={NULL};
  int x=text_pos_x,y=text_pos_y;
  SDL_Event event;
  buffer=make_it_transparent("script/images/empty.bmp");
@@ -174,7 +174,7 @@ void Script_interpreter::Start()
                {
                 SDL_Color aux;
                 int r,g,b,_x,_y;
-                char audio[TEXT_LENGHT_MAX]={"script/audio/"},aux1[TEXT_LENGHT_MAX]={NULL};
+                char audio[TEXT_LENGTH_MAX]={"script/audio/"},aux1[TEXT_LENGTH_MAX]={NULL};
                 int aux2;
                 switch(Get_command_id(command))
                        {

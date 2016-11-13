@@ -10,7 +10,7 @@
 class Shop
 {
  private:
- char name[TEXT_LENGHT_MAX];
+ char name[TEXT_LENGTH_MAX];
  bool changed_page=false;
  int number_of_pages,page_selected,page_click=0;
  int POSX=0,LAST_POSX=0;
@@ -34,7 +34,7 @@ class Shop_Screen
  private:
  Shop shop;
  Player player;
- char filename[TEXT_LENGHT_MAX]={NULL};
+ char filename[TEXT_LENGTH_MAX]={NULL};
 
  public:
  void Reset();

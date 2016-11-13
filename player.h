@@ -22,7 +22,7 @@ const int NUMBER_OF_MAX_KEYS=10;
 class Player
 {
  private:
- char name[TEXT_LENGHT_MAX];
+ char name[TEXT_LENGTH_MAX];
  int money,experience;
  int number_of_items,inventory_number_of_items,inventory_number_of_spells;
  int number_of_items_bought[NUMBER_OF_ITEMS_IDS];

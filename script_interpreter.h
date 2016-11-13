@@ -6,9 +6,9 @@
 #include<algorithm>
 #include<stack>
 
-#ifndef TEXT_LENGHT_MAX
-#define TEXT_LENGHT_MAX 100
-#endif // TEXT_LENGHT_MAX
+#ifndef TEXT_LENGTH_MAX
+#define TEXT_LENGTH_MAX 100
+#endif // TEXT_LENGTH_MAX
 
 const int number_of_commands=11,LINE_HEIGHT=23;
 extern const char *command_names[number_of_commands+1];
@@ -16,7 +16,7 @@ extern const char *command_names[number_of_commands+1];
 class Script_interpreter
 {
  private:
- char script_name[TEXT_LENGHT_MAX]={NULL};
+ char script_name[TEXT_LENGTH_MAX]={NULL};
  SDL_Surface *screen=NULL,*background_image=SCRIPT_default_background_image,*buffer;
  int bufferW=0;
  int text_pos_x=0,text_pos_y=0;
