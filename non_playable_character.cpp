@@ -80,6 +80,16 @@ int Non_Playable_Character::Get_last_dir()
  return last_dir;
 }
 
+int Non_Playable_Character::Get_type()
+{
+ return type;
+}
+
+char *Non_Playable_Character::Get_script_name()
+{
+ return script_name;
+}
+
 void Non_Playable_Character::Update_skin(int dir)
 {
  int dirx[]={1,0,-1,0};
@@ -149,6 +159,10 @@ void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key)
  skin_image_position.w=w;
  skin_image_position.h=h;
  skin_image_position.x=skin_image_position.y=0;
+ fscanf(where,"%d ",&type);
+ fgets(script_name,sizeof script_name,where);
+ if(script_name[strlen(script_name)-1]=='\n')
+    script_name[strlen(script_name)-1]=NULL;
  fclose(where);
 }
 

@@ -21,7 +21,7 @@
 	"load_audio_effects.h"
 	<cstdio>
 
-1479064173 e:\programming\pixel world - duel mode v2 - launcher\menu.h
+1479065279 e:\programming\pixel world - duel mode v2 - launcher\menu.h
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_mixer.h"
@@ -29,7 +29,7 @@
 	"load_images.h"
 	<cstring>
 
-1479063245 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
+1479064173 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
 	"menu.h"
 	"settings.h"
 	<cstring>
@@ -47,33 +47,33 @@
 1475782529 e:\programming\pixel world - duel mode v2 - launcher\big_background.h
 	"library.h"
 
-1479063244 source:e:\programming\pixel world - duel mode v2 - launcher\big_background.cpp
+1479065279 source:e:\programming\pixel world - duel mode v2 - launcher\big_background.cpp
 	"big_background.h"
 	"settings.h"
 
-1479064173 e:\programming\pixel world - duel mode v2 - launcher\settings.h
+1479065279 e:\programming\pixel world - duel mode v2 - launcher\settings.h
 	"library.h"
 	"load_images.h"
 
-1479063247 source:e:\programming\pixel world - duel mode v2 - launcher\settings.cpp
+1479064172 source:e:\programming\pixel world - duel mode v2 - launcher\settings.cpp
 	"settings.h"
 	<cstdio>
 
-1479064173 e:\programming\pixel world - duel mode v2 - launcher\script_interpreter.h
+1479066265 e:\programming\pixel world - duel mode v2 - launcher\script_interpreter.h
 	"library.h"
 	"load_images.h"
 	<algorithm>
 	<stack>
 
-1479063247 source:e:\programming\pixel world - duel mode v2 - launcher\script_interpreter.cpp
+1479067866 source:e:\programming\pixel world - duel mode v2 - launcher\script_interpreter.cpp
 	"script_interpreter.h"
 	<cstring>
 
-1479063245 source:e:\programming\pixel world - duel mode v2 - launcher\item.cpp
+1479064173 source:e:\programming\pixel world - duel mode v2 - launcher\item.cpp
 	"item.h"
 	<cstring>
 
-1479064173 e:\programming\pixel world - duel mode v2 - launcher\item.h
+1479065279 e:\programming\pixel world - duel mode v2 - launcher\item.h
 	"load_images.h"
 	"library.h"
 	"SDL/SDL.h"
@@ -108,57 +108,58 @@
 	<algorithm>
 	<bitset>
 
-1479063247 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
+1479064173 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
 	"player.h"
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_mixer.h"
 	<cstring>
 
-1479063247 source:e:\programming\pixel world - duel mode v2 - launcher\shop.cpp
+1479064172 source:e:\programming\pixel world - duel mode v2 - launcher\shop.cpp
 	"shop.h"
 	<cstring>
 
-1479063247 source:e:\programming\pixel world - duel mode v2 - launcher\shop_page.cpp
+1479064173 source:e:\programming\pixel world - duel mode v2 - launcher\shop_page.cpp
 	"shop_page.h"
 	<cstring>
 
-1479064173 e:\programming\pixel world - duel mode v2 - launcher\buff.h
+1479065279 e:\programming\pixel world - duel mode v2 - launcher\buff.h
 	"library.h"
 
-1479063244 source:e:\programming\pixel world - duel mode v2 - launcher\buff.cpp
+1479064173 source:e:\programming\pixel world - duel mode v2 - launcher\buff.cpp
 	"buff.h"
 	<cstring>
 
-1479063245 source:e:\programming\pixel world - duel mode v2 - launcher\darkness.cpp
+1479064173 source:e:\programming\pixel world - duel mode v2 - launcher\darkness.cpp
 	"darkness.h"
 
-1479064173 e:\programming\pixel world - duel mode v2 - launcher\darkness.h
+1479065279 e:\programming\pixel world - duel mode v2 - launcher\darkness.h
 	"library.h"
 
-1479063245 source:e:\programming\pixel world - duel mode v2 - launcher\interactive_map_texture.cpp
+1479064173 source:e:\programming\pixel world - duel mode v2 - launcher\interactive_map_texture.cpp
 	"interactive_map_texture.h"
 
-1479064173 e:\programming\pixel world - duel mode v2 - launcher\interactive_map_texture.h
+1479065279 e:\programming\pixel world - duel mode v2 - launcher\interactive_map_texture.h
 	"library.h"
 	<vector>
 
-1479064173 e:\programming\pixel world - duel mode v2 - launcher\spell.h
+1479065279 e:\programming\pixel world - duel mode v2 - launcher\spell.h
 	"buff.h"
 	<vector>
 
-1479063245 source:e:\programming\pixel world - duel mode v2 - launcher\level.cpp
+1479068603 source:e:\programming\pixel world - duel mode v2 - launcher\level.cpp
 	"level.h"
 	"load_audio_effects.h"
 	"settings.h"
 	"menu.h"
 	"SDL/SDL_thread.h"
 
-1479064173 e:\programming\pixel world - duel mode v2 - launcher\level.h
+1479068475 e:\programming\pixel world - duel mode v2 - launcher\level.h
 	"player.h"
 	"map.h"
 	"darkness.h"
 	"non_playable_character.h"
+	"script_interpreter.h"
 	<ctime>
 	<map>
 
@@ -168,7 +169,7 @@
 	<vector>
 	<bitset>
 
-1479064173 e:\programming\pixel world - duel mode v2 - launcher\map_texture.h
+1479065279 e:\programming\pixel world - duel mode v2 - launcher\map_texture.h
 	"library.h"
 	"load_images.h"
 	"buff.h"
@@ -179,14 +180,14 @@
 1477587149 source:e:\programming\pixel world - duel mode v2 - launcher\load_audio_effects.cpp
 	"load_audio_effects.h"
 
-1479063245 source:e:\programming\pixel world - duel mode v2 - launcher\map.cpp
+1479064173 source:e:\programming\pixel world - duel mode v2 - launcher\map.cpp
 	"map.h"
 	"settings.h"
 
-1479063245 source:e:\programming\pixel world - duel mode v2 - launcher\map_texture.cpp
+1479064173 source:e:\programming\pixel world - duel mode v2 - launcher\map_texture.cpp
 	"map_texture.h"
 
-1479063247 source:e:\programming\pixel world - duel mode v2 - launcher\spell.cpp
+1479064173 source:e:\programming\pixel world - duel mode v2 - launcher\spell.cpp
 	"spell.h"
 	<cstring>
 
@@ -379,11 +380,11 @@
 	"spell.h"
 	<cstring>
 
-1479064172 e:\programming\pixel world - duel mode v2 - launcher\non_playable_character.h
+1479068288 e:\programming\pixel world - duel mode v2 - launcher\non_playable_character.h
 	"library.h"
 	<bitset>
 	<vector>
 
-1479063614 source:e:\programming\pixel world - duel mode v2 - launcher\non_playable_character.cpp
+1479068312 source:e:\programming\pixel world - duel mode v2 - launcher\non_playable_character.cpp
 	"non_playable_character.h"
 

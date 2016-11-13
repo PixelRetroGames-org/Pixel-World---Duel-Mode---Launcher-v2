@@ -9,10 +9,10 @@
 const int NUMBER_OF_MAX_KEYS=10;
 #endif // PLAYER_H
 
-#ifndef TEXT_LENGHT_MAX_DEFINED
+#ifndef TEXT_LENGTH_MAX_DEFINED
 const int TEXT_LENGTH_MAX=101;
-#define TEXT_LENGHT_MAX_DEFINED
-#endif // TEXT_LENGHT_MAX_DEFINED
+#define TEXT_LENGTH_MAX_DEFINED
+#endif // TEXT_LENGTH_MAX_DEFINED
 
 class Non_Playable_Character
 {
@@ -43,6 +43,8 @@ class Non_Playable_Character
  int Get_map_positionX();
  int Get_map_positionY();
  int Get_last_dir();
+ int Get_type();
+ char *Get_script_name();
  void Update_skin(int dir);
  void Block();
  void Unblock();

@@ -5,10 +5,10 @@
 #include "load_images.h"
 #include "buff.h"
 
-#ifndef TEXT_LENGHT_MAX_DEFINED
+#ifndef TEXT_LENGTH_MAX_DEFINED
 const int TEXT_LENGTH_MAX=101;
-#define TEXT_LENGHT_MAX_DEFINED
-#endif // TEXT_LENGHT_MAX_DEFINED
+#define TEXT_LENGTH_MAX_DEFINED
+#endif // TEXT_LENGTH_MAX_DEFINED
 
 class Texture
 {

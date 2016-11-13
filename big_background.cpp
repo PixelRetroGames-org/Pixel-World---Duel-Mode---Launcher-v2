@@ -1,10 +1,10 @@
 #include "big_background.h"
 #include "settings.h"
 
-#ifndef TEXT_LENGHT_MAX_DEFINED
+#ifndef TEXT_LENGTH_MAX_DEFINED
 const int TEXT_LENGTH_MAX=101;
-#define TEXT_LENGHT_MAX_DEFINED
-#endif // TEXT_LENGHT_MAX_DEFINED
+#define TEXT_LENGTH_MAX_DEFINED
+#endif // TEXT_LENGTH_MAX_DEFINED
 
 Big_Background::Big_Background()
 {

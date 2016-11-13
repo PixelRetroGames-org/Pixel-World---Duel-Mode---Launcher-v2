@@ -705,10 +705,10 @@ void Level::Print_player_information(int _player,SDL_Surface *_screen)
     }
 }
 
-void Level::Handle_Event(int _player)
+bool Level::Handle_Event(int _player)
 {
  if(player_type[_player]>1)
-    return;
+    return false;
  int keys=_player;
  if(player_type[1]==0 && player_type[2]==0)
     keys=Other_player(_player);
@@ -734,11 +734,13 @@ void Level::Handle_Event(int _player)
     Set_player_velocityX(_player,-1);
  if(keystates[player_keys[keys][3]])
     Set_player_velocityX(_player,1);
+ int rtn=0;
  if(type==1)
     {
      if(keystates[player_keys[keys][4]] && !player[_player].Is_blocked())
         {
          Trigger_around_player_map(_player);
+         rtn=Interact_with_NPC_around_player(_player);
          player_time_blocked[_player]=10;
         }
     }
@@ -754,12 +756,15 @@ void Level::Handle_Event(int _player)
 
  if(player_time_blocked[_player]!=0)
     player[_player].Block();
+ return rtn;
 }
 
-void Level::Handle_Events(SDL_Surface *_screen)
+bool Level::Handle_Events(SDL_Surface *_screen)
 {
- Handle_Event(1);
- Handle_Event(2);
+ bool rtn=0;
+ rtn=Handle_Event(1);
+ if(type==2)
+    rtn=rtn && Handle_Event(2);
 
  if(keystates[SDLK_EQUALS])
     Darkness_increase();
@@ -774,6 +779,7 @@ void Level::Handle_Events(SDL_Surface *_screen)
     {
      Pause_Menu();
     }
+ return rtn;
 }
 
 void Level::Darkness_increase()
@@ -895,6 +901,34 @@ void Level::Trigger_around_player_map(int _player)
              {
               case 4:break;
              }*/
+     }
+}
+
+bool Level::Interact_with_NPC(int _player,int _npc)
+{
+ if(non_playable_characters[_npc].Get_type()==0)
+    return false;
+ Script_interpreter script_interpreter;
+ script_interpreter.Start(_screen,non_playable_characters[_npc].Get_script_name());
+ return true;
+}
+
+bool Level::Interact_with_NPC_around_player(int _player)
+{
+ int dirx[]={1,0,-1,0,1,1,-1,-1};
+ int diry[]={0,1,0,-1,1,-1,1,-1};
+ int x,y;
+ for(int i=0;i<8;i++)
+     {
+      x=player[_player].Get_map_positionX()+dirx[i];
+      y=player[_player].Get_map_positionY()+diry[i];
+      if(x<0 || x>=arena.Get_number_of_columns() || y<0 || y>=arena.Get_number_of_lines())
+         continue;
+      for(int j=0;j<number_of_non_playable_characters;j++)
+          {
+           if(x==non_playable_characters[j].Get_map_positionX() && y==non_playable_characters[j].Get_map_positionY())
+              return Interact_with_NPC(_player,j);
+          }
      }
 }
 
@@ -1106,6 +1140,7 @@ void Level::Start(SDL_Surface *screen)
  //Start_music();
  #endif // AUDIO
  int previous_time=current_time.get_ticks(),lag=0;
+ bool reset_lag=false;
  while(!quit && !done)
        {
         fps.start();
@@ -1114,7 +1149,7 @@ void Level::Start(SDL_Surface *screen)
             Change_music(1);
             music_time.start();
            }
-        if(level_changed)
+        if(level_changed || reset_lag)
            previous_time=current_time.get_ticks();
         level_changed=false;
         int elapsed=current_time.get_ticks()-previous_time;
@@ -1122,7 +1157,7 @@ void Level::Start(SDL_Surface *screen)
         lag+=elapsed;
         SDL_PumpEvents();
         quit=keystates[SDL_QUIT] || ((keystates[SDLK_RALT] || keystates[SDLK_LALT]) && keystates[SDLK_F4]);
-        Handle_Events(screen);
+        reset_lag=Handle_Events(screen);
         while(!level_changed && lag>MS_PER_UPDATE && !done)
               {
                Time_Pass();

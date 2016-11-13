@@ -20,8 +20,12 @@ void Script_interpreter::Clear()
  while(!text_color.empty())
        text_color.pop();
  SDL_FreeSurface(buffer);
+ buffer=NULL;
  if(background_image!=SCRIPT_default_background_image)
-    SDL_FreeSurface(background_image);
+    {
+     SDL_FreeSurface(background_image);
+     background_image=NULL;
+    }
 }
 
 void Script_interpreter::Start_line_audio(Mix_Chunk *line_audio)

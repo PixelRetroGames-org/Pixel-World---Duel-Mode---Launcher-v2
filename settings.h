@@ -4,10 +4,10 @@
 #include "library.h"
 #include "load_images.h"
 
-#ifndef TEXT_LENGHT_MAX_DEFINED
+#ifndef TEXT_LENGTH_MAX_DEFINED
 const int TEXT_LENGTH_MAX=101;
-#define TEXT_LENGHT_MAX_DEFINED
-#endif // TEXT_LENGHT_MAX_DEFINED
+#define TEXT_LENGTH_MAX_DEFINED
+#endif // TEXT_LENGTH_MAX_DEFINED
 
 extern int RESOLUTION_X,RESOLUTION_Y,RESOLUTION;
 extern int DISPLAY_MODE,VOLUME,VOL;

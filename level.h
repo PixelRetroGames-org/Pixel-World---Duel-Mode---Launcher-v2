@@ -5,6 +5,7 @@
 #include "map.h"
 #include "darkness.h"
 #include "non_playable_character.h"
+#include "script_interpreter.h"
 #include<ctime>
 #include<map>
 
@@ -100,8 +101,8 @@ class Level
  void Print_players_informations(SDL_Surface *_screen);
  void Print_player_information(int _player,SDL_Surface *_screen);
  ///Handle Events
- void Handle_Event(int _player);
- void Handle_Events(SDL_Surface *_screen);
+ bool Handle_Event(int _player);
+ bool Handle_Events(SDL_Surface *_screen);
  ///Darkness
  void Darkness_increase();
  void Darkness_decrease();
@@ -115,6 +116,8 @@ class Level
  void Trigger_player_map(int _player);
  void Trigger_all_players_map();
  void Trigger_around_player_map(int _player);
+ bool Interact_with_NPC(int _player,int _npc);
+ bool Interact_with_NPC_around_player(int _player);
 
  ///Start
  void Set_screen(SDL_Surface *screen);
