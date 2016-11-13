@@ -55,6 +55,8 @@
 		<Unit filename="map_texture.h" />
 		<Unit filename="menu.cpp" />
 		<Unit filename="menu.h" />
+		<Unit filename="non_playable_character.cpp" />
+		<Unit filename="non_playable_character.h" />
 		<Unit filename="player.cpp" />
 		<Unit filename="player.h" />
 		<Unit filename="script_interpreter.cpp" />
