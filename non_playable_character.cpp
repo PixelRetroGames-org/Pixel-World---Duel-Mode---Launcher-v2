@@ -8,6 +8,8 @@ void Non_Playable_Character::Clear()
  type=0;
  script_name[0]=NULL;
  shop_name[0]=NULL;
+ duel_mode_level_name[0]=NULL;
+ puzzle_name[0]=NULL;
  std::vector<std::pair<int,int> >().swap(map_accessible_positions);
  chance_to_move=0;
  if(skin_image!=NULL)
@@ -90,6 +92,21 @@ char *Non_Playable_Character::Get_script_name()
  return script_name;
 }
 
+char *Non_Playable_Character::Get_shop_name()
+{
+ return shop_name;
+}
+
+char *Non_Playable_Character::Get_duel_mode_level_name()
+{
+ return duel_mode_level_name;
+}
+
+char *Non_Playable_Character::Get_puzzle_name()
+{
+ return puzzle_name;
+}
+
 void Non_Playable_Character::Update_skin(int dir)
 {
  int dirx[]={1,0,-1,0};
@@ -163,6 +180,21 @@ void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key)
  fgets(script_name,sizeof script_name,where);
  if(script_name[strlen(script_name)-1]=='\n')
     script_name[strlen(script_name)-1]=NULL;
+ switch(type)
+        {
+         case 2:fgets(shop_name,sizeof shop_name,where);
+                if(shop_name[strlen(shop_name)-1]=='\n')
+                   shop_name[strlen(shop_name)-1]=NULL;
+                break;
+         case 3:fgets(duel_mode_level_name,sizeof duel_mode_level_name,where);
+                if(duel_mode_level_name[strlen(duel_mode_level_name)-1]=='\n')
+                   duel_mode_level_name[strlen(duel_mode_level_name)-1]=NULL;
+                break;
+         case 4:fgets(puzzle_name,sizeof puzzle_name,where);
+                if(puzzle_name[strlen(puzzle_name)-1]=='\n')
+                   puzzle_name[strlen(puzzle_name)-1]=NULL;
+                break;
+        }
  fclose(where);
 }
 

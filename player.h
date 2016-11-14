@@ -108,6 +108,7 @@ class Player
  int Get_velocityY();
  int Get_skinW();
  int Get_skinH();
+ char *Get_name();
  void Set_skin(char *skin_name);
  void Load_skin();
  void Update_skin_image_position();

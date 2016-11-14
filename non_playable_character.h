@@ -20,7 +20,7 @@ class Non_Playable_Character
  char name[TEXT_LENGTH_MAX]={NULL};
  int map_positionX=0,map_positionY=0;
  int type=0;
- char script_name[TEXT_LENGTH_MAX],shop_name[TEXT_LENGTH_MAX];
+ char script_name[TEXT_LENGTH_MAX]={NULL},shop_name[TEXT_LENGTH_MAX]={NULL},duel_mode_level_name[TEXT_LENGTH_MAX]={NULL},puzzle_name[TEXT_LENGTH_MAX]={NULL};
  std::vector<std::pair<int,int> > map_accessible_positions;
  int chance_to_move=0;
  SDL_Surface *skin_image=NULL;
@@ -45,6 +45,9 @@ class Non_Playable_Character
  int Get_last_dir();
  int Get_type();
  char *Get_script_name();
+ char *Get_shop_name();
+ char *Get_duel_mode_level_name();
+ char *Get_puzzle_name();
  void Update_skin(int dir);
  void Block();
  void Unblock();

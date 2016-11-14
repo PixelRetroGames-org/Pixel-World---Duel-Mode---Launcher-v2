@@ -16,6 +16,7 @@ void Shop_Page::Clear(bool _delete)
 {
  for(int i=0;i<number_of_items;i++)
      items[i].Clear(_delete);
+ std::vector<Item>().swap(items);
  name[0]=NULL;
  item_selected=item_click=-1;
  number_of_items=number_of_lines=number_of_columns=title_size=0;
@@ -62,7 +63,7 @@ void Shop_Page::Load()
       aux.Clear();
       aux.Set_id(_id);
       aux.Load();
-      items[i]=aux;
+      items.push_back(aux);
      }
  fclose(where);
  strcpy(path,"shop/shop_page/images/");

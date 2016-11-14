@@ -89,7 +89,7 @@
 	"settings.h"
 	<vector>
 
-1479064173 e:\programming\pixel world - duel mode v2 - launcher\shop_page.h
+1479109486 e:\programming\pixel world - duel mode v2 - launcher\shop_page.h
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_image.h"
@@ -98,8 +98,9 @@
 	"load_images.h"
 	"item.h"
 	"player.h"
+	<vector>
 
-1479064173 e:\programming\pixel world - duel mode v2 - launcher\player.h
+1479108569 e:\programming\pixel world - duel mode v2 - launcher\player.h
 	"load_images.h"
 	"library.h"
 	"item.h"
@@ -108,18 +109,18 @@
 	<algorithm>
 	<bitset>
 
-1479064173 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
+1479108589 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
 	"player.h"
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_mixer.h"
 	<cstring>
 
-1479064172 source:e:\programming\pixel world - duel mode v2 - launcher\shop.cpp
+1479110787 source:e:\programming\pixel world - duel mode v2 - launcher\shop.cpp
 	"shop.h"
 	<cstring>
 
-1479064173 source:e:\programming\pixel world - duel mode v2 - launcher\shop_page.cpp
+1479109843 source:e:\programming\pixel world - duel mode v2 - launcher\shop_page.cpp
 	"shop_page.h"
 	<cstring>
 
@@ -147,19 +148,20 @@
 	"buff.h"
 	<vector>
 
-1479068752 source:e:\programming\pixel world - duel mode v2 - launcher\level.cpp
+1479111995 source:e:\programming\pixel world - duel mode v2 - launcher\level.cpp
 	"level.h"
 	"load_audio_effects.h"
 	"settings.h"
 	"menu.h"
 	"SDL/SDL_thread.h"
 
-1479068475 e:\programming\pixel world - duel mode v2 - launcher\level.h
+1479108529 e:\programming\pixel world - duel mode v2 - launcher\level.h
 	"player.h"
 	"map.h"
 	"darkness.h"
 	"non_playable_character.h"
 	"script_interpreter.h"
+	"shop.h"
 	<ctime>
 	<map>
 
@@ -380,11 +382,11 @@
 	"spell.h"
 	<cstring>
 
-1479068288 e:\programming\pixel world - duel mode v2 - launcher\non_playable_character.h
+1479108044 e:\programming\pixel world - duel mode v2 - launcher\non_playable_character.h
 	"library.h"
 	<bitset>
 	<vector>
 
-1479068312 source:e:\programming\pixel world - duel mode v2 - launcher\non_playable_character.cpp
+1479108355 source:e:\programming\pixel world - duel mode v2 - launcher\non_playable_character.cpp
 	"non_playable_character.h"
 

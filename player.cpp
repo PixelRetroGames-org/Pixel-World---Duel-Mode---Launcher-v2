@@ -815,6 +815,11 @@ int Player::Get_skinH()
  return skin_image_position.h;
 }
 
+char *Player::Get_name()
+{
+ return name;
+}
+
 void Player::Set_skin(char *_skin_name)
 {
  char where[TEXT_LENGTH_MAX]={NULL};

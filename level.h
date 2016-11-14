@@ -6,6 +6,7 @@
 #include "darkness.h"
 #include "non_playable_character.h"
 #include "script_interpreter.h"
+#include "shop.h"
 #include<ctime>
 #include<map>
 

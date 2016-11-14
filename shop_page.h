@@ -13,6 +13,7 @@
 #include "load_images.h"
 #include "item.h"
 #include "player.h"
+#include<vector>
 
 class Shop_Page
 {
@@ -22,7 +23,7 @@ class Shop_Page
  char name[TEXT_LENGTH_MAX];
  SDL_Surface *image=NULL,*name_image=NULL;
  int item_ids[100];
- Item items[100];
+ std::vector<Item> items;
  int item_selected,item_click;
  int number_of_items,number_of_lines,number_of_columns;
  int title_size;

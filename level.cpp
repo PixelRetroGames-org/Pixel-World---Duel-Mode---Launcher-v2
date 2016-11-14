@@ -182,18 +182,18 @@ void Level::Load()
          {
           Mix_FreeMusic(background_music[i]);
          }
+     fscanf(where,"%d ",&number_of_background_music_tracks);
+     for(int i=0;i<number_of_background_music_tracks && (terrain_type!=last_terrain_type || type==2);i++)
+         {
+          fgets(background_music_name,sizeof background_music_name,where);
+          if(background_music_name[strlen(background_music_name)-1]=='\n')
+             background_music_name[strlen(background_music_name)-1]=NULL;
+          strcpy(path,"audio/");
+          strcat(path,background_music_name);
+          strcat(path,".mp3");
+          background_music[i]=Mix_LoadMUS(path);
+         }
     }
- fscanf(where,"%d ",&number_of_background_music_tracks);
- for(int i=0;i<number_of_background_music_tracks && (terrain_type!=last_terrain_type || type==2);i++)
-     {
-      fgets(background_music_name,sizeof background_music_name,where);
-      if(background_music_name[strlen(background_music_name)-1]=='\n')
-         background_music_name[strlen(background_music_name)-1]=NULL;
-      strcpy(path,"audio/");
-      strcat(path,background_music_name);
-      strcat(path,".mp3");
-      background_music[i]=Mix_LoadMUS(path);
-     }
 
  fclose(where);
  arena.Set_name(arena_name);
@@ -250,8 +250,11 @@ int Level::Change_music(bool play)
      if(play)
         {
          int x=rand()%number_of_background_music_tracks;
-         if(x==last_track_played)
-            x=(last_track_played+rand()%(number_of_background_music_tracks+1)%number_of_background_music_tracks);
+         if(x==last_track_played && number_of_background_music_tracks!=1)
+            {
+             x+=rand()%(number_of_background_music_tracks-1);
+             x%=number_of_background_music_tracks;
+            }
          last_track_played=x;
          Mix_PlayMusic(background_music[x],0);
         }
@@ -764,7 +767,7 @@ bool Level::Handle_Events(SDL_Surface *_screen)
  bool rtn=0;
  rtn=Handle_Event(1);
  if(type==2)
-    rtn=rtn && Handle_Event(2);
+    rtn=Handle_Event(2) || rtn;
 
  if(keystates[SDLK_EQUALS])
     Darkness_increase();
@@ -910,15 +913,38 @@ bool Level::Interact_with_NPC(int _player,int _npc)
     return false;
  Script_interpreter script_interpreter;
  script_interpreter.Start(_screen,non_playable_characters[_npc].Get_script_name());
+ Shop_Screen shop_screen;
+ int x=player[_player].Get_map_positionX(),y=player[_player].Get_map_positionY();
+ char _map_name[TEXT_LENGTH_MAX]={NULL},_aux[TEXT_LENGTH_MAX]={NULL};
+ switch(non_playable_characters[_npc].Get_type())
+        {
+         case 2:shop_screen.Start(_screen,non_playable_characters[_npc].Get_shop_name(),player[_player].Get_name());
+                //shop_screen.Reset();
+                break;
+         case 3:strcpy(_map_name,name);
+                strcpy(_aux,non_playable_characters[_npc].Get_duel_mode_level_name());
+                Change(_aux);
+                if(type==2)
+                   {
+                    Start(_screen);
+                    Change(_map_name);
+                    player[_player].Set_map_position(x,y);
+                    Change_music(1);
+                   }
+                return false;
+                break;
+        }
+ SDL_Delay(100);
+ SDL_PumpEvents();
  return true;
 }
 
 bool Level::Interact_with_NPC_around_player(int _player)
 {
- int dirx[]={1,0,-1,0,1,1,-1,-1};
- int diry[]={0,1,0,-1,1,-1,1,-1};
+ int dirx[]={1,0,-1,0};
+ int diry[]={0,1,0,-1};
  int x,y;
- for(int i=0;i<8;i++)
+ for(int i=0;i<4;i++)
      {
       x=player[_player].Get_map_positionX()+dirx[i];
       y=player[_player].Get_map_positionY()+diry[i];
@@ -1140,12 +1166,18 @@ void Level::Start(SDL_Surface *screen)
  //Start_music();
  #endif // AUDIO
  int previous_time=current_time.get_ticks(),lag=0;
- bool reset_lag=false;
+ bool reset_lag=false,paused_music=false;
  while(!quit && !done)
        {
         fps.start();
+        if(!Mix_PlayingMusic() && !paused_music)
+           {
+            music_time.start();
+            paused_music=true;
+           }
         if(!Mix_PlayingMusic() && music_time.get_ticks()>MUSIC_PAUSE)
            {
+            paused_music=false;
             Change_music(1);
             music_time.start();
            }

@@ -207,6 +207,8 @@ int Shop_Screen::Start(SDL_Surface *screen)
  SDL_FreeSurface(not_enough_background);
  player.Clear(true);
  shop.Clear();
+ while(SDL_PollEvent(&event))
+       SDL_PumpEvents();
  if(event.type==SDL_QUIT)
     return -1;
  return 0;
