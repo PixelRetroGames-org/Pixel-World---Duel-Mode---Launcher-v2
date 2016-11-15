@@ -319,26 +319,33 @@ bool Level::Move_player_X(int _player)
  if((Y1<=y && y<=LY1) || (y<=Y1 && Y1<=LY))
     collision_y=true;
 
- for(int i=0;i<number_of_non_playable_characters;i++)
+ if(collision_x && collision_y)
+    move_possible=false;
+
+ for(int i=0;i<number_of_non_playable_characters && move_possible;i++)
      {
       LX=x+player[_player].Get_skinW()/40-1,LY=y+player[_player].Get_skinH()/40-1;
       X1=non_playable_characters[i].Get_map_positionX(),Y1=non_playable_characters[i].Get_map_positionY();
       LX1=X1+non_playable_characters[i].Get_skinW()/40-1,LY1=Y1+non_playable_characters[i].Get_skinH()/40-1;
+
+      collision_x=collision_y=false;
 
       if((X1<=x && x<=LX1) || (x<=X1 && X1<=LX))
          collision_x=true;
 
       if((Y1<=y && y<=LY1) || (y<=Y1 && Y1<=LY))
          collision_y=true;
-     }
 
- if(collision_x && collision_y)
-    move_possible=false;
+      if(collision_x && collision_y)
+         move_possible=false;
+     }
 
  if(move_possible && player[_player].Get_velocityX()!=0)
     {
      player[_player].Move_X();
      player_time_blocked[_player]=5-5*player[_player].Get_movement_speed()/100;
+     if(player_type[_player]>=1)
+        AI_Block_player(_player);
      player[_player].Block();
      return true;
     }
@@ -371,21 +378,26 @@ bool Level::Move_player_Y(int _player)
  if((Y1<=y && y<=LY1) || (y<=Y1 && Y1<=LY))
     collision_y=true;
 
- for(int i=0;i<number_of_non_playable_characters;i++)
+ if(collision_x && collision_y)
+    move_possible=false;
+
+ for(int i=0;i<number_of_non_playable_characters && move_possible;i++)
      {
       LX=x+player[_player].Get_skinW()/40-1,LY=y+player[_player].Get_skinH()/40-1;
       X1=non_playable_characters[i].Get_map_positionX(),Y1=non_playable_characters[i].Get_map_positionY();
       LX1=X1+non_playable_characters[i].Get_skinW()/40-1,LY1=Y1+non_playable_characters[i].Get_skinH()/40-1;
+
+      collision_x=collision_y=false;
 
       if((X1<=x && x<=LX1) || (x<=X1 && X1<=LX))
          collision_x=true;
 
       if((Y1<=y && y<=LY1) || (y<=Y1 && Y1<=LY))
          collision_y=true;
-     }
 
- if(collision_x && collision_y)
-    move_possible=false;
+      if(collision_x && collision_y)
+         move_possible=false;
+     }
 
  /*if((player[Other_player(_player)].Get_map_positionY()+player[Other_player(_player)].Get_skinH()/40-1<=y+player[_player].Get_skinH()/40-1 && player[Other_player(_player)].Get_map_positionY()>=y && player[Other_player(_player)].Get_map_positionX()+player[Other_player(_player)].Get_skinW()/40-1<=x+player[_player].Get_skinW()/40-1 && player[Other_player(_player)].Get_map_positionX()>=x))
     move_possible=false;*/
@@ -393,6 +405,8 @@ bool Level::Move_player_Y(int _player)
     {
      player[_player].Move_Y();
      player_time_blocked[_player]=5-5*player[_player].Get_movement_speed()/100;
+     if(player_type[_player]>=1)
+        AI_Block_player(_player);
      player[_player].Block();
      return true;
     }
@@ -725,10 +739,10 @@ void Level::Print_player_information(int _player,SDL_Surface *_screen)
 {
  player[_player].Print_name(_screen);
  player[_player].Print_hp(_screen);
+ player[_player].Print_buffs((player[_player].Get_PLAYER_INFO_POSX()+player[_player].Get_PLAYER_INFO_LAST_POSX())/2-85,120,_screen);
+ player[_player].Print_mana(_screen);
  if(player_type[_player]<1)
     {
-     player[_player].Print_mana(_screen);
-     player[_player].Print_buffs((player[_player].Get_PLAYER_INFO_POSX()+player[_player].Get_PLAYER_INFO_LAST_POSX())/2-85,120,_screen);
      player[_player].Print_spells((player[_player].Get_PLAYER_INFO_POSX()+player[_player].Get_PLAYER_INFO_LAST_POSX())/2-95,160,_screen);
      player[_player].Print_items((player[_player].Get_PLAYER_INFO_POSX()+player[_player].Get_PLAYER_INFO_LAST_POSX())/2-85,200,_screen);
      player[_player].Print_Inventory_equipped_items(player[_player].Get_PLAYER_INFO_POSX(),120+100*5,_screen,false);
@@ -737,8 +751,11 @@ void Level::Print_player_information(int _player,SDL_Surface *_screen)
 
 void Level::Handle_Event(int _player)
 {
- if(player_type[_player]>1)
-    return;
+ if(player_type[_player]>=1)
+    {
+     AI_Make_Move_player(_player);
+     return;
+    }
  int keys=_player;
  if(player_type[1]==0 && player_type[2]==0)
     keys=Other_player(_player);
@@ -746,7 +763,7 @@ void Level::Handle_Event(int _player)
  //Spells
  for(int i=1;i<=4 && type==2;i++)
      {
-      if(keystates[player_keys[keys][i+6]] && !player[_player].Spell_Is_blocked(i-1)/*&& !player[_player].Is_blocked()*/)
+      if(((keystates[player_keys[keys][i+6]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][i+6]])) && !player[_player].Spell_Is_blocked(i-1)/*&& !player[_player].Is_blocked()*/)
          {
           if(Cast_Spell(_player,i-1))
              player[_player].Block(),player_time_blocked[_player]=10;
@@ -756,17 +773,17 @@ void Level::Handle_Event(int _player)
  player[_player].Set_velocityX(0);
  player[_player].Set_velocityY(0);
 
- if(keystates[player_keys[keys][0]])
+ if(((keystates[player_keys[keys][0]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][0]])))
     Set_player_velocityY(_player,-1);
- if(keystates[player_keys[keys][1]])
+ if(((keystates[player_keys[keys][1]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][1]])))
     Set_player_velocityY(_player,1);
- if(keystates[player_keys[keys][2]])
+ if(((keystates[player_keys[keys][2]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][2]])))
     Set_player_velocityX(_player,-1);
- if(keystates[player_keys[keys][3]])
+ if(((keystates[player_keys[keys][3]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][3]])))
     Set_player_velocityX(_player,1);
  if(type==1)
     {
-     if(keystates[player_keys[keys][4]] && !player[_player].Is_blocked())
+     if(((keystates[player_keys[keys][4]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][4]])) && !player[_player].Is_blocked())
         {
          Trigger_around_player_map(_player);
          Interact_with_NPC_around_player(_player);
@@ -775,11 +792,11 @@ void Level::Handle_Event(int _player)
     }
  else
     {
-     if(keystates[player_keys[keys][4]] && player[_player].Can_attack())
+     if(((keystates[player_keys[keys][4]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][4]])) && player[_player].Can_attack())
         Player_basic_attack(_player);
-     if(keystates[player_keys[keys][5]] && !player[_player].Is_blocked())
+     if(((keystates[player_keys[keys][5]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][5]])) && !player[_player].Is_blocked())
         player[_player].Use_hp_potion(),player_time_blocked[_player]=10;
-     if(keystates[player_keys[keys][6]] && !player[_player].Is_blocked())
+     if(((keystates[player_keys[keys][6]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][6]])) && !player[_player].Is_blocked())
         player[_player].Use_mana_potion(),player_time_blocked[_player]=10;
     }
 
@@ -977,9 +994,56 @@ void Level::Interact_with_NPC_around_player(int _player)
       for(int j=0;j<number_of_non_playable_characters;j++)
           {
            if(x==non_playable_characters[j].Get_map_positionX() && y==non_playable_characters[j].Get_map_positionY())
-              Interact_with_NPC(_player,j);
+              {
+               Interact_with_NPC(_player,j);
+               return;
+              }
           }
      }
+}
+
+//Artificial Intelligence
+
+void Level::AI_Make_Move_player(int _player)
+{
+ player[_player].Set_velocityX(0);
+ player[_player].Set_velocityY(0);
+ if(player[_player].Is_blocked())
+    return;
+ switch(player_type[_player])
+        {
+         case 1:
+                {
+                 player[_player].Set_velocityX((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())>0?1:-1);
+                 player[_player].Set_velocityY((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())>0?1:-1);
+                 if((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==0)
+                    player[_player].Set_velocityX(0);
+                 if((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==0)
+                    player[_player].Set_velocityY(0);
+                 if((std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==1 &&
+                    std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==0) ||
+                    (std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==0 &&
+                    std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==1))
+                    player[_player].Set_velocityX(0),player[_player].Set_velocityY(0);
+                 //player[_player].Block();
+                 //player_time_blocked[_player]=10;
+                 if(player[_player].Can_attack())
+                    Player_basic_attack(_player);
+                 break;
+                }
+        }
+}
+
+void Level::AI_Block_player(int _player)
+{
+ switch(player_type[_player])
+        {
+         case 1:
+                {
+                 player_time_blocked[_player]=5-5*player[_player].Get_movement_speed()/100+5;
+                 break;
+                }
+        }
 }
 
 //Start
@@ -1077,64 +1141,73 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
  SDL_Color xp_color={75,0,130},MONEY_COLOR={236,242,4};
  char aux[TEXT_LENGTH_MAX]={NULL};
 
- itoa(player[1].Get_experience(),aux);
- strcat(aux,"  +  ");
- player_xp=TTF_RenderText_Solid(font,aux,xp_color);
+ if(player_type[1]==0)
+    {
+     itoa(player[1].Get_experience(),aux);
+     strcat(aux,"  +  ");
+     player_xp=TTF_RenderText_Solid(font,aux,xp_color);
 
- itoa(20*player[2].Get_experience()/100+200,aux);
- player_xp_gain=TTF_RenderText_Solid(font,aux,xp_color);
+     itoa(20*player[2].Get_experience()/100+200,aux);
+     player_xp_gain=TTF_RenderText_Solid(font,aux,xp_color);
 
- apply_surface((_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2,_screen->h/2-LEVEL_XP->h,LEVEL_XP,_screen);
- apply_surface((_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w,_screen->h/2-LEVEL_XP->h,player_xp,_screen);
- apply_surface((_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w+player_xp->w,_screen->h/2-LEVEL_XP->h,player_xp_gain,_screen);
- SDL_FreeSurface(player_xp);
- SDL_FreeSurface(player_xp_gain);
+     apply_surface((_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2,_screen->h/2-LEVEL_XP->h,LEVEL_XP,_screen);
+     apply_surface((_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w,_screen->h/2-LEVEL_XP->h,player_xp,_screen);
+     apply_surface((_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w+player_xp->w,_screen->h/2-LEVEL_XP->h,player_xp_gain,_screen);
+     SDL_FreeSurface(player_xp);
+     SDL_FreeSurface(player_xp_gain);
 
- itoa(player[1].Get_money(),aux);
- strcat(aux,"  +  ");
- player_money=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
+     itoa(player[1].Get_money(),aux);
+     strcat(aux,"  +  ");
+     player_money=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
 
- itoa((10+player[1].Get_extra_money())*player[2].Get_experience()/100+200,aux);
- player_money_gain=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
+     itoa((10+player[1].Get_extra_money())*player[2].Get_experience()/100+200,aux);
+     player_money_gain=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
 
- apply_surface((_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2,_screen->h/2+LEVEL_MONEY->h,LEVEL_MONEY,_screen);
- apply_surface((_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w,_screen->h/2+LEVEL_MONEY->h,player_money,_screen);
- apply_surface((_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w+player_money->w,_screen->h/2+LEVEL_MONEY->h,player_money_gain,_screen);
- SDL_FreeSurface(player_money);
- SDL_FreeSurface(player_money_gain);
+     apply_surface((_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2,_screen->h/2+LEVEL_MONEY->h,LEVEL_MONEY,_screen);
+     apply_surface((_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w,_screen->h/2+LEVEL_MONEY->h,player_money,_screen);
+     apply_surface((_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w+player_money->w,_screen->h/2+LEVEL_MONEY->h,player_money_gain,_screen);
+     SDL_FreeSurface(player_money);
+     SDL_FreeSurface(player_money_gain);
+    }
 
- itoa(player[2].Get_experience(),aux);
- strcat(aux,"  +  ");
- player_xp=TTF_RenderText_Solid(font,aux,xp_color);
+ if(player_type[2]==0)
+    {
+     itoa(player[2].Get_experience(),aux);
+     strcat(aux,"  +  ");
+     player_xp=TTF_RenderText_Solid(font,aux,xp_color);
 
- itoa(20*player[1].Get_experience()/100+200,aux);
- player_xp_gain=TTF_RenderText_Solid(font,aux,xp_color);
+     itoa(20*player[1].Get_experience()/100+200,aux);
+     player_xp_gain=TTF_RenderText_Solid(font,aux,xp_color);
 
- apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2,_screen->h/2-LEVEL_XP->h,LEVEL_XP,_screen);
- apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w,_screen->h/2-LEVEL_XP->h,player_xp,_screen);
- apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w+player_xp->w,_screen->h/2-LEVEL_XP->h,player_xp_gain,_screen);
- SDL_FreeSurface(player_xp);
- SDL_FreeSurface(player_xp_gain);
+     apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2,_screen->h/2-LEVEL_XP->h,LEVEL_XP,_screen);
+     apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w,_screen->h/2-LEVEL_XP->h,player_xp,_screen);
+     apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w+player_xp->w,_screen->h/2-LEVEL_XP->h,player_xp_gain,_screen);
+     SDL_FreeSurface(player_xp);
+     SDL_FreeSurface(player_xp_gain);
 
- itoa(player[2].Get_money(),aux);
- strcat(aux,"  +  ");
- player_money=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
+     itoa(player[2].Get_money(),aux);
+     strcat(aux,"  +  ");
+     player_money=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
 
- itoa((10+player[2].Get_extra_money())*player[1].Get_experience()/100+200,aux);
- player_money_gain=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
+     itoa((10+player[2].Get_extra_money())*player[1].Get_experience()/100+200,aux);
+     player_money_gain=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
 
- apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2,_screen->h/2+LEVEL_MONEY->h,LEVEL_MONEY,_screen);
- apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w,_screen->h/2+LEVEL_MONEY->h,player_money,_screen);
- apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w+player_money->w,_screen->h/2+LEVEL_MONEY->h,player_money_gain,_screen);
- SDL_FreeSurface(player_money);
- SDL_FreeSurface(player_money_gain);
+     apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2,_screen->h/2+LEVEL_MONEY->h,LEVEL_MONEY,_screen);
+     apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w,_screen->h/2+LEVEL_MONEY->h,player_money,_screen);
+     apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w+player_money->w,_screen->h/2+LEVEL_MONEY->h,player_money_gain,_screen);
+     SDL_FreeSurface(player_money);
+     SDL_FreeSurface(player_money_gain);
+    }
 
-
- player[1].Set_money(player[1].Get_money()+(10+player[1].Get_extra_money())*player[2].Get_experience()/100+200);
- player[2].Set_money(player[2].Get_money()+(10+player[2].Get_extra_money())*player[1].Get_experience()/100+200);
+ if(player_type[1]==0)
+    player[1].Set_money(player[1].Get_money()+(10+player[1].Get_extra_money())*player[2].Get_experience()/100+200);
+ if(player_type[2]==0)
+    player[2].Set_money(player[2].Get_money()+(10+player[2].Get_extra_money())*player[1].Get_experience()/100+200);
  int a=player[1].Get_experience(),b=player[2].Get_experience();
- player[1].Set_experience(player[1].Get_experience()+20*b/100+200);
- player[2].Set_experience(player[2].Get_experience()+20*a/100+200);
+ if(player_type[1]==0)
+    player[1].Set_experience(player[1].Get_experience()+20*b/100+200);
+ if(player_type[2]==0)
+    player[2].Set_experience(player[2].Get_experience()+20*a/100+200);
 
  player_money=TTF_RenderText_Solid(font,"Press any key to continue!",{255,255,255});
  apply_surface((_screen->w-player_money->w)/2,_screen->h/2+(_screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,_screen);

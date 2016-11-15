@@ -124,6 +124,9 @@ class Level
  void Trigger_around_player_map(int _player);
  void Interact_with_NPC(int _player,int _npc);
  void Interact_with_NPC_around_player(int _player);
+ ///Artificial Intelligence
+ void AI_Make_Move_player(int _player);
+ void AI_Block_player(int _player);
 
  ///Start
  void Set_screen(SDL_Surface *screen);
