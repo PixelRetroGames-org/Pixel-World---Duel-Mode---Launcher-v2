@@ -34,8 +34,13 @@ class Level
  char player_name[3][TEXT_LENGTH_MAX];
  int player_type[3],player_time_blocked[3]={0,0,0},player_time_blocked_attack[3]={0,0,0};
  char arena_name[TEXT_LENGTH_MAX]={NULL},background_music_name[TEXT_LENGTH_MAX]={NULL};
- int number_of_background_music_tracks;
- Mix_Music *background_music[NUMBER_OF_SONGS_MAX];
+ //Music
+ //int number_of_background_music_tracks;
+ //Mix_Music *background_music[NUMBER_OF_SONGS_MAX];
+ //Timer music_time;
+ //bool paused_music;
+ //int last_track_played;
+ //
  Player player[3];
  Map arena,effects;
  Map aux;
@@ -45,8 +50,7 @@ class Level
  Darkness darkness;
  Timer level_duration;
  SDL_Surface *_screen;
- bool level_changed=false;
- int last_track_played=-1;
+ bool level_changed=false,reset_lag=false;
  int number_of_non_playable_characters=0;
  Non_Playable_Character non_playable_characters[NUMBER_OF_NPC_MAX];
  int non_playable_character_time_blocked[NUMBER_OF_NPC_MAX];
@@ -75,8 +79,9 @@ class Level
  void Start_music();
  void Pause_music();
  void Unpause_music();
- int Change_music(bool play);
+ static int Change_music(bool play);
  void Stop_music();
+ static int Oversee_music(void *data);
  ///Move
  bool Move_player_X(int _player);
  bool Move_player_Y(int _player);
@@ -102,8 +107,8 @@ class Level
  void Print_players_informations(SDL_Surface *_screen);
  void Print_player_information(int _player,SDL_Surface *_screen);
  ///Handle Events
- bool Handle_Event(int _player);
- bool Handle_Events(SDL_Surface *_screen);
+ void Handle_Event(int _player);
+ void Handle_Events(SDL_Surface *_screen);
  ///Darkness
  void Darkness_increase();
  void Darkness_decrease();
@@ -113,12 +118,12 @@ class Level
  ///Spells
  bool Cast_Spell(int _player,int spell_pos);
  void Decrease_all_Spells_time_blocked(int _player);
- ///Interaction with map
+ ///Interactions
  void Trigger_player_map(int _player);
  void Trigger_all_players_map();
  void Trigger_around_player_map(int _player);
- bool Interact_with_NPC(int _player,int _npc);
- bool Interact_with_NPC_around_player(int _player);
+ void Interact_with_NPC(int _player,int _npc);
+ void Interact_with_NPC_around_player(int _player);
 
  ///Start
  void Set_screen(SDL_Surface *screen);
@@ -128,6 +133,13 @@ class Level
  void Setup(char *_level_name);
  void Start(SDL_Surface *_screen);
 };
+
+extern int number_of_background_music_tracks;
+extern Mix_Music *background_music[NUMBER_OF_SONGS_MAX];
+extern Timer music_time;
+extern bool paused_music;
+extern int last_track_played;
+extern SDL_Thread *level_music_overseer;
 
 int Other_player(int _player);
 

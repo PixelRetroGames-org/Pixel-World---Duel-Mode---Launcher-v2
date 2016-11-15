@@ -6,6 +6,13 @@
 
 constexpr SDLKey player_keys[3][20]={{},{SDLK_UP,SDLK_DOWN,SDLK_LEFT,SDLK_RIGHT,SDLK_RCTRL,SDLK_j,SDLK_n,SDLK_u,SDLK_i,SDLK_o,SDLK_p},{SDLK_w,SDLK_s,SDLK_a,SDLK_d,SDLK_z,SDLK_BACKQUOTE,SDLK_TAB,SDLK_1,SDLK_2,SDLK_3,SDLK_4}};
 
+int level_number_of_background_music_tracks;
+Mix_Music *level_background_music[NUMBER_OF_SONGS_MAX];
+Timer level_music_time;
+bool level_paused_music;
+int level_last_track_played;
+SDL_Thread *level_music_overseer=NULL;
+
 Level::Level()
 {
  player_name[0][0]=player_name[1][0]=player_name[2][0]=NULL;
@@ -177,13 +184,13 @@ void Level::Load()
 
  if(terrain_type!=last_terrain_type || type==2)
     {
-     last_track_played=-1;
-     for(int i=0;i<number_of_background_music_tracks;i++)
+     level_last_track_played=-1;
+     for(int i=0;i<level_number_of_background_music_tracks;i++)
          {
-          Mix_FreeMusic(background_music[i]);
+          Mix_FreeMusic(level_background_music[i]);
          }
-     fscanf(where,"%d ",&number_of_background_music_tracks);
-     for(int i=0;i<number_of_background_music_tracks && (terrain_type!=last_terrain_type || type==2);i++)
+     fscanf(where,"%d ",&level_number_of_background_music_tracks);
+     for(int i=0;i<level_number_of_background_music_tracks && (terrain_type!=last_terrain_type || type==2);i++)
          {
           fgets(background_music_name,sizeof background_music_name,where);
           if(background_music_name[strlen(background_music_name)-1]=='\n')
@@ -191,7 +198,7 @@ void Level::Load()
           strcpy(path,"audio/");
           strcat(path,background_music_name);
           strcat(path,".mp3");
-          background_music[i]=Mix_LoadMUS(path);
+          level_background_music[i]=Mix_LoadMUS(path);
          }
     }
 
@@ -228,7 +235,7 @@ void Level::Update_all_arena_frames()
 void Level::Start_music()
 {
  if(Mix_PlayingMusic()==0)
-    Mix_PlayMusic(background_music[0],0);
+    Mix_PlayMusic(level_background_music[0],0);
 }
 
 void Level::Pause_music()
@@ -249,14 +256,14 @@ int Level::Change_music(bool play)
     {
      if(play)
         {
-         int x=rand()%number_of_background_music_tracks;
-         if(x==last_track_played && number_of_background_music_tracks!=1)
+         int x=rand()%level_number_of_background_music_tracks;
+         if(x==level_last_track_played && level_number_of_background_music_tracks!=1)
             {
-             x+=rand()%(number_of_background_music_tracks-1);
-             x%=number_of_background_music_tracks;
+             x+=rand()%(level_number_of_background_music_tracks-1);
+             x%=level_number_of_background_music_tracks;
             }
-         last_track_played=x;
-         Mix_PlayMusic(background_music[x],0);
+         level_last_track_played=x;
+         Mix_PlayMusic(level_background_music[x],0);
         }
      return 1;
     }
@@ -266,6 +273,24 @@ int Level::Change_music(bool play)
 void Level::Stop_music()
 {
  Mix_HaltMusic();
+}
+
+int Level::Oversee_music(void *data)
+{
+ while(true)
+       {
+        if(!Mix_PlayingMusic() && !level_paused_music)
+           {
+            level_music_time.start();
+            level_paused_music=true;
+           }
+        if(!Mix_PlayingMusic() && level_music_time.get_ticks()>MUSIC_PAUSE)
+           {
+            level_paused_music=false;
+            Change_music(1);
+            level_music_time.start();
+           }
+       }
 }
 
 bool Level::Move_player_X(int _player)
@@ -417,6 +442,7 @@ bool Level::Move_player(int _player)
                 velocityX=player[_player].Get_velocityX(),velocityY=player[_player].Get_velocityY();
                 strcpy(_map_name,name);
                 strcpy(_aux,arena.Get_map_texture_map_name(y,x));
+                SDL_KillThread(level_music_overseer);
                 Change(_aux);
                 player[_player].Set_map_position(y1,x1);
                 if(type==2)
@@ -426,6 +452,7 @@ bool Level::Move_player(int _player)
                     player[_player].Set_map_position(x-velocityX,y-velocityY);
                     Change_music(1);
                    }
+                level_music_overseer=SDL_CreateThread(Oversee_music,NULL);
                 return false;
                 break;
         }
@@ -708,10 +735,10 @@ void Level::Print_player_information(int _player,SDL_Surface *_screen)
     }
 }
 
-bool Level::Handle_Event(int _player)
+void Level::Handle_Event(int _player)
 {
  if(player_type[_player]>1)
-    return false;
+    return;
  int keys=_player;
  if(player_type[1]==0 && player_type[2]==0)
     keys=Other_player(_player);
@@ -737,13 +764,12 @@ bool Level::Handle_Event(int _player)
     Set_player_velocityX(_player,-1);
  if(keystates[player_keys[keys][3]])
     Set_player_velocityX(_player,1);
- int rtn=0;
  if(type==1)
     {
      if(keystates[player_keys[keys][4]] && !player[_player].Is_blocked())
         {
          Trigger_around_player_map(_player);
-         rtn=Interact_with_NPC_around_player(_player);
+         Interact_with_NPC_around_player(_player);
          player_time_blocked[_player]=10;
         }
     }
@@ -759,15 +785,13 @@ bool Level::Handle_Event(int _player)
 
  if(player_time_blocked[_player]!=0)
     player[_player].Block();
- return rtn;
 }
 
-bool Level::Handle_Events(SDL_Surface *_screen)
+void Level::Handle_Events(SDL_Surface *_screen)
 {
- bool rtn=0;
- rtn=Handle_Event(1);
+ Handle_Event(1);
  if(type==2)
-    rtn=Handle_Event(2) || rtn;
+    Handle_Event(2);
 
  if(keystates[SDLK_EQUALS])
     Darkness_increase();
@@ -782,7 +806,6 @@ bool Level::Handle_Events(SDL_Surface *_screen)
     {
      Pause_Menu();
     }
- return rtn;
 }
 
 void Level::Darkness_increase()
@@ -907,10 +930,10 @@ void Level::Trigger_around_player_map(int _player)
      }
 }
 
-bool Level::Interact_with_NPC(int _player,int _npc)
+void Level::Interact_with_NPC(int _player,int _npc)
 {
  if(non_playable_characters[_npc].Get_type()==0)
-    return false;
+    return;
  Script_interpreter script_interpreter;
  script_interpreter.Start(_screen,non_playable_characters[_npc].Get_script_name());
  Shop_Screen shop_screen;
@@ -923,6 +946,7 @@ bool Level::Interact_with_NPC(int _player,int _npc)
                 break;
          case 3:strcpy(_map_name,name);
                 strcpy(_aux,non_playable_characters[_npc].Get_duel_mode_level_name());
+                SDL_KillThread(level_music_overseer);
                 Change(_aux);
                 if(type==2)
                    {
@@ -931,15 +955,15 @@ bool Level::Interact_with_NPC(int _player,int _npc)
                     player[_player].Set_map_position(x,y);
                     Change_music(1);
                    }
-                return false;
+                level_music_overseer=SDL_CreateThread(Oversee_music,NULL);
                 break;
         }
  SDL_Delay(100);
  SDL_PumpEvents();
- return true;
+ reset_lag=true;
 }
 
-bool Level::Interact_with_NPC_around_player(int _player)
+void Level::Interact_with_NPC_around_player(int _player)
 {
  int dirx[]={1,0,-1,0};
  int diry[]={0,1,0,-1};
@@ -953,7 +977,7 @@ bool Level::Interact_with_NPC_around_player(int _player)
       for(int j=0;j<number_of_non_playable_characters;j++)
           {
            if(x==non_playable_characters[j].Get_map_positionX() && y==non_playable_characters[j].Get_map_positionY())
-              return Interact_with_NPC(_player,j);
+              Interact_with_NPC(_player,j);
           }
      }
 }
@@ -1154,42 +1178,34 @@ void Level::Start(SDL_Surface *screen)
  static_screen=screen;
  bool quit=false;
  int frame=0;
- Timer fps,arena,buffs,current_time,music_time;
+ Timer fps,arena,buffs,current_time,level_music_time;
  arena.start();
  buffs.start();
  level_duration.start();
  current_time.start();
- music_time.start();
+ level_music_time.start();
  srand(time(NULL));
  #ifdef AUDIO
  Change_music(1);
  //Start_music();
  #endif // AUDIO
  int previous_time=current_time.get_ticks(),lag=0;
- bool reset_lag=false,paused_music=false;
+ level_music_overseer=SDL_CreateThread(Level::Oversee_music,NULL);
  while(!quit && !done)
        {
         fps.start();
-        if(!Mix_PlayingMusic() && !paused_music)
-           {
-            music_time.start();
-            paused_music=true;
-           }
-        if(!Mix_PlayingMusic() && music_time.get_ticks()>MUSIC_PAUSE)
-           {
-            paused_music=false;
-            Change_music(1);
-            music_time.start();
-           }
         if(level_changed || reset_lag)
-           previous_time=current_time.get_ticks();
-        level_changed=false;
+           {
+            previous_time=current_time.get_ticks();
+            level_changed=false;
+            reset_lag=false;
+           }
         int elapsed=current_time.get_ticks()-previous_time;
         previous_time=current_time.get_ticks();
         lag+=elapsed;
         SDL_PumpEvents();
         quit=keystates[SDL_QUIT] || ((keystates[SDLK_RALT] || keystates[SDLK_LALT]) && keystates[SDLK_F4]);
-        reset_lag=Handle_Events(screen);
+        Handle_Events(screen);
         while(!level_changed && lag>MS_PER_UPDATE && !done)
               {
                Time_Pass();
@@ -1246,6 +1262,7 @@ void Level::Start(SDL_Surface *screen)
  Clear();
  SDL_KillThread(_loading_image);
  SDL_Flip(static_screen);
+ SDL_KillThread(level_music_overseer);
 }
 
 int Other_player(int _player)

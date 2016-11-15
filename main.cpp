@@ -13,7 +13,7 @@ Shop_Screen shop_screen;
 
 Level level;
 
-Mix_Music *background_music=NULL;
+Mix_Music *launcher_background_music=NULL;
 
 int main( int argc, char* args[] )
 {
@@ -35,12 +35,12 @@ int main( int argc, char* args[] )
  duel_menu.Load("menu/duel_menu.pwm");
  LAUNCHER_BBACKGROUND.Update_size();
  LAUNCHER_BBACKGROUND.Load_Logo();
- background_music=Mix_LoadMUS("audio/Hallowed Be Thy Name.mp3");
+ launcher_background_music=Mix_LoadMUS("audio/Hallowed Be Thy Name.mp3");
  Mix_Volume(-1,MIX_MAX_VOLUME*VOLUME/100);
  Mix_Volume(2,MIX_MAX_VOLUME*VOLUME/100);
  Mix_Volume(3,MIX_MAX_VOLUME*(VOLUME/24)/100);
  Mix_VolumeMusic(MIX_MAX_VOLUME*VOLUME/100);
- Mix_PlayMusic(background_music,-1);
+ Mix_PlayMusic(launcher_background_music,-1);
  int option=-1;
  while(option!=-2)
        {
@@ -74,7 +74,7 @@ int main( int argc, char* args[] )
                                                                       level.Set_screen(screen);
                                                                       level.Setup("Forest");
                                                                       level.Start(screen);
-                                                                      Mix_PlayMusic(background_music,-1);
+                                                                      Mix_PlayMusic(launcher_background_music,-1);
                                                                       _option=-2;
                                                                       break;
                                                                      };
@@ -107,7 +107,7 @@ int main( int argc, char* args[] )
                                                                       level.Set_screen(screen);
                                                                       level.Setup("Duel Mode");
                                                                       level.Start(screen);
-                                                                      Mix_PlayMusic(background_music,-1);
+                                                                      Mix_PlayMusic(launcher_background_music,-1);
                                                                       _option=-2;
                                                                       break;
                                                                      };
