@@ -18,6 +18,7 @@ class Spell
  int time_blocked=0;
  std::vector<Buff> buffs;
  SDL_Surface *image=NULL;
+ Mix_Chunk *sound_effect=NULL;
 
  public:
  Spell();
@@ -35,6 +36,7 @@ class Spell
  bool Pay(int *_mana,int *_health,int *_mental_health);
  bool Can_Pay(int _mana,int _health,int _mental_health);
  void Print_image(int x,int y,SDL_Surface *_screen);
+ void Play_sound_effect(int channel);
 };
 
 #endif // SPELL_H

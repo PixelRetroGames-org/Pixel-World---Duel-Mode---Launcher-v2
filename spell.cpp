@@ -23,6 +23,9 @@ void Spell::Clear(bool _delete)
      buffs[i].Clear(_delete);
  std::vector<Buff>().swap(buffs);
  SDL_FreeSurface(image);
+ image=NULL;
+ Mix_FreeChunk(sound_effect);
+ sound_effect=NULL;
  //buffs.clear();
 }
 
@@ -57,6 +60,18 @@ void Spell::Load()
  fgets(map_name,sizeof map_name,where);
  if(map_name[strlen(map_name)-1]=='\n')
     map_name[strlen(map_name)-1]=NULL;
+ if(map_name[strlen(map_name)-1]=='~')
+    map_name[strlen(map_name)-1]=NULL;
+ char sound_effect_name[TEXT_LENGTH_MAX]={NULL};
+ fgets(sound_effect_name,sizeof sound_effect_name,where);
+ if(sound_effect_name[strlen(sound_effect_name)-1]=='\n')
+    sound_effect_name[strlen(sound_effect_name)-1]=NULL;
+ if(map_name[strlen(map_name)-1]=='~')
+    map_name[strlen(map_name)-1]=NULL;
+ strcpy(aux,"spells/sound effects/");
+ strcat(aux,sound_effect_name);
+ strcat(aux,".wav");
+ sound_effect=Mix_LoadWAV(aux);
  fclose(where);
 }
 
@@ -127,4 +142,9 @@ bool Spell::Can_Pay(int _mana,int _health,int _mental_health)
 void Spell::Print_image(int x,int y,SDL_Surface *_screen)
 {
  apply_surface(x,y,image,_screen);
+}
+
+void Spell::Play_sound_effect(int channel)
+{
+ Mix_PlayChannel(channel,sound_effect,0);
 }

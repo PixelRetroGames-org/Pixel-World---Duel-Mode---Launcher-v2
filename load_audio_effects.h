@@ -3,6 +3,7 @@
 #include "library.h"
 
 extern Mix_Chunk *DUEL_MODE_hit[3];
+extern Mix_Chunk *DUEL_MODE_START;
 
 void Load_Duel_Mode_effects();
 

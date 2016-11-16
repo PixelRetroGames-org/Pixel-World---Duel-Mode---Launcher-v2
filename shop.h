@@ -37,7 +37,6 @@ class Shop_Screen
  char filename[TEXT_LENGTH_MAX]={NULL};
 
  public:
- void Reset();
  int Start(SDL_Surface *screen);
  int Start(SDL_Surface *screen,char *shop_name,char *player_name);
 };

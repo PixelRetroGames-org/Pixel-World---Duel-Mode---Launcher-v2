@@ -902,6 +902,7 @@ bool Level::Cast_Spell(int _player,int spell_pos)
          default:break;
         }
  _buffs.clear();
+ _spell.Play_sound_effect(4);
  return true;
 }
 
@@ -951,6 +952,13 @@ void Level::Interact_with_NPC(int _player,int _npc)
 {
  if(non_playable_characters[_npc].Get_type()==0)
     return;
+ switch(non_playable_characters[_npc].Get_type())
+        {
+         case 3:SDL_KillThread(level_music_overseer);
+                Stop_music();
+                Mix_PlayChannel(3,DUEL_MODE_START,0);
+                break;
+        }
  Script_interpreter script_interpreter;
  script_interpreter.Start(_screen,non_playable_characters[_npc].Get_script_name());
  Shop_Screen shop_screen;
@@ -959,11 +967,12 @@ void Level::Interact_with_NPC(int _player,int _npc)
  switch(non_playable_characters[_npc].Get_type())
         {
          case 2:shop_screen.Start(_screen,non_playable_characters[_npc].Get_shop_name(),player[_player].Get_name());
+                SDL_Delay(100);
+                SDL_PumpEvents();
                 //shop_screen.Reset();
                 break;
          case 3:strcpy(_map_name,name);
                 strcpy(_aux,non_playable_characters[_npc].Get_duel_mode_level_name());
-                SDL_KillThread(level_music_overseer);
                 Change(_aux);
                 if(type==2)
                    {

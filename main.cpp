@@ -38,7 +38,8 @@ int main( int argc, char* args[] )
  launcher_background_music=Mix_LoadMUS("audio/Hallowed Be Thy Name.mp3");
  Mix_Volume(-1,MIX_MAX_VOLUME*VOLUME/100);
  Mix_Volume(2,MIX_MAX_VOLUME*VOLUME/100);
- Mix_Volume(3,MIX_MAX_VOLUME*(VOLUME/24)/100);
+ Mix_Volume(3,MIX_MAX_VOLUME*(VOLUME/10)/100);
+ Mix_Volume(4,MIX_MAX_VOLUME*(VOLUME/10)/100);
  Mix_VolumeMusic(MIX_MAX_VOLUME*VOLUME/100);
  Mix_PlayMusic(launcher_background_music,-1);
  int option=-1;
@@ -81,7 +82,6 @@ int main( int argc, char* args[] )
                                                               case 1:{
                                                                       if(shop_screen.Start(screen,"Shop","Timy")==-1)
                                                                          return 0;
-                                                                      shop_screen.Reset();
                                                                       break;
                                                                      };
                                                               case 2:{
@@ -114,10 +114,8 @@ int main( int argc, char* args[] )
                                                               case 1:{
                                                                       if(shop_screen.Start(screen,"Shop","Player1")==-1)
                                                                          return 0;
-                                                                      shop_screen.Reset();
                                                                       if(shop_screen.Start(screen,"Shop","Player2")==-1)
                                                                          return 0;
-                                                                      shop_screen.Reset();
                                                                       break;
                                                                      };
                                                               case 2:{

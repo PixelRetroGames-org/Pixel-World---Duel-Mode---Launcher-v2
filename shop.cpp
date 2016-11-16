@@ -112,11 +112,6 @@ inline int Shop::Start(SDL_Surface *_screen,SDL_Event *event)
 }
 
 ///SHOP_SCREEN
-void Shop_Screen::Reset()
-{
- shop.Reset();
-}
-
 SDL_Color MESSAGE_COLOR={255,255,255};
 const int FRAMES_PER_SECOND=27;
 
@@ -206,6 +201,7 @@ int Shop_Screen::Start(SDL_Surface *screen)
  SDL_FreeSurface(not_enough_space);
  SDL_FreeSurface(not_enough_background);
  player.Clear(true);
+ shop.Reset();
  shop.Clear();
  while(SDL_PollEvent(&event))
        SDL_PumpEvents();
