@@ -200,6 +200,7 @@ void Level::Load()
           strcat(path,".mp3");
           level_background_music[i]=Mix_LoadMUS(path);
          }
+     Change_music(1);
     }
 
  fclose(where);
@@ -952,6 +953,21 @@ void Level::Interact_with_NPC(int _player,int _npc)
 {
  if(non_playable_characters[_npc].Get_type()==0)
     return;
+ int dirx[]={1,0,-1,0};
+ int diry[]={0,1,0,-1};
+ for(int i=0;i<4;i++)
+     {
+      if(player[_player].Get_map_positionX()==non_playable_characters[_npc].Get_map_positionX()+dirx[i] &&
+         player[_player].Get_map_positionY()==non_playable_characters[_npc].Get_map_positionY()+diry[i])
+         {
+          non_playable_characters[_npc].Update_skin(i);
+          non_playable_character_time_blocked[_npc]=40;
+          non_playable_characters[_npc].Block();
+          player[_player].Set_velocityX(-dirx[i]);
+          player[_player].Set_velocityY(-diry[i]);
+          player[_player].Update_skin_image_position();
+         }
+     }
  switch(non_playable_characters[_npc].Get_type())
         {
          case 3:SDL_KillThread(level_music_overseer);
@@ -1328,13 +1344,14 @@ void Level::Start(SDL_Surface *screen)
         if(type==2 && (player[1].Get_hp()<=0 || player[2].Get_hp()<=0))
            quit=true;
        }
- if(quit)
+ if(quit && type==2)
     {
      Pause_music();
+     Mix_PlayChannel(4,DUEL_MODE_hit[1],0);
      if(player[1].Get_hp()<=0 && player[2].Get_hp()<=0)
-        Duel_Mode_Finish_Screen(0);
+        Duel_Mode_Finish_Screen(winner=0);
      else
-        Duel_Mode_Finish_Screen(player[1].Get_hp()<=0?2:1);
+        Duel_Mode_Finish_Screen(winner=(player[1].Get_hp()<=0?2:1));
     }
  player[1].Update();
  if(type==2)

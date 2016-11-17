@@ -54,6 +54,7 @@ class Level
  int number_of_non_playable_characters=0;
  Non_Playable_Character non_playable_characters[NUMBER_OF_NPC_MAX];
  int non_playable_character_time_blocked[NUMBER_OF_NPC_MAX];
+ int winner=0;
 
  public:
  Level();
