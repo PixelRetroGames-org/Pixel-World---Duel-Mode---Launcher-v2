@@ -598,7 +598,7 @@ void Level::Player_basic_attack(int _player)
 
      player[_player].Set_hp(std::min(1000,player[_player].Get_hp()+player[_player].Get_life_steal()*((std::max(player[_player].Get_attack()-player[Other_player(_player)].Get_defense()*3/8,50))/10)/100));
      player[Other_player(_player)].Set_hp(player[Other_player(_player)].Get_hp()-(std::max(player[_player].Get_attack()-player[Other_player(_player)].Get_defense()*3/8,50))/10);
-     player[_player].Block_attack(),player_time_blocked_attack[_player]=7-50*player[_player].Get_movement_speed()/100;
+     player[_player].Block_attack(),player_time_blocked_attack[_player]=7-player[_player].Get_movement_speed();
      if(player_time_blocked_attack[_player]<=0)
         player_time_blocked_attack[_player]=4;
      std::vector<Buff> _buffs[3];
@@ -683,6 +683,10 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
     {
      mapX=std::min(std::max(0,player[1].Get_map_positionX()-(MAP_IMAGE_HEIGHT-1)/2),arena.Get_number_of_columns()-(MAP_IMAGE_HEIGHT));
      mapY=std::min(std::max(0,player[1].Get_map_positionY()-(MAP_IMAGE_WEIGHT-1)/2),arena.Get_number_of_lines()-(MAP_IMAGE_WEIGHT));
+     if(arena.Get_number_of_columns()<MAP_IMAGE_HEIGHT)
+        mapX=-(MAP_IMAGE_HEIGHT-arena.Get_number_of_columns())/2;
+     if(arena.Get_number_of_lines()<MAP_IMAGE_WEIGHT)
+        mapY=-(MAP_IMAGE_WEIGHT-arena.Get_number_of_lines())/2;
     }
  arena.Print_background(x,y,mapX,mapY,_screen,true,false);
  arena.Print_background_Animations(x,y,mapX,mapY,_screen,true,false);
@@ -740,7 +744,7 @@ void Level::Print_player_information(int _player,SDL_Surface *_screen)
 {
  player[_player].Print_name(_screen);
  player[_player].Print_hp(_screen);
- player[_player].Print_buffs((player[_player].Get_PLAYER_INFO_POSX()+player[_player].Get_PLAYER_INFO_LAST_POSX())/2-85,120,_screen);
+ player[_player].Print_buffs((player[_player].Get_PLAYER_INFO_POSX()+player[_player].Get_PLAYER_INFO_LAST_POSX())/2-95,120,_screen);
  player[_player].Print_mana(_screen);
  if(player_type[_player]<1)
     {
@@ -933,7 +937,7 @@ void Level::Trigger_around_player_map(int _player)
  int dirx[]={1,0,-1,0,1,1,-1,-1};
  int diry[]={0,1,0,-1,1,-1,1,-1};
  int x,y;
- for(int i=0;i<8;i++)
+ for(int i=0;i<4;i++)
      {
       x=player[_player].Get_map_positionX()+dirx[i];
       y=player[_player].Get_map_positionY()+diry[i];
@@ -1341,7 +1345,7 @@ void Level::Start(SDL_Surface *screen)
            }*/
         if(type==2 && level_duration.get_ticks()>duration)
            quit=true;
-        if(type==2 && (player[1].Get_hp()<=0 || player[2].Get_hp()<=0))
+        if(type==2 && ((player[1].Get_hp()<=0 && !player[1].Is_immortal()) || (player[2].Get_hp()<=0 && !player[2].Is_immortal())))
            quit=true;
        }
  if(quit && type==2)

@@ -655,6 +655,10 @@ void Player::Set_hp(int _hp)
  hp=_hp;
  if(hp<0)
     hp=0;
+ if(hp>basic_hp)
+    hp=basic_hp;
+ if(is_immortal && hp==0)
+    hp=1;
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
  char aux[TEXT_LENGTH_MAX]={NULL};
  itoa(hp,aux);
@@ -668,6 +672,8 @@ void Player::Set_mana(int _mana)
  mana=_mana;
  if(mana<0)
     mana=0;
+ if(mana>basic_mana)
+    mana=basic_mana;
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
  SDL_Surface *_image=NULL;
  char aux[TEXT_LENGTH_MAX]={NULL};
@@ -962,6 +968,11 @@ void Player::Use_mana_potion()
     }
 }
 
+bool Player::Is_immortal()
+{
+ return is_immortal;
+}
+
 ///Game
 
 ///Buffs
@@ -974,7 +985,7 @@ void Player::Apply_buff(Buff *_buff)
                 break;
          ///HP
          case 2:if(_buff->Get_damage()<0)
-                   hp+=(_buff->Get_damage())-_buff->Get_damage()*Get_spell_resistance()/100;
+                   hp+=(_buff->Get_damage())+_buff->Get_damage()*Get_spell_resistance()/100;
                 else
                    hp+=_buff->Get_damage();
                 Set_hp(std::min(basic_hp,hp));
@@ -1005,6 +1016,11 @@ void Player::Apply_buff(Buff *_buff)
                 Set_skin_image_position(_buff->Get_skin_image_position());
                 Set_skin(_buff->Get_skin_name());
                 break;
+         ///LAST BREATH
+         case 6:if(_buff->Get_remaining_duration()<_buff->Get_duration())
+                   break;
+                is_immortal=true;
+                break;
          default:break;
         }
  _buff->Decrease_remaining_duration();
@@ -1029,6 +1045,9 @@ void Player::Remove_buff(Buff *_buff)
                 life_steal-=_buff->Get_life_steal();
                 Load_skin();
                 Reset_skin_image_position();
+                break;
+         case 6:is_immortal=false;
+                Set_hp(0);
                 break;
          default:break;
         }

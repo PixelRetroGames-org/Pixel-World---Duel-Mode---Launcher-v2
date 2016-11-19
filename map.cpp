@@ -143,6 +143,10 @@ int Map::Get_map_texture_key_id(int x,int y)
 
 void Map::Copy(int x,int y,Map *source)
 {
+ if(x<0)
+    x=0;
+ if(y<0)
+    y=0;
  for(int i=0;i<source->Get_number_of_lines();i++)
      for(int j=0;j<source->Get_number_of_columns();j++)
          {

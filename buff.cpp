@@ -64,6 +64,8 @@ void Buff::Load()
                 if(skin_name[strlen(skin_name)-1]=='\n')
                    skin_name[strlen(skin_name)-1]=NULL;
                 break;
+         ///Last Breath
+         case 6:break;
          default:break;
         }
  strcpy(filename,"buffs/images/");

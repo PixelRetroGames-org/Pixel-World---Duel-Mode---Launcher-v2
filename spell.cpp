@@ -66,8 +66,6 @@ void Spell::Load()
  fgets(sound_effect_name,sizeof sound_effect_name,where);
  if(sound_effect_name[strlen(sound_effect_name)-1]=='\n')
     sound_effect_name[strlen(sound_effect_name)-1]=NULL;
- if(map_name[strlen(map_name)-1]=='~')
-    map_name[strlen(map_name)-1]=NULL;
  strcpy(aux,"spells/sound effects/");
  strcat(aux,sound_effect_name);
  strcat(aux,".wav");

@@ -49,6 +49,7 @@ class Player
  int number_of_spells=0;
  Spell spells[4];
  std::bitset<NUMBER_OF_MAX_KEYS> keys;
+ bool is_immortal=false;
  ///Game
 
  public:
@@ -127,7 +128,7 @@ class Player
  void Move_Y();
  void Use_hp_potion();
  void Use_mana_potion();
- //void Cast(int spell);
+ bool Is_immortal();
  ///Game
 
  ///Buffs
