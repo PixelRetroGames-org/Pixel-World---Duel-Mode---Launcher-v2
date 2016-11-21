@@ -5,11 +5,6 @@
 
 #define BUFF_PERMANENT -1
 
-#ifndef TEXT_LENGTH_MAX_DEFINED
-const int TEXT_LENGTH_MAX=101;
-#define TEXT_LENGTH_MAX_DEFINED
-#endif // TEXT_LENGTH_MAX_DEFINED
-
 class Buff
 {
  private:

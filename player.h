@@ -15,10 +15,6 @@ extern const int INVENTORY_MAX_NUMBER_OF_ITEMS;
 
 const int NUMBER_OF_MAX_ACTIVE_BUFFS=4;
 
-#ifndef NPC_H
-const int NUMBER_OF_MAX_KEYS=10;
-#endif // NPC_H
-
 class Player
 {
  private:
@@ -152,6 +148,7 @@ class Player
  void Print_spells(int x,int y,SDL_Surface *_screen);
  ///Keys
  void Add_key(int _key_id);
+ void Add_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids);
  void Remove_key(int _key_id);
  std::bitset<NUMBER_OF_MAX_KEYS> *Get_keys();
 };

@@ -87,6 +87,11 @@ int Non_Playable_Character::Get_type()
  return type;
 }
 
+std::bitset<NUMBER_OF_MAX_KEYS> *Non_Playable_Character::Get_keys()
+{
+ return &keys_to_give;
+}
+
 char *Non_Playable_Character::Get_script_name()
 {
  return script_name;

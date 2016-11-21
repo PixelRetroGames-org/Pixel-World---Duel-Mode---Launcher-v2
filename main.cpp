@@ -4,6 +4,7 @@
 #include "shop.h"
 #include "level.h"
 #include "load_audio_effects.h"
+#include "puzzle.h"
 #include<cstdio>
 SDL_Surface *screen;
 
@@ -42,6 +43,12 @@ int main( int argc, char* args[] )
  Mix_Volume(4,MIX_MAX_VOLUME*(VOLUME/10)/100);
  Mix_VolumeMusic(MIX_MAX_VOLUME*VOLUME/100);
  Mix_PlayMusic(launcher_background_music,-1);
+ Puzzle test;
+ test.Set_name("1");
+ test.Load();
+ bool ret=test.Start(screen);
+ if(ret==false)
+    exit(666013);
  int option=-1;
  while(option!=-2)
        {
@@ -73,7 +80,7 @@ int main( int argc, char* args[] )
                                                               case 0:{//Launch Story Mode
                                                                       Mix_HaltMusic();
                                                                       level.Set_screen(screen);
-                                                                      level.Setup("Forge");
+                                                                      level.Setup("Tavern");
                                                                       level.Start(screen);
                                                                       Mix_PlayMusic(launcher_background_music,-1);
                                                                       _option=-2;

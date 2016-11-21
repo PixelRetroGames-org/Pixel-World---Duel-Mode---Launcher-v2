@@ -6,11 +6,6 @@
 #include<algorithm>
 #include<stack>
 
-#ifndef TEXT_LENGTH_MAX_DEFINED
-const int TEXT_LENGTH_MAX=101;
-#define TEXT_LENGTH_MAX_DEFINED
-#endif // TEXT_LENGTH_MAX_DEFINED
-
 const int number_of_commands=11,LINE_HEIGHT=23;
 extern const char *command_names[number_of_commands+1];
 

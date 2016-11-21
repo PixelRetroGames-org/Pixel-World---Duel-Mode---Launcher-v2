@@ -2,25 +2,32 @@
 #define PUZZLE_H
 
 #include "library.h"
+#include "settings.h"
+#include <bitset>
+
+const int NUMBER_OF_ANSWERS_MAX=10;
 
 class Puzzle
 {
  private:
- int id=0,type=0;
- char title[TEXT_LENGHT_MAX],text[TEXT_LENGHT_MAX],text_typed[TEXT_LENGHT_MAX],answer[TEXT_LENGHT_MAX];
- SDL_Surface *title_image=NULL,*text_image=NULL,*text_typed_image=NULL,answer_image=NULL;
+ int type=0,number_of_answers=0;
+ char name[TEXT_LENGTH_MAX];
+ char title[TEXT_LENGTH_MAX],text[TEXT_LENGTH_MAX],text_typed[TEXT_LENGTH_MAX],answers[NUMBER_OF_ANSWERS_MAX][TEXT_LENGTH_MAX];
+ SDL_Surface *title_image=NULL,*text_image=NULL,*text_typed_image=NULL,*answer_image=NULL;
  SDL_Surface *background_image=NULL;
+ std::bitset<NUMBER_OF_MAX_KEYS> keys;
 
  public:
  Puzzle();
  ~Puzzle();
  void Clear(bool _delete=false);
- void Set_id(int _id);
- int Get_id();
+ void Set_name(char *_name);
  void Load();
  bool Start(SDL_Surface *_screen);
- void Print(SDL_Surface *_screen);
- void Handle_Events(SDL_Event);
+ bool Validate_Riddle();
+ bool Start_Riddle(SDL_Surface *_screen);
 };
+
+int Get_Key(char ch);
 
 #endif // PUZZLE_H

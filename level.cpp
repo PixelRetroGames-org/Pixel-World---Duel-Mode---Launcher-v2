@@ -974,7 +974,9 @@ void Level::Interact_with_NPC(int _player,int _npc)
      }
  switch(non_playable_characters[_npc].Get_type())
         {
-         case 3:SDL_KillThread(level_music_overseer);
+         case 1:break;
+         case 2:break;
+         default:SDL_KillThread(level_music_overseer);
                 Stop_music();
                 Mix_PlayChannel(3,DUEL_MODE_START,0);
                 break;
@@ -984,6 +986,7 @@ void Level::Interact_with_NPC(int _player,int _npc)
  Shop_Screen shop_screen;
  int x=player[_player].Get_map_positionX(),y=player[_player].Get_map_positionY();
  char _map_name[TEXT_LENGTH_MAX]={NULL},_aux[TEXT_LENGTH_MAX]={NULL};
+ Puzzle puzzle;
  switch(non_playable_characters[_npc].Get_type())
         {
          case 2:shop_screen.Start(_screen,non_playable_characters[_npc].Get_shop_name(),player[_player].Get_name());
@@ -1003,7 +1006,12 @@ void Level::Interact_with_NPC(int _player,int _npc)
                    }
                 level_music_overseer=SDL_CreateThread(Oversee_music,NULL);
                 break;
+         case 4:puzzle.Set_name(non_playable_characters[_npc].Get_puzzle_name());
+                puzzle.Load();
+                puzzle.Start(_screen);
+                break;
         }
+ player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
  SDL_Delay(100);
  SDL_PumpEvents();
  reset_lag=true;

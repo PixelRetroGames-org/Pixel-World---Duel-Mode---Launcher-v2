@@ -1227,6 +1227,11 @@ void Player::Add_key(int _key_id)
  keys[_key_id]=true;
 }
 
+void Player::Add_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids)
+{
+ keys&=(*_keys_ids);
+}
+
 void Player::Remove_key(int _key_id)
 {
  if(_key_id==0)

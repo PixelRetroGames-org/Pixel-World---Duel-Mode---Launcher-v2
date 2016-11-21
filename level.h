@@ -7,6 +7,7 @@
 #include "non_playable_character.h"
 #include "script_interpreter.h"
 #include "shop.h"
+#include "puzzle.h"
 #include<ctime>
 #include<map>
 

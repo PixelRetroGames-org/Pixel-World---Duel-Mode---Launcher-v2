@@ -8,10 +8,6 @@
 
 const int NUMBER_OF_LINES_MAX=1000,NUMBER_OF_COLUMNS_MAX=1000,NUMBER_OF_TEXTURES_IDS=200;
 
-#ifndef PLAYER_H
-const int NUMBER_OF_MAX_KEYS=10;
-#endif // PLAYER_H
-
 class Map
 {
  private:

@@ -5,15 +5,6 @@
 #include<bitset>
 #include<vector>
 
-#ifndef PLAYER_H
-const int NUMBER_OF_MAX_KEYS=10;
-#endif // PLAYER_H
-
-#ifndef TEXT_LENGTH_MAX_DEFINED
-const int TEXT_LENGTH_MAX=101;
-#define TEXT_LENGTH_MAX_DEFINED
-#endif // TEXT_LENGTH_MAX_DEFINED
-
 class Non_Playable_Character
 {
  private:
@@ -44,6 +35,7 @@ class Non_Playable_Character
  int Get_map_positionY();
  int Get_last_dir();
  int Get_type();
+ std::bitset<NUMBER_OF_MAX_KEYS> *Get_keys();
  char *Get_script_name();
  char *Get_shop_name();
  char *Get_duel_mode_level_name();

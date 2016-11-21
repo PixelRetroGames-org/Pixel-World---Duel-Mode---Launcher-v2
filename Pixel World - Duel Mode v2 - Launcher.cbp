@@ -59,6 +59,8 @@
 		<Unit filename="non_playable_character.h" />
 		<Unit filename="player.cpp" />
 		<Unit filename="player.h" />
+		<Unit filename="puzzle.cpp" />
+		<Unit filename="puzzle.h" />
 		<Unit filename="script_interpreter.cpp" />
 		<Unit filename="script_interpreter.h" />
 		<Unit filename="settings.cpp" />
