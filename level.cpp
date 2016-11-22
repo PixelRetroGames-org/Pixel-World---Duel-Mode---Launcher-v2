@@ -991,7 +991,12 @@ void Level::Interact_with_NPC(int _player,int _npc)
  Puzzle puzzle;
  switch(non_playable_characters[_npc].Get_type())
         {
-         case 2:shop_screen.Start(_screen,non_playable_characters[_npc].Get_shop_name(),player[_player].Get_name());
+         case 1:player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
+                player[_player].Update();
+                break;
+         case 2:player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
+                player[_player].Update();
+                shop_screen.Start(_screen,non_playable_characters[_npc].Get_shop_name(),player[_player].Get_name());
                 SDL_Delay(100);
                 SDL_PumpEvents();
                 //shop_screen.Reset();
@@ -1002,6 +1007,8 @@ void Level::Interact_with_NPC(int _player,int _npc)
                 Mix_HaltChannel(5);
                 if(type==2)
                    {
+                    player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
+                    player[_player].Update();
                     Start(_screen);
                     Change(_map_name);
                     player[_player].Set_map_position(x,y);
@@ -1012,9 +1019,10 @@ void Level::Interact_with_NPC(int _player,int _npc)
          case 4:puzzle.Set_name(non_playable_characters[_npc].Get_puzzle_name());
                 puzzle.Load();
                 puzzle.Start(_screen);
+                player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
+                player[_player].Update();
                 break;
         }
- player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
  SDL_Delay(100);
  SDL_PumpEvents();
  reset_lag=true;

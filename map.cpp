@@ -311,7 +311,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
      }
  int number_of_keys=0;
  fscanf(where,"%d ",&number_of_keys);
- for(int i=0;i<number_of_locks;i++)
+ for(int i=0;i<number_of_keys;i++)
      {
       int x,y,key_id,_texture;
       fscanf(where,"%d %d %d %d ",&_texture,&x,&y,&key_id);

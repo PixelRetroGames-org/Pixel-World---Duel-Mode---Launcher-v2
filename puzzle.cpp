@@ -50,14 +50,6 @@ void Puzzle::Load()
  fgets(title,sizeof title,where);
  if(title[strlen(title)-1]=='\n')
     title[strlen(title)-1]=NULL;
- int number_of_keys=0;
- fscanf(where,"%d ",&number_of_keys);
- for(int i=0;i<number_of_keys;i++)
-     {
-      int key_id;
-      fscanf(where,"%d ",&key_id);
-      keys[key_id]=true;
-     }
  switch(type)
         {
          case 1:

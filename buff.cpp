@@ -14,15 +14,15 @@ Buff::Buff()
 
 void Buff::Clear(bool _delete)
 {
- id=type=duration=0;
- printable=self=false;
- damage=0,chance=0,mana=0;
- memset(name,0,sizeof name);
  if(_delete && image!=NULL)
     {
      SDL_FreeSurface(image);
      image=NULL;
     }
+ id=type=duration=0;
+ printable=self=false;
+ damage=0,chance=0,mana=0;
+ memset(name,0,sizeof name);
 }
 
 void Buff::Load()

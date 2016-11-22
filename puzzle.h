@@ -15,7 +15,6 @@ class Puzzle
  char title[TEXT_LENGTH_MAX],text[TEXT_LENGTH_MAX],text_typed[TEXT_LENGTH_MAX],answers[NUMBER_OF_ANSWERS_MAX][TEXT_LENGTH_MAX];
  SDL_Surface *title_image=NULL,*text_image=NULL,*text_typed_image=NULL,*answer_image=NULL;
  SDL_Surface *background_image=NULL;
- std::bitset<NUMBER_OF_MAX_KEYS> keys;
 
  public:
  Puzzle();

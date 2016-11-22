@@ -19,7 +19,7 @@ void Spell::Clear(bool _delete)
  memset(map_name,0,sizeof map_name);
  mana_cost=health_cost=mental_health_cost=0;
  range=mana_cost=health_cost=mental_health_cost=cooldown=time_blocked=0;
- for(int i=0;i<buffs.size();i++)
+ for(int i=0;i<buffs.size() && !buffs.empty();i++)
      buffs[i].Clear(_delete);
  std::vector<Buff>().swap(buffs);
  SDL_FreeSurface(image);

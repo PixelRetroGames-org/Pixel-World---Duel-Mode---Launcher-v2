@@ -47,7 +47,7 @@ void Player::Clear(bool _delete)
  skin_image_position.h=skin_image_position.w=40;
  skin_image_position.x=skin_image_position.y=0;
  for(int i=0;!active_buffs.empty() && i<active_buffs.size();i++)
-     active_buffs[i].Clear(_delete);
+     active_buffs[i].Clear(false);
  //active_buffs.clear();
  std::vector<Buff>().swap(active_buffs);
  for(int i=0;i<10;i++)
@@ -1229,7 +1229,14 @@ void Player::Add_key(int _key_id)
 
 void Player::Add_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids)
 {
- keys&=(*_keys_ids);
+ keys|=(*_keys_ids);
+ bool a;
+ for(int i=0;i<keys.size();i++)
+     fprintf(stderr,"%d",a=keys[i]);
+ fprintf(stderr,"\n");
+ for(int i=0;i<(*_keys_ids).size();i++)
+     fprintf(stderr,"%d",a=(*_keys_ids)[i]);
+ fprintf(stderr,"\n");
 }
 
 void Player::Remove_key(int _key_id)

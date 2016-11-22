@@ -80,7 +80,7 @@ int main( int argc, char* args[] )
                                                               case 0:{//Launch Story Mode
                                                                       Mix_HaltMusic();
                                                                       level.Set_screen(screen);
-                                                                      level.Setup("Tavern");
+                                                                      level.Setup("Forest");
                                                                       level.Start(screen);
                                                                       Mix_PlayMusic(launcher_background_music,-1);
                                                                       _option=-2;
