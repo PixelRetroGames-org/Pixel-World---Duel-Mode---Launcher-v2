@@ -976,9 +976,11 @@ void Level::Interact_with_NPC(int _player,int _npc)
         {
          case 1:break;
          case 2:break;
+         case 4:break;
          default:SDL_KillThread(level_music_overseer);
                 Stop_music();
-                Mix_PlayChannel(3,DUEL_MODE_START,0);
+                SDL_Delay(50);
+                Mix_PlayChannel(5,DUEL_MODE_START,-1);
                 break;
         }
  Script_interpreter script_interpreter;
@@ -997,6 +999,7 @@ void Level::Interact_with_NPC(int _player,int _npc)
          case 3:strcpy(_map_name,name);
                 strcpy(_aux,non_playable_characters[_npc].Get_duel_mode_level_name());
                 Change(_aux);
+                Mix_HaltChannel(5);
                 if(type==2)
                    {
                     Start(_screen);
