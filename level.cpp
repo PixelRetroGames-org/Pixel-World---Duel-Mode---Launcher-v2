@@ -115,22 +115,22 @@ void Level::Load()
  player[1].Set_map_position(x,y);
  player[1].Load();
 
- for(int i=0;i<player[1].Get_number_of_spells();i++)
-     {
-      if(!spell_effects_ids.count((player[1].Get_Spell(i)).Get_id()) && ((player[1].Get_Spell(i)).Get_map_name())[0]!=NULL)
-         {
-          aux.Set_name((player[1].Get_Spell(i)).Get_map_name());
-          aux.Load(NULL);
-          spell_effects.push_back(aux);
-          spell_effects_ids[(player[1].Get_Spell(i)).Get_id()]=spell_effects.size()-1;
-          aux.Clear(false);
-         }
-     }
-
  player[2].Set_map_position(-5,-5);
 
  if(type==2)
     {
+     for(int i=0;i<player[1].Get_number_of_spells();i++)
+         {
+          if(!spell_effects_ids.count((player[1].Get_Spell(i)).Get_id()) && ((player[1].Get_Spell(i)).Get_map_name())[0]!=NULL)
+             {
+              aux.Set_name((player[1].Get_Spell(i)).Get_map_name());
+              aux.Load(NULL);
+              spell_effects.push_back(aux);
+              spell_effects_ids[(player[1].Get_Spell(i)).Get_id()]=spell_effects.size()-1;
+              aux.Clear(false);
+             }
+         }
+
      fgets(player_name[2],sizeof player_name[2],where);
      if(player_name[2][strlen(player_name[2])-1]=='\n')
         player_name[2][strlen(player_name[2])-1]=NULL;
