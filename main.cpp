@@ -46,9 +46,12 @@ int main( int argc, char* args[] )
  Puzzle test;
  test.Set_name("1");
  test.Load();
- bool ret=test.Start(screen);
- if(ret==false)
-    exit(666013);
+ if(false)
+    {
+     bool ret=test.Start(screen);
+     if(ret==false && false)
+        exit(666013);
+    }
  int option=-1;
  while(option!=-2)
        {
@@ -80,7 +83,7 @@ int main( int argc, char* args[] )
                                                               case 0:{//Launch Story Mode
                                                                       Mix_HaltMusic();
                                                                       level.Set_screen(screen);
-                                                                      level.Setup("Forest");
+                                                                      level.Setup("The Stables");
                                                                       level.Start(screen);
                                                                       Mix_PlayMusic(launcher_background_music,-1);
                                                                       _option=-2;
