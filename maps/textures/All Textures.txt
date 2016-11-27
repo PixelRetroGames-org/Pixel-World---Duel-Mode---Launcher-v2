@@ -167,3 +167,8 @@
 167 - waterCD
 168 - waterRD
 169 - bush3
+170 - red_flowers
+171 - grass5
+172 - grass6
+173 - grass7
+174 - grass8
