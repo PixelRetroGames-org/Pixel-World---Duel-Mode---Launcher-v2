@@ -172,3 +172,8 @@
 172 - grass6
 173 - grass7
 174 - grass8
+175 - stairsL
+176 - stairsR
+177 - hillRU1
+178 - hillLU1
+179 - empty
