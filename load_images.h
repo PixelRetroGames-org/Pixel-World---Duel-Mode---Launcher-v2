@@ -41,6 +41,7 @@ void Load_player_images();
 ///LEVEL
 extern SDL_Surface *LEVEL_background_image,*LEVEL_loading_image;
 extern SDL_Surface *LEVEL_WINNER,*LEVEL_LOSER,*LEVEL_MONEY,*LEVEL_XP,*LEVEL_LINE;
+extern SDL_Surface *MAP_NAME_background;
 void Load_level_images();
 
 ///SETTINGS
@@ -56,6 +57,7 @@ void Load_all_images();
 
 ///Loading Screen
 extern SDL_Surface *static_screen;
+extern bool Loading_image_quit;
 int Loading_image(void *data);
 
 

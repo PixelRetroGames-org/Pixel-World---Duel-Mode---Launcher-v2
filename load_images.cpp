@@ -28,6 +28,7 @@ SDL_Surface *PLAYER_SPELLS_background,*PLAYER_SPELLS_front,*PLAYER_SPELLS_no_man
 ///LEVEL
 SDL_Surface *LEVEL_background_image,*LEVEL_loading_image;
 SDL_Surface *LEVEL_WINNER,*LEVEL_LOSER,*LEVEL_MONEY,*LEVEL_XP,*LEVEL_LINE;
+SDL_Surface *MAP_NAME_background;
 
 ///SETTINGS
 SDL_Surface *SETTINGS_option_background,*SETTINGS_option_background_selected,*SETTINGS_background,*SETTINGS_name;
@@ -110,6 +111,7 @@ void Load_level_images()
  LEVEL_XP=TTF_RenderText_Solid(font1,"XP:   ",xp_color);
  LEVEL_MONEY=TTF_RenderText_Solid(font1,"MONEY:   ",MONEY_COLOR);
  LEVEL_LINE=make_it_transparent("images/game/line.bmp");
+ MAP_NAME_background=make_it_transparent("images/game/map_name_background.bmp");
  TTF_CloseFont(font);
  TTF_CloseFont(font1);
 }
@@ -169,10 +171,12 @@ void Load_all_images()
 }
 
 SDL_Surface *static_screen;
+bool Loading_image_quit=false;
 int Loading_image(void *data)
 {
  int frame=0;
- while(true)
+ Loading_image_quit=false;
+ while(!Loading_image_quit)
        {
         apply_surface(0,0,LEVEL_background_image,static_screen);
         apply_surface(160*frame,0,((static_screen->w)-160)/2,((static_screen->h)-LEVEL_loading_image->h)/2,160,LEVEL_loading_image->h,LEVEL_loading_image,static_screen);

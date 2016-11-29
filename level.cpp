@@ -216,7 +216,7 @@ void Level::Change(char *_level_name)
  SDL_Thread *_loading_image=NULL;
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Clear();
- SDL_KillThread(_loading_image);
+ Loading_image_quit=true;
  SDL_Flip(static_screen);
  Setup(_level_name);
 }
@@ -276,9 +276,12 @@ void Level::Stop_music()
  Mix_HaltMusic();
 }
 
+bool Oversee_music_quit;
+
 int Level::Oversee_music(void *data)
 {
- while(true)
+ Oversee_music_quit=false;
+ while(!Oversee_music_quit)
        {
         if(!Mix_PlayingMusic() && !level_paused_music)
            {
@@ -457,7 +460,7 @@ bool Level::Move_player(int _player)
                 velocityX=player[_player].Get_velocityX(),velocityY=player[_player].Get_velocityY();
                 strcpy(_map_name,name);
                 strcpy(_aux,arena.Get_map_texture_map_name(y,x));
-                SDL_KillThread(level_music_overseer);
+                Oversee_music_quit=true;
                 Change(_aux);
                 player[_player].Set_map_position(y1,x1);
                 if(type==2)
@@ -732,6 +735,7 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
  if(type==2)
     effects.Print_Animations(x,y,mapX,mapY,_screen,false,true);
  //effects.Print(x,y,_screen,false);
+ arena.Print_name_image(_screen);
 }
 
 void Level::Print_players_informations(SDL_Surface *_screen)
@@ -977,7 +981,7 @@ void Level::Interact_with_NPC(int _player,int _npc)
          case 1:break;
          case 2:break;
          case 4:break;
-         default:SDL_KillThread(level_music_overseer);
+         default:Oversee_music_quit=true;
                 Stop_music();
                 SDL_Delay(50);
                 Mix_PlayChannel(5,DUEL_MODE_START,-1);
@@ -1278,7 +1282,7 @@ void Level::Setup(char *_level_name)
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Load();
  //SDL_Delay(1000);
- SDL_KillThread(_loading_image);
+ Loading_image_quit=true;
  SDL_Flip(static_screen);
  player_time_blocked[1]=player_time_blocked[2]=0;
  player[1].Unblock();
@@ -1382,9 +1386,9 @@ void Level::Start(SDL_Surface *screen)
  SDL_Thread *_loading_image=NULL;
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Clear();
- SDL_KillThread(_loading_image);
+ Loading_image_quit=true;
  SDL_Flip(static_screen);
- SDL_KillThread(level_music_overseer);
+ Oversee_music_quit=true;
 }
 
 int Other_player(int _player)

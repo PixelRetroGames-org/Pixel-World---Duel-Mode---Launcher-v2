@@ -145,6 +145,7 @@ extern Timer music_time;
 extern bool paused_music;
 extern int last_track_played;
 extern SDL_Thread *level_music_overseer;
+extern bool Oversee_music_quit;
 
 int Other_player(int _player);
 

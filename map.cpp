@@ -48,6 +48,10 @@ void Map::Clear(bool _delete,bool _delete_all)
           map_textures_ids[i][j].Clear();
           background_map_textures_ids[i][j].Clear();
          }
+ SDL_FreeSurface(name_image);
+ name_image=NULL;
+ name_image_opaque_time=NAME_IMAGE_OPAQUE_TIME;
+ name_image_alpha=SDL_ALPHA_OPAQUE;
 }
 
 void Map::Set_name(char *_name)
@@ -143,10 +147,6 @@ int Map::Get_map_texture_key_id(int x,int y)
 
 void Map::Copy(int x,int y,Map *source)
 {
- if(x<0)
-    x=0;
- if(y<0)
-    y=0;
  for(int i=0;i<source->Get_number_of_lines();i++)
      for(int j=0;j<source->Get_number_of_columns();j++)
          {
@@ -209,7 +209,24 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
  strcat(path,name);
  strcat(path,".pwm");
  FILE *where=fopen(path,"r");
- fscanf(where,"%d %d %d %d ",&is_static,&number_of_updates,&number_of_lines,&number_of_columns);
+ int _is_interest_point,_is_static;
+ fscanf(where,"%d %d %d %d %d ",&_is_interest_point,&_is_static,&number_of_updates,&number_of_lines,&number_of_columns);
+ is_interest_point=_is_interest_point;
+ is_static=_is_static;
+
+ if(is_interest_point)
+    {
+     TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
+     SDL_Color color={0,0,0};
+     SDL_Surface *image=TTF_RenderText_Solid(font,name,color);
+     name_image=make_it_transparent("images/game/map_name_background.bmp");
+     apply_surface((name_image->w-image->w)/2,(name_image->h-image->h)/2,image,name_image);
+     SDL_Flip(name_image);
+     SDL_FreeSurface(image);
+     TTF_CloseFont(font);
+     name_image_opaque_time=NAME_IMAGE_OPAQUE_TIME;
+     name_image_alpha=SDL_ALPHA_OPAQUE;
+    }
 
  for(int i=0;i<=1 && is_static;i++)
      for(int j=0;j<=1;j++)
@@ -369,4 +386,22 @@ void Map::Trigger(int x,int y)
  background_map_textures_ids[x][y].Get_all_targets_map_positions(target_map_position);
  for(std::vector<std::pair<int,int> >::iterator it=target_map_position.begin();it!=target_map_position.end();it++)
      Trigger(it->first,it->second);
+}
+
+void Map::Print_name_image(SDL_Surface *_screen)
+{
+ if(!is_interest_point)
+    return;
+ apply_surface((RESOLUTION_X-name_image->w)/2,40,name_image,_screen);
+ Update_name_image();
+}
+
+void Map::Update_name_image()
+{
+ if(name_image_alpha==0 || name_image_opaque_time-->0)
+    return;
+ name_image_alpha-=10;
+ if(name_image_alpha<0)
+    name_image_alpha=0;
+ SDL_SetAlpha(name_image,SDL_SRCALPHA,name_image_alpha);
 }

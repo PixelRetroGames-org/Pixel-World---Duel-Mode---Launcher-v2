@@ -7,6 +7,7 @@
 #include<bitset>
 
 const int NUMBER_OF_LINES_MAX=1000,NUMBER_OF_COLUMNS_MAX=1000,NUMBER_OF_TEXTURES_IDS=200;
+const int NAME_IMAGE_OPAQUE_TIME=50;
 
 class Map
 {
@@ -19,7 +20,9 @@ class Map
  SDL_Surface *map_image[2][2],*background_map_image[2][2];
  int number_of_updates,current_number_of_updates;
  bool map_obstacles[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX];
- bool is_static=true;
+ bool is_static=true,is_interest_point=false;
+ SDL_Surface *name_image=NULL;
+ int name_image_alpha=SDL_ALPHA_OPAQUE,name_image_opaque_time=NAME_IMAGE_OPAQUE_TIME;
 
  public:
  //~Map();
@@ -53,6 +56,8 @@ class Map
  void Print_background(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights=false);
  void Print_background_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights=false);
  void Print_image(int screen_x,int screen_y,SDL_Surface *_screen,Interactive_map_texture *source);
+ void Print_name_image(SDL_Surface *_screen);
+ void Update_name_image();
 
  void Trigger(int x,int y);
 };
