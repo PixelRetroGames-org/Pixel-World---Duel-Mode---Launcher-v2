@@ -205,5 +205,7 @@ int main( int argc, char* args[] )
                        };
                }
        }
+ Clear_all_images();
+ Clear_Duel_Mode_effects();
  return 0;
 }

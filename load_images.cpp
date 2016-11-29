@@ -1,4 +1,5 @@
 #include "load_images.h"
+#include "library.h"
 
 ///GLOBAL
 SDL_Surface *COIN,*HEART,*MANA;
@@ -103,6 +104,7 @@ void Clear_shop_images()
  SDL_FreeSurface(INVENTORY_SELL);
  for(int i=0;i<4;i++)
      SDL_FreeSurface(INVENTORY_spell_position[i]);
+ SHOP_IMAGES_LOADED=false;
 }
 
 void Load_player_images()
@@ -128,6 +130,25 @@ void Load_player_images()
  SDL_SetAlpha(PLAYER_SPELLS_not_ready,SDL_SRCALPHA,200);
 }
 
+void Clear_player_images()
+{
+ SDL_FreeSurface(PLAYER_name_background);
+ SDL_FreeSurface(PLAYER_name_background_shop);
+ SDL_FreeSurface(PLAYER_name_background_right_layer);
+ SDL_FreeSurface(PLAYER_details_background);
+ SDL_FreeSurface(PLAYER_experience_background);
+ SDL_FreeSurface(PLAYER_money_background);
+ SDL_FreeSurface(PLAYER_HP_background);
+ SDL_FreeSurface(PLAYER_MANA_background);
+ SDL_FreeSurface(PLAYER_CASE_background);
+ SDL_FreeSurface(PLAYER_CASE_front);
+ SDL_FreeSurface(PLAYER_SPELLS_background);
+ SDL_FreeSurface(PLAYER_SPELLS_front);
+ SDL_FreeSurface(PLAYER_SPELLS_no_mana);
+ SDL_FreeSurface(PLAYER_SPELLS_not_ready);
+ PLAYER_IMAGES_LOADED=false;
+}
+
 void Load_level_images()
 {
  if(LEVEL_IMAGES_LOADED)
@@ -147,12 +168,31 @@ void Load_level_images()
  TTF_CloseFont(font1);
 }
 
+void Clear_level_images()
+{
+ SDL_FreeSurface(LEVEL_background_image);
+ SDL_FreeSurface(LEVEL_loading_image);
+ SDL_FreeSurface(LEVEL_WINNER);
+ SDL_FreeSurface(LEVEL_LOSER);
+ SDL_FreeSurface(LEVEL_XP);
+ SDL_FreeSurface(LEVEL_MONEY);
+ SDL_FreeSurface(LEVEL_LINE);
+ SDL_FreeSurface(MAP_NAME_background);
+ LEVEL_IMAGES_LOADED=false;
+}
+
 void Load_global_images()
 {
  if(GLOBAL_IMAGES_LOADED)
     return;
  GLOBAL_IMAGES_LOADED=true;
  COIN=make_it_transparent("images/shop/coin.bmp");
+}
+
+void Clear_global_images()
+{
+ SDL_FreeSurface(COIN);
+ GLOBAL_IMAGES_LOADED=false;
 }
 
 void Load_settings_images()
@@ -167,6 +207,15 @@ void Load_settings_images()
  SETTINGS_name=TTF_RenderText_Solid(font,"Settings",SDL_Color{255,255,255});
 }
 
+void Clear_settings_images()
+{
+ SDL_FreeSurface(SETTINGS_option_background);
+ SDL_FreeSurface(SETTINGS_option_background_selected);
+ SDL_FreeSurface(SETTINGS_background);
+ SDL_FreeSurface(SETTINGS_name);
+ SETTINGS_IMAGES_LOADED=false;
+}
+
 void Load_menu_images()
 {
  if(MENU_IMAGES_LOADED)
@@ -178,12 +227,27 @@ void Load_menu_images()
  MENU_background_selected=load_image("images/menu/menu_background_selected.bmp");
 }
 
+void Clear_menu_images()
+{
+ SDL_FreeSurface(MENU_big_background);
+ SDL_FreeSurface(MENU_background);
+ SDL_FreeSurface(MENU_background_click);
+ SDL_FreeSurface(MENU_background_selected);
+ MENU_IMAGES_LOADED=false;
+}
+
 void Load_script_images()
 {
  if(SCRIPT_IMAGES_LOADED)
     return;
  SCRIPT_IMAGES_LOADED=true;
  SCRIPT_default_background_image=make_it_transparent("images/script/default_background_image.bmp");
+}
+
+void Clear_script_images()
+{
+ SDL_FreeSurface(SCRIPT_default_background_image);
+ SCRIPT_IMAGES_LOADED=false;
 }
 
 void Load_all_images()
@@ -197,6 +261,17 @@ void Load_all_images()
  Load_script_images();
 }
 
+void Clear_all_images()
+{
+ Clear_global_images();
+ Clear_menu_images();
+ Clear_shop_images();
+ Clear_player_images();
+ Clear_level_images();
+ Clear_settings_images();
+ Clear_script_images();
+}
+
 SDL_Surface *static_screen;
 bool Loading_image_quit=false;
 int Loading_image(void *data)
@@ -205,6 +280,7 @@ int Loading_image(void *data)
  Loading_image_quit=false;
  while(!Loading_image_quit)
        {
+        SDL_PumpEvents();
         apply_surface(0,0,LEVEL_background_image,static_screen);
         apply_surface(160*frame,0,((static_screen->w)-160)/2,((static_screen->h)-LEVEL_loading_image->h)/2,160,LEVEL_loading_image->h,LEVEL_loading_image,static_screen);
         SDL_Flip(static_screen);
