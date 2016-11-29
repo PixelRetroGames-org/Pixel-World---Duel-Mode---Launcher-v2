@@ -3,6 +3,7 @@
 
 #include "library.h"
 #include "load_images.h"
+#include "errors.h"
 
 extern int RESOLUTION_X,RESOLUTION_Y,RESOLUTION;
 extern int DISPLAY_MODE,VOLUME,VOL;

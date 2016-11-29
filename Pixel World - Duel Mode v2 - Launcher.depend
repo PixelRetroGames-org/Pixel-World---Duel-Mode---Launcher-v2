@@ -209,9 +209,10 @@
 	<cstring>
 	<string>
 
-1479807192 c:\users\elev\desktop\pixel world - duel mode v2 - launcher\settings.h
+1480422590 c:\users\elev\desktop\pixel world - duel mode v2 - launcher\settings.h
 	"library.h"
 	"load_images.h"
+	"errors.h"
 
 1480419725 c:\users\elev\desktop\pixel world - duel mode v2 - launcher\load_images.h
 	"SDL/SDL.h"
@@ -254,7 +255,7 @@
 	<cstdio>
 	"buff.h"
 
-1480420297 source:c:\users\elev\desktop\pixel world - duel mode v2 - launcher\level.cpp
+1480422625 source:c:\users\elev\desktop\pixel world - duel mode v2 - launcher\level.cpp
 	"level.h"
 	"load_audio_effects.h"
 	"settings.h"
@@ -422,4 +423,9 @@
 
 1479885978 source:c:\users\elev\desktop\pixel world - duel mode v2 - launcher\puzzle.cpp
 	"puzzle.h"
+
+1480422504 c:\users\elev\desktop\pixel world - duel mode v2 - launcher\errors.h
+
+1480422521 source:c:\users\elev\desktop\pixel world - duel mode v2 - launcher\errors.cpp
+	"errors.h"
 

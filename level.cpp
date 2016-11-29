@@ -235,24 +235,32 @@ void Level::Update_all_arena_frames()
 
 void Level::Start_music()
 {
+ if(!MUSIC_MODULE_INIT)
+    return;
  if(Mix_PlayingMusic()==0)
     Mix_PlayMusic(level_background_music[0],0);
 }
 
 void Level::Pause_music()
 {
+ if(!MUSIC_MODULE_INIT)
+    return;
  if(Mix_PlayingMusic()==1)
     Mix_PauseMusic();
 }
 
 void Level::Unpause_music()
 {
+ if(!MUSIC_MODULE_INIT)
+    return;
  if(Mix_PausedMusic()==1)
     Mix_ResumeMusic();
 }
 
 int Level::Change_music(bool play)
 {
+ if(!MUSIC_MODULE_INIT)
+    return 0;
  if(Mix_PlayingMusic()==0)
     {
      if(play)
@@ -280,6 +288,8 @@ bool Oversee_music_quit;
 
 int Level::Oversee_music(void *data)
 {
+ if(!MUSIC_MODULE_INIT)
+    return -1;
  Oversee_music_quit=false;
  while(!Oversee_music_quit)
        {
