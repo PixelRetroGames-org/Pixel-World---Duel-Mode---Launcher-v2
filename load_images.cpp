@@ -2,11 +2,13 @@
 
 ///GLOBAL
 SDL_Surface *COIN,*HEART,*MANA;
+bool GLOBAL_IMAGES_LOADED;
 
 ///LAUNCHER
 Big_Background LAUNCHER_BBACKGROUND;
 SDL_Surface *MENU_big_background=NULL;
 SDL_Surface *MENU_background=NULL,*MENU_background_click=NULL,*MENU_background_selected=NULL;
+bool LAUNCHER_IMAGES_LOADED,MENU_IMAGES_LOADED;
 
 ///SHOP
 SDL_Surface *SHOP_title_clear,*SHOP_title_background_line,*SHOP_title_background_click;
@@ -17,6 +19,7 @@ SDL_Surface *SHOP_inventory_background,*SHOP_item_background_selected,*SHOP_item
 SDL_Surface *SHOP_inventory_spell_background,*SHOP_inventory_spell_background_equipped;
 SDL_Surface *INVENTORY_EQUIP,*INVENTORY_EQUIPPED,*INVENTORY_SELL;
 SDL_Surface *INVENTORY_spell_position[4];
+bool SHOP_IMAGES_LOADED;
 const SDL_Color EQUIP_COLOR={15,30,90},BUY_COLOR={40,80,160},EQUIPPED_COLOR={255,128,0};
 
 ///PLAYER
@@ -24,24 +27,27 @@ SDL_Surface *PLAYER_name_background,*PLAYER_name_background_right_layer,*PLAYER_
 SDL_Surface *PLAYER_HP_background,*PLAYER_MANA_background,*PLAYER_CASE_background,*PLAYER_CASE_front;
 SDL_Surface *PLAYER_name_background_shop;
 SDL_Surface *PLAYER_SPELLS_background,*PLAYER_SPELLS_front,*PLAYER_SPELLS_no_mana,*PLAYER_SPELLS_not_ready;
+bool PLAYER_IMAGES_LOADED;
 
 ///LEVEL
 SDL_Surface *LEVEL_background_image,*LEVEL_loading_image;
 SDL_Surface *LEVEL_WINNER,*LEVEL_LOSER,*LEVEL_MONEY,*LEVEL_XP,*LEVEL_LINE;
 SDL_Surface *MAP_NAME_background;
+bool LEVEL_IMAGES_LOADED;
 
 ///SETTINGS
 SDL_Surface *SETTINGS_option_background,*SETTINGS_option_background_selected,*SETTINGS_background,*SETTINGS_name;
+bool SETTINGS_IMAGES_LOADED;
 
 ///SCRIPT
 SDL_Surface *SCRIPT_default_background_image;
+bool SCRIPT_IMAGES_LOADED;
 
 void Load_shop_images()
 {
- #ifdef SHOP_IMAGES_LOADED
- return;
- #endif // SHOP_IMAGES_LOADED
- #define SHOP_IMAGES_LOADED
+ if(SHOP_IMAGES_LOADED)
+    return;
+ SHOP_IMAGES_LOADED=true;
  SHOP_title_clear=make_it_transparent("images/shop/title_clear.bmp");
  SHOP_title_background_line=make_it_transparent("images/shop/title_background_line.bmp");
  SHOP_title_background_click=make_it_transparent("images/shop/title_background_click.bmp");
@@ -72,12 +78,38 @@ void Load_shop_images()
  TTF_CloseFont(font);
 }
 
+void Clear_shop_images()
+{
+ SDL_FreeSurface(SHOP_title_clear);
+ SDL_FreeSurface(SHOP_title_background_line);
+ SDL_FreeSurface(SHOP_title_background_click);
+ SDL_FreeSurface(SHOP_title_background_click_right_frame);
+ SDL_FreeSurface(SHOP_title_background_right_frame);
+ SDL_FreeSurface(SHOP_title_background_selected);
+ SDL_FreeSurface(SHOP_title_background);
+ SDL_FreeSurface(SHOP_shop_page_background);
+ SDL_FreeSurface(SHOP_shop_big_background);
+ SDL_FreeSurface(SHOP_shop_rope);
+ SDL_FreeSurface(SHOP_shop_background);
+ SDL_FreeSurface(SHOP_shop_background_selected);
+ SDL_FreeSurface(SHOP_description_background);
+ SDL_FreeSurface(SHOP_inventory_background);
+ SDL_FreeSurface(SHOP_item_background_selected);
+ SDL_FreeSurface(SHOP_item_background);
+ SDL_FreeSurface(SHOP_inventory_spell_background);
+ SDL_FreeSurface(SHOP_inventory_spell_background_equipped);
+ SDL_FreeSurface(INVENTORY_EQUIP);
+ SDL_FreeSurface(INVENTORY_EQUIPPED);
+ SDL_FreeSurface(INVENTORY_SELL);
+ for(int i=0;i<4;i++)
+     SDL_FreeSurface(INVENTORY_spell_position[i]);
+}
+
 void Load_player_images()
 {
- #ifdef PLAYER_IMAGES_LOADED
- return;
- #endif // PLAYER_IMAGES_LOADED
- #define PLAYER_IMAGES_LOADED
+ if(PLAYER_IMAGES_LOADED)
+    return;
+ PLAYER_IMAGES_LOADED=true;
  PLAYER_name_background=make_it_transparent("images/player/name_background.bmp");
  PLAYER_name_background_shop=make_it_transparent("images/player/name_background_shop.bmp");
  PLAYER_name_background_right_layer=load_image("images/player/name_background_right_layer.bmp");
@@ -98,10 +130,9 @@ void Load_player_images()
 
 void Load_level_images()
 {
- #ifdef LEVEL_IMAGES_LOADED
- return
- #endif // LEVEL_IMAGES_LOADED
- #define LEVEL_IMAGES_LOADED
+ if(LEVEL_IMAGES_LOADED)
+    return;
+ LEVEL_IMAGES_LOADED=true;
  LEVEL_background_image=load_image("images/game/background.bmp");
  LEVEL_loading_image=make_it_transparent("images/game/loading.bmp");
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",50),*font1=TTF_OpenFont("fonts/pixel.ttf",30);
@@ -118,19 +149,17 @@ void Load_level_images()
 
 void Load_global_images()
 {
- #ifdef GLOBAL_IMAGES_LOADED
- return;
- #endif //GLOBAL_IMAGES_LOADED
- #define GLOBAL_IMAGES_LOADED
+ if(GLOBAL_IMAGES_LOADED)
+    return;
+ GLOBAL_IMAGES_LOADED=true;
  COIN=make_it_transparent("images/shop/coin.bmp");
 }
 
 void Load_settings_images()
 {
- #ifdef SETTINGS_IMAGES_LOADED
- return;
- #endif // SETTINGS_IMAGES_LOADED
- #define SETTINGS_IMAGES_LOADED
+ if(SETTINGS_IMAGES_LOADED)
+    return;
+ SETTINGS_IMAGES_LOADED=true;
  SETTINGS_option_background=load_image("images/settings/option_background.bmp");
  SETTINGS_option_background_selected=load_image("images/settings/option_background_selected.bmp");
  SETTINGS_background=load_image("images/settings/background.bmp");
@@ -140,10 +169,9 @@ void Load_settings_images()
 
 void Load_menu_images()
 {
- #ifdef MENU_IMAGES_LOADED
- return;
- #endif // MENU_IMAGES_LOADED
- #define MENU_IMAGES_LOADED
+ if(MENU_IMAGES_LOADED)
+    return;
+ MENU_IMAGES_LOADED=true;
  MENU_big_background=load_image("images/menu/menu_big_background.bmp");
  MENU_background=load_image("images/menu/menu_background.bmp");
  MENU_background_click=load_image("images/menu/menu_background_click.bmp");
@@ -152,10 +180,9 @@ void Load_menu_images()
 
 void Load_script_images()
 {
- #ifdef SCRIPT_IMAGES_LOADED
- return;
- #endif // SCRIPT_IMAGES_LOADED
- #define SCRIPT_IMAGES_LOADED
+ if(SCRIPT_IMAGES_LOADED)
+    return;
+ SCRIPT_IMAGES_LOADED=true;
  SCRIPT_default_background_image=make_it_transparent("images/script/default_background_image.bmp");
 }
 

@@ -214,7 +214,7 @@
 	"load_images.h"
 	"errors.h"
 
-1480419725 c:\users\elev\desktop\pixel world - duel mode v2 - launcher\load_images.h
+1480425045 c:\users\elev\desktop\pixel world - duel mode v2 - launcher\load_images.h
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_mixer.h"
@@ -273,7 +273,7 @@
 	<ctime>
 	<map>
 
-1479807191 c:\users\elev\desktop\pixel world - duel mode v2 - launcher\player.h
+1480422999 c:\users\elev\desktop\pixel world - duel mode v2 - launcher\player.h
 	"load_images.h"
 	"library.h"
 	"item.h"
@@ -320,7 +320,7 @@
 1480419729 source:c:\users\elev\desktop\pixel world - duel mode v2 - launcher\load_images.cpp
 	"load_images.h"
 
-1480420068 source:c:\users\elev\desktop\pixel world - duel mode v2 - launcher\main.cpp
+1480422680 source:c:\users\elev\desktop\pixel world - duel mode v2 - launcher\main.cpp
 	"menu.h"
 	"settings.h"
 	"script_interpreter.h"
@@ -365,7 +365,7 @@
 	"settings.h"
 	<cstring>
 
-1479885978 source:c:\users\elev\desktop\pixel world - duel mode v2 - launcher\player.cpp
+1480423080 source:c:\users\elev\desktop\pixel world - duel mode v2 - launcher\player.cpp
 	"player.h"
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
@@ -376,11 +376,11 @@
 	"script_interpreter.h"
 	<cstring>
 
-1479291912 source:c:\users\elev\desktop\pixel world - duel mode v2 - launcher\settings.cpp
+1480422591 source:c:\users\elev\desktop\pixel world - duel mode v2 - launcher\settings.cpp
 	"settings.h"
 	<cstdio>
 
-1479291912 source:c:\users\elev\desktop\pixel world - duel mode v2 - launcher\shop.cpp
+1480423497 source:c:\users\elev\desktop\pixel world - duel mode v2 - launcher\shop.cpp
 	"shop.h"
 	<cstring>
 

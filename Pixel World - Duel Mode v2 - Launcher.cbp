@@ -36,6 +36,8 @@
 		<Unit filename="buff.h" />
 		<Unit filename="darkness.cpp" />
 		<Unit filename="darkness.h" />
+		<Unit filename="errors.cpp" />
+		<Unit filename="errors.h" />
 		<Unit filename="interactive_map_texture.cpp" />
 		<Unit filename="interactive_map_texture.h" />
 		<Unit filename="item.cpp" />

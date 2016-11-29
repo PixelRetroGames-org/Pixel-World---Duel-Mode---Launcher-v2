@@ -10,7 +10,7 @@ const SDL_Color NAME_COLOR={255,255,255},EXPERIENCE_COLOR={235,20,20},MONEY_COLO
 const SDL_Color EQUIP_COLOR={15,30,90},BUY_COLOR={40,80,160},EQUIPPED_COLOR={255,128,0},SKIN_COLOR={193,20,20};
 const SDL_Color HP_COLOR={255,255,255},MANA_COLOR={255,255,255};
 
-const int INVENTORY_MAX_NUMBER_OF_ITEMS=10;
+const int INVENTORY_MAX_NUMBER_OF_ITEMS=10,INVENTORY_MAX_NUMBER_OF_POTIONS=5;
 
 Player::Player()
 {
@@ -277,7 +277,9 @@ int Player::Buy(int _item_id)
  if(money<_item.Get_cost())
     return 1;
  if(_item.Get_type()==10 && inventory_number_of_spells>=INVENTORY_MAX_NUMBER_OF_ITEMS)
-    return 2;
+    return 3;
+ if(Is_potion(_item) && number_of_items_bought[_item.Get_id()]>=INVENTORY_MAX_NUMBER_OF_POTIONS)
+    return 4;
  if(inventory_number_of_items>=INVENTORY_MAX_NUMBER_OF_ITEMS && (!Is_bought(_item_id) && !Is_potion(_item_id) && _item.Get_type()!=10))
     return 2;
  number_of_items_bought[_item_id]++,money-=_item.Get_cost();

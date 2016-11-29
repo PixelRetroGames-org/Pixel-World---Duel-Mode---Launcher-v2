@@ -145,9 +145,11 @@ int Shop_Screen::Start(SDL_Surface *screen)
  SDL_Event event;
  TTF_Font *font=NULL;
  font=TTF_OpenFont("fonts/pixel.ttf",30);
- SDL_Surface *not_enough_money=NULL,*not_enough_space=NULL,*not_enough_background=NULL;
+ SDL_Surface *not_enough_money=NULL,*not_enough_space_items=NULL,*not_enough_space_spells=NULL,*not_enough_space_potions=NULL,*not_enough_background=NULL;
  not_enough_money=TTF_RenderText_Solid(font,"You don't have enough money to buy this!",MESSAGE_COLOR);
- not_enough_space=TTF_RenderText_Solid(font,"Not enough space, sell some items!",MESSAGE_COLOR);
+ not_enough_space_items=TTF_RenderText_Solid(font,"Not enough space, sell some items!",MESSAGE_COLOR);
+ not_enough_space_spells=TTF_RenderText_Solid(font,"Not enough space, sell some spells!",MESSAGE_COLOR);
+ not_enough_space_potions=TTF_RenderText_Solid(font,"Not enough space, sell some potions!",MESSAGE_COLOR);
  TTF_CloseFont(font);
  not_enough_background=make_it_transparent("images/shop/not_enough_background.bmp");
  int message=0,nr=0;
@@ -182,7 +184,13 @@ int Shop_Screen::Start(SDL_Surface *screen)
                                apply_surface(player.Get_PLAYER_INFO_POSX()/2-not_enough_money->w/2,384,not_enough_money,screen);
                                nr++;break;};
                        case 2:{apply_surface(player.Get_PLAYER_INFO_POSX()/2-not_enough_money->w/2-5,381,not_enough_background,screen);
-                               apply_surface(player.Get_PLAYER_INFO_POSX()/2-not_enough_space->w/2,384,not_enough_space,screen);
+                               apply_surface(player.Get_PLAYER_INFO_POSX()/2-not_enough_space_items->w/2,384,not_enough_space_items,screen);
+                               nr++;break;};
+                       case 3:{apply_surface(player.Get_PLAYER_INFO_POSX()/2-not_enough_money->w/2-5,381,not_enough_background,screen);
+                               apply_surface(player.Get_PLAYER_INFO_POSX()/2-not_enough_space_spells->w/2,384,not_enough_space_spells,screen);
+                               nr++;break;};
+                       case 4:{apply_surface(player.Get_PLAYER_INFO_POSX()/2-not_enough_money->w/2-5,381,not_enough_background,screen);
+                               apply_surface(player.Get_PLAYER_INFO_POSX()/2-not_enough_space_potions->w/2,384,not_enough_space_potions,screen);
                                nr++;break;};
                       }
                if(nr>5)
@@ -198,7 +206,9 @@ int Shop_Screen::Start(SDL_Surface *screen)
        }
  player.Update();
  SDL_FreeSurface(not_enough_money);
- SDL_FreeSurface(not_enough_space);
+ SDL_FreeSurface(not_enough_space_items);
+ SDL_FreeSurface(not_enough_space_spells);
+ SDL_FreeSurface(not_enough_space_potions);
  SDL_FreeSurface(not_enough_background);
  player.Clear(true);
  shop.Reset();
