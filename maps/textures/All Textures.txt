@@ -177,3 +177,14 @@
 177 - hillRU1
 178 - hillLU1
 179 - empty
+180 - hillLU2
+181 - hillCU2
+182 - hillRU2
+183 - fence1LU
+184 - fence1CU
+185 - fence1RU
+186 - fence1LC
+187 - fence1RC
+188 - fence1RD
+189 - fence1CD
+190 - fence1RD
