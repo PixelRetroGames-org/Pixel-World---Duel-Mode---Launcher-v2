@@ -56,6 +56,7 @@ class Level
  Non_Playable_Character non_playable_characters[NUMBER_OF_NPC_MAX];
  int non_playable_character_time_blocked[NUMBER_OF_NPC_MAX];
  int winner=0;
+ std::pair<int,int> player_map_position[3];
 
  public:
  Level();
@@ -133,7 +134,7 @@ class Level
  ///Start
  void Set_screen(SDL_Surface *screen);
  void Pause_Menu();
- void Duel_Mode_Finish_Screen(int _player_winner);
+ bool Duel_Mode_Finish_Screen(int _player_winner);
  void Print_Duel_Mode_Finish_Screen(int _player_winner);
  void Setup(char *_level_name);
  void Start(SDL_Surface *_screen);

@@ -48,10 +48,13 @@ void Map::Clear(bool _delete,bool _delete_all)
           map_textures_ids[i][j].Clear();
           background_map_textures_ids[i][j].Clear();
          }
- SDL_FreeSurface(name_image);
- name_image=NULL;
- name_image_opaque_time=NAME_IMAGE_OPAQUE_TIME;
- name_image_alpha=SDL_ALPHA_OPAQUE;
+ if(_delete)
+    {
+     SDL_FreeSurface(name_image);
+     name_image=NULL;
+     name_image_opaque_time=NAME_IMAGE_OPAQUE_TIME;
+     name_image_alpha=SDL_ALPHA_OPAQUE;
+    }
 }
 
 void Map::Set_name(char *_name)
@@ -217,7 +220,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
  if(is_interest_point)
     {
      TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
-     SDL_Color color={0,0,0};
+     SDL_Color color={255,255,255};
      SDL_Surface *image=TTF_RenderText_Solid(font,name,color);
      name_image=make_it_transparent("images/game/map_name_background.bmp");
      apply_surface((name_image->w-image->w)/2,(name_image->h-image->h)/2,image,name_image);

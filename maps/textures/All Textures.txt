@@ -188,3 +188,4 @@
 188 - fence1RD
 189 - fence1CD
 190 - fence1RD
+191 - boulder

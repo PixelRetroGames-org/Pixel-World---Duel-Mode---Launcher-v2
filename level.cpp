@@ -110,9 +110,9 @@ void Level::Load()
  if(player_name[1][strlen(player_name[1])-1]=='\n')
     player_name[1][strlen(player_name[1])-1]=NULL;
 
- fscanf(where,"%d %d %d ",&x,&y,&player_type[1]);
+ fscanf(where,"%d %d %d ",&player_map_position[1].first,&player_map_position[1].second,&player_type[1]);
  player[1].Set_name(player_name[1]);
- player[1].Set_map_position(x,y);
+ player[1].Set_map_position(player_map_position[1].first,player_map_position[1].second);
  player[1].Load();
 
  player[2].Set_map_position(-5,-5);
@@ -135,9 +135,9 @@ void Level::Load()
      if(player_name[2][strlen(player_name[2])-1]=='\n')
         player_name[2][strlen(player_name[2])-1]=NULL;
 
-     fscanf(where,"%d %d %d ",&x,&y,&player_type[2]);
+     fscanf(where,"%d %d %d ",&player_map_position[2].first,&player_map_position[2].second,&player_type[2]);
      player[2].Set_name(player_name[2]);
-     player[2].Set_map_position(x,y);
+     player[2].Set_map_position(player_map_position[2].first,player_map_position[2].second);
      player[2].Load();
 
      for(int i=0;i<player[2].Get_number_of_spells();i++)
@@ -609,8 +609,8 @@ void Level::Player_basic_attack(int _player)
      player[_player].Set_velocityX(0);
      player[Other_player(_player)].Set_velocityX(0);
 
-     player[_player].Set_hp(std::min(1000,player[_player].Get_hp()+player[_player].Get_life_steal()*((std::max(player[_player].Get_attack()-player[Other_player(_player)].Get_defense()*3/8,50))/10)/100));
-     player[Other_player(_player)].Set_hp(player[Other_player(_player)].Get_hp()-(std::max(player[_player].Get_attack()-player[Other_player(_player)].Get_defense()*3/8,50))/10);
+     player[_player].Set_hp(std::min(1000,player[_player].Get_hp()+player[_player].Get_life_steal()*((std::max(player[_player].Get_attack()-player[Other_player(_player)].Get_defense()*3/8,20))/10)/100));
+     player[Other_player(_player)].Set_hp(player[Other_player(_player)].Get_hp()-(std::max(player[_player].Get_attack()-player[Other_player(_player)].Get_defense()*3/8,20))/10);
      player[_player].Block_attack(),player_time_blocked_attack[_player]=7-player[_player].Get_movement_speed();
      if(player_time_blocked_attack[_player]<=0)
         player_time_blocked_attack[_player]=4;
@@ -1157,8 +1157,9 @@ void Level::Pause_Menu()
  menu.Clear();
 }
 
-void Level::Duel_Mode_Finish_Screen(int _player_winner)
+bool Level::Duel_Mode_Finish_Screen(int _player_winner)
 {
+ player[_player_winner].Increase_number_of_wins();
  bool quit=false;
  Print_Duel_Mode_Finish_Screen(_player_winner);
  SDL_Event event;
@@ -1172,6 +1173,9 @@ void Level::Duel_Mode_Finish_Screen(int _player_winner)
         SDL_Delay(100);
        }
  quit=false;
+ if(event.key.keysym.sym==SDLK_ESCAPE)
+    return false;
+ return true;
 }
 
 void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
@@ -1200,11 +1204,17 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
     }
  SDL_Surface *player_xp,*player_money,*player_xp_gain,*player_money_gain;
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
- SDL_Color xp_color={75,0,130},MONEY_COLOR={236,242,4};
+ SDL_Color xp_color={75,0,130},MONEY_COLOR={236,242,4},wins_color={241,188,48};
  char aux[TEXT_LENGTH_MAX]={NULL};
 
  if(player_type[1]==0)
     {
+     itoa(player[1].Get_number_of_wins(),aux);
+     player_xp=TTF_RenderText_Solid(font,aux,wins_color);
+     apply_surface((_screen->w/2-(LEVEL_WINS->w+player_xp->w))/2,_screen->h/2-LEVEL_XP->h-LEVEL_WINS->h-25,LEVEL_WINS,_screen);
+     apply_surface((_screen->w/2-(LEVEL_WINS->w+player_xp->w))/2+LEVEL_WINS->w,_screen->h/2-LEVEL_XP->h-LEVEL_WINS->h-25,player_xp,_screen);
+     SDL_FreeSurface(player_xp);
+
      itoa(player[1].Get_experience(),aux);
      strcat(aux,"  +  ");
      player_xp=TTF_RenderText_Solid(font,aux,xp_color);
@@ -1234,6 +1244,12 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
 
  if(player_type[2]==0)
     {
+     itoa(player[2].Get_number_of_wins(),aux);
+     player_xp=TTF_RenderText_Solid(font,aux,wins_color);
+     apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_WINS->w))/2,_screen->h/2-LEVEL_WINS->h-LEVEL_WINS->h-25,LEVEL_WINS,_screen);
+     apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_WINS->w))/2+LEVEL_WINS->w,_screen->h/2-LEVEL_WINS->h-LEVEL_WINS->h-25,player_xp,_screen);
+     SDL_FreeSurface(player_xp);
+
      itoa(player[2].Get_experience(),aux);
      strcat(aux,"  +  ");
      player_xp=TTF_RenderText_Solid(font,aux,xp_color);
@@ -1308,91 +1324,105 @@ void Level::Setup(char *_level_name)
 
 void Level::Start(SDL_Surface *screen)
 {
- done=false;
- _screen=screen;
- static_screen=screen;
- bool quit=false;
- int frame=0;
- Timer fps,arena,buffs,current_time,level_music_time;
- arena.start();
- buffs.start();
- level_duration.start();
- current_time.start();
- level_music_time.start();
- srand(time(NULL));
- #ifdef AUDIO
- Change_music(1);
- //Start_music();
- #endif // AUDIO
- int previous_time=current_time.get_ticks(),lag=0;
- level_music_overseer=SDL_CreateThread(Level::Oversee_music,NULL);
- while(!quit && !done)
+ bool play=true;
+ while(play)
        {
-        fps.start();
-        if(level_changed || reset_lag)
-           {
-            previous_time=current_time.get_ticks();
-            level_changed=false;
-            reset_lag=false;
-           }
-        int elapsed=current_time.get_ticks()-previous_time;
-        previous_time=current_time.get_ticks();
-        lag+=elapsed;
-        SDL_PumpEvents();
-        quit=keystates[SDL_QUIT] || ((keystates[SDLK_RALT] || keystates[SDLK_LALT]) && keystates[SDLK_F4]);
-        Handle_Events(screen);
-        while(!level_changed && lag>MS_PER_UPDATE && !done)
+        done=false;
+        _screen=screen;
+        static_screen=screen;
+        bool quit=false;
+        int frame=0;
+        Timer fps,arena,buffs,current_time,level_music_time;
+        arena.start();
+        buffs.start();
+        level_duration.start();
+        current_time.start();
+        level_music_time.start();
+        srand(time(NULL));
+        #ifdef AUDIO
+        Change_music(1);
+        //Start_music();
+        #endif // AUDIO
+        int previous_time=current_time.get_ticks(),lag=0;
+        level_music_overseer=SDL_CreateThread(Level::Oversee_music,NULL);
+        while(!quit && !done)
               {
-               Time_Pass();
-               Move_all_players();
-               if(arena.get_ticks()>1000/ARENA_FRAMES_PER_SECOND)
+               fps.start();
+               if(level_changed || reset_lag)
                   {
-                   //SDL_Flip(screen);
-                   Update_all_arena_frames();
-                   darkness.Update_frame();
-                   arena.start();
+                   previous_time=current_time.get_ticks();
+                   level_changed=false;
+                   reset_lag=false;
                   }
-               if(buffs.get_ticks()>=1000 && type==2)
-                  {
-                   Apply_all_players_buffs();
-                   buffs.start();
-                  }
-               lag-=MS_PER_UPDATE;
+               int elapsed=current_time.get_ticks()-previous_time;
+               previous_time=current_time.get_ticks();
+               lag+=elapsed;
+               SDL_PumpEvents();
+               quit=keystates[SDL_QUIT] || ((keystates[SDLK_RALT] || keystates[SDLK_LALT]) && keystates[SDLK_F4]);
+               Handle_Events(screen);
+               while(!level_changed && lag>MS_PER_UPDATE && !done)
+                     {
+                      Time_Pass();
+                      Move_all_players();
+                      if(arena.get_ticks()>1000/ARENA_FRAMES_PER_SECOND)
+                         {
+                          //SDL_Flip(screen);
+                          Update_all_arena_frames();
+                          darkness.Update_frame();
+                          arena.start();
+                         }
+                      if(buffs.get_ticks()>=1000 && type==2)
+                         {
+                          Apply_all_players_buffs();
+                          buffs.start();
+                         }
+                      lag-=MS_PER_UPDATE;
+                     }
+               //Update_all_arena_frames();
+               apply_surface(0,0,LEVEL_background_image,screen);
+               if(type==2)
+                  Print_players_informations(screen);
+               Print_Map((RESOLUTION_X-840)/2,40,screen);
+               if(!done)
+                  SDL_Flip(screen);
+               /*if(arena.get_ticks()>1000/ARENA_FRAMES_PER_SECOND)
+                    {
+                     //SDL_Flip(screen);
+                     Update_all_arena_frames();
+                     arena.start();
+                    }
+                 if(fps.get_ticks()<1000/FRAMES_PER_SECOND)
+                    {
+                     SDL_Delay((1000/FRAMES_PER_SECOND)-fps.get_ticks());
+                    }*/
+               if(type==2 && level_duration.get_ticks()>duration)
+                  quit=true;
+               if(type==2 && ((player[1].Get_hp()<=0 && !player[1].Is_immortal()) || (player[2].Get_hp()<=0 && !player[2].Is_immortal())))
+                  quit=true;
               }
-        //Update_all_arena_frames();
-        apply_surface(0,0,LEVEL_background_image,screen);
-        if(type==2)
-           Print_players_informations(screen);
-        Print_Map((RESOLUTION_X-840)/2,40,screen);
-        if(!done)
-           SDL_Flip(screen);
-        /*if(arena.get_ticks()>1000/ARENA_FRAMES_PER_SECOND)
+        play=false;
+        if(quit && type==2)
            {
-            //SDL_Flip(screen);
-            Update_all_arena_frames();
-            arena.start();
+            Pause_music();
+            Mix_PlayChannel(4,DUEL_MODE_hit[1],0);
+            if(player[1].Get_hp()<=0 && player[2].Get_hp()<=0)
+               play=Duel_Mode_Finish_Screen(winner=0);
+            else
+               play=Duel_Mode_Finish_Screen(winner=(player[1].Get_hp()<=0?2:1));
            }
-        if(fps.get_ticks()<1000/FRAMES_PER_SECOND)
-           {
-            SDL_Delay((1000/FRAMES_PER_SECOND)-fps.get_ticks());
-           }*/
-        if(type==2 && level_duration.get_ticks()>duration)
-           quit=true;
-        if(type==2 && ((player[1].Get_hp()<=0 && !player[1].Is_immortal()) || (player[2].Get_hp()<=0 && !player[2].Is_immortal())))
-           quit=true;
+        player[1].Update();
+        if(type==2)
+           player[2].Update();
+        player_time_blocked[1]=player_time_blocked[2]=0;
+        player[1].Unblock();
+        player[2].Unblock();
+        player[1].Reset(player_map_position[1].first,player_map_position[1].second);
+        if(type==2)
+           player[2].Reset(player_map_position[2].first,player_map_position[2].second);
+        effects.Clear(false,false);
+        effects.Set_name("Empty");
+        effects.Load(player[1].Get_keys());
        }
- if(quit && type==2)
-    {
-     Pause_music();
-     Mix_PlayChannel(4,DUEL_MODE_hit[1],0);
-     if(player[1].Get_hp()<=0 && player[2].Get_hp()<=0)
-        Duel_Mode_Finish_Screen(winner=0);
-     else
-        Duel_Mode_Finish_Screen(winner=(player[1].Get_hp()<=0?2:1));
-    }
- player[1].Update();
- if(type==2)
-    player[2].Update();
  SDL_Thread *_loading_image=NULL;
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Clear();

@@ -105,7 +105,7 @@ char *Spell::Get_map_name()
 
 bool Spell::Is_blocked()
 {
- return time_blocked;
+ return time_blocked!=0;
 }
 
 void Spell::Decrease_time_blocked()
@@ -118,6 +118,11 @@ void Spell::Decrease_time_blocked()
 void Spell::Block()
 {
  time_blocked=cooldown;
+}
+
+void Spell::Unblock()
+{
+ time_blocked=0;
 }
 
 bool Spell::Pay(int *_mana,int *_health,int *_mental_health)

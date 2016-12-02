@@ -194,7 +194,10 @@ void Player::Load()
       fscanf(where,"%d ",&_key_id);
       keys[_key_id]=true;
      }
+ fscanf(where,"%d ",&number_of_wins);
  fclose(where);
+ for(int i=0;i<number_of_spells;i++)
+     spells[i].Unblock();
  Equip_items();
  Load_skin();
  Set_hp(basic_hp);
@@ -233,6 +236,7 @@ void Player::Update()
  for(int i=0;i<keys.size();i++)
      if(keys[i])
         fprintf(where,"%d\n",i);
+ fprintf(where,"%d\n",number_of_wins);
  fclose(where);
 }
 
@@ -975,6 +979,26 @@ bool Player::Is_immortal()
  return is_immortal;
 }
 
+void Player::Reset(int _map_positionX,int _map_positionY)
+{
+ map_positionX=_map_positionX;
+ map_positionY=_map_positionY;
+ Load_skin();
+ Reset_skin_image_position();
+ Set_mana(basic_mana);
+ Set_hp(basic_hp);
+ for(int i=0;!active_buffs.empty() && i<active_buffs.size();i++)
+     {
+      Remove_buff(&active_buffs[i]);
+      active_buffs[i].Clear(false);
+     }
+ //active_buffs.clear();
+ std::vector<Buff>().swap(active_buffs);
+ std::vector<int>().swap(printable_item_buffs_id);
+ for(int i=0;i<number_of_spells;i++)
+     spells[i].Unblock();
+}
+
 ///Game
 
 ///Buffs
@@ -1251,4 +1275,15 @@ void Player::Remove_key(int _key_id)
 std::bitset<NUMBER_OF_MAX_KEYS> *Player::Get_keys()
 {
  return &keys;
+}
+
+///Score
+void Player::Increase_number_of_wins()
+{
+ number_of_wins++;
+}
+
+int Player::Get_number_of_wins()
+{
+ return number_of_wins;
 }

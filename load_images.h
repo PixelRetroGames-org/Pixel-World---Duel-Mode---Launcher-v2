@@ -48,7 +48,7 @@ void Clear_player_images();
 
 ///LEVEL
 extern SDL_Surface *LEVEL_background_image,*LEVEL_loading_image;
-extern SDL_Surface *LEVEL_WINNER,*LEVEL_LOSER,*LEVEL_MONEY,*LEVEL_XP,*LEVEL_LINE;
+extern SDL_Surface *LEVEL_WINNER,*LEVEL_LOSER,*LEVEL_MONEY,*LEVEL_XP,*LEVEL_LINE,*LEVEL_WINS;
 extern SDL_Surface *MAP_NAME_background;
 extern bool LEVEL_IMAGES_LOADED;
 void Load_level_images();

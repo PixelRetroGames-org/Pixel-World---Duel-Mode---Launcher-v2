@@ -32,7 +32,7 @@ bool PLAYER_IMAGES_LOADED;
 
 ///LEVEL
 SDL_Surface *LEVEL_background_image,*LEVEL_loading_image;
-SDL_Surface *LEVEL_WINNER,*LEVEL_LOSER,*LEVEL_MONEY,*LEVEL_XP,*LEVEL_LINE;
+SDL_Surface *LEVEL_WINNER,*LEVEL_LOSER,*LEVEL_MONEY,*LEVEL_XP,*LEVEL_LINE,*LEVEL_WINS;
 SDL_Surface *MAP_NAME_background;
 bool LEVEL_IMAGES_LOADED;
 
@@ -157,9 +157,10 @@ void Load_level_images()
  LEVEL_background_image=load_image("images/game/background.bmp");
  LEVEL_loading_image=make_it_transparent("images/game/loading.bmp");
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",50),*font1=TTF_OpenFont("fonts/pixel.ttf",30);
- SDL_Color winner_color={0,205,0},loser_color={207,0,0},xp_color={75,0,130},MONEY_COLOR={125,125,125};
+ SDL_Color winner_color={0,205,0},loser_color={207,0,0},xp_color={75,0,130},MONEY_COLOR={125,125,125},wins_color={241,188,48};
  LEVEL_WINNER=TTF_RenderText_Solid(font,"Winner",winner_color);
  LEVEL_LOSER=TTF_RenderText_Solid(font,"Loser",loser_color);
+ LEVEL_WINS=TTF_RenderText_Solid(font1,"WINS:   ",wins_color);
  LEVEL_XP=TTF_RenderText_Solid(font1,"XP:   ",xp_color);
  LEVEL_MONEY=TTF_RenderText_Solid(font1,"MONEY:   ",MONEY_COLOR);
  LEVEL_LINE=make_it_transparent("images/game/line.bmp");
@@ -178,6 +179,7 @@ void Clear_level_images()
  SDL_FreeSurface(LEVEL_MONEY);
  SDL_FreeSurface(LEVEL_LINE);
  SDL_FreeSurface(MAP_NAME_background);
+ SDL_FreeSurface(LEVEL_WINS);
  LEVEL_IMAGES_LOADED=false;
 }
 

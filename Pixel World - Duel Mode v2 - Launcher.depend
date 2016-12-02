@@ -12,7 +12,7 @@
 	<cstring>
 	<string>
 
-1480324166 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
+1480504618 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
 	"menu.h"
 	"settings.h"
 	"script_interpreter.h"
@@ -35,15 +35,16 @@
 	"settings.h"
 	<cstring>
 
-1478507837 e:\programming\pixel world - duel mode v2 - launcher\load_images.h
+1480707176 e:\programming\pixel world - duel mode v2 - launcher\load_images.h
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_mixer.h"
 	"library.h"
 	"big_background.h"
 
-1478510196 source:e:\programming\pixel world - duel mode v2 - launcher\load_images.cpp
+1480709571 source:e:\programming\pixel world - duel mode v2 - launcher\load_images.cpp
 	"load_images.h"
+	"library.h"
 
 1475782529 e:\programming\pixel world - duel mode v2 - launcher\big_background.h
 	"library.h"
@@ -52,9 +53,10 @@
 	"big_background.h"
 	"settings.h"
 
-1479753644 e:\programming\pixel world - duel mode v2 - launcher\settings.h
+1480442928 e:\programming\pixel world - duel mode v2 - launcher\settings.h
 	"library.h"
 	"load_images.h"
+	"errors.h"
 
 1479064172 source:e:\programming\pixel world - duel mode v2 - launcher\settings.cpp
 	"settings.h"
@@ -101,7 +103,7 @@
 	"player.h"
 	<vector>
 
-1479844469 e:\programming\pixel world - duel mode v2 - launcher\player.h
+1480706903 e:\programming\pixel world - duel mode v2 - launcher\player.h
 	"load_images.h"
 	"library.h"
 	"item.h"
@@ -110,14 +112,14 @@
 	<algorithm>
 	<bitset>
 
-1479844825 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
+1480710826 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
 	"player.h"
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_mixer.h"
 	<cstring>
 
-1479288765 source:e:\programming\pixel world - duel mode v2 - launcher\shop.cpp
+1480442928 source:e:\programming\pixel world - duel mode v2 - launcher\shop.cpp
 	"shop.h"
 	<cstring>
 
@@ -145,18 +147,18 @@
 	"library.h"
 	<vector>
 
-1479753636 e:\programming\pixel world - duel mode v2 - launcher\spell.h
+1480710625 e:\programming\pixel world - duel mode v2 - launcher\spell.h
 	"buff.h"
 	<vector>
 
-1480325862 source:e:\programming\pixel world - duel mode v2 - launcher\level.cpp
+1480715687 source:e:\programming\pixel world - duel mode v2 - launcher\level.cpp
 	"level.h"
 	"load_audio_effects.h"
 	"settings.h"
 	"menu.h"
 	"SDL/SDL_thread.h"
 
-1479762546 e:\programming\pixel world - duel mode v2 - launcher\level.h
+1480703660 e:\programming\pixel world - duel mode v2 - launcher\level.h
 	"player.h"
 	"map.h"
 	"darkness.h"
@@ -167,7 +169,7 @@
 	<ctime>
 	<map>
 
-1479844473 e:\programming\pixel world - duel mode v2 - launcher\map.h
+1480442928 e:\programming\pixel world - duel mode v2 - launcher\map.h
 	"map_texture.h"
 	"interactive_map_texture.h"
 	<vector>
@@ -178,20 +180,20 @@
 	"load_images.h"
 	"buff.h"
 
-1479290688 e:\programming\pixel world - duel mode v2 - launcher\load_audio_effects.h
+1480442928 e:\programming\pixel world - duel mode v2 - launcher\load_audio_effects.h
 	"library.h"
 
-1479290720 source:e:\programming\pixel world - duel mode v2 - launcher\load_audio_effects.cpp
+1480442928 source:e:\programming\pixel world - duel mode v2 - launcher\load_audio_effects.cpp
 	"load_audio_effects.h"
 
-1480063842 source:e:\programming\pixel world - duel mode v2 - launcher\map.cpp
+1480704187 source:e:\programming\pixel world - duel mode v2 - launcher\map.cpp
 	"map.h"
 	"settings.h"
 
 1479064173 source:e:\programming\pixel world - duel mode v2 - launcher\map_texture.cpp
 	"map_texture.h"
 
-1479844466 source:e:\programming\pixel world - duel mode v2 - launcher\spell.cpp
+1480710608 source:e:\programming\pixel world - duel mode v2 - launcher\spell.cpp
 	"spell.h"
 	<cstring>
 
@@ -428,5 +430,10 @@
 1480425438 c:\users\elev\desktop\pixel world - duel mode v2 - launcher\errors.h
 
 1480425438 source:c:\users\elev\desktop\pixel world - duel mode v2 - launcher\errors.cpp
+	"errors.h"
+
+1480442928 e:\programming\pixel world - duel mode v2 - launcher\errors.h
+
+1480442928 source:e:\programming\pixel world - duel mode v2 - launcher\errors.cpp
 	"errors.h"
 

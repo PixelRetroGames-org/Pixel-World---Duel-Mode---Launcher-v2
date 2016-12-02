@@ -28,6 +28,7 @@ class Spell
  bool Is_blocked();
  void Decrease_time_blocked();
  void Block();
+ void Unblock();
  bool Pay(int *_mana,int *_health,int *_mental_health);
  bool Can_Pay(int _mana,int _health,int _mental_health);
  void Print_image(int x,int y,SDL_Surface *_screen);
