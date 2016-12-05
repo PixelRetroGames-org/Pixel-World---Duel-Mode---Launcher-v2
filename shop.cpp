@@ -135,7 +135,9 @@ int Shop_Screen::Start(SDL_Surface *screen)
     }
  shop.Load();
  player.Load();
- SDL_KillThread(_loading_image);
+ int thread_return_value=0;
+ Loading_image_quit=true;
+ SDL_WaitThread(_loading_image,&thread_return_value);
  SDL_Flip(static_screen);
  shop.Print(screen);
  player.Print_Character(player.Get_PLAYER_INFO_POSX(),0,screen);

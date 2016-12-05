@@ -41,8 +41,8 @@ void Player::Clear(bool _delete)
  memset(equipped_items_ids,0,sizeof equipped_items_ids);
  memset(equipped_items,0,sizeof equipped_items);
  inventory_item_selected=inventory_item_click=pos_last_y=0;
- basic_hp=1000,basic_mana=100,basic_mental_health=100;
- basic_attack=5,basic_defense=0,basic_spell_damage=10,basic_spell_resistance=0,basic_movement_speed=0,basic_life_steal=0;
+ basic_hp=100,basic_mana=100,basic_mental_health=100;
+ basic_attack=5,basic_defense=0,basic_spell_damage=10,basic_spell_resistance=0,basic_movement_speed=2,basic_life_steal=0;
  attack=defense=spell_damage=spell_resistance=movement_speed=life_steal=0;
  skin_image_position.h=skin_image_position.w=40;
  skin_image_position.x=skin_image_position.y=0;
@@ -123,7 +123,7 @@ void Player::Load()
           equipped_items[i].Set_type(i);
           equipped_items[i].Load();
          }
-     inventory_number_of_items=7;
+     inventory_number_of_items=0;
      equipped_items[8].Set_type(8);
      equipped_items[8].Load();
      number_of_spells=4;
@@ -140,6 +140,7 @@ void Player::Load()
      spell_resistance=basic_spell_resistance;
      movement_speed=basic_movement_speed;
      life_steal=basic_life_steal;
+     money=600;
      Update();
      //Load();
      return;
@@ -205,6 +206,8 @@ void Player::Load()
  Set_mental_health(basic_mental_health);
 }
 
+const int MAX_MONEY=666013,MAX_EXPERIENCE=2000;
+
 void Player::Update()
 {
  char path[TEXT_LENGTH_MAX]={NULL};
@@ -212,6 +215,8 @@ void Player::Update()
  strcat(path,name);
  strcat(path,".pwp");
  FILE *where=fopen(path,"w");
+ money=std::min(money,MAX_MONEY);
+ experience=std::min(experience,MAX_EXPERIENCE);
  fprintf(where,"%d\n%d\n%d\n",money,experience,number_of_items);
  for(int i=0;i<NUMBER_OF_ITEMS_IDS;i++)
      {
@@ -220,6 +225,11 @@ void Player::Update()
      }
  for(int i=0;i<9;i++)
      fprintf(where,"%d ",equipped_items_ids[i]);
+ if(basic_hp<1000 && experience!=0)
+    {
+     basic_hp=100+experience*500/100;
+     basic_hp=std::min(1000,basic_hp);
+    }
  fprintf(where,"\n%d %d %d\n",basic_hp,basic_mana,basic_mental_health);
  fprintf(where,"%d %d %d %d %d %d\n",basic_attack,basic_defense,basic_spell_damage,basic_spell_resistance,basic_movement_speed,basic_life_steal);
  int w=original_skin_image_position.w,h=original_skin_image_position.h;
@@ -284,6 +294,8 @@ int Player::Buy(int _item_id)
     return 3;
  if(Is_potion(_item) && number_of_items_bought[_item.Get_id()]>=INVENTORY_MAX_NUMBER_OF_POTIONS)
     return 4;
+ if(Is_potion(_item) && number_of_items_bought[_item.Get_id()]==0 && inventory_number_of_items>=INVENTORY_MAX_NUMBER_OF_ITEMS)
+    return 2;
  if(inventory_number_of_items>=INVENTORY_MAX_NUMBER_OF_ITEMS && (!Is_bought(_item_id) && !Is_potion(_item_id) && _item.Get_type()!=10))
     return 2;
  number_of_items_bought[_item_id]++,money-=_item.Get_cost();
@@ -524,9 +536,9 @@ void Player::Print_Inventory_equipped_items(int x,int y,SDL_Surface *_screen,boo
      {
       if(number_of_items_bought[i]!=0)
          {
-          if(items_bought[i].Get_id()==0 || ((items_bought[i].Get_type()<6 || items_bought[i].Get_type()>9))/* || items_bought[i].Get_type()<6*/)
+          if(items_bought[i].Get_id()==0 || ((items_bought[i].Get_type()<6 || items_bought[i].Get_type()>9) || items_bought[i].Get_type()==8)/* || items_bought[i].Get_type()<6*/)
              continue;
-          if(equipped_items_ids[i]!=i && items_bought[i].Get_type()!=9)
+          if(equipped_items_ids[items_bought[i].Get_type()]!=i && items_bought[i].Get_type()!=9)
              continue;
           switch(type)
                  {
@@ -1073,7 +1085,6 @@ void Player::Remove_buff(Buff *_buff)
                 Reset_skin_image_position();
                 break;
          case 6:is_immortal=false;
-                Set_hp(0);
                 break;
          default:break;
         }

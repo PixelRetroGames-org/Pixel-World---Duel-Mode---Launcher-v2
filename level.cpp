@@ -216,7 +216,9 @@ void Level::Change(char *_level_name)
  SDL_Thread *_loading_image=NULL;
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Clear();
+ int thread_return_value=0;
  Loading_image_quit=true;
+ SDL_WaitThread(_loading_image,&thread_return_value);
  SDL_Flip(static_screen);
  Setup(_level_name);
 }
@@ -272,7 +274,13 @@ int Level::Change_music(bool play)
              x%=level_number_of_background_music_tracks;
             }
          level_last_track_played=x;
-         Mix_PlayMusic(level_background_music[x],0);
+         if(Mix_PlayMusic(level_background_music[x],0)==-1)
+            {
+             FILE *log_file=fopen("err/logs.txt","w");
+             fprintf(log_file,"Mix_PlayMusic failed : %s ",SDL_GetError());
+             fclose(log_file);
+             exit(-3);
+            }
         }
      return 1;
     }
@@ -357,7 +365,7 @@ bool Level::Move_player_X(int _player)
  if(move_possible && player[_player].Get_velocityX()!=0)
     {
      player[_player].Move_X();
-     player_time_blocked[_player]=5-5*player[_player].Get_movement_speed()/100;
+     player_time_blocked[_player]=std::max(5-player[_player].Get_movement_speed(),2);
      if(player_type[_player]>=1)
         AI_Block_player(_player);
      player[_player].Block();
@@ -418,7 +426,7 @@ bool Level::Move_player_Y(int _player)
  if(move_possible && player[_player].Get_velocityY()!=0)
     {
      player[_player].Move_Y();
-     player_time_blocked[_player]=5-5*player[_player].Get_movement_speed()/100;
+     player_time_blocked[_player]=std::max(5-player[_player].Get_movement_speed(),2);
      if(player_type[_player]>=1)
         AI_Block_player(_player);
      player[_player].Block();
@@ -1219,7 +1227,7 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
      strcat(aux,"  +  ");
      player_xp=TTF_RenderText_Solid(font,aux,xp_color);
 
-     itoa(20*player[2].Get_experience()/100+200,aux);
+     itoa(10*player[2].Get_experience()/100+10+((_player_winner==2)?20:0),aux);
      player_xp_gain=TTF_RenderText_Solid(font,aux,xp_color);
 
      apply_surface((_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2,_screen->h/2-LEVEL_XP->h,LEVEL_XP,_screen);
@@ -1232,7 +1240,7 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
      strcat(aux,"  +  ");
      player_money=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
 
-     itoa((10+player[1].Get_extra_money())*player[2].Get_experience()/100+200,aux);
+     itoa((10+player[1].Get_extra_money())*player[2].Get_experience()/100+20+((_player_winner==1)?40:0),aux);
      player_money_gain=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
 
      apply_surface((_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2,_screen->h/2+LEVEL_MONEY->h,LEVEL_MONEY,_screen);
@@ -1254,7 +1262,7 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
      strcat(aux,"  +  ");
      player_xp=TTF_RenderText_Solid(font,aux,xp_color);
 
-     itoa(20*player[1].Get_experience()/100+200,aux);
+     itoa(10*player[1].Get_experience()/100+10+((_player_winner==1)?20:0),aux);
      player_xp_gain=TTF_RenderText_Solid(font,aux,xp_color);
 
      apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2,_screen->h/2-LEVEL_XP->h,LEVEL_XP,_screen);
@@ -1267,7 +1275,7 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
      strcat(aux,"  +  ");
      player_money=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
 
-     itoa((10+player[2].Get_extra_money())*player[1].Get_experience()/100+200,aux);
+     itoa((10+player[2].Get_extra_money())*player[1].Get_experience()/100+20+((_player_winner==2)?40:0),aux);
      player_money_gain=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
 
      apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2,_screen->h/2+LEVEL_MONEY->h,LEVEL_MONEY,_screen);
@@ -1278,16 +1286,16 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
     }
 
  if(player_type[1]==0)
-    player[1].Set_money(player[1].Get_money()+(10+player[1].Get_extra_money())*player[2].Get_experience()/100+200);
+    player[1].Set_money(player[1].Get_money()+(10+player[1].Get_extra_money())*player[2].Get_experience()/100+5+((_player_winner==1)?10:0));
  if(player_type[2]==0)
-    player[2].Set_money(player[2].Get_money()+(10+player[2].Get_extra_money())*player[1].Get_experience()/100+200);
+    player[2].Set_money(player[2].Get_money()+(10+player[2].Get_extra_money())*player[1].Get_experience()/100+5+((_player_winner==2)?10:0));
  int a=player[1].Get_experience(),b=player[2].Get_experience();
  if(player_type[1]==0)
-    player[1].Set_experience(player[1].Get_experience()+20*b/100+200);
+    player[1].Set_experience(player[1].Get_experience()+10*player[2].Get_experience()/100+10+((_player_winner==2)?20:0));
  if(player_type[2]==0)
-    player[2].Set_experience(player[2].Get_experience()+20*a/100+200);
+    player[2].Set_experience(player[2].Get_experience()+10*player[1].Get_experience()/100+10+((_player_winner==1)?20:0));
 
- player_money=TTF_RenderText_Solid(font,"Press any key to continue!",{255,255,255});
+ player_money=TTF_RenderText_Solid(font,"Press ESC to exit or any other key to rematch!",{255,255,255});
  apply_surface((_screen->w-player_money->w)/2,_screen->h/2+(_screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,_screen);
 
  TTF_CloseFont(font);
@@ -1308,7 +1316,9 @@ void Level::Setup(char *_level_name)
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Load();
  //SDL_Delay(1000);
+ int thread_return_value=0;
  Loading_image_quit=true;
+ SDL_WaitThread(_loading_image,&thread_return_value);
  SDL_Flip(static_screen);
  player_time_blocked[1]=player_time_blocked[2]=0;
  player[1].Unblock();
@@ -1327,6 +1337,7 @@ void Level::Start(SDL_Surface *screen)
  bool play=true;
  while(play)
        {
+        Mix_HaltMusic();
         done=false;
         _screen=screen;
         static_screen=screen;
@@ -1426,9 +1437,12 @@ void Level::Start(SDL_Surface *screen)
  SDL_Thread *_loading_image=NULL;
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Clear();
+ int thread_return_value=0;
  Loading_image_quit=true;
+ SDL_WaitThread(_loading_image,&thread_return_value);
  SDL_Flip(static_screen);
  Oversee_music_quit=true;
+ SDL_WaitThread(level_music_overseer,&thread_return_value);
 }
 
 int Other_player(int _player)

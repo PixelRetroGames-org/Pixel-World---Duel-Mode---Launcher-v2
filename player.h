@@ -31,8 +31,8 @@ class Player
  ///Game
  int hp,mana,mental_health;
  int attack=0,defense=0,extra_money=0,spell_damage=0,spell_resistance=0,movement_speed=0,life_steal=0;
- int basic_hp=1000,basic_mana=100,basic_mental_health=100;
- int basic_attack=5,basic_defense=0,basic_spell_damage=10,basic_spell_resistance=0,basic_movement_speed=0,basic_life_steal=0;
+ int basic_hp=100,basic_mana=100,basic_mental_health=100;
+ int basic_attack=5,basic_defense=0,basic_spell_damage=10,basic_spell_resistance=0,basic_movement_speed=2,basic_life_steal=0;
  int map_positionX=0,map_positionY=0;
  int skin_size_w=40,skin_size_h=40;
  int velocityX=0,velocityY=0;
