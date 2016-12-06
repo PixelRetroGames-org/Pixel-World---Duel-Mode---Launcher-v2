@@ -1335,6 +1335,7 @@ void Level::Setup(char *_level_name)
 void Level::Start(SDL_Surface *screen)
 {
  bool play=true;
+ int thread_return_value=0;
  while(play)
        {
         Mix_HaltMusic();
@@ -1412,6 +1413,8 @@ void Level::Start(SDL_Surface *screen)
                   quit=true;
               }
         play=false;
+        Oversee_music_quit=true;
+        SDL_WaitThread(level_music_overseer,&thread_return_value);
         if(quit && type==2)
            {
             Pause_music();
@@ -1437,7 +1440,6 @@ void Level::Start(SDL_Surface *screen)
  SDL_Thread *_loading_image=NULL;
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Clear();
- int thread_return_value=0;
  Loading_image_quit=true;
  SDL_WaitThread(_loading_image,&thread_return_value);
  SDL_Flip(static_screen);
