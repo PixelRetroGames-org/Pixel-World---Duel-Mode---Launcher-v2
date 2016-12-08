@@ -1009,6 +1009,13 @@ void Player::Reset(int _map_positionX,int _map_positionY)
  std::vector<int>().swap(printable_item_buffs_id);
  for(int i=0;i<number_of_spells;i++)
      spells[i].Unblock();
+ attack=basic_attack;
+ defense=basic_defense;
+ spell_damage=basic_spell_damage;
+ spell_resistance=basic_spell_resistance;
+ movement_speed=basic_movement_speed;
+ life_steal=basic_life_steal;
+ Equip_items();
 }
 
 ///Game
