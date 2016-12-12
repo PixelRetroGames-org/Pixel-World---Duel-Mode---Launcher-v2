@@ -72,6 +72,10 @@ class Level
  void Set_player_LAST_POSX(int _player,int _x);
  void Set_player_velocityX(int _player,int _velocityX);
  void Set_player_velocityY(int _player,int _velocityY);
+ ///Get
+ int Get_player_map_position_x(int _player);
+ int Get_player_map_position_y(int _player);
+ char *Get_name();
  ///Load
  void Load();
  void Change(char *_level_name);
@@ -149,5 +153,9 @@ extern SDL_Thread *level_music_overseer;
 extern bool Oversee_music_quit;
 
 int Other_player(int _player);
+
+///Launch
+void Launch_Story_Mode(Level *level,SDL_Surface *_screen);
+void Launch_Duel_Mode(Level *level,SDL_Surface *_screen);
 
 #endif //LEVEL_H

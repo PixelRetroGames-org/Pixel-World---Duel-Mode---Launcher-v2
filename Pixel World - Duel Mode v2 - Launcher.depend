@@ -12,7 +12,7 @@
 	<cstring>
 	<string>
 
-1480504618 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
+1481568697 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
 	"menu.h"
 	"settings.h"
 	"script_interpreter.h"
@@ -22,15 +22,16 @@
 	"puzzle.h"
 	<cstdio>
 
-1479753673 e:\programming\pixel world - duel mode v2 - launcher\menu.h
+1481382760 e:\programming\pixel world - duel mode v2 - launcher\menu.h
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	"SDL/SDL_mixer.h"
 	"library.h"
 	"load_images.h"
+	"load_audio_effects.h"
 	<cstring>
 
-1479064173 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
+1481389072 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
 	"menu.h"
 	"settings.h"
 	<cstring>
@@ -53,12 +54,12 @@
 	"big_background.h"
 	"settings.h"
 
-1480442928 e:\programming\pixel world - duel mode v2 - launcher\settings.h
+1481561235 e:\programming\pixel world - duel mode v2 - launcher\settings.h
 	"library.h"
 	"load_images.h"
 	"errors.h"
 
-1479064172 source:e:\programming\pixel world - duel mode v2 - launcher\settings.cpp
+1481561309 source:e:\programming\pixel world - duel mode v2 - launcher\settings.cpp
 	"settings.h"
 	<cstdio>
 
@@ -112,7 +113,7 @@
 	<algorithm>
 	<bitset>
 
-1480774811 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
+1481565752 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
 	"player.h"
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
@@ -151,14 +152,14 @@
 	"buff.h"
 	<vector>
 
-1481015925 source:e:\programming\pixel world - duel mode v2 - launcher\level.cpp
+1481573360 source:e:\programming\pixel world - duel mode v2 - launcher\level.cpp
 	"level.h"
 	"load_audio_effects.h"
 	"settings.h"
 	"menu.h"
 	"SDL/SDL_thread.h"
 
-1480927921 e:\programming\pixel world - duel mode v2 - launcher\level.h
+1481568461 e:\programming\pixel world - duel mode v2 - launcher\level.h
 	"player.h"
 	"map.h"
 	"darkness.h"
@@ -180,10 +181,10 @@
 	"load_images.h"
 	"buff.h"
 
-1480442928 e:\programming\pixel world - duel mode v2 - launcher\load_audio_effects.h
+1481382630 e:\programming\pixel world - duel mode v2 - launcher\load_audio_effects.h
 	"library.h"
 
-1480442928 source:e:\programming\pixel world - duel mode v2 - launcher\load_audio_effects.cpp
+1481382729 source:e:\programming\pixel world - duel mode v2 - launcher\load_audio_effects.cpp
 	"load_audio_effects.h"
 
 1480704187 source:e:\programming\pixel world - duel mode v2 - launcher\map.cpp
@@ -395,12 +396,12 @@
 	"spell.h"
 	<cstring>
 
-1479844487 e:\programming\pixel world - duel mode v2 - launcher\non_playable_character.h
+1481573412 e:\programming\pixel world - duel mode v2 - launcher\non_playable_character.h
 	"library.h"
 	<bitset>
 	<vector>
 
-1479844498 source:e:\programming\pixel world - duel mode v2 - launcher\non_playable_character.cpp
+1481573426 source:e:\programming\pixel world - duel mode v2 - launcher\non_playable_character.cpp
 	"non_playable_character.h"
 
 1479839833 source:e:\programming\pixel world - duel mode v2 - launcher\puzzle.cpp

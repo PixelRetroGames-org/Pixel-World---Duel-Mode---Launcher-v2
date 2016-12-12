@@ -7,7 +7,7 @@
 
 extern int RESOLUTION_X,RESOLUTION_Y,RESOLUTION;
 extern int DISPLAY_MODE,VOLUME,VOL;
-extern bool POWER_SAVER;
+extern bool POWER_SAVER,AUTO_ATTACK;
 
 void Load_Settings();
 void Save_Settings();
@@ -22,6 +22,7 @@ void Graphic_Change_Resolution(int x,int y,SDL_Surface *_screen,SDL_Event *event
 void Graphic_Change_Display_Mode(int x,int y,SDL_Surface *_screen,SDL_Event *event);
 void Graphic_Change_Volume(int x,int y,SDL_Surface *_screen,SDL_Event *event);
 void Graphic_Power_Saver(int x,int y,SDL_Surface *_screen,SDL_Event *event);
+void Graphic_Auto_Attack(int x,int y,SDL_Surface *_screen,SDL_Event *event);
 bool Graphic_Back(int x,int y,SDL_Surface *_screen,SDL_Event *event);
 
 #endif // SETTINGS_H

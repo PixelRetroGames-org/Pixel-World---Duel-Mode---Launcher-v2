@@ -133,7 +133,7 @@ void Non_Playable_Character::Unblock()
  is_blocked=false;
 }
 
-void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key)
+void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair<int,int> player_pos)
 {
  char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"NPC/");
@@ -164,9 +164,9 @@ void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key)
       int x,y;
       fscanf(where,"%d %d ",&x,&y);
       map_accessible_positions.push_back(std::make_pair(x,y));
+      if(x!=player_pos.first || y!=player_pos.second)
+         map_positionX=x,map_positionY=y;
      }
- map_positionX=map_accessible_positions[0].first;
- map_positionY=map_accessible_positions[0].second;
  fscanf(where,"%d ",&chance_to_move);
  char skin_name[TEXT_LENGTH_MAX]={NULL};
  fgets(skin_name,sizeof skin_name,where);
@@ -203,10 +203,10 @@ void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key)
  fclose(where);
 }
 
-void Non_Playable_Character::Load(char *_name,std::bitset<NUMBER_OF_MAX_KEYS> *key)
+void Non_Playable_Character::Load(char *_name,std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair<int,int> player_pos)
 {
  Set_name(_name);
- Load(key);
+ Load(key,player_pos);
 }
 
 //void Non_Playable_Character::Interact(char *player_name)

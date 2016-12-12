@@ -52,6 +52,8 @@ void Level::Set_name(char *_name)
 
 void Level::Set_player_map_position(int x,int y,int _player)
 {
+ player_map_position[_player].first=x;
+ player_map_position[_player].second=y;
  player[_player].Set_map_position(x,y);
 }
 
@@ -90,6 +92,21 @@ void Level::Set_player_velocityY(int _player,int _velocityY)
  player[_player].Set_velocityY(_velocityY);
 }
 
+int Level::Get_player_map_position_x(int _player)
+{
+ return player[_player].Get_map_positionX();
+}
+
+int Level::Get_player_map_position_y(int _player)
+{
+ return player[_player].Get_map_positionY();
+}
+
+char *Level::Get_name()
+{
+ return name;
+}
+
 /*int static_number_of_background_music_tracks;
 Mix_Music *static_background_music[NUMBER_OF_SONGS_MAX];*/
 
@@ -109,16 +126,15 @@ void Level::Load()
  fgets(player_name[1],sizeof player_name[1],where);
  if(player_name[1][strlen(player_name[1])-1]=='\n')
     player_name[1][strlen(player_name[1])-1]=NULL;
-
- fscanf(where,"%d %d %d ",&player_map_position[1].first,&player_map_position[1].second,&player_type[1]);
  player[1].Set_name(player_name[1]);
- player[1].Set_map_position(player_map_position[1].first,player_map_position[1].second);
  player[1].Load();
 
  player[2].Set_map_position(-5,-5);
 
  if(type==2)
     {
+     fscanf(where,"%d %d %d ",&player_map_position[1].first,&player_map_position[1].second,&player_type[1]);
+     player[1].Set_map_position(player_map_position[1].first,player_map_position[1].second);
      for(int i=0;i<player[1].Get_number_of_spells();i++)
          {
           if(!spell_effects_ids.count((player[1].Get_Spell(i)).Get_id()) && ((player[1].Get_Spell(i)).Get_map_name())[0]!=NULL)
@@ -163,7 +179,7 @@ void Level::Load()
           fgets(npc_name,sizeof npc_name,where);
           if(npc_name[strlen(npc_name)-1]=='\n')
              npc_name[strlen(npc_name)-1]=NULL;
-          non_playable_characters[i].Load(npc_name,player[1].Get_keys());
+          non_playable_characters[i].Load(npc_name,player[1].Get_keys(),std::make_pair(player[1].Get_map_positionX(),player[1].Get_map_positionY()));
          }
     }
 
@@ -617,8 +633,8 @@ void Level::Player_basic_attack(int _player)
      player[_player].Set_velocityX(0);
      player[Other_player(_player)].Set_velocityX(0);
 
-     player[_player].Set_hp(std::min(1000,player[_player].Get_hp()+player[_player].Get_life_steal()*((std::max(player[_player].Get_attack()-player[Other_player(_player)].Get_defense()*3/8,20))/10)/100));
-     player[Other_player(_player)].Set_hp(player[Other_player(_player)].Get_hp()-(std::max(player[_player].Get_attack()-player[Other_player(_player)].Get_defense()*3/8,20))/10);
+     player[_player].Set_hp(player[_player].Get_hp()+player[_player].Get_life_steal()*((std::max(player[_player].Get_attack()-player[Other_player(_player)].Get_defense()*3/8,10))/10)/100);
+     player[Other_player(_player)].Set_hp(player[Other_player(_player)].Get_hp()-(std::max(player[_player].Get_attack()-player[Other_player(_player)].Get_defense()*3/8,10))/10);
      player[_player].Block_attack(),player_time_blocked_attack[_player]=7-player[_player].Get_movement_speed();
      if(player_time_blocked_attack[_player]<=0)
         player_time_blocked_attack[_player]=4;
@@ -819,7 +835,7 @@ void Level::Handle_Event(int _player)
     }
  else
     {
-     if(((keystates[player_keys[keys][4]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][4]])) && player[_player].Can_attack())
+     if((AUTO_ATTACK || ((keystates[player_keys[keys][4]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][4]]))) && player[_player].Can_attack())
         Player_basic_attack(_player);
      if(((keystates[player_keys[keys][5]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][5]])) && !player[_player].Is_blocked())
         player[_player].Use_hp_potion(),player_time_blocked[_player]=10;
@@ -1181,7 +1197,7 @@ bool Level::Duel_Mode_Finish_Screen(int _player_winner)
         SDL_Delay(100);
        }
  quit=false;
- if(event.key.keysym.sym==SDLK_ESCAPE)
+ if(event.key.keysym.sym==SDLK_ESCAPE || player_type[2]!=0)
     return false;
  return true;
 }
@@ -1286,17 +1302,27 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
     }
 
  if(player_type[1]==0)
-    player[1].Set_money(player[1].Get_money()+(10+player[1].Get_extra_money())*player[2].Get_experience()/100+5+((_player_winner==1)?10:0));
+    player[1].Set_money(player[1].Get_money()+(10+player[1].Get_extra_money())*player[2].Get_experience()/100+20+((_player_winner==1)?40:0));
  if(player_type[2]==0)
-    player[2].Set_money(player[2].Get_money()+(10+player[2].Get_extra_money())*player[1].Get_experience()/100+5+((_player_winner==2)?10:0));
+    player[2].Set_money(player[2].Get_money()+(10+player[2].Get_extra_money())*player[1].Get_experience()/100+20+((_player_winner==2)?40:0));
  int a=player[1].Get_experience(),b=player[2].Get_experience();
  if(player_type[1]==0)
     player[1].Set_experience(player[1].Get_experience()+10*player[2].Get_experience()/100+10+((_player_winner==2)?20:0));
  if(player_type[2]==0)
     player[2].Set_experience(player[2].Get_experience()+10*player[1].Get_experience()/100+10+((_player_winner==1)?20:0));
 
- player_money=TTF_RenderText_Solid(font,"Press ESC to exit or any other key to rematch!",{255,255,255});
- apply_surface((_screen->w-player_money->w)/2,_screen->h/2+(_screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,_screen);
+ if(player_type[2]==0)
+    {
+     player_money=TTF_RenderText_Solid(font,"Press ESC to exit or any other key to rematch!",{255,255,255});
+     apply_surface((_screen->w-player_money->w)/2,_screen->h/2+(_screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,_screen);
+     SDL_FreeSurface(player_money);
+    }
+ else
+    {
+     player_money=TTF_RenderText_Solid(font,"Press any key to continue!",{255,255,255});
+     apply_surface((_screen->w-player_money->w)/2,_screen->h/2+(_screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,_screen);
+     SDL_FreeSurface(player_money);
+    }
 
  TTF_CloseFont(font);
  SDL_Flip(_screen);
@@ -1430,21 +1456,63 @@ void Level::Start(SDL_Surface *screen)
         player_time_blocked[1]=player_time_blocked[2]=0;
         player[1].Unblock();
         player[2].Unblock();
-        player[1].Reset(player_map_position[1].first,player_map_position[1].second);
         if(type==2)
-           player[2].Reset(player_map_position[2].first,player_map_position[2].second);
+           {
+            player[1].Reset(player_map_position[1].first,player_map_position[1].second);
+            player[2].Reset(player_map_position[2].first,player_map_position[2].second);
+           }
         effects.Clear(false,false);
         effects.Set_name("Empty");
         effects.Load(player[1].Get_keys());
        }
  SDL_Thread *_loading_image=NULL;
  _loading_image=SDL_CreateThread(Loading_image,NULL);
- Clear();
+ if(type==2)
+    Clear();
  Loading_image_quit=true;
  SDL_WaitThread(_loading_image,&thread_return_value);
  SDL_Flip(static_screen);
  Oversee_music_quit=true;
  SDL_WaitThread(level_music_overseer,&thread_return_value);
+}
+
+///Launch
+void Launch_Story_Mode(Level *level,SDL_Surface *_screen)
+{
+ int player_map_position_x,player_map_position_y;
+ char level_name[TEXT_LENGTH_MAX],player_name[TEXT_LENGTH_MAX];
+ FILE *where=fopen("saves/gamemodes/Story Mode.pwsav","r");
+ if(where==NULL)
+    exit(5);
+ fscanf(where,"%d %d ",&player_map_position_x,&player_map_position_y);
+ fgets(level_name,sizeof level_name,where);
+ int n=strlen(level_name);
+ if(level_name[n-1]=='\n')
+    level_name[n-1]=NULL;
+ fgets(player_name,sizeof player_name,where);
+ n=strlen(player_name);
+ if(player_name[n-1]=='\n')
+    player_name[n-1]=NULL;
+ fclose(where);
+ level->Set_screen(_screen);
+ level->Set_player_map_position(player_map_position_x,player_map_position_y,1);
+ level->Setup(level_name);
+ level->Start(_screen);
+ where=fopen("saves/gamemodes/Story Mode.pwsav","w");
+ player_map_position_x=level->Get_player_map_position_x(1);
+ player_map_position_y=level->Get_player_map_position_y(1);
+ strcpy(level_name,level->Get_name());
+ fprintf(where,"%d %d\n",player_map_position_x,player_map_position_y);
+ fprintf(where,"%s\n%s\n",level_name,player_name);
+ fclose(where);
+ level->Clear();
+}
+
+void Launch_Duel_Mode(Level *level,SDL_Surface *_screen)
+{
+ level->Set_screen(_screen);
+ level->Setup("Duel Mode");
+ level->Start(_screen);
 }
 
 int Other_player(int _player)

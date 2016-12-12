@@ -183,6 +183,7 @@ int Menu::Start(SDL_Surface *_screen)
                }
             if(event.type==SDL_MOUSEBUTTONUP)
                {
+                //Mix_PlayChannel(0,CLICK,0);
                 x=event.button.x;
                 y=event.button.y;
                 selector_position=-1;

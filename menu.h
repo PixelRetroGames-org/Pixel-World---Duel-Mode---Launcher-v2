@@ -8,6 +8,7 @@
 //LIBRARY
 #include "library.h"
 #include "load_images.h"
+#include "load_audio_effects.h"
 //CSTRING
 #include<cstring>
 

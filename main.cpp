@@ -56,6 +56,7 @@ int main( int argc, char* args[] )
  Menu main_menu,gamemode_menu,story_menu,duel_menu;
  Load_all_images();
  Load_Duel_Mode_effects();
+ Load_Click_effects();
  main_menu.Load("menu/main_menu.pwm");
  gamemode_menu.Load("menu/gamemode.pwm");
  story_menu.Load("menu/story_menu.pwm");
@@ -112,9 +113,7 @@ int main( int argc, char* args[] )
                                                               case 0:{//Launch Story Mode
                                                                       if(MUSIC_MODULE_INIT)
                                                                          Mix_HaltMusic();
-                                                                      level.Set_screen(screen);
-                                                                      level.Setup("The Stables Western Exit");
-                                                                      level.Start(screen);
+                                                                      Launch_Story_Mode(&level,screen);
                                                                       if(MUSIC_MODULE_INIT)
                                                                          Mix_PlayMusic(launcher_background_music,-1);
                                                                       _option=-2;
@@ -146,9 +145,7 @@ int main( int argc, char* args[] )
                                                               case 0:{//Launch Duel Mode
                                                                       if(MUSIC_MODULE_INIT)
                                                                          Mix_HaltMusic();
-                                                                      level.Set_screen(screen);
-                                                                      level.Setup("Duel Mode");
-                                                                      level.Start(screen);
+                                                                      Launch_Duel_Mode(&level,screen);
                                                                       if(MUSIC_MODULE_INIT)
                                                                          Mix_PlayMusic(launcher_background_music,-1);
                                                                       _option=-2;

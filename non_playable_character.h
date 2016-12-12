@@ -43,8 +43,8 @@ class Non_Playable_Character
  void Update_skin(int dir);
  void Block();
  void Unblock();
- void Load(std::bitset<NUMBER_OF_MAX_KEYS> *key);
- void Load(char *_name,std::bitset<NUMBER_OF_MAX_KEYS> *key);
+ void Load(std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair<int,int> player_pos);
+ void Load(char *_name,std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair<int,int> player_pos);
  //void Interact(char *player_name);
  void Print_skin(int x,int y,int mapX,int mapY,SDL_Surface *_screen);
 };
