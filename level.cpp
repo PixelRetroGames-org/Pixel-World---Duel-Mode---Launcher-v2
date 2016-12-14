@@ -4,7 +4,8 @@
 #include "menu.h"
 #include "SDL/SDL_thread.h"
 
-constexpr SDLKey player_keys[3][20]={{},{SDLK_UP,SDLK_DOWN,SDLK_LEFT,SDLK_RIGHT,SDLK_RCTRL,SDLK_j,SDLK_n,SDLK_u,SDLK_i,SDLK_o,SDLK_p},{SDLK_w,SDLK_s,SDLK_a,SDLK_d,SDLK_z,SDLK_BACKQUOTE,SDLK_TAB,SDLK_1,SDLK_2,SDLK_3,SDLK_4}};
+const SDLKey player_keys[3][20]={{},{SDLK_UP,SDLK_DOWN,SDLK_LEFT,SDLK_RIGHT,SDLK_RCTRL,SDLK_j,SDLK_n,SDLK_u,SDLK_i,SDLK_o,SDLK_p,SDLK_LSHIFT},{SDLK_w,SDLK_s,SDLK_a,SDLK_d,SDLK_z,SDLK_BACKQUOTE,SDLK_TAB,SDLK_1,SDLK_2,SDLK_3,SDLK_4,SDLK_x}};
+const int SKEPTIC_VISION_MAX_ALPHA=100;
 
 int level_number_of_background_music_tracks;
 Mix_Music *level_background_music[NUMBER_OF_SONGS_MAX];
@@ -40,9 +41,9 @@ void Level::Clear()
 
 void Level::Set_arena_size()
 {
- arena_size.x=(RESOLUTION_X-840)/2,arena_size.y=40;
- arena_size.w=840;
- arena_size.h=680;
+ arena_size.w=std::min(40*arena.Get_number_of_columns(),840);
+ arena_size.h=std::min(40*arena.Get_number_of_lines(),680);
+ arena_size.x=(RESOLUTION_X-(840-arena_size.w))/2,arena_size.y=40;
 }
 
 void Level::Set_name(char *_name)
@@ -729,6 +730,7 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
  arena.Print_background_Animations(x,y,mapX,mapY,_screen,true,false);
  arena.Print(x,y,mapX,mapY,_screen,true,false);
  arena.Print_Animations(x,y,mapX,mapY,_screen,true,false);
+ arena.Print_Clues(x,y,mapX,mapY,_screen,true,false);
  player[1].Print_skin(x,y,mapX,mapY,_screen);
  player[2].Print_skin(x,y,mapX,mapY,_screen);
 
@@ -741,6 +743,7 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
  arena.Print_background_Animations(x,y,mapX,mapY,_screen,false);
  arena.Print(x,y,mapX,mapY,_screen,false);
  arena.Print_Animations(x,y,mapX,mapY,_screen,false);
+ arena.Print_Clues(x,y,mapX,mapY,_screen,false);
 
  SDL_Rect _area=arena_size;
  /*_area.h=MAP_IMAGE_HEIGHT*40-mapY*40;
@@ -753,6 +756,7 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
  arena.Print_background_Animations(x,y,mapX,mapY,_screen,true,true);
  arena.Print(x,y,mapX,mapY,_screen,true,true);
  arena.Print_Animations(x,y,mapX,mapY,_screen,true,true);
+ arena.Print_Clues(x,y,mapX,mapY,_screen,true,true);
  if(Player_is_on_light(1))
     player[1].Print_skin(x,y,mapX,mapY,_screen);
  if(type==2 && Player_is_on_light(2))
@@ -766,8 +770,27 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
  arena.Print_background_Animations(x,y,mapX,mapY,_screen,false,true);
  arena.Print(x,y,mapX,mapY,_screen,false,true);
  arena.Print_Animations(x,y,mapX,mapY,_screen,false,true);
- if(type==2)
-    effects.Print_Animations(x,y,mapX,mapY,_screen,false,true);
+ arena.Print_Clues(x,y,mapX,mapY,_screen,false,true);
+ if(skeptic_vision_on)
+    {
+     skeptic_vision_alpha+=10;
+     if(skeptic_vision_alpha>SKEPTIC_VISION_MAX_ALPHA)
+        skeptic_vision_alpha=SKEPTIC_VISION_MAX_ALPHA;
+     SDL_SetAlpha(SKEPTIC_VISION_image,SDL_SRCALPHA,skeptic_vision_alpha);
+     arena.Print_Special_Clues(x,y,mapX,mapY,_screen);
+     apply_surface(0,0,_area.x,_area.y,_area.w,_area.h,SKEPTIC_VISION_image,_screen);
+    }
+ else
+    {
+     if(skeptic_vision_alpha!=0)
+        {
+         skeptic_vision_alpha-=10;
+         if(skeptic_vision_alpha<0)
+            skeptic_vision_alpha=0;
+         SDL_SetAlpha(SKEPTIC_VISION_image,SDL_SRCALPHA,skeptic_vision_alpha);
+         apply_surface(0,0,_area.x,_area.y,_area.w,_area.h,SKEPTIC_VISION_image,_screen);
+        }
+    }
  //effects.Print(x,y,_screen,false);
  arena.Print_name_image(_screen);
 }
@@ -832,6 +855,8 @@ void Level::Handle_Event(int _player)
          Interact_with_NPC_around_player(_player);
          player_time_blocked[_player]=10;
         }
+     if(keystates[player_keys[keys][11]] && !player[_player].Is_blocked())
+        skeptic_vision_on=!skeptic_vision_on,player_time_blocked[_player]=10,player[_player].Block();
     }
  else
     {
@@ -1336,7 +1361,6 @@ void Level::Set_screen(SDL_Surface *screen)
 
 void Level::Setup(char *_level_name)
 {
- Set_arena_size();
  Set_name(_level_name);
  SDL_Thread *_loading_image=NULL;
  _loading_image=SDL_CreateThread(Loading_image,NULL);
@@ -1346,6 +1370,7 @@ void Level::Setup(char *_level_name)
  Loading_image_quit=true;
  SDL_WaitThread(_loading_image,&thread_return_value);
  SDL_Flip(static_screen);
+ Set_arena_size();
  player_time_blocked[1]=player_time_blocked[2]=0;
  player[1].Unblock();
  player[2].Unblock();

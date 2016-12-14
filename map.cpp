@@ -337,6 +337,62 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
       fscanf(where,"%d %d %d %d ",&_texture,&x,&y,&key_id);
       map_textures_ids[x][y].Set_key_id(_texture,key_id);
      }
+ int number_of_clues=0;
+ fscanf(where,"%d ",&number_of_clues);
+ for(int i=0;i<number_of_clues;i++)
+     {
+      int id,x,y,n_keys;
+      fscanf(where,"%d %d %d %d ",&id,&x,&y,&n_keys);
+      bool locked=false;
+      for(int j=0;j<n_keys && !locked;j++)
+          {
+           int __key;
+           fscanf(where,"%d ",&__key);
+           locked=(_keys[j]==__key);
+          }
+      if(!locked && clues_map_textures_ids[x][y].Get_id()==0)
+         {
+          clues_map_textures_ids[x][y].Load(id);
+          clues_map_textures_ids[x][y].Get_all_textures_ids(textures_ids);
+          for(std::vector<Map_texture_id>::iterator it=textures_ids.begin();it!=textures_ids.end();it++)
+              {
+               if(map_textures[it->Get_id()].Get_id()==0)
+                  {
+                   map_textures[it->Get_id()].Set_id(it->Get_id());
+                   map_textures[it->Get_id()].Load();
+                  }
+              }
+          fast_access_clues_map_textures[map_textures[clues_map_textures_ids[x][y].Get_texture_id()].Get_print_before_player()][map_textures[clues_map_textures_ids[x][y].Get_texture_id()].Is_light()].push_back(std::make_pair(x,y));
+         }
+     }
+ int number_of_special_clues=0;
+ fscanf(where,"%d ",&number_of_special_clues);
+ for(int i=0;i<number_of_clues;i++)
+     {
+      int id,x,y,n_keys;
+      fscanf(where,"%d %d %d %d ",&id,&x,&y,&n_keys);
+      bool locked=false;
+      for(int j=0;j<n_keys && !locked;j++)
+          {
+           int __key;
+           fscanf(where,"%d ",&__key);
+           locked=(_keys[j]==__key);
+          }
+      if(!locked && special_clues_map_textures_ids[x][y].Get_id()==0)
+         {
+          special_clues_map_textures_ids[x][y].Load(id);
+          special_clues_map_textures_ids[x][y].Get_all_textures_ids(textures_ids);
+          for(std::vector<Map_texture_id>::iterator it=textures_ids.begin();it!=textures_ids.end();it++)
+              {
+               if(map_textures[it->Get_id()].Get_id()==0)
+                  {
+                   map_textures[it->Get_id()].Set_id(it->Get_id());
+                   map_textures[it->Get_id()].Load();
+                  }
+              }
+          fast_access_special_clues_map_textures.push_back(std::make_pair(x,y));
+         }
+     }
  fclose(where);
 }
 
@@ -407,4 +463,22 @@ void Map::Update_name_image()
  if(name_image_alpha<0)
     name_image_alpha=0;
  SDL_SetAlpha(name_image,SDL_SRCALPHA,name_image_alpha);
+}
+
+void Map::Print_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights)
+{
+ for(std::vector<std::pair<int,int> >::iterator it=fast_access_clues_map_textures[before_player][lights].begin();it!=fast_access_clues_map_textures[before_player][lights].end();it++)
+     {
+      if(!clues_map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/40 && it->second<map_x+MAP_IMAGE_HEIGHT/40)
+         Print_image((it->second-map_x)*40+screen_x,(it->first-map_y)*40+screen_y,_screen,&clues_map_textures_ids[it->first][it->second]);
+     }
+}
+
+void Map::Print_Special_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen)
+{
+ for(std::vector<std::pair<int,int> >::iterator it=fast_access_special_clues_map_textures.begin();it!=fast_access_special_clues_map_textures.end();it++)
+     {
+      if(!special_clues_map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/40 && it->second<map_x+MAP_IMAGE_HEIGHT/40)
+         Print_image((it->second-map_x)*40+screen_x,(it->first-map_y)*40+screen_y,_screen,&special_clues_map_textures_ids[it->first][it->second]);
+     }
 }

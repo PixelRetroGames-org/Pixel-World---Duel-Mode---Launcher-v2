@@ -17,6 +17,8 @@ class Map
  Texture map_textures[NUMBER_OF_TEXTURES_IDS];
  Interactive_map_texture map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX],background_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX];
  std::vector<std::pair<int,int> > fast_access_map_textures_animations[2][2],fast_access_background_map_textures_animations[2][2];
+ Interactive_map_texture clues_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX],special_clues_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX];
+ std::vector<std::pair<int,int> > fast_access_clues_map_textures[2][2],fast_access_special_clues_map_textures;
  SDL_Surface *map_image[2][2],*background_map_image[2][2];
  int number_of_updates,current_number_of_updates;
  bool map_obstacles[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX];
@@ -58,6 +60,9 @@ class Map
  void Print_image(int screen_x,int screen_y,SDL_Surface *_screen,Interactive_map_texture *source);
  void Print_name_image(SDL_Surface *_screen);
  void Update_name_image();
+ ///Clues
+ void Print_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights=false);
+ void Print_Special_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen);
 
  void Trigger(int x,int y);
 };

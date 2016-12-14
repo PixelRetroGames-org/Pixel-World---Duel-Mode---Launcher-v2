@@ -33,7 +33,7 @@ bool PLAYER_IMAGES_LOADED;
 ///LEVEL
 SDL_Surface *LEVEL_background_image,*LEVEL_loading_image;
 SDL_Surface *LEVEL_WINNER,*LEVEL_LOSER,*LEVEL_MONEY,*LEVEL_XP,*LEVEL_LINE,*LEVEL_WINS;
-SDL_Surface *MAP_NAME_background;
+SDL_Surface *MAP_NAME_background,*SKEPTIC_VISION_image;
 bool LEVEL_IMAGES_LOADED;
 
 ///SETTINGS
@@ -165,6 +165,8 @@ void Load_level_images()
  LEVEL_MONEY=TTF_RenderText_Solid(font1,"MONEY:   ",MONEY_COLOR);
  LEVEL_LINE=make_it_transparent("images/game/line.bmp");
  MAP_NAME_background=make_it_transparent("images/game/map_name_background.bmp");
+ SKEPTIC_VISION_image=make_it_transparent("images/game/skeptic_vision.bmp");
+ SDL_SetAlpha(SKEPTIC_VISION_image,SDL_SRCALPHA,0);
  TTF_CloseFont(font);
  TTF_CloseFont(font1);
 }
@@ -180,6 +182,7 @@ void Clear_level_images()
  SDL_FreeSurface(LEVEL_LINE);
  SDL_FreeSurface(MAP_NAME_background);
  SDL_FreeSurface(LEVEL_WINS);
+ SDL_FreeSurface(SKEPTIC_VISION_image);
  LEVEL_IMAGES_LOADED=false;
 }
 

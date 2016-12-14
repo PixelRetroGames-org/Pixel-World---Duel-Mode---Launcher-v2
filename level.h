@@ -56,6 +56,8 @@ class Level
  Non_Playable_Character non_playable_characters[NUMBER_OF_NPC_MAX];
  int non_playable_character_time_blocked[NUMBER_OF_NPC_MAX];
  int winner=0;
+ bool skeptic_vision_on=false;
+ int skeptic_vision_alpha=0;
  std::pair<int,int> player_map_position[3];
 
  public:
