@@ -43,7 +43,7 @@ void Level::Set_arena_size()
 {
  arena_size.w=std::min(40*arena.Get_number_of_columns(),840);
  arena_size.h=std::min(40*arena.Get_number_of_lines(),680);
- arena_size.x=(RESOLUTION_X-(840-arena_size.w))/2,arena_size.y=40;
+ arena_size.x=(RESOLUTION_X-arena_size.w+(arena_size.w%80==0?-40:0))/2,arena_size.y=40;
 }
 
 void Level::Set_name(char *_name)
@@ -1060,6 +1060,11 @@ void Level::Interact_with_NPC(int _player,int _npc)
          case 2:player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
                 player[_player].Update();
                 shop_screen.Start(_screen,non_playable_characters[_npc].Get_shop_name(),player[_player].Get_name());
+                strcpy(_aux,player[_player].Get_name());
+                player[_player].Clear(true);
+                player[_player].Set_name(_aux);
+                player[_player].Load();
+                player[_player].Set_map_position(x,y);
                 SDL_Delay(100);
                 SDL_PumpEvents();
                 //shop_screen.Reset();
