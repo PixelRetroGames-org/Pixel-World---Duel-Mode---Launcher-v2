@@ -12,19 +12,15 @@ void Map::Clear(bool _delete,bool _delete_all)
     {
      //map_textures[20].Clear();
      //map_textures[0].Clear();
-     for(int i=0;i<NUMBER_OF_TEXTURES_IDS;i++)
-         {
-          if(map_textures[i].Get_id()!=0 && map_textures[i].Get_id()!=20)
-             map_textures[i].Clear(true);
-         }
+     for(auto i:map_textures)
+         i.second.Clear(true);
+     map_textures.clear();
     }
  else
     {
-     for(int i=0;i<NUMBER_OF_TEXTURES_IDS;i++)
-         {
-          if(map_textures[i].Get_id()!=0 && map_textures[i].Get_id()!=20)
-             map_textures[i].Clear(false);
-         }
+     for(auto i:map_textures)
+         i.second.Clear(false);
+     map_textures.clear();
     }
  for(int i=0;i<=1;i++)
      for(int j=0;j<=1;j++)
@@ -41,12 +37,16 @@ void Map::Clear(bool _delete,bool _delete_all)
              }
           std::vector<std::pair<int,int> >().swap(fast_access_map_textures_animations[i][j]);
           std::vector<std::pair<int,int> >().swap(fast_access_background_map_textures_animations[i][j]);
+          std::vector<std::pair<int,int> >().swap(fast_access_clues_map_textures[i][j]);
          }
+ std::vector<std::pair<int,int> >().swap(fast_access_special_clues_map_textures);
  for(int i=0;i<number_of_lines;i++)
      for(int j=0;j<number_of_columns;j++)
          {
           map_textures_ids[i][j].Clear();
           background_map_textures_ids[i][j].Clear();
+          clues_map_textures_ids[i][j].Clear();
+          special_clues_map_textures_ids[i][j].Clear();
          }
  if(_delete)
     {
@@ -193,11 +193,46 @@ void Map::Decrease_background_map_texture_id_remaining_time(bool before_player,b
      }
 }
 
+void Map::Decrease_clues_map_texture_id_remaining_time(bool before_player,bool lights)
+{
+ for(std::vector<std::pair<int,int> >::iterator it=fast_access_clues_map_textures[before_player][lights].begin();it!=fast_access_clues_map_textures[before_player][lights].end();it++)
+     {
+      if(!map_textures_ids[it->first][it->second].Is_done())
+         {
+          clues_map_textures_ids[it->first][it->second].Decrease_remaining_duration();
+          clues_map_textures_ids[it->first][it->second].Update_texture_frame(map_textures[clues_map_textures_ids[it->first][it->second].Get_texture_id()].Get_number_of_frames());
+         }
+     }
+}
+
+void Map::Decrease_clues_map_textures_ids_remaining_time()
+{
+ for(int i=0;i<=1;i++)
+     for(int j=0;j<=1;j++)
+         {
+          Decrease_clues_map_texture_id_remaining_time(i,j);
+         }
+}
+
+void Map::Decrease_special_clues_map_texture_id_remaining_time()
+{
+ for(std::vector<std::pair<int,int> >::iterator it=fast_access_special_clues_map_textures.begin();it!=fast_access_special_clues_map_textures.end();it++)
+     {
+      if(!map_textures_ids[it->first][it->second].Is_done())
+         {
+          special_clues_map_textures_ids[it->first][it->second].Decrease_remaining_duration();
+          special_clues_map_textures_ids[it->first][it->second].Update_texture_frame(map_textures[special_clues_map_textures_ids[it->first][it->second].Get_texture_id()].Get_number_of_frames());
+         }
+     }
+}
+
 
 void Map::Update_all_frames()
 {
  current_number_of_updates++;
  Decrease_map_textures_ids_remaining_time();
+ Decrease_clues_map_textures_ids_remaining_time();
+ Decrease_special_clues_map_texture_id_remaining_time();
 }
 
 bool Map::Is_done()
@@ -265,7 +300,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
 
            for(std::vector<Map_texture_id>::iterator it=textures_ids.begin();it!=textures_ids.end();it++)
                {
-                if(map_textures[it->Get_id()].Get_id()==0 && it->Get_id()!=0)
+                if(map_textures.count(it->Get_id())==0 && it->Get_id()!=0)
                    {
                     map_textures[it->Get_id()].Set_id(it->Get_id());
                     map_textures[it->Get_id()].Load();
@@ -290,7 +325,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
 
            for(std::vector<Map_texture_id>::iterator it=textures_ids.begin();it!=textures_ids.end();it++)
                {
-                if(map_textures[it->Get_id()].Get_id()==0)
+                if(map_textures.count(it->Get_id())==0 && it->Get_id()!=0)
                    {
                     map_textures[it->Get_id()].Set_id(it->Get_id());
                     map_textures[it->Get_id()].Load();
@@ -348,7 +383,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
           {
            int __key;
            fscanf(where,"%d ",&__key);
-           locked=(_keys[j]==__key);
+           locked=!(*_keys)[__key];
           }
       if(!locked && clues_map_textures_ids[x][y].Get_id()==0)
          {
@@ -356,7 +391,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
           clues_map_textures_ids[x][y].Get_all_textures_ids(textures_ids);
           for(std::vector<Map_texture_id>::iterator it=textures_ids.begin();it!=textures_ids.end();it++)
               {
-               if(map_textures[it->Get_id()].Get_id()==0)
+               if(map_textures.count(it->Get_id())==0 && it->Get_id()!=0)
                   {
                    map_textures[it->Get_id()].Set_id(it->Get_id());
                    map_textures[it->Get_id()].Load();
@@ -376,7 +411,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
           {
            int __key;
            fscanf(where,"%d ",&__key);
-           locked=(_keys[j]==__key);
+           locked=!(*_keys)[__key];
           }
       if(!locked && special_clues_map_textures_ids[x][y].Get_id()==0)
          {
@@ -384,7 +419,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
           special_clues_map_textures_ids[x][y].Get_all_textures_ids(textures_ids);
           for(std::vector<Map_texture_id>::iterator it=textures_ids.begin();it!=textures_ids.end();it++)
               {
-               if(map_textures[it->Get_id()].Get_id()==0)
+               if(map_textures.count(it->Get_id())==0 && it->Get_id()!=0)
                   {
                    map_textures[it->Get_id()].Set_id(it->Get_id());
                    map_textures[it->Get_id()].Load();

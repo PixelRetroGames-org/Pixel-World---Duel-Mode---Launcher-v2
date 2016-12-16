@@ -5,8 +5,9 @@
 #include "interactive_map_texture.h"
 #include<vector>
 #include<bitset>
+#include<map>
 
-const int NUMBER_OF_LINES_MAX=1000,NUMBER_OF_COLUMNS_MAX=1000,NUMBER_OF_TEXTURES_IDS=200;
+const int NUMBER_OF_LINES_MAX=100,NUMBER_OF_COLUMNS_MAX=100,NUMBER_OF_TEXTURES_IDS=200;
 const int NAME_IMAGE_OPAQUE_TIME=50;
 
 class Map
@@ -14,7 +15,7 @@ class Map
  private:
  char name[TEXT_LENGTH_MAX]={NULL};
  int number_of_lines=0,number_of_columns=0;
- Texture map_textures[NUMBER_OF_TEXTURES_IDS];
+ std::map<int,Texture> map_textures;
  Interactive_map_texture map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX],background_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX];
  std::vector<std::pair<int,int> > fast_access_map_textures_animations[2][2],fast_access_background_map_textures_animations[2][2];
  Interactive_map_texture clues_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX],special_clues_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX];
@@ -49,6 +50,9 @@ class Map
  void Decrease_map_textures_ids_remaining_time();
  void Decrease_map_texture_id_remaining_time(bool before_player,bool lights);
  void Decrease_background_map_texture_id_remaining_time(bool before_player,bool lights);
+ void Decrease_clues_map_texture_id_remaining_time(bool before_player,bool lights);
+ void Decrease_clues_map_textures_ids_remaining_time();
+ void Decrease_special_clues_map_texture_id_remaining_time();
  void Update_all_frames();
  bool Is_done();
  void Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys);

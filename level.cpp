@@ -4,7 +4,7 @@
 #include "menu.h"
 #include "SDL/SDL_thread.h"
 
-const SDLKey player_keys[3][20]={{},{SDLK_UP,SDLK_DOWN,SDLK_LEFT,SDLK_RIGHT,SDLK_RCTRL,SDLK_j,SDLK_n,SDLK_u,SDLK_i,SDLK_o,SDLK_p,SDLK_LSHIFT},{SDLK_w,SDLK_s,SDLK_a,SDLK_d,SDLK_z,SDLK_BACKQUOTE,SDLK_TAB,SDLK_1,SDLK_2,SDLK_3,SDLK_4,SDLK_x}};
+const SDLKey player_keys[3][20]={{},{SDLK_UP,SDLK_DOWN,SDLK_LEFT,SDLK_RIGHT,SDLK_RCTRL,SDLK_j,SDLK_n,SDLK_u,SDLK_i,SDLK_o,SDLK_p,SDLK_RSHIFT},{SDLK_w,SDLK_s,SDLK_a,SDLK_d,SDLK_z,SDLK_BACKQUOTE,SDLK_TAB,SDLK_1,SDLK_2,SDLK_3,SDLK_4,SDLK_x}};
 const int SKEPTIC_VISION_MAX_ALPHA=100;
 
 int level_number_of_background_music_tracks;
@@ -20,6 +20,7 @@ Level::Level()
  arena_size.x=(RESOLUTION_X-840)/2,arena_size.y=40;
  arena_size.w=860;
  arena_size.h=680;
+ spell_effects.reserve(15);
 }
 
 void Level::Clear()
@@ -37,6 +38,9 @@ void Level::Clear()
  spell_effects_ids.clear();
  for(int i=0;i<number_of_non_playable_characters;i++)
      non_playable_characters[i].Clear();
+ skeptic_vision_alpha=0;
+ skeptic_vision_on=false;
+ SDL_SetAlpha(SKEPTIC_VISION_image,SDL_SRCALPHA,skeptic_vision_alpha);
 }
 
 void Level::Set_arena_size()
@@ -145,6 +149,9 @@ void Level::Load()
               spell_effects.push_back(aux);
               spell_effects_ids[(player[1].Get_Spell(i)).Get_id()]=spell_effects.size()-1;
               aux.Clear(false);
+              #ifdef DEBUG
+              fprintf(stderr,"1:%s\n",spell_effects[spell_effects_ids[(player[1].Get_Spell(i)).Get_id()]].Get_name());
+              #endif // DEBUG
              }
          }
 
@@ -166,6 +173,9 @@ void Level::Load()
               spell_effects.push_back(aux);
               spell_effects_ids[(player[2].Get_Spell(i)).Get_id()]=spell_effects.size()-1;
               aux.Clear(false);
+              #ifdef DEBUG
+              fprintf(stderr,"2:%s\n",spell_effects[spell_effects_ids[(player[2].Get_Spell(i)).Get_id()]].Get_name());
+              #endif // DEBUG
              }
          }
 
@@ -730,7 +740,8 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
  arena.Print_background_Animations(x,y,mapX,mapY,_screen,true,false);
  arena.Print(x,y,mapX,mapY,_screen,true,false);
  arena.Print_Animations(x,y,mapX,mapY,_screen,true,false);
- arena.Print_Clues(x,y,mapX,mapY,_screen,true,false);
+ if(type==1)
+    arena.Print_Clues(x,y,mapX,mapY,_screen,true,false);
  player[1].Print_skin(x,y,mapX,mapY,_screen);
  player[2].Print_skin(x,y,mapX,mapY,_screen);
 
@@ -743,7 +754,8 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
  arena.Print_background_Animations(x,y,mapX,mapY,_screen,false);
  arena.Print(x,y,mapX,mapY,_screen,false);
  arena.Print_Animations(x,y,mapX,mapY,_screen,false);
- arena.Print_Clues(x,y,mapX,mapY,_screen,false);
+ if(type==1)
+    arena.Print_Clues(x,y,mapX,mapY,_screen,false);
 
  SDL_Rect _area=arena_size;
  /*_area.h=MAP_IMAGE_HEIGHT*40-mapY*40;
@@ -756,7 +768,8 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
  arena.Print_background_Animations(x,y,mapX,mapY,_screen,true,true);
  arena.Print(x,y,mapX,mapY,_screen,true,true);
  arena.Print_Animations(x,y,mapX,mapY,_screen,true,true);
- arena.Print_Clues(x,y,mapX,mapY,_screen,true,true);
+ if(type==1)
+    arena.Print_Clues(x,y,mapX,mapY,_screen,true,true);
  if(Player_is_on_light(1))
     player[1].Print_skin(x,y,mapX,mapY,_screen);
  if(type==2 && Player_is_on_light(2))
@@ -770,27 +783,32 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
  arena.Print_background_Animations(x,y,mapX,mapY,_screen,false,true);
  arena.Print(x,y,mapX,mapY,_screen,false,true);
  arena.Print_Animations(x,y,mapX,mapY,_screen,false,true);
- arena.Print_Clues(x,y,mapX,mapY,_screen,false,true);
- if(skeptic_vision_on)
+ if(type==1)
     {
-     skeptic_vision_alpha+=10;
-     if(skeptic_vision_alpha>SKEPTIC_VISION_MAX_ALPHA)
-        skeptic_vision_alpha=SKEPTIC_VISION_MAX_ALPHA;
-     SDL_SetAlpha(SKEPTIC_VISION_image,SDL_SRCALPHA,skeptic_vision_alpha);
-     arena.Print_Special_Clues(x,y,mapX,mapY,_screen);
-     apply_surface(0,0,_area.x,_area.y,_area.w,_area.h,SKEPTIC_VISION_image,_screen);
-    }
- else
-    {
-     if(skeptic_vision_alpha!=0)
+     arena.Print_Clues(x,y,mapX,mapY,_screen,false,true);
+     if(skeptic_vision_on)
         {
-         skeptic_vision_alpha-=10;
-         if(skeptic_vision_alpha<0)
-            skeptic_vision_alpha=0;
+         skeptic_vision_alpha+=10;
+         if(skeptic_vision_alpha>SKEPTIC_VISION_MAX_ALPHA)
+            skeptic_vision_alpha=SKEPTIC_VISION_MAX_ALPHA;
          SDL_SetAlpha(SKEPTIC_VISION_image,SDL_SRCALPHA,skeptic_vision_alpha);
+         arena.Print_Special_Clues(x,y,mapX,mapY,_screen);
          apply_surface(0,0,_area.x,_area.y,_area.w,_area.h,SKEPTIC_VISION_image,_screen);
         }
+     else
+        {
+         if(skeptic_vision_alpha!=0)
+            {
+             skeptic_vision_alpha-=10;
+             if(skeptic_vision_alpha<0)
+                skeptic_vision_alpha=0;
+             SDL_SetAlpha(SKEPTIC_VISION_image,SDL_SRCALPHA,skeptic_vision_alpha);
+             apply_surface(0,0,_area.x,_area.y,_area.w,_area.h,SKEPTIC_VISION_image,_screen);
+            }
+        }
     }
+ if(type==2)
+    effects.Print_Animations(x,y,mapX,mapY,_screen,false,true);
  //effects.Print(x,y,_screen,false);
  arena.Print_name_image(_screen);
 }
@@ -855,7 +873,7 @@ void Level::Handle_Event(int _player)
          Interact_with_NPC_around_player(_player);
          player_time_blocked[_player]=10;
         }
-     if(keystates[player_keys[keys][11]] && !player[_player].Is_blocked())
+     if((keystates[player_keys[keys][11]] || keystates[player_keys[Other_player(keys)][11]]) && !player[_player].Is_blocked())
         skeptic_vision_on=!skeptic_vision_on,player_time_blocked[_player]=10,player[_player].Block();
     }
  else

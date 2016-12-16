@@ -285,7 +285,6 @@ int Loading_image(void *data)
  Loading_image_quit=false;
  while(!Loading_image_quit)
        {
-        SDL_PumpEvents();
         apply_surface(0,0,LEVEL_background_image,static_screen);
         apply_surface(160*frame,0,((static_screen->w)-160)/2,((static_screen->h)-LEVEL_loading_image->h)/2,160,LEVEL_loading_image->h,LEVEL_loading_image,static_screen);
         SDL_Flip(static_screen);
