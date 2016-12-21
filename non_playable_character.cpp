@@ -92,6 +92,11 @@ std::bitset<NUMBER_OF_MAX_KEYS> *Non_Playable_Character::Get_keys()
  return &keys_to_give;
 }
 
+std::bitset<NUMBER_OF_MAX_KEYS> *Non_Playable_Character::Get_keys_to_take()
+{
+ return &keys_to_take;
+}
+
 char *Non_Playable_Character::Get_script_name()
 {
  return script_name;
@@ -156,6 +161,14 @@ void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair
       int _key_id;
       fscanf(where,"%d ",&_key_id);
       keys_to_give[_key_id]=true;
+     }
+ number_of_keys=0;
+ fscanf(where,"%d ",&number_of_keys);
+ for(int i=0;i<number_of_keys;i++)
+     {
+      int _key_id;
+      fscanf(where,"%d ",&_key_id);
+      keys_to_take[_key_id]=true;
      }
  int number_of_map_accessible_positions=0;
  fscanf(where,"%d ",&number_of_map_accessible_positions);

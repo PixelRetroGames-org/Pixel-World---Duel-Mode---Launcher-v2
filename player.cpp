@@ -141,6 +141,7 @@ void Player::Load()
      movement_speed=basic_movement_speed;
      life_steal=basic_life_steal;
      money=600;
+     keys[4]=true;
      Update();
      //Load();
      return;
@@ -744,6 +745,11 @@ void Player::Set_velocityY(int _velocityY)
  velocityY=_velocityY;
 }
 
+void Player::Set_movement_speed(int _movement_speed)
+{
+ movement_speed=_movement_speed;
+}
+
 void Player::Block()
 {
  is_blocked=true;
@@ -1274,6 +1280,17 @@ void Player::Add_key(int _key_id)
 void Player::Add_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids)
 {
  keys|=(*_keys_ids);
+}
+
+void Player::Remove_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids)
+{
+
+ for(int i=0;i<_keys_ids->size();i++)
+     {
+      keys[i]=((*_keys_ids)[i])?false:keys[i];
+      fprintf(stderr,"%d",keys[i]==true);
+     }
+ fprintf(stderr,"\n");
 }
 
 void Player::Remove_key(int _key_id)

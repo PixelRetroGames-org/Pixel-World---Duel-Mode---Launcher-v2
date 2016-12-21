@@ -133,6 +133,8 @@ void Level::Load()
     player_name[1][strlen(player_name[1])-1]=NULL;
  player[1].Set_name(player_name[1]);
  player[1].Load();
+ if(type==1)
+    player[1].Set_movement_speed(2);
 
  player[2].Set_map_position(-5,-5);
 
@@ -602,10 +604,15 @@ void Level::Move_NPC()
           int poz=rand()%(possible_directions.size());
           if(keep_direction)
              {
-              poz=keep_direction;
+              poz=non_playable_characters[i].Get_last_dir();
+              x+=dirx[poz];
+              y+=diry[poz];
              }
-          x+=dirx[possible_directions[poz]];
-          y+=diry[possible_directions[poz]];
+          else
+             {
+              x+=dirx[possible_directions[poz]];
+              y+=diry[possible_directions[poz]];
+             }
           non_playable_characters[i].Update_skin(possible_directions[poz]);
           non_playable_characters[i].Set_map_positionX(x);
           non_playable_characters[i].Set_map_positionY(y);
@@ -1073,9 +1080,11 @@ void Level::Interact_with_NPC(int _player,int _npc)
  switch(non_playable_characters[_npc].Get_type())
         {
          case 1:player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
+                player[_player].Remove_keys(non_playable_characters[_npc].Get_keys_to_take());
                 player[_player].Update();
                 break;
          case 2:player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
+                player[_player].Remove_keys(non_playable_characters[_npc].Get_keys_to_take());
                 player[_player].Update();
                 shop_screen.Start(_screen,non_playable_characters[_npc].Get_shop_name(),player[_player].Get_name());
                 strcpy(_aux,player[_player].Get_name());
@@ -1094,6 +1103,7 @@ void Level::Interact_with_NPC(int _player,int _npc)
                 if(type==2)
                    {
                     player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
+                    player[_player].Remove_keys(non_playable_characters[_npc].Get_keys_to_take());
                     player[_player].Update();
                     Start(_screen);
                     Change(_map_name);
@@ -1106,6 +1116,7 @@ void Level::Interact_with_NPC(int _player,int _npc)
                 puzzle.Load();
                 puzzle.Start(_screen);
                 player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
+                player[_player].Remove_keys(non_playable_characters[_npc].Get_keys_to_take());
                 player[_player].Update();
                 break;
         }

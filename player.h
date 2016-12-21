@@ -87,6 +87,7 @@ class Player
  void Reset_skin_image_position();
  void Set_velocityX(int _velocityX);
  void Set_velocityY(int _velocityY);
+ void Set_movement_speed(int _movement_speed);
  void Block();
  void Block_attack();
  void Unblock();
@@ -152,6 +153,7 @@ class Player
  void Add_key(int _key_id);
  void Add_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids);
  void Remove_key(int _key_id);
+ void Remove_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids);
  std::bitset<NUMBER_OF_MAX_KEYS> *Get_keys();
  ///Score
  void Increase_number_of_wins();
