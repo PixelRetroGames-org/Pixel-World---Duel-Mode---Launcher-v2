@@ -136,7 +136,9 @@ int Shop_Screen::Start(SDL_Surface *screen)
  shop.Load();
  player.Load();
  int thread_return_value=0;
+ SDL_LockMutex(loading_image_mutex);
  Loading_image_quit=true;
+ SDL_UnlockMutex(loading_image_mutex);
  SDL_WaitThread(_loading_image,&thread_return_value);
  SDL_Flip(static_screen);
  shop.Print(screen);

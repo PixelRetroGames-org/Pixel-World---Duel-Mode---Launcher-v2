@@ -11,6 +11,8 @@
 #include<ctime>
 #include<map>
 
+#include "SDL/SDL_thread.h"
+
 #ifndef NUMBER_OF_SONGS_MAX_DEFINED
 const int NUMBER_OF_SONGS_MAX=20;
 #define NUMBER_OF_SONGS_MAX_DEFINED
@@ -23,6 +25,15 @@ const int MS_PER_UPDATE=25;
 const int MUSIC_PAUSE=5000;
 
 const int NUMBER_OF_NPC_MAX=20;
+
+extern int number_of_background_music_tracks;
+extern Mix_Music *background_music[NUMBER_OF_SONGS_MAX];
+extern Timer music_time;
+extern bool paused_music;
+extern int last_track_played;
+extern SDL_Thread *level_music_overseer;
+extern bool Oversee_music_quit;
+extern SDL_mutex *music_overseer_mutex;
 
 class Level
 {
@@ -62,7 +73,7 @@ class Level
 
  public:
  Level();
- void Clear();
+ void Clear(bool terminal=false);
  ///Set
  void Set_arena_size();
  void Set_name(char *_name);
@@ -145,14 +156,6 @@ class Level
  void Setup(char *_level_name);
  void Start(SDL_Surface *_screen);
 };
-
-extern int number_of_background_music_tracks;
-extern Mix_Music *background_music[NUMBER_OF_SONGS_MAX];
-extern Timer music_time;
-extern bool paused_music;
-extern int last_track_played;
-extern SDL_Thread *level_music_overseer;
-extern bool Oversee_music_quit;
 
 int Other_player(int _player);
 

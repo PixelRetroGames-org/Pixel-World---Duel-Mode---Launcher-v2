@@ -1280,6 +1280,9 @@ void Player::Add_key(int _key_id)
 void Player::Add_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids)
 {
  keys|=(*_keys_ids);
+ for(int i=0;i<keys.size();i++)
+     fprintf(stderr,"%d",keys[i]==true);
+ fprintf(stderr,"\n");
 }
 
 void Player::Remove_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids)

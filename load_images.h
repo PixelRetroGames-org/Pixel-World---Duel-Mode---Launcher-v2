@@ -5,6 +5,7 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_ttf.h"
 #include "SDL/SDL_mixer.h"
+#include "SDL/SDL_thread.h"
 //Library
 #include "library.h"
 
@@ -73,6 +74,7 @@ void Clear_all_images();
 ///Loading Screen
 extern SDL_Surface *static_screen;
 extern bool Loading_image_quit;
+extern SDL_mutex *loading_image_mutex;
 int Loading_image(void *data);
 
 

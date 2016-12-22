@@ -13,6 +13,7 @@ Timer level_music_time;
 bool level_paused_music;
 int level_last_track_played;
 SDL_Thread *level_music_overseer=NULL;
+SDL_mutex *music_overseer_mutex;
 
 Level::Level()
 {
@@ -21,9 +22,10 @@ Level::Level()
  arena_size.w=860;
  arena_size.h=680;
  spell_effects.reserve(15);
+ music_overseer_mutex=SDL_CreateMutex();
 }
 
-void Level::Clear()
+void Level::Clear(bool terminal)
 {
  player[1].Clear(true);
  if(type==2)
@@ -41,6 +43,16 @@ void Level::Clear()
  skeptic_vision_alpha=0;
  skeptic_vision_on=false;
  SDL_SetAlpha(SKEPTIC_VISION_image,SDL_SRCALPHA,skeptic_vision_alpha);
+ if(terminal)
+    {
+     for(int i=0;i<level_number_of_background_music_tracks;i++)
+         {
+          Mix_FreeMusic(level_background_music[i]);
+         }
+     SDL_DestroyMutex(music_overseer_mutex);
+     level_last_track_played=-1;
+     terrain_type=-1;
+    }
 }
 
 void Level::Set_arena_size()
@@ -230,6 +242,7 @@ void Level::Load()
           level_background_music[i]=Mix_LoadMUS(path);
          }
      Change_music(1);
+     level_music_time.start();
     }
 
  fclose(where);
@@ -246,7 +259,9 @@ void Level::Change(char *_level_name)
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Clear();
  int thread_return_value=0;
+ SDL_LockMutex(loading_image_mutex);
  Loading_image_quit=true;
+ SDL_UnlockMutex(loading_image_mutex);
  SDL_WaitThread(_loading_image,&thread_return_value);
  SDL_Flip(static_screen);
  Setup(_level_name);
@@ -327,9 +342,11 @@ int Level::Oversee_music(void *data)
 {
  if(!MUSIC_MODULE_INIT)
     return -1;
+ SDL_LockMutex(music_overseer_mutex);
  Oversee_music_quit=false;
  while(!Oversee_music_quit)
        {
+        SDL_UnlockMutex(music_overseer_mutex);
         if(!Mix_PlayingMusic() && !level_paused_music)
            {
             level_music_time.start();
@@ -341,7 +358,9 @@ int Level::Oversee_music(void *data)
             Change_music(1);
             level_music_time.start();
            }
+        SDL_LockMutex(music_overseer_mutex);
        }
+ SDL_UnlockMutex(music_overseer_mutex);
 }
 
 bool Level::Move_player_X(int _player)
@@ -507,7 +526,9 @@ bool Level::Move_player(int _player)
                 velocityX=player[_player].Get_velocityX(),velocityY=player[_player].Get_velocityY();
                 strcpy(_map_name,name);
                 strcpy(_aux,arena.Get_map_texture_map_name(y,x));
+                SDL_LockMutex(music_overseer_mutex);
                 Oversee_music_quit=true;
+                SDL_UnlockMutex(music_overseer_mutex);
                 Change(_aux);
                 player[_player].Set_map_position(y1,x1);
                 if(type==2)
@@ -1060,16 +1081,20 @@ void Level::Interact_with_NPC(int _player,int _npc)
           player[_player].Update_skin_image_position();
          }
      }
+ int thread_return_value;
  switch(non_playable_characters[_npc].Get_type())
         {
          case 1:break;
          case 2:break;
          case 4:break;
-         default:Oversee_music_quit=true;
-                Stop_music();
-                SDL_Delay(50);
-                Mix_PlayChannel(5,DUEL_MODE_START,-1);
-                break;
+         default:SDL_LockMutex(music_overseer_mutex);
+                 Oversee_music_quit=true;
+                 SDL_UnlockMutex(music_overseer_mutex);
+                 SDL_WaitThread(level_music_overseer,&thread_return_value);
+                 SDL_Delay(50);
+                 Pause_music();
+                 Mix_PlayChannel(5,DUEL_MODE_START,-1);
+                 break;
         }
  Script_interpreter script_interpreter;
  script_interpreter.Start(_screen,non_playable_characters[_npc].Get_script_name());
@@ -1401,7 +1426,9 @@ void Level::Setup(char *_level_name)
  Load();
  //SDL_Delay(1000);
  int thread_return_value=0;
+ SDL_LockMutex(loading_image_mutex);
  Loading_image_quit=true;
+ SDL_UnlockMutex(loading_image_mutex);
  SDL_WaitThread(_loading_image,&thread_return_value);
  SDL_Flip(static_screen);
  Set_arena_size();
@@ -1421,9 +1448,9 @@ void Level::Start(SDL_Surface *screen)
 {
  bool play=true;
  int thread_return_value=0;
+ //Mix_HaltMusic();
  while(play)
        {
-        Mix_HaltMusic();
         done=false;
         _screen=screen;
         static_screen=screen;
@@ -1498,7 +1525,9 @@ void Level::Start(SDL_Surface *screen)
                   quit=true;
               }
         play=false;
+        SDL_LockMutex(music_overseer_mutex);
         Oversee_music_quit=true;
+        SDL_UnlockMutex(music_overseer_mutex);
         SDL_WaitThread(level_music_overseer,&thread_return_value);
         if(quit && type==2)
            {
@@ -1528,11 +1557,16 @@ void Level::Start(SDL_Surface *screen)
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  if(type==2)
     Clear();
+ SDL_LockMutex(loading_image_mutex);
  Loading_image_quit=true;
+ SDL_UnlockMutex(loading_image_mutex);
  SDL_WaitThread(_loading_image,&thread_return_value);
  SDL_Flip(static_screen);
+ play=false;
+ /*SDL_LockMutex(music_overseer_mutex);
  Oversee_music_quit=true;
- SDL_WaitThread(level_music_overseer,&thread_return_value);
+ SDL_UnlockMutex(music_overseer_mutex);
+ SDL_WaitThread(level_music_overseer,&thread_return_value);*/
 }
 
 ///Launch
@@ -1555,6 +1589,7 @@ void Launch_Story_Mode(Level *level,SDL_Surface *_screen)
  fclose(where);
  level->Set_screen(_screen);
  level->Set_player_map_position(player_map_position_x,player_map_position_y,1);
+ Mix_HaltMusic();
  level->Setup(level_name);
  level->Start(_screen);
  where=fopen("saves/gamemodes/Story Mode.pwsav","w");
@@ -1564,7 +1599,7 @@ void Launch_Story_Mode(Level *level,SDL_Surface *_screen)
  fprintf(where,"%d %d\n",player_map_position_x,player_map_position_y);
  fprintf(where,"%s\n%s\n",level_name,player_name);
  fclose(where);
- level->Clear();
+ level->Clear(true);
 }
 
 void Launch_Duel_Mode(Level *level,SDL_Surface *_screen)

@@ -140,7 +140,7 @@ void Script_interpreter::Start()
  strcat(path,".pwst");
  //FILE *out=fopen(script_name,"w");
  //fclose(out);
- std::FILE *in=std::fopen(path,"r");
+ FILE *in=fopen(path,"r");
  //system("cd ..");
  bool quit=false,line=false;
  char ch=NULL,command[TEXT_LENGTH_MAX]={NULL},script_line[TEXT_LENGTH_MAX]={NULL};

@@ -153,6 +153,7 @@ void Load_level_images()
 {
  if(LEVEL_IMAGES_LOADED)
     return;
+ loading_image_mutex=SDL_CreateMutex();
  LEVEL_IMAGES_LOADED=true;
  LEVEL_background_image=load_image("images/game/background.bmp");
  LEVEL_loading_image=make_it_transparent("images/game/loading.bmp");
@@ -173,6 +174,7 @@ void Load_level_images()
 
 void Clear_level_images()
 {
+ SDL_DestroyMutex(loading_image_mutex);
  SDL_FreeSurface(LEVEL_background_image);
  SDL_FreeSurface(LEVEL_loading_image);
  SDL_FreeSurface(LEVEL_WINNER);
@@ -279,17 +281,21 @@ void Clear_all_images()
 
 SDL_Surface *static_screen;
 bool Loading_image_quit=false;
+SDL_mutex *loading_image_mutex;
 int Loading_image(void *data)
 {
  int frame=0;
+ SDL_LockMutex(loading_image_mutex);
  Loading_image_quit=false;
  while(!Loading_image_quit)
        {
+        SDL_UnlockMutex(loading_image_mutex);
         apply_surface(0,0,LEVEL_background_image,static_screen);
         apply_surface(160*frame,0,((static_screen->w)-160)/2,((static_screen->h)-LEVEL_loading_image->h)/2,160,LEVEL_loading_image->h,LEVEL_loading_image,static_screen);
         SDL_Flip(static_screen);
         SDL_Delay(100);
         frame++;
         frame%=8;
+        SDL_LockMutex(loading_image_mutex);
        }
 }
