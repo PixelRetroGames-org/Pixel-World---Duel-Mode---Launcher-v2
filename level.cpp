@@ -1163,7 +1163,7 @@ void Level::Interact_with_NPC_around_player(int _player)
          continue;
       for(int j=0;j<number_of_non_playable_characters;j++)
           {
-           if(x==non_playable_characters[j].Get_map_positionX() && y==non_playable_characters[j].Get_map_positionY())
+           if(x>=non_playable_characters[j].Get_map_positionX() && x<non_playable_characters[j].Get_map_positionX()+non_playable_characters[j].Get_skinW()/40 && y>=non_playable_characters[j].Get_map_positionY() && y<non_playable_characters[j].Get_map_positionY()+non_playable_characters[j].Get_skinH()/40)
               {
                Interact_with_NPC(_player,j);
                return;
