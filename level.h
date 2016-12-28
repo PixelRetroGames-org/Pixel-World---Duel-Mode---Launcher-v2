@@ -144,6 +144,8 @@ class Level
  void Trigger_around_player_map(int _player);
  void Interact_with_NPC(int _player,int _npc);
  void Interact_with_NPC_around_player(int _player);
+ void Interact_with_clues_around_player(int _player);
+ bool Interact_with_clue(int _player,int x,int y);
  ///Artificial Intelligence
  void AI_Make_Move_player(int _player);
  void AI_Block_player(int _player);

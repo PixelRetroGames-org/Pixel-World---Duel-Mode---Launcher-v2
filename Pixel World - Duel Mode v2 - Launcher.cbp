@@ -38,6 +38,7 @@
 		<Unit filename="big_background.h" />
 		<Unit filename="buff.cpp" />
 		<Unit filename="buff.h" />
+		<Unit filename="clue_map_texture.cpp" />
 		<Unit filename="clue_map_texture.h" />
 		<Unit filename="darkness.cpp" />
 		<Unit filename="darkness.h" />

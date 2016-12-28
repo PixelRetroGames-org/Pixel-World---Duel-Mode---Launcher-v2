@@ -899,6 +899,7 @@ void Level::Handle_Event(int _player)
         {
          Trigger_around_player_map(_player);
          Interact_with_NPC_around_player(_player);
+         Interact_with_clues_around_player(_player);
          player_time_blocked[_player]=10;
         }
      if((keystates[player_keys[keys][11]] || keystates[player_keys[Other_player(keys)][11]]) && !player[_player].Is_blocked())
@@ -1170,6 +1171,39 @@ void Level::Interact_with_NPC_around_player(int _player)
               }
           }
      }
+}
+
+void Level::Interact_with_clues_around_player(int _player)
+{
+ int dirx[]={1,0,-1,0};
+ int diry[]={0,1,0,-1};
+ int x,y;
+ for(int i=0;i<4;i++)
+     {
+      x=player[_player].Get_map_positionX()+dirx[i];
+      y=player[_player].Get_map_positionY()+diry[i];
+      if(x<0 || x>=arena.Get_number_of_columns() || y<0 || y>=arena.Get_number_of_lines())
+         continue;
+      if(Interact_with_clue(_player,y,x))
+         return;
+     }
+}
+
+bool Level::Interact_with_clue(int _player,int x,int y)
+{
+ if(skeptic_vision_on && arena.Get_Special_Clue_map_texture(x,y)->Get_id()!=0)
+    {
+     player[_player].Add_keys(arena.Get_Special_Clue_map_texture(x,y)->Get_keys());
+     arena.Get_Special_Clue_map_texture(x,y)->Start_action(_screen);
+     reset_lag=true;
+     return true;
+    }
+ if(((arena.Get_Clue_map_texture(x,y))->Get_id())==0)
+    return false;
+ player[_player].Add_keys(arena.Get_Clue_map_texture(x,y)->Get_keys());
+ arena.Get_Clue_map_texture(x,y)->Start_action(_screen);
+ reset_lag=true;
+ return true;
 }
 
 //Artificial Intelligence

@@ -199,8 +199,8 @@ void Map::Decrease_clues_map_texture_id_remaining_time(bool before_player,bool l
      {
       if(!map_textures_ids[it->first][it->second].Is_done())
          {
-          clues_map_textures_ids[it->first][it->second].Decrease_remaining_duration();
-          clues_map_textures_ids[it->first][it->second].Update_texture_frame(map_textures[clues_map_textures_ids[it->first][it->second].Get_texture_id()].Get_number_of_frames());
+          clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Decrease_remaining_duration();
+          clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Update_texture_frame(map_textures[clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Get_texture_id()].Get_number_of_frames());
          }
      }
 }
@@ -220,8 +220,8 @@ void Map::Decrease_special_clues_map_texture_id_remaining_time()
      {
       if(!map_textures_ids[it->first][it->second].Is_done())
          {
-          special_clues_map_textures_ids[it->first][it->second].Decrease_remaining_duration();
-          special_clues_map_textures_ids[it->first][it->second].Update_texture_frame(map_textures[special_clues_map_textures_ids[it->first][it->second].Get_texture_id()].Get_number_of_frames());
+          special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Decrease_remaining_duration();
+          special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Update_texture_frame(map_textures[special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Get_texture_id()].Get_number_of_frames());
          }
      }
 }
@@ -388,7 +388,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
       if(!locked && clues_map_textures_ids[x][y].Get_id()==0)
          {
           clues_map_textures_ids[x][y].Load(id);
-          clues_map_textures_ids[x][y].Get_all_textures_ids(textures_ids);
+          clues_map_textures_ids[x][y].Get_interactive_map_texture()->Get_all_textures_ids(textures_ids);
           for(std::vector<Map_texture_id>::iterator it=textures_ids.begin();it!=textures_ids.end();it++)
               {
                if(map_textures.count(it->Get_id())==0 && it->Get_id()!=0)
@@ -397,7 +397,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
                    map_textures[it->Get_id()].Load();
                   }
               }
-          fast_access_clues_map_textures[map_textures[clues_map_textures_ids[x][y].Get_texture_id()].Get_print_before_player()][map_textures[clues_map_textures_ids[x][y].Get_texture_id()].Is_light()].push_back(std::make_pair(x,y));
+          fast_access_clues_map_textures[map_textures[clues_map_textures_ids[x][y].Get_interactive_map_texture()->Get_texture_id()].Get_print_before_player()][map_textures[clues_map_textures_ids[x][y].Get_interactive_map_texture()->Get_texture_id()].Is_light()].push_back(std::make_pair(x,y));
          }
      }
  int number_of_special_clues=0;
@@ -416,7 +416,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
       if(!locked && special_clues_map_textures_ids[x][y].Get_id()==0)
          {
           special_clues_map_textures_ids[x][y].Load(id);
-          special_clues_map_textures_ids[x][y].Get_all_textures_ids(textures_ids);
+          special_clues_map_textures_ids[x][y].Get_interactive_map_texture()->Get_all_textures_ids(textures_ids);
           for(std::vector<Map_texture_id>::iterator it=textures_ids.begin();it!=textures_ids.end();it++)
               {
                if(map_textures.count(it->Get_id())==0 && it->Get_id()!=0)
@@ -504,8 +504,8 @@ void Map::Print_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface 
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_clues_map_textures[before_player][lights].begin();it!=fast_access_clues_map_textures[before_player][lights].end();it++)
      {
-      if(!clues_map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/40 && it->second<map_x+MAP_IMAGE_HEIGHT/40)
-         Print_image((it->second-map_x)*40+screen_x,(it->first-map_y)*40+screen_y,_screen,&clues_map_textures_ids[it->first][it->second]);
+      if(!clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/40 && it->second<map_x+MAP_IMAGE_HEIGHT/40)
+         Print_image((it->second-map_x)*40+screen_x,(it->first-map_y)*40+screen_y,_screen,clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture());
      }
 }
 
@@ -513,7 +513,17 @@ void Map::Print_Special_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_special_clues_map_textures.begin();it!=fast_access_special_clues_map_textures.end();it++)
      {
-      if(!special_clues_map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/40 && it->second<map_x+MAP_IMAGE_HEIGHT/40)
-         Print_image((it->second-map_x)*40+screen_x,(it->first-map_y)*40+screen_y,_screen,&special_clues_map_textures_ids[it->first][it->second]);
+      if(!special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/40 && it->second<map_x+MAP_IMAGE_HEIGHT/40)
+         Print_image((it->second-map_x)*40+screen_x,(it->first-map_y)*40+screen_y,_screen,special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture());
      }
+}
+
+Clue_map_texture *Map::Get_Clue_map_texture(int x,int y)
+{
+ return &clues_map_textures_ids[x][y];
+}
+
+Clue_map_texture *Map::Get_Special_Clue_map_texture(int x,int y)
+{
+ return &special_clues_map_textures_ids[x][y];
 }

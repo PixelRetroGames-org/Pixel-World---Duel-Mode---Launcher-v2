@@ -3,6 +3,7 @@
 
 #include "map_texture.h"
 #include "interactive_map_texture.h"
+#include "clue_map_texture.h"
 #include<vector>
 #include<bitset>
 #include<map>
@@ -18,7 +19,7 @@ class Map
  std::map<int,Texture> map_textures;
  Interactive_map_texture map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX],background_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX];
  std::vector<std::pair<int,int> > fast_access_map_textures_animations[2][2],fast_access_background_map_textures_animations[2][2];
- Interactive_map_texture clues_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX],special_clues_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX];
+ Clue_map_texture clues_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX],special_clues_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX];
  std::vector<std::pair<int,int> > fast_access_clues_map_textures[2][2],fast_access_special_clues_map_textures;
  SDL_Surface *map_image[2][2],*background_map_image[2][2];
  int number_of_updates,current_number_of_updates;
@@ -67,6 +68,8 @@ class Map
  ///Clues
  void Print_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights=false);
  void Print_Special_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen);
+ Clue_map_texture *Get_Clue_map_texture(int x,int y);
+ Clue_map_texture *Get_Special_Clue_map_texture(int x,int y);
 
  void Trigger(int x,int y);
 };

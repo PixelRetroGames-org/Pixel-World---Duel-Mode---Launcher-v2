@@ -3,18 +3,29 @@
 
 #include "library.h"
 #include "interactive_map_texture.h"
+#include<bitset>
 
-class Clue_map_position
+class Clue_map_texture
 {
  private:
+ int id;
  Interactive_map_texture interactive_map_texture;
  int type=0;
- char action_name[TEXT_LENGTH_MAX];
-
+ char script_name[TEXT_LENGTH_MAX];
+ std::bitset<NUMBER_OF_MAX_KEYS> keys_to_give;
 
  public:
+ void Clear();
+ void Load();
+ void Load(int _id);
+ void Set_id(int _id);
  Interactive_map_texture *Get_interactive_map_texture();
+ std::bitset<NUMBER_OF_MAX_KEYS> *Get_keys();
+ int Get_id();
+ int Get_type();
+ char *Get_script_name();
+ void Start_action(SDL_Surface *_screen);
 
-}
+};
 
 #endif // CLUE_MAP_POSITION_H
