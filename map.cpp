@@ -80,7 +80,10 @@ bool Map::Is_obstacle(int x,int y)
 {
  if(y>=number_of_columns || x>=number_of_lines)
     return false;
- return map_textures[map_textures_ids[x][y].Get_texture_id()].Is_obstacle();
+ if((clues_map_textures_ids[x][y].Get_id()!=0 && map_textures[clues_map_textures_ids[x][y].Get_interactive_map_texture()->Get_texture_id()].Is_obstacle()) ||
+    (special_clues_map_textures_ids[x][y].Get_id()!=0 && map_textures[special_clues_map_textures_ids[x][y].Get_interactive_map_texture()->Get_texture_id()].Is_obstacle()))
+    return true;
+ return (map_textures[map_textures_ids[x][y].Get_texture_id()].Is_obstacle());
 }
 
 bool Map::Is_obstacle_pixel(int x,int y)
@@ -402,7 +405,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
      }
  int number_of_special_clues=0;
  fscanf(where,"%d ",&number_of_special_clues);
- for(int i=0;i<number_of_clues;i++)
+ for(int i=0;i<number_of_special_clues;i++)
      {
       int id,x,y,n_keys;
       fscanf(where,"%d %d %d %d ",&id,&x,&y,&n_keys);

@@ -1178,6 +1178,11 @@ void Level::Interact_with_clues_around_player(int _player)
  int dirx[]={1,0,-1,0};
  int diry[]={0,1,0,-1};
  int x,y;
+ x=player[_player].Get_map_positionX();
+ y=player[_player].Get_map_positionY();
+ if(!(x<0 || x>=arena.Get_number_of_columns() || y<0 || y>=arena.Get_number_of_lines()))
+    if(Interact_with_clue(_player,y,x))
+       return;
  for(int i=0;i<4;i++)
      {
       x=player[_player].Get_map_positionX()+dirx[i];
@@ -1191,7 +1196,7 @@ void Level::Interact_with_clues_around_player(int _player)
 
 bool Level::Interact_with_clue(int _player,int x,int y)
 {
- if(skeptic_vision_on && arena.Get_Special_Clue_map_texture(x,y)->Get_id()!=0)
+ if(skeptic_vision_on && arena.Get_Special_Clue_map_texture(x,y)->Get_id()!=0 && arena.Get_Special_Clue_map_texture(x,y)->Get_type()!=0)
     {
      player[_player].Add_keys(arena.Get_Special_Clue_map_texture(x,y)->Get_keys());
      arena.Get_Special_Clue_map_texture(x,y)->Start_action(_screen);
