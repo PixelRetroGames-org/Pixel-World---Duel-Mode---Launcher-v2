@@ -11,7 +11,7 @@ class Non_Playable_Character
  char name[TEXT_LENGTH_MAX]={NULL};
  int map_positionX=0,map_positionY=0;
  int type=0;
- char script_name[TEXT_LENGTH_MAX]={NULL},shop_name[TEXT_LENGTH_MAX]={NULL},duel_mode_level_name[TEXT_LENGTH_MAX]={NULL},puzzle_name[TEXT_LENGTH_MAX]={NULL};
+ char script_name[TEXT_LENGTH_MAX]={NULL},afterscript_name[TEXT_LENGTH_MAX]={NULL},shop_name[TEXT_LENGTH_MAX]={NULL},duel_mode_level_name[TEXT_LENGTH_MAX]={NULL},puzzle_name[TEXT_LENGTH_MAX]={NULL};
  std::vector<std::pair<int,int> > map_accessible_positions;
  int chance_to_move=0;
  SDL_Surface *skin_image=NULL;
@@ -19,6 +19,7 @@ class Non_Playable_Character
  std::bitset<NUMBER_OF_MAX_KEYS> keys_to_give,keys_to_take;
  bool is_blocked=false;
  int last_dir=0;
+ int range=0;
 
  public:
  void Clear();
@@ -38,16 +39,18 @@ class Non_Playable_Character
  std::bitset<NUMBER_OF_MAX_KEYS> *Get_keys();
  std::bitset<NUMBER_OF_MAX_KEYS> *Get_keys_to_take();
  char *Get_script_name();
+ char *Get_afterscript_name();
  char *Get_shop_name();
  char *Get_duel_mode_level_name();
  char *Get_puzzle_name();
+ int Get_range();
  void Update_skin(int dir);
  void Block();
  void Unblock();
  void Load(std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair<int,int> player_pos);
  void Load(char *_name,std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair<int,int> player_pos);
  //void Interact(char *player_name);
- void Print_skin(int x,int y,int mapX,int mapY,SDL_Surface *_screen);
+ void Print_skin(int x,int y,int mapX,int mapY,int mapW,int mapH,SDL_Surface *_screen);
 };
 
 #endif // NPC_H

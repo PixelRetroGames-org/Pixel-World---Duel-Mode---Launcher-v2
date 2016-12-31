@@ -3,7 +3,7 @@
 
 void Clue_map_texture::Clear()
 {
- id=0;
+ id=type=0;
  interactive_map_texture.Clear();
 }
 
@@ -36,6 +36,13 @@ void Clue_map_texture::Load()
       fscanf(where,"%d ",&key_id);
       keys_to_give[key_id]=true;
      }
+ fscanf(where,"%d ",&number_of_keys);
+ for(int i=0;i<number_of_keys;i++)
+     {
+      int key_id;
+      fscanf(where,"%d ",&key_id);
+      keys_to_take[key_id]=true;
+     }
  fclose(where);
 }
 
@@ -58,6 +65,11 @@ Interactive_map_texture *Clue_map_texture::Get_interactive_map_texture()
 std::bitset<NUMBER_OF_MAX_KEYS> *Clue_map_texture::Get_keys()
 {
  return &keys_to_give;
+}
+
+std::bitset<NUMBER_OF_MAX_KEYS> *Clue_map_texture::Get_keys_to_take()
+{
+ return &keys_to_take;
 }
 
 int Clue_map_texture::Get_id()

@@ -144,6 +144,7 @@ class Level
  void Trigger_around_player_map(int _player);
  void Interact_with_NPC(int _player,int _npc);
  void Interact_with_NPC_around_player(int _player);
+ void Interaction_NPC_player(int _player);
  void Interact_with_clues_around_player(int _player);
  bool Interact_with_clue(int _player,int x,int y);
  ///Artificial Intelligence
@@ -156,7 +157,8 @@ class Level
  bool Duel_Mode_Finish_Screen(int _player_winner);
  void Print_Duel_Mode_Finish_Screen(int _player_winner);
  void Setup(char *_level_name);
- void Start(SDL_Surface *_screen);
+ void Start(SDL_Surface *_screen,bool cleanup=true);
+ void Cleanup();
 };
 
 int Other_player(int _player);

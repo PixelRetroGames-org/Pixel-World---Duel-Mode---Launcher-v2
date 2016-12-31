@@ -24,6 +24,7 @@ class Puzzle
  void Load();
  bool Start(SDL_Surface *_screen);
  bool Validate_Riddle();
+ void Print_Verdict(bool verdict,SDL_Surface *_screen);
  bool Start_Riddle(SDL_Surface *_screen);
 };
 

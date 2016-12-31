@@ -148,6 +148,7 @@ void Script_interpreter::Start()
  SDL_Event event;
  buffer=make_it_transparent("script/images/empty.bmp");
  bufferW=0;
+ SDL_Delay(100);
  while(SDL_PollEvent(&event));
  while(!quit)
        {

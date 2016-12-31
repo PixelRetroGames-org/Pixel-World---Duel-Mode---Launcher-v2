@@ -92,6 +92,24 @@ bool Puzzle::Validate_Riddle()
  return false;
 }
 
+void Puzzle::Print_Verdict(bool verdict,SDL_Surface *_screen)
+{
+ TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",50);
+ SDL_Color right_color={0,205,0},wrong_color={207,0,0};
+ SDL_Surface *right_message=TTF_RenderText_Solid(font,"Right!",right_color);
+ SDL_Surface *wrong_message=TTF_RenderText_Solid(font,"Wrong!",wrong_color);
+ TTF_CloseFont(font);
+ apply_surface(0,0,background_image,_screen);
+ if(verdict==false)
+    apply_surface((RESOLUTION_X-wrong_message->w)/2,300,wrong_message,_screen);
+ else
+    apply_surface((RESOLUTION_X-right_message->w)/2,300,right_message,_screen);
+ SDL_Flip(_screen);
+ SDL_Delay(300);
+ SDL_FreeSurface(right_message);
+ SDL_FreeSurface(wrong_message);
+}
+
 const int PUZZLE_TEXT_LENGTH_MAX=20,BACKSPACE_POS=2*('z'-'a')+2,COOLDOWN_TIME=100;
 
 int Get_Key(char ch)
@@ -148,8 +166,23 @@ bool Puzzle::Start_Riddle(SDL_Surface *_screen)
                 keys_cooldown[Get_Key((char)event.key.keysym.unicode)]=COOLDOWN_TIME;
                }
             if(event.key.keysym.sym==SDLK_RETURN)
-               if(Validate_Riddle())
-                  return true;
+               {
+                if(Validate_Riddle())
+                   {
+                    Print_Verdict(true,_screen);
+                    TTF_CloseFont(font);
+                    SDL_FreeSurface(text_typed_background_image);
+                    SDL_EnableUNICODE(SDL_DISABLE);
+                    SDL_EnableKeyRepeat(0,0);
+                    return true;
+                   }
+                Print_Verdict(false,_screen);
+                TTF_CloseFont(font);
+                SDL_FreeSurface(text_typed_background_image);
+                SDL_EnableUNICODE(SDL_DISABLE);
+                SDL_EnableKeyRepeat(0,0);
+                return false;
+               }
             if(text_typed_modified)
                {
                 SDL_FreeSurface(text_typed_image);
@@ -176,11 +209,8 @@ bool Puzzle::Start_Riddle(SDL_Surface *_screen)
        }
  TTF_CloseFont(font);
  SDL_FreeSurface(text_typed_background_image);
- SDL_FreeSurface(text_typed_image);
- SDL_FreeSurface(title_image);
- SDL_FreeSurface(text_image);
- SDL_FreeSurface(background_image);
  SDL_EnableUNICODE(SDL_DISABLE);
  SDL_EnableKeyRepeat(0,0);
+ return false;
 }
 

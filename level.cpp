@@ -559,7 +559,10 @@ bool Level::Move_player(int _player)
 void Level::Move_all_players()
 {
  if(type==1)
-    Move_NPC();
+    {
+     Move_NPC();
+     Interaction_NPC_player(1);
+    }
  bool first=Move_player(1),second=false;
  if(type==2)
     second=Move_player(2);
@@ -775,7 +778,7 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
 
  for(int i=0;i<number_of_non_playable_characters;i++)
      {
-      non_playable_characters[i].Print_skin(x,y,mapX,mapY,_screen);
+      non_playable_characters[i].Print_skin(x,y,mapX,mapY,arena_size.w,arena_size.h,_screen);
      }
 
  arena.Print_background(x,y,mapX,mapY,_screen,false);
@@ -805,7 +808,7 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
  for(int i=0;i<number_of_non_playable_characters;i++)
      {
       if(Non_Playable_Character_is_on_light(i))
-         non_playable_characters[i].Print_skin(x,y,mapX,mapY,_screen);
+         non_playable_characters[i].Print_skin(x,y,mapX,mapY,arena_size.w,arena_size.h,_screen);
      }
  arena.Print_background(x,y,mapX,mapY,_screen,false,true);
  arena.Print_background_Animations(x,y,mapX,mapY,_screen,false,true);
@@ -903,7 +906,13 @@ void Level::Handle_Event(int _player)
          player_time_blocked[_player]=10;
         }
      if((keystates[player_keys[keys][11]] || keystates[player_keys[Other_player(keys)][11]]) && !player[_player].Is_blocked())
-        skeptic_vision_on=!skeptic_vision_on,player_time_blocked[_player]=10,player[_player].Block();
+        {
+         skeptic_vision_on=!skeptic_vision_on,player_time_blocked[_player]=10,player[_player].Block();
+         if(skeptic_vision_on)
+            player[_player].Set_movement_speed(0);
+         else
+            player[_player].Set_movement_speed(2);
+        }
     }
  else
     {
@@ -1101,7 +1110,8 @@ void Level::Interact_with_NPC(int _player,int _npc)
  script_interpreter.Start(_screen,non_playable_characters[_npc].Get_script_name());
  Shop_Screen shop_screen;
  int x=player[_player].Get_map_positionX(),y=player[_player].Get_map_positionY();
- char _map_name[TEXT_LENGTH_MAX]={NULL},_aux[TEXT_LENGTH_MAX]={NULL};
+ char _map_name[TEXT_LENGTH_MAX]={NULL},_aux[TEXT_LENGTH_MAX]={NULL},afterscript[TEXT_LENGTH_MAX]={NULL};
+ strcpy(afterscript,non_playable_characters[_npc].Get_afterscript_name());
  Puzzle puzzle;
  switch(non_playable_characters[_npc].Get_type())
         {
@@ -1120,6 +1130,7 @@ void Level::Interact_with_NPC(int _player,int _npc)
                 player[_player].Set_map_position(x,y);
                 SDL_Delay(100);
                 SDL_PumpEvents();
+                script_interpreter.Start(_screen,afterscript);
                 //shop_screen.Reset();
                 break;
          case 3:strcpy(_map_name,name);
@@ -1128,22 +1139,27 @@ void Level::Interact_with_NPC(int _player,int _npc)
                 Mix_HaltChannel(5);
                 if(type==2)
                    {
+                    Start(_screen,false);
                     player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
                     player[_player].Remove_keys(non_playable_characters[_npc].Get_keys_to_take());
                     player[_player].Update();
-                    Start(_screen);
+                    Cleanup();
                     Change(_map_name);
                     player[_player].Set_map_position(x,y);
                     Change_music(1);
+                    script_interpreter.Start(_screen,afterscript);
                    }
                 level_music_overseer=SDL_CreateThread(Oversee_music,NULL);
                 break;
          case 4:puzzle.Set_name(non_playable_characters[_npc].Get_puzzle_name());
                 puzzle.Load();
-                puzzle.Start(_screen);
-                player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
-                player[_player].Remove_keys(non_playable_characters[_npc].Get_keys_to_take());
-                player[_player].Update();
+                if(puzzle.Start(_screen))
+                   {
+                    player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
+                    player[_player].Remove_keys(non_playable_characters[_npc].Get_keys_to_take());
+                    player[_player].Update();
+                    script_interpreter.Start(_screen,afterscript);
+                   }
                 break;
         }
  SDL_Delay(100);
@@ -1173,6 +1189,20 @@ void Level::Interact_with_NPC_around_player(int _player)
      }
 }
 
+void Level::Interaction_NPC_player(int _player)
+{
+ for(int i=0;i<number_of_non_playable_characters;i++)
+     {
+      if(non_playable_characters[i].Get_type()==3 &&
+         std::max(std::abs(player[_player].Get_map_positionX()-non_playable_characters[i].Get_map_positionX()),
+                  std::abs(player[_player].Get_map_positionY()-non_playable_characters[i].Get_map_positionY()))<=non_playable_characters[i].Get_range())
+         {
+          Interact_with_NPC(_player,i);
+          return;
+         }
+     }
+}
+
 void Level::Interact_with_clues_around_player(int _player)
 {
  int dirx[]={1,0,-1,0};
@@ -1199,6 +1229,8 @@ bool Level::Interact_with_clue(int _player,int x,int y)
  if(skeptic_vision_on && arena.Get_Special_Clue_map_texture(x,y)->Get_id()!=0 && arena.Get_Special_Clue_map_texture(x,y)->Get_type()!=0)
     {
      player[_player].Add_keys(arena.Get_Special_Clue_map_texture(x,y)->Get_keys());
+     player[_player].Remove_keys(arena.Get_Special_Clue_map_texture(x,y)->Get_keys_to_take());
+     player[_player].Update();
      arena.Get_Special_Clue_map_texture(x,y)->Start_action(_screen);
      reset_lag=true;
      return true;
@@ -1206,6 +1238,8 @@ bool Level::Interact_with_clue(int _player,int x,int y)
  if(((arena.Get_Clue_map_texture(x,y))->Get_id())==0)
     return false;
  player[_player].Add_keys(arena.Get_Clue_map_texture(x,y)->Get_keys());
+ player[_player].Remove_keys(arena.Get_Clue_map_texture(x,y)->Get_keys_to_take());
+ player[_player].Update();
  arena.Get_Clue_map_texture(x,y)->Start_action(_screen);
  reset_lag=true;
  return true;
@@ -1238,6 +1272,27 @@ void Level::AI_Make_Move_player(int _player)
                  //player_time_blocked[_player]=10;
                  if(player[_player].Can_attack())
                     Player_basic_attack(_player);
+                 break;
+                }
+         ///Werewolf
+         case 2:
+                {
+                 player[_player].Set_velocityX((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())>0?1:-1);
+                 player[_player].Set_velocityY((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())>0?1:-1);
+                 if((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==0)
+                    player[_player].Set_velocityX(0);
+                 if((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==0)
+                    player[_player].Set_velocityY(0);
+                 if((std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==1 &&
+                    std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==0) ||
+                    (std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==0 &&
+                    std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==1))
+                    player[_player].Set_velocityX(0),player[_player].Set_velocityY(0);
+                 //player[_player].Block();
+                 //player_time_blocked[_player]=10;
+                 if(player[_player].Can_attack())
+                    Player_basic_attack(_player);
+                 Cast_Spell(_player,0);
                  break;
                 }
         }
@@ -1306,6 +1361,7 @@ void Level::Pause_Menu()
 
 bool Level::Duel_Mode_Finish_Screen(int _player_winner)
 {
+ winner=_player_winner;
  player[_player_winner].Increase_number_of_wins();
  bool quit=false;
  Print_Duel_Mode_Finish_Screen(_player_winner);
@@ -1320,7 +1376,9 @@ bool Level::Duel_Mode_Finish_Screen(int _player_winner)
         SDL_Delay(100);
        }
  quit=false;
- if(event.key.keysym.sym==SDLK_ESCAPE || player_type[2]!=0)
+ if(event.key.keysym.sym==SDLK_ESCAPE && (player_type[2]!=0 && winner!=1))
+    exit(0);
+ if(event.key.keysym.sym==SDLK_ESCAPE || (player_type[2]!=0 && winner==1))
     return false;
  return true;
 }
@@ -1434,15 +1492,15 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
  if(player_type[2]==0)
     player[2].Set_experience(player[2].Get_experience()+10*player[1].Get_experience()/100+10+((_player_winner==1)?20:0));
 
- if(player_type[2]==0)
+ if(player_type[2]!=0 && winner==1)
     {
-     player_money=TTF_RenderText_Solid(font,"Press ESC to exit or any other key to rematch!",{255,255,255});
+     player_money=TTF_RenderText_Solid(font,"Press any key to continue!",{255,255,255});
      apply_surface((_screen->w-player_money->w)/2,_screen->h/2+(_screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,_screen);
      SDL_FreeSurface(player_money);
     }
  else
     {
-     player_money=TTF_RenderText_Solid(font,"Press any key to continue!",{255,255,255});
+     player_money=TTF_RenderText_Solid(font,"Press ESC to exit or any other key to rematch!",{255,255,255});
      apply_surface((_screen->w-player_money->w)/2,_screen->h/2+(_screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,_screen);
      SDL_FreeSurface(player_money);
     }
@@ -1483,8 +1541,9 @@ void Level::Setup(char *_level_name)
  Set_player_LAST_POSX(2,(RESOLUTION_X+(RESOLUTION_X-840)/2+840)/2+100);
 }
 
-void Level::Start(SDL_Surface *screen)
+void Level::Start(SDL_Surface *screen,bool cleanup)
 {
+ winner=0;
  bool play=true;
  int thread_return_value=0;
  //Mix_HaltMusic();
@@ -1570,7 +1629,7 @@ void Level::Start(SDL_Surface *screen)
         SDL_WaitThread(level_music_overseer,&thread_return_value);
         if(quit && type==2)
            {
-            Pause_music();
+            Stop_music();
             Mix_PlayChannel(4,DUEL_MODE_hit[1],0);
             if(player[1].Get_hp()<=0 && player[2].Get_hp()<=0)
                play=Duel_Mode_Finish_Screen(winner=0);
@@ -1592,20 +1651,26 @@ void Level::Start(SDL_Surface *screen)
         effects.Set_name("Empty");
         effects.Load(player[1].Get_keys());
        }
- SDL_Thread *_loading_image=NULL;
- _loading_image=SDL_CreateThread(Loading_image,NULL);
- if(type==2)
-    Clear();
- SDL_LockMutex(loading_image_mutex);
- Loading_image_quit=true;
- SDL_UnlockMutex(loading_image_mutex);
- SDL_WaitThread(_loading_image,&thread_return_value);
- SDL_Flip(static_screen);
+ if(cleanup)
+    Cleanup();
  play=false;
  /*SDL_LockMutex(music_overseer_mutex);
  Oversee_music_quit=true;
  SDL_UnlockMutex(music_overseer_mutex);
  SDL_WaitThread(level_music_overseer,&thread_return_value);*/
+}
+
+void Level::Cleanup()
+{
+ SDL_Thread *_loading_image=NULL;
+ _loading_image=SDL_CreateThread(Loading_image,NULL);
+ Clear();
+ SDL_LockMutex(loading_image_mutex);
+ Loading_image_quit=true;
+ SDL_UnlockMutex(loading_image_mutex);
+ int thread_return_value=0;
+ SDL_WaitThread(_loading_image,&thread_return_value);
+ SDL_Flip(static_screen);
 }
 
 ///Launch
@@ -1630,7 +1695,7 @@ void Launch_Story_Mode(Level *level,SDL_Surface *_screen)
  level->Set_player_map_position(player_map_position_x,player_map_position_y,1);
  Mix_HaltMusic();
  level->Setup(level_name);
- level->Start(_screen);
+ level->Start(_screen,false);
  where=fopen("saves/gamemodes/Story Mode.pwsav","w");
  player_map_position_x=level->Get_player_map_position_x(1);
  player_map_position_y=level->Get_player_map_position_y(1);
@@ -1638,7 +1703,7 @@ void Launch_Story_Mode(Level *level,SDL_Surface *_screen)
  fprintf(where,"%d %d\n",player_map_position_x,player_map_position_y);
  fprintf(where,"%s\n%s\n",level_name,player_name);
  fclose(where);
- level->Clear(true);
+ level->Cleanup();
 }
 
 void Launch_Duel_Mode(Level *level,SDL_Surface *_screen)

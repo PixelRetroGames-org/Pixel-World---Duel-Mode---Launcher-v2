@@ -7,6 +7,7 @@ void Non_Playable_Character::Clear()
  map_positionY=0;
  type=0;
  script_name[0]=NULL;
+ afterscript_name[0]=NULL;
  shop_name[0]=NULL;
  duel_mode_level_name[0]=NULL;
  puzzle_name[0]=NULL;
@@ -102,6 +103,11 @@ char *Non_Playable_Character::Get_script_name()
  return script_name;
 }
 
+char *Non_Playable_Character::Get_afterscript_name()
+{
+ return afterscript_name;
+}
+
 char *Non_Playable_Character::Get_shop_name()
 {
  return shop_name;
@@ -115,6 +121,11 @@ char *Non_Playable_Character::Get_duel_mode_level_name()
 char *Non_Playable_Character::Get_puzzle_name()
 {
  return puzzle_name;
+}
+
+int Non_Playable_Character::Get_range()
+{
+ return range;
 }
 
 void Non_Playable_Character::Update_skin(int dir)
@@ -203,14 +214,24 @@ void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair
          case 2:fgets(shop_name,sizeof shop_name,where);
                 if(shop_name[strlen(shop_name)-1]=='\n')
                    shop_name[strlen(shop_name)-1]=NULL;
+                fgets(afterscript_name,sizeof afterscript_name,where);
+                if(afterscript_name[strlen(afterscript_name)-1]=='\n')
+                   afterscript_name[strlen(afterscript_name)-1]=NULL;
                 break;
          case 3:fgets(duel_mode_level_name,sizeof duel_mode_level_name,where);
                 if(duel_mode_level_name[strlen(duel_mode_level_name)-1]=='\n')
                    duel_mode_level_name[strlen(duel_mode_level_name)-1]=NULL;
+                fscanf(where,"%d ",&range);
+                fgets(afterscript_name,sizeof afterscript_name,where);
+                if(afterscript_name[strlen(afterscript_name)-1]=='\n')
+                   afterscript_name[strlen(afterscript_name)-1]=NULL;
                 break;
          case 4:fgets(puzzle_name,sizeof puzzle_name,where);
                 if(puzzle_name[strlen(puzzle_name)-1]=='\n')
                    puzzle_name[strlen(puzzle_name)-1]=NULL;
+                fgets(afterscript_name,sizeof afterscript_name,where);
+                if(afterscript_name[strlen(afterscript_name)-1]=='\n')
+                   afterscript_name[strlen(afterscript_name)-1]=NULL;
                 break;
         }
  fclose(where);
@@ -224,7 +245,23 @@ void Non_Playable_Character::Load(char *_name,std::bitset<NUMBER_OF_MAX_KEYS> *k
 
 //void Non_Playable_Character::Interact(char *player_name)
 
-void Non_Playable_Character::Print_skin(int x,int y,int mapX,int mapY,SDL_Surface *_screen)
+void Non_Playable_Character::Print_skin(int x,int y,int mapX,int mapY,int mapW,int mapH,SDL_Surface *_screen)
 {
- apply_surface(skin_image_position.x,skin_image_position.y,x+(map_positionX-mapX)*40,y+(map_positionY-mapY)*40,skin_image_position.w,skin_image_position.h,skin_image,_screen);
+ if(type==0)
+    return;
+ if(Get_map_positionX()-mapX>=mapW/40 ||
+    Get_map_positionY()-mapY>=mapH/40 ||
+    Get_map_positionX()-mapX+Get_skinW()/40-1<0 ||
+    Get_map_positionY()-mapY+Get_skinH()/40-1<0)
+    return;
+ SDL_Rect _skin_image_position=skin_image_position;
+ if(Get_map_positionY()-mapY+Get_skinH()/40-1>=mapH/40 && Get_map_positionY()-mapY<mapH/40)
+    _skin_image_position.h=(mapH/40-(Get_map_positionY()-mapY))*40;
+ if(Get_map_positionY()-mapY<0 && Get_map_positionY()-mapY+Get_skinH()/40-1>=0)
+    _skin_image_position.h=(Get_skinH()/40-(-Get_map_positionY()+mapY))*40,_skin_image_position.y=(0-(Get_map_positionY()-mapY))*40;
+ if(Get_map_positionX()-mapX+Get_skinW()/40-1>=mapW/40 && Get_map_positionX()-mapX<mapW/40)
+    _skin_image_position.w=(mapW/40-(Get_map_positionX()-mapX))*40;
+ if(Get_map_positionX()-mapX<0 && Get_map_positionX()-mapX+Get_skinW()/40-1>=0)
+    _skin_image_position.w=(Get_skinW()/40-(-Get_map_positionX()+mapX))*40,_skin_image_position.x=(0-(Get_map_positionX()-mapX))*40;
+ apply_surface(_skin_image_position.x,_skin_image_position.y,-skin_image_position.x+_skin_image_position.x+x+(map_positionX-mapX)*40,-skin_image_position.y+_skin_image_position.y+y+(map_positionY-mapY)*40,_skin_image_position.w,_skin_image_position.h,skin_image,_screen);
 }
