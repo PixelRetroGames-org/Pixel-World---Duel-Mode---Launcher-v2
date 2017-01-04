@@ -20,6 +20,7 @@ Player::Player()
  name[0]=NULL;
  memset(number_of_items_bought,0,sizeof number_of_items_bought);
  keys.reset();
+ progress.reset();
 }
 
 void Player::Clear(bool _delete)
@@ -60,6 +61,7 @@ void Player::Clear(bool _delete)
      spells[i].Clear(_delete);
  map_positionX=map_positionY=-10;
  keys.reset();
+ progress.reset();
 }
 
 void Player::Set_name(char *_name)
@@ -141,7 +143,7 @@ void Player::Load()
      movement_speed=basic_movement_speed;
      life_steal=basic_life_steal;
      money=600;
-     keys[4]=true;
+     keys[1]=progress[1]=true;
      Update();
      //Load();
      return;
@@ -196,6 +198,15 @@ void Player::Load()
       fscanf(where,"%d ",&_key_id);
       keys[_key_id]=true;
      }
+ number_of_keys=0;
+ progress.reset();
+ fscanf(where,"%d ",&number_of_keys);
+ for(int i=0;i<number_of_keys;i++)
+     {
+      int _key_id;
+      fscanf(where,"%d ",&_key_id);
+      progress[_key_id]=true;
+     }
  fscanf(where,"%d ",&number_of_wins);
  fclose(where);
  for(int i=0;i<number_of_spells;i++)
@@ -246,6 +257,13 @@ void Player::Update()
  fprintf(where,"%d\n",number_of_keys);
  for(int i=0;i<keys.size();i++)
      if(keys[i])
+        fprintf(where,"%d\n",i);
+ number_of_keys=0;
+ for(int i=0;i<progress.size();i++)
+     number_of_keys+=progress[i];
+ fprintf(where,"%d\n",number_of_keys);
+ for(int i=0;i<progress.size();i++)
+     if(progress[i])
         fprintf(where,"%d\n",i);
  fprintf(where,"%d\n",number_of_wins);
  fclose(where);
@@ -1272,14 +1290,24 @@ void Player::Print_spells(int x,int y,SDL_Surface *_screen)
 ///Keys
 void Player::Add_key(int _key_id)
 {
- if(_key_id==0)
+ if(_key_id==0 || progress[_key_id]==true)
     return;
  keys[_key_id]=true;
+ progress[_key_id]=true;
 }
 
 void Player::Add_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids)
 {
- keys|=(*_keys_ids);
+ for(int i=0;i<_keys_ids->size();i++)
+     {
+      if((*_keys_ids)[i]==false)
+         continue;
+      if(progress[i]==true)
+         continue;
+      keys[i]=true;
+      progress[i]=true;
+     }
+ //keys|=(*_keys_ids);
  for(int i=0;i<keys.size();i++)
      fprintf(stderr,"%d",keys[i]==true);
  fprintf(stderr,"\n");

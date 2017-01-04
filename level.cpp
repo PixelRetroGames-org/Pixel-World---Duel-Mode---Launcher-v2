@@ -198,13 +198,12 @@ void Level::Load()
  if(type==1)
     {
      fscanf(where,"%d ",&number_of_non_playable_characters);
-     char npc_name[TEXT_LENGTH_MAX];
      for(int i=0;i<number_of_non_playable_characters;i++)
          {
-          fgets(npc_name,sizeof npc_name,where);
-          if(npc_name[strlen(npc_name)-1]=='\n')
-             npc_name[strlen(npc_name)-1]=NULL;
-          non_playable_characters[i].Load(npc_name,player[1].Get_keys(),std::make_pair(player[1].Get_map_positionX(),player[1].Get_map_positionY()));
+          fgets(non_playable_characters_names[i],sizeof non_playable_characters_names[i],where);
+          if(non_playable_characters_names[i][strlen(non_playable_characters_names[i])-1]=='\n')
+             non_playable_characters_names[i][strlen(non_playable_characters_names[i])-1]=NULL;
+          non_playable_characters[i].Load(non_playable_characters_names[i],player[1].Get_keys(),std::make_pair(player[1].Get_map_positionX(),player[1].Get_map_positionY()));
          }
     }
 
@@ -250,6 +249,21 @@ void Level::Load()
  arena.Load(player[1].Get_keys());
  effects.Set_name("Empty");
  effects.Load(player[1].Get_keys());
+}
+
+void Level::Reload()
+{
+ arena.Clear(true,true);
+ arena.Set_name(arena_name);
+ arena.Load(player[1].Get_keys());
+ for(int i=0;i<number_of_non_playable_characters;i++)
+     {
+      non_playable_characters[i].Clear();
+     }
+ for(int i=0;i<number_of_non_playable_characters;i++)
+     {
+      non_playable_characters[i].Load(non_playable_characters_names[i],player[1].Get_keys(),std::make_pair(player[1].Get_map_positionX(),player[1].Get_map_positionY()));
+     }
 }
 
 void Level::Change(char *_level_name)
@@ -1162,6 +1176,7 @@ void Level::Interact_with_NPC(int _player,int _npc)
                    }
                 break;
         }
+ Reload();
  SDL_Delay(100);
  SDL_PumpEvents();
  reset_lag=true;
@@ -1242,6 +1257,7 @@ bool Level::Interact_with_clue(int _player,int x,int y)
  player[_player].Update();
  arena.Get_Clue_map_texture(x,y)->Start_action(_screen);
  reset_lag=true;
+ Reload();
  return true;
 }
 

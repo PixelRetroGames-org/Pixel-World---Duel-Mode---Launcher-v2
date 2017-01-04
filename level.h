@@ -66,6 +66,7 @@ class Level
  int number_of_non_playable_characters=0;
  Non_Playable_Character non_playable_characters[NUMBER_OF_NPC_MAX];
  int non_playable_character_time_blocked[NUMBER_OF_NPC_MAX];
+ char non_playable_characters_names[NUMBER_OF_NPC_MAX][TEXT_LENGTH_MAX];
  int winner=0;
  bool skeptic_vision_on=false;
  int skeptic_vision_alpha=0;
@@ -91,6 +92,7 @@ class Level
  char *Get_name();
  ///Load
  void Load();
+ void Reload();
  void Change(char *_level_name);
  ///Update
  void Update_players();

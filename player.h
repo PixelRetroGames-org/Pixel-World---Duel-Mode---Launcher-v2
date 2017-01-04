@@ -44,7 +44,7 @@ class Player
  std::vector<int> printable_item_buffs_id;
  int number_of_spells=0;
  Spell spells[4];
- std::bitset<NUMBER_OF_MAX_KEYS> keys;
+ std::bitset<NUMBER_OF_MAX_KEYS> keys,progress;
  bool is_immortal=false;
  int number_of_wins=0;
  ///Game

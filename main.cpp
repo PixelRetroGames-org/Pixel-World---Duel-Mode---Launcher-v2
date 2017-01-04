@@ -44,6 +44,13 @@ int main( int argc, char* args[] )
  Set_icon("images/icon.bmp");
  Load_Settings();
  screen=SDL_SetVideoMode(RESOLUTION_X,RESOLUTION_Y,32,DISPLAY_MODE);
+ if(screen==NULL)
+    {
+     FILE *log_file=fopen("err/logs.txt","w");
+     fprintf(log_file,"SDL_SetVideoMode failed : %s ",SDL_GetError());
+     fclose(log_file);
+     exit(-1);
+    }
  MUSIC_MODULE_INIT=true;
  if(Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096)==-1)
     {
