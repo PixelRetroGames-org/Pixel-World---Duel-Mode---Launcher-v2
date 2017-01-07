@@ -282,7 +282,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
      {
       int x,y,key_id,texture_id;
       fscanf(where,"%d %d %d %d ",&x,&y,&key_id,&texture_id);
-      if((*_keys)[key_id])
+      if((*_keys)[key_id] && map_textures_ids[x][y].Get_id()==0)
          map_textures_ids[x][y].Set_id(texture_id);
      }
 

@@ -92,7 +92,7 @@ class Level
  char *Get_name();
  ///Load
  void Load();
- void Reload();
+ void Fast_Reload();
  void Change(char *_level_name);
  ///Update
  void Update_players();

@@ -251,7 +251,7 @@ void Level::Load()
  effects.Load(player[1].Get_keys());
 }
 
-void Level::Reload()
+void Level::Fast_Reload()
 {
  arena.Clear(true,true);
  arena.Set_name(arena_name);
@@ -1176,7 +1176,7 @@ void Level::Interact_with_NPC(int _player,int _npc)
                    }
                 break;
         }
- Reload();
+ Fast_Reload();
  SDL_Delay(100);
  SDL_PumpEvents();
  reset_lag=true;
@@ -1257,7 +1257,7 @@ bool Level::Interact_with_clue(int _player,int x,int y)
  player[_player].Update();
  arena.Get_Clue_map_texture(x,y)->Start_action(_screen);
  reset_lag=true;
- Reload();
+ Fast_Reload();
  return true;
 }
 
