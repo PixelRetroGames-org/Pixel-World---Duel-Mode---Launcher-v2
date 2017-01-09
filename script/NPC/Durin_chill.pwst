@@ -6,7 +6,7 @@
 <color 125 0 7 >Durin: </color >Drink with us, friend! We are dragon hunters from the Iron Mountains.</line >
 <line >I think you have already met the others: Fror, Gloin and Jimli. </line >
 <line > We should all meet here but Ori's missing. Will you help us find him? </line >
-<we >
+< flip >
 </page >
 <page >
 <line >
@@ -14,5 +14,7 @@
 
 
 <color 125 0 7 >Durin: </color >You should look after him in the <color 53 205 205 >Dark Forest</color >. </line >
+<we >
+< flip >
 <we >
 </page >

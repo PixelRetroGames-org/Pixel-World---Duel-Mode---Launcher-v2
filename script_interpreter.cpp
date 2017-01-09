@@ -1,7 +1,7 @@
 #include "script_interpreter.h"
 #include<cstring>
 
-const char *command_names[number_of_commands+1]={"set","line","color","la","ba","sleep","wla","we","bckimg","img","page"};
+const char *command_names[number_of_commands+1]={"set","line","color","la","ba","sleep","wla","we","bckimg","img","page","flip"};
 const SDL_Color default_text_color={255,255,255};
 
 //Script_interpreter::Script_interpreter();
@@ -26,6 +26,8 @@ void Script_interpreter::Clear()
      SDL_FreeSurface(background_image);
      background_image=NULL;
     }
+ SDL_FreeSurface(big_buffer);
+ big_buffer=NULL;
 }
 
 void Script_interpreter::Start_line_audio(Mix_Chunk *line_audio)
@@ -86,16 +88,14 @@ void Script_interpreter::Print_line(int &x,int y,char *_line,bool on_screen)
     }
  if(on_screen)
     {
-     apply_surface((screen->w-bufferW)/2,y,buffer,screen);
+     apply_surface((screen->w-bufferW)/2,y,buffer,big_buffer);
      bufferW=0;
      SDL_FreeSurface(buffer);
      buffer=make_it_transparent("script/images/empty.bmp");
-     SDL_Flip(screen);
      SDL_FreeSurface(image);
      TTF_CloseFont(font);
      return;
     }
- SDL_Flip(screen);
  SDL_FreeSurface(image);
  TTF_CloseFont(font);
 }
@@ -107,8 +107,7 @@ void Script_interpreter::Print_image(int &x,int y,char *_name)
  strcat(aux,_name);
  strcat(aux,".bmp");
  SDL_Surface *image=make_it_transparent(aux);
- apply_surface((screen->w-image->w)/2,y,image,screen);
- SDL_Flip(screen);
+ apply_surface((screen->w-image->w)/2,y,image,big_buffer);
  SDL_FreeSurface(image);
 }
 
@@ -119,6 +118,7 @@ void Script_interpreter::Set_background_image(char *_name)
  strcat(aux,_name);
  strcat(aux,".bmp");
  background_image=load_image(aux);
+ apply_surface(0,0,background_image,big_buffer);
 }
 
 void Script_interpreter::Set_script_name(char *_script_name)
@@ -147,6 +147,7 @@ void Script_interpreter::Start()
  int x=text_pos_x,y=text_pos_y;
  SDL_Event event;
  buffer=make_it_transparent("script/images/empty.bmp");
+ big_buffer=load_image("script/images/empty.bmp");
  bufferW=0;
  SDL_Delay(100);
  while(SDL_PollEvent(&event));
@@ -167,7 +168,7 @@ void Script_interpreter::Start()
                                 break;
                         case 3: Stop_line_audio(); Mix_FreeChunk(chunk); break;
                         case 4: Stop_background_audio(); Mix_FreeMusic(music);break;
-                        case 10:apply_surface(text_pos_x,text_pos_y,background_image,screen);
+                        case 10:apply_surface(0,0,background_image,big_buffer);
                                 x=text_pos_x,y=text_pos_y;line=false;
                                 bufferW=0;
                                 SDL_FreeSurface(buffer);
@@ -220,6 +221,7 @@ void Script_interpreter::Start()
                                 while(event.type!=SDL_KEYDOWN && event.type!=SDL_MOUSEBUTTONDOWN)
                                       {
                                        SDL_PollEvent(&event);
+                                       SDL_Delay(25);
                                       }
                                 break;
                         case 8: fscanf(in,"%s ",aux1);
@@ -228,11 +230,14 @@ void Script_interpreter::Start()
                         case 9: fscanf(in,"%d %d %s ",&x,&y,aux1);
                                 Print_image(x,y,aux1);
                                 break;
-                        case 10:apply_surface(text_pos_x,text_pos_y,background_image,screen);
+                        case 10:apply_surface(0,0,background_image,big_buffer);
                                 x=text_pos_x,y=text_pos_y;line=false;
                                 bufferW=0;
                                 SDL_FreeSurface(buffer);
                                 buffer=make_it_transparent("script/images/empty.bmp");
+                                break;
+                        case 11:apply_surface(0,0,big_buffer,screen);
+                                SDL_Flip(screen);
                                 break;
                        }
                }
@@ -251,6 +256,7 @@ void Script_interpreter::Start()
         quit=feof(in);
        }
  fclose(in);
+ Clear();
 }
 
 void Script_interpreter::Start(SDL_Surface *_screen,char *_script_name)

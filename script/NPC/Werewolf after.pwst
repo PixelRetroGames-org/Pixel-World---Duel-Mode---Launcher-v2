@@ -4,7 +4,7 @@
 
 
 <color 125 0 7 >Werewolf: </color > Rrrraaaargggghhh!!</line >
-<we >
+< flip >
 </page >
 <page >
 <line >
@@ -12,5 +12,7 @@
 
 
 <color 125 0 7 >Timy: </color > I killed you, beast!</line >
+<we >
+< flip >
 <we >
 </page >

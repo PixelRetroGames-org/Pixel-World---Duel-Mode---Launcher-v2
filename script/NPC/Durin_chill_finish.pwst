@@ -5,7 +5,7 @@
 
 <color 125 0 7 >Timy: </color >Ori's dead, I found his body. He was killed by a werewolf, 
 but I managed to kill the beast.</line >
-<we >
+< flip >
 </page >
 <page >
 <line >
@@ -14,5 +14,7 @@ but I managed to kill the beast.</line >
 
 <color 125 0 7 >Durin: </color >Damn, I told him to be careful... We should take care of his body.</line >
 <line >Thank you!</line >
+<we >
+< flip >
 <we >
 </page >

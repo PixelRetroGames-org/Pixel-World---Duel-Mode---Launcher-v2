@@ -6,14 +6,14 @@
 #include<algorithm>
 #include<stack>
 
-const int number_of_commands=11,LINE_HEIGHT=23;
+const int number_of_commands=12,LINE_HEIGHT=23;
 extern const char *command_names[number_of_commands+1];
 
 class Script_interpreter
 {
  private:
  char script_name[TEXT_LENGTH_MAX]={NULL};
- SDL_Surface *screen=NULL,*background_image=SCRIPT_default_background_image,*buffer;
+ SDL_Surface *screen=NULL,*background_image=SCRIPT_default_background_image,*buffer,*big_buffer;
  int bufferW=0;
  int text_pos_x=0,text_pos_y=0;
  Mix_Chunk *chunk=NULL;
