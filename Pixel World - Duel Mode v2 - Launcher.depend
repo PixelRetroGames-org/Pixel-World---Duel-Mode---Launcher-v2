@@ -64,7 +64,7 @@
 	"settings.h"
 	<cstdio>
 
-1483949686 e:\programming\pixel world - duel mode v2 - launcher\script_interpreter.h
+1484031950 e:\programming\pixel world - duel mode v2 - launcher\script_interpreter.h
 	"library.h"
 	"load_images.h"
 	<algorithm>
@@ -672,5 +672,21 @@
 1483189837 e:\programming\pixel world - duel mode v2 - launcher\clue_map_texture.h
 	"library.h"
 	"interactive_map_texture.h"
+	<bitset>
+
+1484045131 source:e:\programming\pixel world - duel mode v2 - launcher\journal.cpp
+	"journal.h"
+
+1484045113 e:\programming\pixel world - duel mode v2 - launcher\journal.h
+	"library.h"
+	"journal_entry.h"
+	"settings.h"
+	"load_audio_effects.h"
+	"load_images.h"
+	<vector>
+
+1484042220 e:\programming\pixel world - duel mode v2 - launcher\journal_entry.h
+	"library.h"
+	"script_interpreter.h"
 	<bitset>
 

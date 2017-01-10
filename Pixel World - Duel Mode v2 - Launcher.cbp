@@ -48,6 +48,10 @@
 		<Unit filename="interactive_map_texture.h" />
 		<Unit filename="item.cpp" />
 		<Unit filename="item.h" />
+		<Unit filename="journal.cpp" />
+		<Unit filename="journal.h" />
+		<Unit filename="journal_entry.cpp" />
+		<Unit filename="journal_entry.h" />
 		<Unit filename="level.cpp" />
 		<Unit filename="level.h" />
 		<Unit filename="library.cpp" />

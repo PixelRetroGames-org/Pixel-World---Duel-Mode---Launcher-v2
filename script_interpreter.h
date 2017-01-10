@@ -19,6 +19,7 @@ class Script_interpreter
  Mix_Chunk *chunk=NULL;
  Mix_Music *music=NULL;
  std::stack<SDL_Color> text_color;
+ int screen_posX,screen_posY;
 
  void Start_line_audio(Mix_Chunk *line_audio);
  void Pause_line_audio();
@@ -38,9 +39,8 @@ class Script_interpreter
  void Clear();
  void Set_script_name(char *_script_name);
  void Set_screen(SDL_Surface *_screen);
- void Start();
- void Start(SDL_Surface *_screen);
- void Start(SDL_Surface *_screen,char *_script_name);
+ void Start(int x=0,int y=0);
+ void Start(SDL_Surface *_screen,char *_script_name,int x=0,int y=0);
 };
 
 int Get_command_id(char *_command);
