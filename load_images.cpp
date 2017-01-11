@@ -342,7 +342,7 @@ int Loading_image(void *data)
 
 bool splash_screen_quit;
 SDL_mutex *splash_screen_mutex;
-const int FOG_UPDATE_INTERVAL=100,FOG_OPACITY_DECREASE_INTERVAL=200;
+const int FOG_UPDATE_INTERVAL=125,FOG_OPACITY_DECREASE_INTERVAL=200;
 const int FRAMES_PER_SECOND=30,FRAMES_PER_SECOND_FIRE=25;
 int Splash_Screen(void *data)
 {
