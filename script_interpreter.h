@@ -3,6 +3,7 @@
 
 #include "library.h"
 #include "load_images.h"
+#include "settings.h"
 #include<algorithm>
 #include<stack>
 
@@ -39,8 +40,8 @@ class Script_interpreter
  void Clear();
  void Set_script_name(char *_script_name);
  void Set_screen(SDL_Surface *_screen);
- void Start(int x=0,int y=0);
- void Start(SDL_Surface *_screen,char *_script_name,int x=0,int y=0);
+ void Start(int X=0,int Y=0);
+ void Start(SDL_Surface *_screen,char *_script_name,int X=0,int Y=0);
 };
 
 int Get_command_id(char *_command);

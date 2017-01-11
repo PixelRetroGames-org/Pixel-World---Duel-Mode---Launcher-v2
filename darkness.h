@@ -16,12 +16,18 @@ class Darkness
  SDL_Surface *image=NULL;
  int number_of_frames=0,current_frame=0;
  char image_name[TEXT_LENGTH_MAX]={NULL};
+ int frameW=DARKNESS_FRAME_X;
 
  public:
  Darkness();
  void Clear();
  void Set_image_name(char *_image_name);
  void Load_image();
+ void Set_frameW(int _frameW);
+ void Set_current_frame(int _current_frame);
+
+ int Get_alpha();
+ int Get_frame();
 
  void Update_frame();
  void Update_image();

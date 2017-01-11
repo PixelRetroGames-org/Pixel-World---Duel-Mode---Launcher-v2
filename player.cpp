@@ -1336,6 +1336,11 @@ std::bitset<NUMBER_OF_MAX_KEYS> *Player::Get_keys()
  return &keys;
 }
 
+std::bitset<NUMBER_OF_MAX_KEYS> *Player::Get_progress()
+{
+ return &progress;
+}
+
 ///Score
 void Player::Increase_number_of_wins()
 {

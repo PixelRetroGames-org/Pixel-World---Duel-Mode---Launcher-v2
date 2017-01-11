@@ -88,7 +88,7 @@ void Script_interpreter::Print_line(int &x,int y,char *_line,bool on_screen)
     }
  if(on_screen)
     {
-     apply_surface((screen->w-bufferW)/2,y,buffer,big_buffer);
+     apply_surface((RESOLUTION_X-bufferW)/2,y,buffer,big_buffer);
      bufferW=0;
      SDL_FreeSurface(buffer);
      buffer=make_it_transparent("script/images/empty.bmp");
@@ -107,7 +107,7 @@ void Script_interpreter::Print_image(int &x,int y,char *_name)
  strcat(aux,_name);
  strcat(aux,".bmp");
  SDL_Surface *image=make_it_transparent(aux);
- apply_surface((screen->w-image->w)/2,y,image,big_buffer);
+ apply_surface((RESOLUTION_X-image->w)/2,y,image,big_buffer);
  SDL_FreeSurface(image);
 }
 
@@ -117,7 +117,7 @@ void Script_interpreter::Set_background_image(char *_name)
  strcpy(aux,"script/images/");
  strcat(aux,_name);
  strcat(aux,".bmp");
- background_image=load_image(aux);
+ background_image=make_it_transparent(aux);
  apply_surface(0,0,background_image,big_buffer);
 }
 
@@ -131,10 +131,10 @@ void Script_interpreter::Set_screen(SDL_Surface *_screen)
  screen=_screen;
 }
 
-void Script_interpreter::Start(int x,int y)
+void Script_interpreter::Start(int X,int Y)
 {
- screen_posX=x;
- screen_posY=y;
+ screen_posX=X;
+ screen_posY=Y;
  char path[TEXT_LENGTH_MAX]={NULL};
  //system("cd \\script");
  strcpy(path,"script\\");
@@ -149,7 +149,7 @@ void Script_interpreter::Start(int x,int y)
  int x=text_pos_x,y=text_pos_y;
  SDL_Event event;
  buffer=make_it_transparent("script/images/empty.bmp");
- big_buffer=load_image("script/images/empty.bmp");
+ big_buffer=make_it_transparent("script/images/empty.bmp");
  bufferW=0;
  SDL_Delay(100);
  while(SDL_PollEvent(&event));
@@ -238,7 +238,7 @@ void Script_interpreter::Start(int x,int y)
                                 SDL_FreeSurface(buffer);
                                 buffer=make_it_transparent("script/images/empty.bmp");
                                 break;
-                        case 11:apply_surface(x/2,0,big_buffer,screen);
+                        case 11:apply_surface(X/2,0,big_buffer,screen);
                                 SDL_Flip(screen);
                                 break;
                        }
@@ -261,12 +261,12 @@ void Script_interpreter::Start(int x,int y)
  Clear();
 }
 
-void Script_interpreter::Start(SDL_Surface *_screen,char *_script_name,int x,int y)
+void Script_interpreter::Start(SDL_Surface *_screen,char *_script_name,int X,int Y)
 {
  text_color.push(default_text_color);
  Set_screen(_screen);
  Set_script_name(_script_name);
- Start(x,y);
+ Start(X,Y);
  Clear();
 }
 

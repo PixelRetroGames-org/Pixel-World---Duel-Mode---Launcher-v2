@@ -155,6 +155,7 @@ class Player
  void Remove_key(int _key_id);
  void Remove_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids);
  std::bitset<NUMBER_OF_MAX_KEYS> *Get_keys();
+ std::bitset<NUMBER_OF_MAX_KEYS> *Get_progress();
  ///Score
  void Increase_number_of_wins();
  int Get_number_of_wins();

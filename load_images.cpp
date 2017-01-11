@@ -36,6 +36,10 @@ SDL_Surface *LEVEL_WINNER,*LEVEL_LOSER,*LEVEL_MONEY,*LEVEL_XP,*LEVEL_LINE,*LEVEL
 SDL_Surface *MAP_NAME_background,*SKEPTIC_VISION_image;
 bool LEVEL_IMAGES_LOADED;
 
+///JOURNAL
+SDL_Surface *JOURNAL_ENTRY_BACKGROUND,*JOURNAL_ENTRY_HOVER_BACKGROUND,*JOURNAL_ENTRY_CLICK_BACKGROUND;
+bool JOURNAL_IMAGES_LOADED;
+
 ///SETTINGS
 SDL_Surface *SETTINGS_option_background,*SETTINGS_option_background_selected,*SETTINGS_background,*SETTINGS_name;
 bool SETTINGS_IMAGES_LOADED;
@@ -81,6 +85,8 @@ void Load_shop_images()
 
 void Clear_shop_images()
 {
+ if(!SHOP_IMAGES_LOADED)
+    return;
  SDL_FreeSurface(SHOP_title_clear);
  SDL_FreeSurface(SHOP_title_background_line);
  SDL_FreeSurface(SHOP_title_background_click);
@@ -132,6 +138,8 @@ void Load_player_images()
 
 void Clear_player_images()
 {
+ if(!PLAYER_IMAGES_LOADED)
+    return;
  SDL_FreeSurface(PLAYER_name_background);
  SDL_FreeSurface(PLAYER_name_background_shop);
  SDL_FreeSurface(PLAYER_name_background_right_layer);
@@ -174,6 +182,8 @@ void Load_level_images()
 
 void Clear_level_images()
 {
+ if(!LEVEL_IMAGES_LOADED)
+    return;
  SDL_DestroyMutex(loading_image_mutex);
  SDL_FreeSurface(LEVEL_background_image);
  SDL_FreeSurface(LEVEL_loading_image);
@@ -188,6 +198,26 @@ void Clear_level_images()
  LEVEL_IMAGES_LOADED=false;
 }
 
+void Load_journal_images()
+{
+ if(JOURNAL_IMAGES_LOADED)
+    return;
+ LEVEL_IMAGES_LOADED=true;
+ JOURNAL_ENTRY_BACKGROUND=make_it_transparent("images/journal/background.bmp");
+ JOURNAL_ENTRY_CLICK_BACKGROUND=make_it_transparent("images/journal/click_background.bmp");
+ JOURNAL_ENTRY_HOVER_BACKGROUND=make_it_transparent("images/journal/hover_background.bmp");
+}
+
+void Clear_journal_images()
+{
+ if(!JOURNAL_IMAGES_LOADED)
+    return;
+ JOURNAL_IMAGES_LOADED=false;
+ SDL_FreeSurface(JOURNAL_ENTRY_BACKGROUND);
+ SDL_FreeSurface(JOURNAL_ENTRY_CLICK_BACKGROUND);
+ SDL_FreeSurface(JOURNAL_ENTRY_HOVER_BACKGROUND);
+}
+
 void Load_global_images()
 {
  if(GLOBAL_IMAGES_LOADED)
@@ -198,6 +228,8 @@ void Load_global_images()
 
 void Clear_global_images()
 {
+ if(!GLOBAL_IMAGES_LOADED)
+    return;
  SDL_FreeSurface(COIN);
  GLOBAL_IMAGES_LOADED=false;
 }
@@ -216,6 +248,8 @@ void Load_settings_images()
 
 void Clear_settings_images()
 {
+ if(!SETTINGS_IMAGES_LOADED)
+    return;
  SDL_FreeSurface(SETTINGS_option_background);
  SDL_FreeSurface(SETTINGS_option_background_selected);
  SDL_FreeSurface(SETTINGS_background);
@@ -236,6 +270,8 @@ void Load_menu_images()
 
 void Clear_menu_images()
 {
+ if(!MENU_IMAGES_LOADED)
+    return;
  SDL_FreeSurface(MENU_big_background);
  SDL_FreeSurface(MENU_background);
  SDL_FreeSurface(MENU_background_click);
@@ -248,11 +284,13 @@ void Load_script_images()
  if(SCRIPT_IMAGES_LOADED)
     return;
  SCRIPT_IMAGES_LOADED=true;
- SCRIPT_default_background_image=make_it_transparent("images/script/default_background_image.bmp");
+ SCRIPT_default_background_image=make_it_transparent("images/game/empty.bmp");
 }
 
 void Clear_script_images()
 {
+ if(!SCRIPT_IMAGES_LOADED)
+    return;
  SDL_FreeSurface(SCRIPT_default_background_image);
  SCRIPT_IMAGES_LOADED=false;
 }
@@ -264,6 +302,7 @@ void Load_all_images()
  Load_shop_images();
  Load_player_images();
  Load_level_images();
+ Load_journal_images();
  Load_settings_images();
  Load_script_images();
 }
@@ -275,6 +314,7 @@ void Clear_all_images()
  Clear_shop_images();
  Clear_player_images();
  Clear_level_images();
+ Clear_journal_images();
  Clear_settings_images();
  Clear_script_images();
 }
@@ -298,4 +338,76 @@ int Loading_image(void *data)
         frame%=8;
         SDL_LockMutex(loading_image_mutex);
        }
+}
+
+bool splash_screen_quit;
+SDL_mutex *splash_screen_mutex;
+const int FOG_UPDATE_INTERVAL=100,FOG_OPACITY_DECREASE_INTERVAL=200;
+const int FRAMES_PER_SECOND=30,FRAMES_PER_SECOND_FIRE=25;
+int Splash_Screen(void *data)
+{
+ SDL_LockMutex(splash_screen_mutex);
+ splash_screen_quit=false;
+ Darkness fog[2];
+ fog[1].Set_image_name("launcher_fog");
+ fog[1].Load_image();
+ fog[1].Set_number_of_frames(8);
+ fog[1].Set_aplha(SDL_ALPHA_OPAQUE/2);
+ fog[1].Update_image();
+ fog[1].Set_frameW(1920);
+ fog[0].Set_image_name("launcher_fog1");
+ fog[0].Load_image();
+ fog[0].Set_number_of_frames(8);
+ fog[0].Set_aplha(SDL_ALPHA_OPAQUE/2);
+ fog[0].Update_image();
+ fog[0].Set_frameW(1920);
+ SDL_Rect area;
+ area.x=area.y=0;
+ area.w=RESOLUTION_X;
+ area.h=RESOLUTION_Y;
+ Timer fog_update_timer,fog_opacity_decrease_timer,fps,fps1;
+ fog_update_timer.start();
+ fog_opacity_decrease_timer.start();
+ fps1.start();
+ int poz=1;
+ while(!splash_screen_quit || fog[poz].Get_alpha()!=0)
+       {
+        fps.start();
+        SDL_UnlockMutex(splash_screen_mutex);
+        LAUNCHER_BBACKGROUND.Print_image(0,0,static_screen);
+        LAUNCHER_BBACKGROUND.Update_image_frame();
+        if(fps1.get_ticks()>=1000/FRAMES_PER_SECOND_FIRE)
+           {
+            LAUNCHER_BBACKGROUND.Update_fire_frame();
+            fps1.start();
+           }
+        fog[poz].Enshroud(area,static_screen);
+        if(fog_opacity_decrease_timer.get_ticks()>=FOG_OPACITY_DECREASE_INTERVAL)
+           {
+            fog_opacity_decrease_timer.start();
+            fog[poz].Decrease();
+           }
+        if(fog_update_timer.get_ticks()>=FOG_UPDATE_INTERVAL)
+           {
+            fog[poz].Update_frame();
+            fog_update_timer.start();
+           }
+        fog[poz].Update_image();
+        SDL_Flip(static_screen);
+        if(fog[poz].Get_frame()==7)
+           {
+            poz++;
+            poz%=2;
+            fog[poz].Set_aplha(fog[(poz+1)%2].Get_alpha());
+            fog[poz].Set_current_frame(0);
+            fog[poz].Update_image();
+           }
+        if(fps.get_ticks()<1000/FRAMES_PER_SECOND)
+           {
+            SDL_Delay((1000/FRAMES_PER_SECOND)-fps.get_ticks());
+           }
+        SDL_LockMutex(splash_screen_mutex);
+       }
+ fog[0].Clear();
+ fog[1].Clear();
 }

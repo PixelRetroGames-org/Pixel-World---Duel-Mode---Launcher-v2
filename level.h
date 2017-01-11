@@ -8,6 +8,7 @@
 #include "script_interpreter.h"
 #include "shop.h"
 #include "puzzle.h"
+#include "journal.h"
 #include<ctime>
 #include<map>
 
@@ -168,5 +169,8 @@ int Other_player(int _player);
 ///Launch
 void Launch_Story_Mode(Level *level,SDL_Surface *_screen);
 void Launch_Duel_Mode(Level *level,SDL_Surface *_screen);
+
+///Journal
+void Open_Journal(std::bitset<NUMBER_OF_MAX_KEYS> *progress,SDL_Surface *_screen);
 
 #endif //LEVEL_H

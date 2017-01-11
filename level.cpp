@@ -961,6 +961,10 @@ void Level::Handle_Events(SDL_Surface *_screen)
     {
      Pause_Menu();
     }
+ if(keystates[SDLK_j] && type==1)
+    {
+     Open_Journal(player[1].Get_progress(),_screen);
+    }
 }
 
 void Level::Darkness_increase()
@@ -1727,6 +1731,11 @@ void Launch_Duel_Mode(Level *level,SDL_Surface *_screen)
  level->Set_screen(_screen);
  level->Setup("Duel Mode");
  level->Start(_screen);
+}
+
+void Open_Journal(std::bitset<NUMBER_OF_MAX_KEYS> *progress,SDL_Surface *_screen)
+{
+ journal.Start(progress,_screen);
 }
 
 int Other_player(int _player)

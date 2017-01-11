@@ -60,6 +60,12 @@ int main( int argc, char* args[] )
      fclose(log_file);
     }
  SDL_Flip(screen);
+ LAUNCHER_BBACKGROUND.Update_size();
+ LAUNCHER_BBACKGROUND.Load_Logo();
+ static_screen=screen;
+ splash_screen_mutex=SDL_CreateMutex();
+ SDL_Thread *splash_screen=NULL;
+ splash_screen=SDL_CreateThread(Splash_Screen,NULL);
  Menu main_menu,gamemode_menu,story_menu,duel_menu;
  Load_all_images();
  Load_Duel_Mode_effects();
@@ -68,8 +74,6 @@ int main( int argc, char* args[] )
  gamemode_menu.Load("menu/gamemode.pwm");
  story_menu.Load("menu/story_menu.pwm");
  duel_menu.Load("menu/duel_menu.pwm");
- LAUNCHER_BBACKGROUND.Update_size();
- LAUNCHER_BBACKGROUND.Load_Logo();
  launcher_background_music=Mix_LoadMUS("audio/Hallowed Be Thy Name.mp3");
  if(MUSIC_MODULE_INIT)
     {
@@ -80,6 +84,7 @@ int main( int argc, char* args[] )
      Mix_VolumeMusic(MIX_MAX_VOLUME*VOLUME/100);
      Mix_PlayMusic(launcher_background_music,-1);
     }
+ Load_Journal();
  Puzzle test;
  test.Set_name("1");
  test.Load();
@@ -89,6 +94,13 @@ int main( int argc, char* args[] )
      if(ret==false && false)
         exit(666013);
     }
+ SDL_LockMutex(splash_screen_mutex);
+ splash_screen_quit=true;
+ SDL_UnlockMutex(splash_screen_mutex);
+ int thread_return_value=0;
+ SDL_WaitThread(splash_screen,&thread_return_value);
+ SDL_Flip(static_screen);
+ SDL_DestroyMutex(splash_screen_mutex);
  int option=-1;
  while(option!=-2)
        {

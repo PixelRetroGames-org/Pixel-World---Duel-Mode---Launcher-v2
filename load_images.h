@@ -11,6 +11,10 @@
 
 #include "big_background.h"
 
+#include "settings.h"
+
+#include "darkness.h"
+
 ///GLOBAL
 extern SDL_Surface *COIN,*HEART,*MANA;
 extern bool GLOBAL_IMAGES_LOADED;
@@ -67,6 +71,12 @@ extern bool SCRIPT_IMAGES_LOADED;
 void Load_script_images();
 void Clear_script_images();
 
+///JOURNAL
+extern SDL_Surface *JOURNAL_ENTRY_BACKGROUND,*JOURNAL_ENTRY_HOVER_BACKGROUND,*JOURNAL_ENTRY_CLICK_BACKGROUND;
+extern bool JOURNAL_IMAGES_LOADED;
+void Load_journal_images();
+void Clear_journal_images();
+
 ///ALL
 void Load_all_images();
 void Clear_all_images();
@@ -76,6 +86,11 @@ extern SDL_Surface *static_screen;
 extern bool Loading_image_quit;
 extern SDL_mutex *loading_image_mutex;
 int Loading_image(void *data);
+
+///Splash Screen
+extern bool splash_screen_quit;
+extern SDL_mutex *splash_screen_mutex;
+int Splash_Screen(void *data);
 
 
 #endif // LOAD_IMAGES_H

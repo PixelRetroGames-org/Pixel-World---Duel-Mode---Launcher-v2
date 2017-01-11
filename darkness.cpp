@@ -30,6 +30,26 @@ void Darkness::Load_image()
  image=load_image(path);
 }
 
+void Darkness::Set_frameW(int _frameW)
+{
+ frameW=_frameW;
+}
+
+void Darkness::Set_current_frame(int _current_frame)
+{
+ current_frame=_current_frame;
+}
+
+int Darkness::Get_alpha()
+{
+ return alpha;
+}
+
+int Darkness::Get_frame()
+{
+ return current_frame;
+}
+
 void Darkness::Update_frame()
 {
  current_frame++;
@@ -46,7 +66,7 @@ void Darkness::Update_image()
 void Darkness::Enshroud(SDL_Rect area,SDL_Surface *_screen)
 {
 // apply_surface((int)area.x,(int)area.y,(int)area.w,(int)area.h,image,_screen);
- apply_surface(current_frame*DARKNESS_FRAME_X,0,area.x,area.y,area.w,area.h,image,_screen);
+ apply_surface(current_frame*frameW,0,area.x,area.y,area.w,area.h,image,_screen);
 }
 
 void Darkness::Set_aplha(int _alpha)
