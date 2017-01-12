@@ -7,6 +7,12 @@
 const SDLKey player_keys[3][20]={{},{SDLK_UP,SDLK_DOWN,SDLK_LEFT,SDLK_RIGHT,SDLK_RCTRL,SDLK_j,SDLK_n,SDLK_u,SDLK_i,SDLK_o,SDLK_p,SDLK_RSHIFT},{SDLK_w,SDLK_s,SDLK_a,SDLK_d,SDLK_z,SDLK_BACKQUOTE,SDLK_TAB,SDLK_1,SDLK_2,SDLK_3,SDLK_4,SDLK_x}};
 const int SKEPTIC_VISION_MAX_ALPHA=100;
 
+#define GOD_POWERS
+
+#ifdef GOD_POWERS
+bool OBSTACLES=true;
+#endif // GOD_POWERS
+
 int level_number_of_background_music_tracks;
 Mix_Music *level_background_music[NUMBER_OF_SONGS_MAX];
 Timer level_music_time;
@@ -148,12 +154,13 @@ void Level::Load()
  if(type==1)
     player[1].Set_movement_speed(2);
 
+ fscanf(where,"%d %d %d ",&player_map_position[1].first,&player_map_position[1].second,&player_type[1]);
+ player[1].Set_map_position(player_map_position[1].first,player_map_position[1].second);
+
  player[2].Set_map_position(-5,-5);
 
  if(type==2)
     {
-     fscanf(where,"%d %d %d ",&player_map_position[1].first,&player_map_position[1].second,&player_type[1]);
-     player[1].Set_map_position(player_map_position[1].first,player_map_position[1].second);
      for(int i=0;i<player[1].Get_number_of_spells();i++)
          {
           if(!spell_effects_ids.count((player[1].Get_Spell(i)).Get_id()) && ((player[1].Get_Spell(i)).Get_map_name())[0]!=NULL)
@@ -389,8 +396,13 @@ bool Level::Move_player_X(int _player)
  for(int _x=x;_x<=x+(player[_player].Get_skinW()/40)-1 && move_possible;_x++)
      for(int _y=y;_y<=y+(player[_player].Get_skinH()/40)-1 && move_possible;_y++)
          if((/*(_x!=x-1 && _y!=y-1) && */(arena.Is_obstacle(_y,_x) || effects.Is_obstacle(_y,_x)))/* || (player[Other_player(_player)].Get_map_positionY()+player[Other_player(_player)].Get_skinH()/40<=_y+player[_player].Get_skinH()/40 && player[Other_player(_player)].Get_map_positionY()>=_y && player[Other_player(_player)].Get_map_positionX()+player[Other_player(_player)].Get_skinW()/40<=_x+player[_player].Get_skinW()/40 && player[Other_player(_player)].Get_map_positionX()>=_x)*/)
-            move_possible=false;
-
+            {
+             #ifdef GOD_POWERS
+             if(!OBSTACLES)
+                continue;
+             #endif // GOD_POWERS
+             move_possible=false;
+            }
  int LX=x+player[_player].Get_skinW()/40-1,LY=y+player[_player].Get_skinH()/40-1;
  int X1=player[Other_player(_player)].Get_map_positionX(),Y1=player[Other_player(_player)].Get_map_positionY();
  int LX1=X1+player[Other_player(_player)].Get_skinW()/40-1,LY1=Y1+player[Other_player(_player)].Get_skinH()/40-1;
@@ -448,8 +460,13 @@ bool Level::Move_player_Y(int _player)
  for(int _x=x;_x<=x+(player[_player].Get_skinW()/40)-1 && move_possible;_x++)
      for(int _y=y;_y<=y+(player[_player].Get_skinH()/40)-1 && move_possible;_y++)
          if(arena.Is_obstacle(_y,_x) || effects.Is_obstacle(_y,_x))
-            move_possible=false;
-
+            {
+             #ifdef GOD_POWERS
+             if(!OBSTACLES)
+                continue;
+             #endif // GOD_POWERS
+             move_possible=false;
+            }
  int LX=x+player[_player].Get_skinW()/40-1,LY=y+player[_player].Get_skinH()/40-1;
  int X1=player[Other_player(_player)].Get_map_positionX(),Y1=player[Other_player(_player)].Get_map_positionY();
  int LX1=X1+player[Other_player(_player)].Get_skinW()/40-1,LY1=Y1+player[Other_player(_player)].Get_skinH()/40-1;
@@ -965,6 +982,44 @@ void Level::Handle_Events(SDL_Surface *_screen)
     {
      Open_Journal(player[1].Get_progress(),_screen);
     }
+ #ifdef GOD_POWERS
+ if(type==1)
+    {
+     if(keystates[SDLK_INSERT])
+        OBSTACLES=!OBSTACLES;
+     char map_name[TEXT_LENGTH_MAX]={NULL};
+     if(keystates[SDLK_F1])
+        {
+         strcpy(map_name,"The Stables");
+        }
+     if(keystates[SDLK_F2])
+        {
+         strcpy(map_name,"The Stables Western Exit");
+        }
+     if(keystates[SDLK_F3])
+        {
+         strcpy(map_name,"New1");
+        }
+     if(keystates[SDLK_F4])
+        {
+         strcpy(map_name,"New2");
+        }
+     if(keystates[SDLK_F5])
+        {
+         strcpy(map_name,"New3");
+        }
+     if(strlen(map_name)!=0)
+        {
+         Change(map_name);
+         reset_lag=true;
+        }
+    }
+ if(type==2)
+    {
+     if(keystates[SDLK_END])
+        player[2].Set_hp(0);
+    }
+ #endif // GOD_POWERS
 }
 
 void Level::Darkness_increase()
@@ -1700,7 +1755,12 @@ void Launch_Story_Mode(Level *level,SDL_Surface *_screen)
  char level_name[TEXT_LENGTH_MAX],player_name[TEXT_LENGTH_MAX];
  FILE *where=fopen("saves/gamemodes/Story Mode.pwsav","r");
  if(where==NULL)
-    exit(5);
+    {
+     FILE *log_file=fopen("err/logs.txt","w");
+     fprintf(log_file,"\"saves/gamemodes/Story Mode.pwsav is missing\"");
+     fclose(log_file);
+     exit(5);
+    }
  fscanf(where,"%d %d ",&player_map_position_x,&player_map_position_y);
  fgets(level_name,sizeof level_name,where);
  int n=strlen(level_name);
@@ -1712,9 +1772,9 @@ void Launch_Story_Mode(Level *level,SDL_Surface *_screen)
     player_name[n-1]=NULL;
  fclose(where);
  level->Set_screen(_screen);
- level->Set_player_map_position(player_map_position_x,player_map_position_y,1);
  Mix_HaltMusic();
  level->Setup(level_name);
+ level->Set_player_map_position(player_map_position_x,player_map_position_y,1);
  level->Start(_screen,false);
  where=fopen("saves/gamemodes/Story Mode.pwsav","w");
  player_map_position_x=level->Get_player_map_position_x(1);

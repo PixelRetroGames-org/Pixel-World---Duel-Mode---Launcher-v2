@@ -234,3 +234,6 @@
 234 - cave_wallLU1
 235 - cave_wallRU1
 236 - cave_wallRU
+237 - bradLU2
+238 - bradRU2
+239 - hillLD1
