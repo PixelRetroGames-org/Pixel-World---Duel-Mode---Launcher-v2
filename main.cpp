@@ -82,7 +82,8 @@ int main( int argc, char* args[] )
      Mix_Volume(3,MIX_MAX_VOLUME*(VOLUME/10)/100);
      Mix_Volume(4,MIX_MAX_VOLUME*(VOLUME/10)/100);
      Mix_VolumeMusic(MIX_MAX_VOLUME*VOLUME/100);
-     Mix_PlayMusic(launcher_background_music,-1);
+     //Mix_PlayMusic(launcher_background_music,-1);
+     Mix_FadeInMusic(launcher_background_music,-1,8000);
     }
  Load_Journal();
  Puzzle test;
