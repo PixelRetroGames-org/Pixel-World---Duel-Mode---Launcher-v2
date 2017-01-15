@@ -46,6 +46,7 @@ class Map
  int Get_map_texture_player_pos_x(int x,int y);
  int Get_map_texture_player_pos_y(int x,int y);
  char *Get_map_texture_map_name(int x,int y);
+ char *Get_map_texture_puzzle_name(int x,int y);
  int Get_map_texture_key_id(int x,int y);
  void Update_frame(int _texture_id);
  void Decrease_map_textures_ids_remaining_time();

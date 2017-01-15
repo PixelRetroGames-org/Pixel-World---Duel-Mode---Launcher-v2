@@ -145,6 +145,8 @@ class Level
  void Trigger_player_map(int _player);
  void Trigger_all_players_map();
  void Trigger_around_player_map(int _player);
+ void Interact_with_map_textures_around_player(int _player);
+ void Interact_with_map_texture(int _player,int x,int y);
  void Interact_with_NPC(int _player,int _npc);
  void Interact_with_NPC_around_player(int _player);
  void Interaction_NPC_player(int _player);

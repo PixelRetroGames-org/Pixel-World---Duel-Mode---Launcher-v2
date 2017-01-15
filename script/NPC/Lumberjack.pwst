@@ -1,0 +1,86 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >Greetings! What happened to the bridge?</line >
+< flip >
+</page >
+<page >
+<line >
+<img 0 0 Lumberjack >
+
+
+<color 125 0 7 >Lumberjack: </color >Good day! The devil destroyed it after a young villager </line >
+<line > went to his cave to fight with him.</line >
+<line > Don't worry we can fix it in no time,</line >
+<line > but who will protect us from the devil? </line >
+<we >
+< flip >
+</page >
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >Tell me more about him. Why did that lad tried to kill him? </line >
+<we >
+< flip >
+</page >
+<page >
+<line >
+<img 0 0 Lumberjack >
+
+
+<color 125 0 7 >Lumberjack: </color >At first he was stealing a cow</line >
+<line > or a goat from time to time.</line >
+<line > Then, he started playing pranks. One day, he planted weed</line >
+<line > in my garden and that nearly destroyed my beautiful flowers.</line >
+<line > I had to pull weeds thrice a day for some time. </line >
+<line > Once, he replaced all the alcohol in the tavern with milk. </line >
+<line > This lad, he had a beautiful dog he loved very much. The devil took</line >
+<line > it at night and tied it to a tree in the forest. The man searched</line >
+<line > his pet all day but he had only found his dog's corpse devoured by wolves.</line >
+<line > He took his fork and went to the devil's cave, decided to kill him. </line >
+<line > Then the bridge was destroyed. That's all I know. </line >
+<we >
+< flip >
+</page >
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >You repair the bridge, I'll take care of this devil. </line >
+<we >
+< flip >
+</page >
+<page >
+<line >
+<img 0 0 Lumberjack >
+
+
+<color 125 0 7 >Lumberjack: </color >Very well then. I should get to work!</line >
+<line > Farewell! </line >
+<we >
+< flip >
+</page >
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >So long! </line >
+<we >
+< flip >
+</page >
+<page >
+<line >
+
+
+
+The lumberjack repairs the bridge and then, exhausted, he enters his house to rest.</line >
+<we >
+< flip >
+<we >
+</page >

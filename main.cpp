@@ -5,7 +5,8 @@
 #include "level.h"
 #include "load_audio_effects.h"
 #include "puzzle.h"
-#include<cstdio>
+#include <cstdio>
+#include <ctime>
 SDL_Surface *screen;
 
 Script_interpreter script_interpreter;
@@ -40,6 +41,7 @@ int main( int argc, char* args[] )
      fprintf(log_file,"Mix_Init() failed : %s ",Mix_GetError());
      fclose(log_file);
     }
+ srand(time(NULL));
  SDL_WM_SetCaption("Pixel World",NULL);
  Set_icon("images/icon.bmp");
  Load_Settings();
@@ -63,9 +65,12 @@ int main( int argc, char* args[] )
  LAUNCHER_BBACKGROUND.Update_size();
  LAUNCHER_BBACKGROUND.Load_Logo();
  static_screen=screen;
+  #define SPLASH_SCREEN
+ #ifdef SPLASH_SCREEN
  splash_screen_mutex=SDL_CreateMutex();
  SDL_Thread *splash_screen=NULL;
  splash_screen=SDL_CreateThread(Splash_Screen,NULL);
+ #endif // SPLASH_SCREEN
  Menu main_menu,gamemode_menu,story_menu,duel_menu;
  Load_all_images();
  Load_Duel_Mode_effects();
@@ -95,6 +100,7 @@ int main( int argc, char* args[] )
      if(ret==false && false)
         exit(666013);
     }
+ #ifdef SPLASH_SCREEN
  SDL_LockMutex(splash_screen_mutex);
  splash_screen_quit=true;
  SDL_UnlockMutex(splash_screen_mutex);
@@ -102,6 +108,7 @@ int main( int argc, char* args[] )
  SDL_WaitThread(splash_screen,&thread_return_value);
  SDL_Flip(static_screen);
  SDL_DestroyMutex(splash_screen_mutex);
+ #endif // SPLASH_SCREEN
  int option=-1;
  while(option!=-2)
        {

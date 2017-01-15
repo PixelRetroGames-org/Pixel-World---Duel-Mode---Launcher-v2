@@ -188,8 +188,6 @@ void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair
       int x,y;
       fscanf(where,"%d %d ",&x,&y);
       map_accessible_positions.push_back(std::make_pair(x,y));
-      if(x!=player_pos.first || y!=player_pos.second)
-         map_positionX=x,map_positionY=y;
      }
  fscanf(where,"%d ",&chance_to_move);
  char skin_name[TEXT_LENGTH_MAX]={NULL};
@@ -205,6 +203,14 @@ void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair
  skin_image_position.w=w;
  skin_image_position.h=h;
  skin_image_position.x=skin_image_position.y=0;
+ std::vector<int> available_positions;
+ for(int i=0;i<number_of_map_accessible_positions;i++)
+     {
+      if(map_accessible_positions[i].first<=player_pos.first || map_accessible_positions[i].first+skin_image_position.w/40>=player_pos.first || map_accessible_positions[i].second<=player_pos.second || map_accessible_positions[i].second+skin_image_position.h/40>=player_pos.second)
+         available_positions.push_back(i);
+     }
+ int random_position=rand()%available_positions.size();
+ map_positionX=map_accessible_positions[available_positions[random_position]].first,map_positionY=map_accessible_positions[available_positions[random_position]].second;
  fscanf(where,"%d ",&type);
  fgets(script_name,sizeof script_name,where);
  if(script_name[strlen(script_name)-1]=='\n')

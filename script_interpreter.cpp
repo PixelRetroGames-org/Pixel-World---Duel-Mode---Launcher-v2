@@ -10,9 +10,7 @@ Script_interpreter::~Script_interpreter()
 {
  while(!text_color.empty())
        text_color.pop();
- SDL_FreeSurface(buffer);
- if(background_image!=SCRIPT_default_background_image)
-    SDL_FreeSurface(background_image);
+ buffer=NULL;
 }
 
 void Script_interpreter::Clear()

@@ -11,6 +11,7 @@ class Map_texture_id
  int duration=0,remaining_duration=0;
  int frame=0;
  char map_name[TEXT_LENGTH_MAX]={NULL};
+ char puzzle_name[TEXT_LENGTH_MAX]={NULL};
  int player_map_pos_x,player_map_pos_y;
  int key_id=0;
 
@@ -21,12 +22,14 @@ class Map_texture_id
  void Set_frame(int _frame);
  void Set_player_map_pos(int x,int y);
  void Set_map_name(char *_map_name);
+ void Set_puzzle_name(char *_puzzle_name);
  void Set_key_id(int _key_id);
  int Get_id();
  int Get_frame();
  int Get_player_map_pos_x();
  int Get_player_map_pos_y();
  char *Get_map_name();
+ char *Get_puzzle_name();
  int Get_key_id();
  bool Is_done();
  void Decrease_remaining_duration();
@@ -52,6 +55,7 @@ class Interactive_map_texture
  void Set_texture_frame(int _frame);
  void Set_texture_player_map_pos(int _texture,int x,int y);
  void Set_texture_map_name(int _texture,char *_map_name);
+ void Set_texture_puzzle_name(int _texture,char *_map_name);
  void Set_key_id(int _texture,int _key_id);
  int Get_id();
  int Get_texture_id();
@@ -62,6 +66,7 @@ class Interactive_map_texture
  int Get_texture_player_map_pos_y();
  int Get_key_id();
  char *Get_texture_map_name();
+ char *Get_texture_puzzle_name();
  bool Is_done();
  void Decrease_remaining_duration();
  void Update_texture_frame(int _number_of_frames);

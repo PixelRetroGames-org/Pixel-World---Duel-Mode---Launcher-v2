@@ -60,8 +60,9 @@ void Puzzle::Load()
                 for(int i=0;i<number_of_answers;i++)
                     {
                      fgets(answers[i],sizeof answers[i],where);
-                     if(answers[i][strlen(answers[i])-1]=='\n')
-                        answers[i][strlen(answers[i])-1]=NULL;
+                     int length=strlen(answers[i])-1;
+                     if(answers[i][length]=='\n')
+                        answers[i][length]=NULL,length--;
                     }
                 break;
         }

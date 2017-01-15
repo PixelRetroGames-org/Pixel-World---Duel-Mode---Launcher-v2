@@ -32,6 +32,11 @@ void Map_texture_id::Set_map_name(char *_map_name)
  strcpy(map_name,_map_name);
 }
 
+void Map_texture_id::Set_puzzle_name(char *_puzzle_name)
+{
+ strcpy(puzzle_name,_puzzle_name);
+}
+
 void Map_texture_id::Set_key_id(int _key_id)
 {
  key_id=_key_id;
@@ -60,6 +65,11 @@ int Map_texture_id::Get_player_map_pos_y()
 char *Map_texture_id::Get_map_name()
 {
  return map_name;
+}
+
+char *Map_texture_id::Get_puzzle_name()
+{
+ return puzzle_name;
 }
 
 int Map_texture_id::Get_key_id()
@@ -131,6 +141,11 @@ void Interactive_map_texture::Set_texture_player_map_pos(int _texture,int x,int 
 void Interactive_map_texture::Set_texture_map_name(int _texture,char *_map_name)
 {
  map_textures_ids[_texture].Set_map_name(_map_name);
+}
+
+void Interactive_map_texture::Set_texture_puzzle_name(int _texture,char *_puzzle_name)
+{
+ map_textures_ids[_texture].Set_puzzle_name(_puzzle_name);
 }
 
 void Interactive_map_texture::Set_key_id(int _texture,int _key_id)
@@ -219,6 +234,11 @@ int Interactive_map_texture::Get_texture_player_map_pos_y()
 char *Interactive_map_texture::Get_texture_map_name()
 {
  return map_textures_ids[current_map_texture_id_position].Get_map_name();
+}
+
+char *Interactive_map_texture::Get_texture_puzzle_name()
+{
+ return map_textures_ids[current_map_texture_id_position].Get_puzzle_name();
 }
 
 int Interactive_map_texture::Get_key_id()

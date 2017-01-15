@@ -146,6 +146,11 @@ char *Map::Get_map_texture_map_name(int x,int y)
  return map_textures_ids[x][y].Get_texture_map_name();
 }
 
+char *Map::Get_map_texture_puzzle_name(int x,int y)
+{
+ return map_textures_ids[x][y].Get_texture_puzzle_name();
+}
+
 int Map::Get_map_texture_key_id(int x,int y)
 {
  return map_textures_ids[x][y].Get_key_id();
@@ -430,6 +435,18 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
               }
           fast_access_special_clues_map_textures.push_back(std::make_pair(x,y));
          }
+     }
+ int number_of_puzzles=0;
+ fscanf(where,"%d ",&number_of_puzzles);
+ for(int i=0;i<number_of_puzzles;i++)
+     {
+      int x,y,_texture;
+      char puzzle_name[TEXT_LENGTH_MAX];
+      fscanf(where,"%d %d %d %d ",&_texture,&x,&y);
+      fgets(puzzle_name,sizeof puzzle_name,where);
+      if(puzzle_name[strlen(puzzle_name)-1]=='\n')
+         puzzle_name[strlen(puzzle_name)-1]=NULL;
+      map_textures_ids[x][y].Set_texture_puzzle_name(_texture,puzzle_name);
      }
  fclose(where);
 }

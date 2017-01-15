@@ -1,0 +1,56 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Shaytaan >
+
+
+<color 125 0 7 >Shaytaan: </color > What have you accomplished, huh? </line >
+<line > Do you realy think you can kill the sorcerer, fool?! </line >
+< flip >
+</page >
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Where is he hiding? Answer, devil! </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Shaytaan >
+
+
+<color 125 0 7 >Shaytaan: </color > Hiding? He's waiting for you... if you can get at him alive... </line >
+<we >
+< flip >
+</page >
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > You will never return to this world! </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+Timy killed the Shaytaan with one mighty blow. </line >
+<line > He poured some salt on the dead body and cast the spell. </line >
+<we >
+< flip >
+</page >
+<page >
+<line >
+
+
+Timy drained all of his vitality and regenerated hp. </line >
+<we >
+< flip >
+<we >
+</page >

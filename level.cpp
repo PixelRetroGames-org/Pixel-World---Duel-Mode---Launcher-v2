@@ -46,6 +46,7 @@ void Level::Clear(bool terminal)
  spell_effects_ids.clear();
  for(int i=0;i<number_of_non_playable_characters;i++)
      non_playable_characters[i].Clear();
+ number_of_non_playable_characters=0;
  skeptic_vision_alpha=0;
  skeptic_vision_on=false;
  SDL_SetAlpha(SKEPTIC_VISION_image,SDL_SRCALPHA,skeptic_vision_alpha);
@@ -932,6 +933,7 @@ void Level::Handle_Event(int _player)
      if(((keystates[player_keys[keys][4]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][4]])) && !player[_player].Is_blocked())
         {
          Trigger_around_player_map(_player);
+         Interact_with_map_textures_around_player(_player);
          Interact_with_NPC_around_player(_player);
          Interact_with_clues_around_player(_player);
          player_time_blocked[_player]=10;
@@ -1143,6 +1145,55 @@ void Level::Trigger_around_player_map(int _player)
               case 4:break;
              }*/
      }
+}
+
+
+void Level::Interact_with_map_textures_around_player(int _player)
+{
+ int dirx[]={1,0,-1,0};
+ int diry[]={0,1,0,-1};
+ int x,y;
+ for(int i=0;i<4;i++)
+     {
+      x=player[_player].Get_map_positionX()+dirx[i];
+      y=player[_player].Get_map_positionY()+diry[i];
+      if(x<0 || x>=arena.Get_number_of_columns() || y<0 || y>=arena.Get_number_of_lines())
+         continue;
+      Interact_with_map_texture(_player,x,y);
+     }
+}
+
+void Level::Interact_with_map_texture(int _player,int x,int y)
+{
+ Script_interpreter script_interpreter;
+ Puzzle puzzle;
+ char aux[TEXT_LENGTH_MAX];
+ switch(arena.Get_map_texture_type(y,x))
+        {
+         case 4:script_interpreter.Start(_screen,"map_texture/Picklock");
+                if((*player[_player].Get_keys())[arena.Get_map_texture_key_id(y,x)]==true)
+                   return;
+                strcpy(aux,"map_texture/");
+                strcat(aux,arena.Get_map_texture_puzzle_name(y,x));
+                puzzle.Set_name(aux);
+                puzzle.Load();
+                if(puzzle.Start(_screen))
+                   {
+                    player[_player].Add_key(arena.Get_map_texture_key_id(y,x));
+                    player[_player].Update();
+                    script_interpreter.Start(_screen,"map_texture/Picklock succeeded");
+                   }
+                else
+                   {
+                    script_interpreter.Start(_screen,"map_texture/Picklock failed");
+                   }
+                break;
+         default:return;
+        }
+ Fast_Reload();
+ SDL_Delay(100);
+ SDL_PumpEvents();
+ reset_lag=true;
 }
 
 void Level::Interact_with_NPC(int _player,int _npc)
