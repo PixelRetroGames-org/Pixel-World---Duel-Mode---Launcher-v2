@@ -1,0 +1,130 @@
+< bckimg background > <page >
+<line >
+
+
+</line >
+< line > The lab is full of dusty books and all kinds of expensive instruments. </line >
+< line > Our hero is sleeping with his head on the desk. He is experimenting </line >
+< line > a spell that let him explore his own mind. The spell will lift only </line >
+< line > when the clock rings, and it should rang a long time ago. </line >
+< line > The clock broke and Timy is still trapped in his own head. </line > 
+< flip >
+< we >
+</page >
+
+<page >
+<line >
+
+
+</line >
+<line > . </line >
+<flip >
+<sleep 400>
+</page >
+<page >
+<line >
+
+
+</line >
+<line > .. </line >
+<flip >
+<sleep 400>
+</page >
+<page >
+<line >
+
+
+</line >
+<line > ... </line >
+<flip >
+<sleep 400>
+</page >
+
+<page >
+<line >
+
+
+</line >
+< line > The earth shook from an eartquaqe and the clock hit the ground with a </line >
+< line > loud metallic noise. </line >
+< flip >
+</page >
+<page >
+<line >
+
+
+</line >
+< line > Timy woke up and jumped from his chair. </line >
+< we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > It worked very well this time! </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > What happened here? </line >
+<we >
+< flip >
+<we >
+</page >
+
+<page >
+<line >
+
+
+</line >
+<line > . </line >
+<flip >
+<sleep 400>
+</page >
+<page >
+<line >
+
+
+</line >
+<line > .. </line >
+<flip >
+<sleep 400>
+</page >
+<page >
+<line >
+
+
+</line >
+<line > ... </line >
+<flip >
+<sleep 400>
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > I should inspect the room! </line >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+</line >
+< line > Use the <color 123 234 50 >arrow keys/WASD</color > to move, <color 123 234 50 >z/RCTRL</color > to interact and <color 123 234 50 >z/RSHIFT</color > to </line >
+< line > use the <color 24 100 200>Skeptic Vision</color >, an ability that will help you find clues.</line >
+<we >
+< flip >
+<we >
+</page >

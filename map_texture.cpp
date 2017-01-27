@@ -32,6 +32,11 @@ void Texture::Set_type(int _type)
  type=_type;
 }
 
+void Texture::Set_light(bool _light)
+{
+ light=_light;
+}
+
 int Texture::Get_id()
 {
  return id;

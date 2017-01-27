@@ -66,7 +66,8 @@ void Level::Set_arena_size()
 {
  arena_size.w=std::min(40*arena.Get_number_of_columns(),840);
  arena_size.h=std::min(40*arena.Get_number_of_lines(),680);
- arena_size.x=(RESOLUTION_X-arena_size.w+(arena_size.w%80==0?-40:0))/2,arena_size.y=40;
+ arena_size.x=(RESOLUTION_X-arena_size.w+(arena_size.w%80==0?-40:0))/2;
+ arena_size.y=(RESOLUTION_Y-arena_size.h+(arena_size.h%80==0?-40:0))/2-4;
 }
 
 void Level::Set_name(char *_name)
@@ -152,7 +153,7 @@ void Level::Load()
     player_name[1][strlen(player_name[1])-1]=NULL;
  player[1].Set_name(player_name[1]);
  player[1].Load();
- if(type==1)
+ if(type!=2)
     player[1].Set_movement_speed(2);
 
  fscanf(where,"%d %d %d ",&player_map_position[1].first,&player_map_position[1].second,&player_type[1]);
@@ -203,7 +204,7 @@ void Level::Load()
 
     }
 
- if(type==1)
+ if(type!=2)
     {
      fscanf(where,"%d ",&number_of_non_playable_characters);
      for(int i=0;i<number_of_non_playable_characters;i++)
@@ -590,7 +591,7 @@ bool Level::Move_player(int _player)
 
 void Level::Move_all_players()
 {
- if(type==1)
+ if(type!=2)
     {
      Move_NPC();
      Interaction_NPC_player(1);
@@ -790,7 +791,7 @@ const int MAP_IMAGE_HEIGHT=21,MAP_IMAGE_WEIGHT=17;
 void Level::Print_Map(int x,int y,SDL_Surface *_screen)
 {
  int mapX=0,mapY=0;
- if(type==1)
+ if(type!=2)
     {
      mapX=std::min(std::max(0,player[1].Get_map_positionX()-(MAP_IMAGE_HEIGHT-1)/2),arena.Get_number_of_columns()-(MAP_IMAGE_HEIGHT));
      mapY=std::min(std::max(0,player[1].Get_map_positionY()-(MAP_IMAGE_WEIGHT-1)/2),arena.Get_number_of_lines()-(MAP_IMAGE_WEIGHT));
@@ -803,7 +804,7 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
  arena.Print_background_Animations(x,y,mapX,mapY,_screen,true,false);
  arena.Print(x,y,mapX,mapY,_screen,true,false);
  arena.Print_Animations(x,y,mapX,mapY,_screen,true,false);
- if(type==1)
+ if(type!=2)
     arena.Print_Clues(x,y,mapX,mapY,_screen,true,false);
  player[1].Print_skin(x,y,mapX,mapY,_screen);
  player[2].Print_skin(x,y,mapX,mapY,_screen);
@@ -817,7 +818,7 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
  arena.Print_background_Animations(x,y,mapX,mapY,_screen,false);
  arena.Print(x,y,mapX,mapY,_screen,false);
  arena.Print_Animations(x,y,mapX,mapY,_screen,false);
- if(type==1)
+ if(type!=2)
     arena.Print_Clues(x,y,mapX,mapY,_screen,false);
 
  SDL_Rect _area=arena_size;
@@ -831,7 +832,7 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
  arena.Print_background_Animations(x,y,mapX,mapY,_screen,true,true);
  arena.Print(x,y,mapX,mapY,_screen,true,true);
  arena.Print_Animations(x,y,mapX,mapY,_screen,true,true);
- if(type==1)
+ if(type!=2)
     arena.Print_Clues(x,y,mapX,mapY,_screen,true,true);
  if(Player_is_on_light(1))
     player[1].Print_skin(x,y,mapX,mapY,_screen);
@@ -846,7 +847,7 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
  arena.Print_background_Animations(x,y,mapX,mapY,_screen,false,true);
  arena.Print(x,y,mapX,mapY,_screen,false,true);
  arena.Print_Animations(x,y,mapX,mapY,_screen,false,true);
- if(type==1)
+ if(type!=2)
     {
      arena.Print_Clues(x,y,mapX,mapY,_screen,false,true);
      if(skeptic_vision_on)
@@ -910,7 +911,7 @@ void Level::Handle_Event(int _player)
  //Spells
  for(int i=1;i<=4 && type==2;i++)
      {
-      if(((keystates[player_keys[keys][i+6]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][i+6]])) && !player[_player].Spell_Is_blocked(i-1)/*&& !player[_player].Is_blocked()*/)
+      if(((keystates[player_keys[keys][i+6]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][i+6]])) && !player[_player].Spell_Is_blocked(i-1)/*&& !player[_player].Is_blocked()*/)
          {
           if(Cast_Spell(_player,i-1))
              player[_player].Block(),player_time_blocked[_player]=10;
@@ -920,17 +921,17 @@ void Level::Handle_Event(int _player)
  player[_player].Set_velocityX(0);
  player[_player].Set_velocityY(0);
 
- if(((keystates[player_keys[keys][0]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][0]])))
+ if(((keystates[player_keys[keys][0]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][0]])))
     Set_player_velocityY(_player,-1);
- if(((keystates[player_keys[keys][1]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][1]])))
+ if(((keystates[player_keys[keys][1]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][1]])))
     Set_player_velocityY(_player,1);
- if(((keystates[player_keys[keys][2]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][2]])))
+ if(((keystates[player_keys[keys][2]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][2]])))
     Set_player_velocityX(_player,-1);
- if(((keystates[player_keys[keys][3]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][3]])))
+ if(((keystates[player_keys[keys][3]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][3]])))
     Set_player_velocityX(_player,1);
- if(type==1)
+ if(type!=2)
     {
-     if(((keystates[player_keys[keys][4]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][4]])) && !player[_player].Is_blocked())
+     if(((keystates[player_keys[keys][4]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][4]])) && !player[_player].Is_blocked())
         {
          Trigger_around_player_map(_player);
          Interact_with_map_textures_around_player(_player);
@@ -949,11 +950,11 @@ void Level::Handle_Event(int _player)
     }
  else
     {
-     if((AUTO_ATTACK || ((keystates[player_keys[keys][4]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][4]]))) && player[_player].Can_attack())
+     if((AUTO_ATTACK || ((keystates[player_keys[keys][4]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][4]]))) && player[_player].Can_attack())
         Player_basic_attack(_player);
-     if(((keystates[player_keys[keys][5]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][5]])) && !player[_player].Is_blocked())
+     if(((keystates[player_keys[keys][5]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][5]])) && !player[_player].Is_blocked())
         player[_player].Use_hp_potion(),player_time_blocked[_player]=10;
-     if(((keystates[player_keys[keys][6]]) || ((player_type[Other_player(_player)]>=1 || type==1) && keystates[player_keys[Other_player(keys)][6]])) && !player[_player].Is_blocked())
+     if(((keystates[player_keys[keys][6]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][6]])) && !player[_player].Is_blocked())
         player[_player].Use_mana_potion(),player_time_blocked[_player]=10;
     }
 
@@ -980,12 +981,12 @@ void Level::Handle_Events(SDL_Surface *_screen)
     {
      Pause_Menu();
     }
- if(keystates[SDLK_j] && type==1)
+ if(keystates[SDLK_j] && type!=2)
     {
      Open_Journal(player[1].Get_progress(),_screen);
     }
  #ifdef GOD_POWERS
- if(type==1)
+ if(type!=2)
     {
      if(keystates[SDLK_INSERT])
         OBSTACLES=!OBSTACLES;
@@ -1440,7 +1441,7 @@ void Level::AI_Block_player(int _player)
 void Level::Pause_Menu()
 {
  Menu menu;
- if(type==1)
+ if(type!=2)
     {
      menu.Load("menu/pause_menu.pwm");
      int option=0;
@@ -1658,7 +1659,7 @@ void Level::Setup(char *_level_name)
  player_time_blocked[1]=player_time_blocked[2]=0;
  player[1].Unblock();
  player[2].Unblock();
- if(type==1)
+ if(type!=2)
     return;
  level_duration.start();
  Set_player_POSX(1,((RESOLUTION_X-840)/2)/2-100);
@@ -1675,6 +1676,16 @@ void Level::Start(SDL_Surface *screen,bool cleanup)
  //Mix_HaltMusic();
  while(play)
        {
+        level_music_overseer=SDL_CreateThread(Level::Oversee_music,NULL);
+        if(type==3)
+           {
+            Script_interpreter _script;
+            char aux[TEXT_LENGTH_MAX]={NULL};
+            strcpy(aux,"level/");
+            strcat(aux,name);
+            SDL_Delay(100);
+            _script.Start(screen,aux,0,0);
+           }
         done=false;
         _screen=screen;
         static_screen=screen;
@@ -1692,7 +1703,6 @@ void Level::Start(SDL_Surface *screen,bool cleanup)
         //Start_music();
         #endif // AUDIO
         int previous_time=current_time.get_ticks(),lag=0;
-        level_music_overseer=SDL_CreateThread(Level::Oversee_music,NULL);
         while(!quit && !done)
               {
                fps.start();
@@ -1807,10 +1817,18 @@ void Launch_Story_Mode(Level *level,SDL_Surface *_screen)
  FILE *where=fopen("saves/gamemodes/Story Mode.pwsav","r");
  if(where==NULL)
     {
-     FILE *log_file=fopen("err/logs.txt","w");
-     fprintf(log_file,"\"saves/gamemodes/Story Mode.pwsav is missing\"");
-     fclose(log_file);
-     exit(5);
+     fclose(where);
+     where=fopen("saves/gamemodes/Story Mode.pwsav","w");
+     fprintf(where,"%d %d\nTimy's Lab\nTimy",5,5);
+     fclose(where);
+     where=fopen("saves/gamemodes/Story Mode.pwsav","r");
+     if(where==NULL)
+        {
+         FILE *log_file=fopen("err/logs.txt","w");
+         fprintf(log_file,"\"saves/gamemodes/Story Mode.pwsav\" is missing");
+         fclose(log_file);
+         exit(5);
+        }
     }
  fscanf(where,"%d %d ",&player_map_position_x,&player_map_position_y);
  fgets(level_name,sizeof level_name,where);

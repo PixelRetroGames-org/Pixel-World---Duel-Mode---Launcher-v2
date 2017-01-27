@@ -346,6 +346,56 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
               Print_image(j*40,i*40,background_map_image[map_textures[background_map_textures_ids[i][j].Get_texture_id()].Get_print_before_player()][map_textures[background_map_textures_ids[i][j].Get_texture_id()].Is_light()],&background_map_textures_ids[i][j]);
           }
      }
+
+ const int dirx[]={0,0,1,0,-1};
+ const int diry[]={0,1,0,-1,0};
+ std::map<std::pair<int,int>,bool> viz,viz_back;
+ std::vector<std::pair<int,int> > new_elements[2],new_elements_background[2];
+ for(int before_player=0;before_player<=1;before_player++)
+     for(std::vector<std::pair<int,int> >::iterator it=fast_access_map_textures_animations[before_player][true].begin();it!=fast_access_map_textures_animations[before_player][true].end();it++)
+         {
+          int i=it->first,j=it->second;
+          for(int dir=0;dir<5;dir++)
+              {
+               map_textures_ids[i+dirx[dir]][j+diry[dir]].Get_all_textures_ids(textures_ids);
+
+               for(std::vector<Map_texture_id>::iterator itt=textures_ids.begin();itt!=textures_ids.end();itt++)
+                   {
+                    if((!map_textures[itt->Get_id()].Is_animation()) && viz.count(std::make_pair(i+dirx[dir],j+diry[dir]))==0)
+                       {
+                        map_textures[itt->Get_id()].Set_light(true);
+                        new_elements[map_textures[itt->Get_id()].Get_print_before_player()].push_back(std::make_pair(i+dirx[dir],j+diry[dir]));
+                        viz[std::make_pair(i+dirx[dir],j+diry[dir])]=true;
+                       }
+                   }
+
+               background_map_textures_ids[i+dirx[dir]][j+diry[dir]].Get_all_textures_ids(textures_ids);
+
+               for(std::vector<Map_texture_id>::iterator itt=textures_ids.begin();itt!=textures_ids.end();itt++)
+                   {
+                    if((!map_textures[itt->Get_id()].Is_animation()) && viz_back.count(std::make_pair(i+dirx[dir],j+diry[dir]))==0)
+                       {
+                        map_textures[itt->Get_id()].Set_light(true);
+                        new_elements_background[map_textures[itt->Get_id()].Get_print_before_player()].push_back(std::make_pair(i+dirx[dir],j+diry[dir]));
+                        viz_back[std::make_pair(i+dirx[dir],j+diry[dir])]=true;
+                       }
+                   }
+              }
+         }
+ for(int before_player=0;before_player<=1;before_player++)
+     {
+      for(std::vector<std::pair<int,int> >::iterator it=new_elements[before_player].begin();it!=new_elements[before_player].end();it++)
+          {
+           fast_access_map_textures_animations[before_player][true].push_back(*it);
+          }
+      for(std::vector<std::pair<int,int> >::iterator it=new_elements_background[before_player].begin();it!=new_elements_background[before_player].end();it++)
+          {
+           fast_access_background_map_textures_animations[before_player][true].push_back(*it);
+          }
+     }
+ viz.clear();
+ viz_back.clear();
+
  int number_of_triggers=0;
  fscanf(where,"%d ",&number_of_triggers);
  for(int i=0;i<number_of_triggers;i++)
