@@ -1,0 +1,19 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > If you want blood, you'll get it! </line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > There are more... </line >
+<we >
+< flip >
+<we >
+</page >

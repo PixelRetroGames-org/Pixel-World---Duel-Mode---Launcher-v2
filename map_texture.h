@@ -24,7 +24,6 @@ class Texture
  void Set_name(char *_name);
  void Set_type(int _type);
  void Set_id(int _id);
- void Set_light(bool _light);
  int Get_id();
  int Get_type();
  bool Get_print_before_player();

@@ -39,7 +39,7 @@ extern SDL_mutex *music_overseer_mutex;
 class Level
 {
  private:
- int type=0,terrain_type=0;
+ int type=0,terrain_type=0,last_terrain_type=0;
  bool done=false;
  int duration=0;
  char name[TEXT_LENGTH_MAX]={NULL};

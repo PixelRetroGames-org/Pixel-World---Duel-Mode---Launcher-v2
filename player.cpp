@@ -144,6 +144,7 @@ void Player::Load()
      life_steal=basic_life_steal;
      money=600;
      keys[1]=progress[1]=true;
+     keys[15]=progress[15]=true;
      Update();
      //Load();
      return;

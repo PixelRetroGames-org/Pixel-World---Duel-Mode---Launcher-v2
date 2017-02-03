@@ -1,0 +1,99 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Who the fuck are you?</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Bandit >
+
+
+<color 125 0 7 >Bandit: </color > How did you get here? We were here first, it's our loot! </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > You have 5 seconds to leave...</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Bandit >
+
+
+<color 125 0 7 >Bandit: </color > Or what? </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > 1 </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > 2 </line >
+<sleep 1000 >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > 3 </line >
+<sleep 1000 >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > 4 </line >
+<sleep 1000 >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > 5 </line >
+<sleep 1000 >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > You die!</line >
+<sleep 1000 >
+< flip >
+<we >
+</page >

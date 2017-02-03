@@ -93,6 +93,8 @@ bool Map::Is_obstacle_pixel(int x,int y)
 
 bool Map::Is_light(int x,int y)
 {
+ if(x>=number_of_lines || x<0 || y<0 || y>=number_of_columns)
+    return false;
  return map_textures[map_textures_ids[x][y].Get_texture_id()].Is_light() || map_textures[background_map_textures_ids[x][y].Get_texture_id()].Is_light();
 }
 
@@ -347,15 +349,15 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
           }
      }
 
- const int dirx[]={0,0,1,0,-1};
- const int diry[]={0,1,0,-1,0};
+ const int dirx[]={0,0,1,0,-1,1,1,-1,-1};
+ const int diry[]={0,1,0,-1,0,1,-1,1,-1};
  std::map<std::pair<int,int>,bool> viz,viz_back;
  std::vector<std::pair<int,int> > new_elements[2],new_elements_background[2];
  for(int before_player=0;before_player<=1;before_player++)
      for(std::vector<std::pair<int,int> >::iterator it=fast_access_map_textures_animations[before_player][true].begin();it!=fast_access_map_textures_animations[before_player][true].end();it++)
          {
           int i=it->first,j=it->second;
-          for(int dir=0;dir<5;dir++)
+          for(int dir=0;dir<9;dir++)
               {
                map_textures_ids[i+dirx[dir]][j+diry[dir]].Get_all_textures_ids(textures_ids);
 
@@ -363,7 +365,6 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
                    {
                     if((!map_textures[itt->Get_id()].Is_animation()) && viz.count(std::make_pair(i+dirx[dir],j+diry[dir]))==0)
                        {
-                        map_textures[itt->Get_id()].Set_light(true);
                         new_elements[map_textures[itt->Get_id()].Get_print_before_player()].push_back(std::make_pair(i+dirx[dir],j+diry[dir]));
                         viz[std::make_pair(i+dirx[dir],j+diry[dir])]=true;
                        }
@@ -375,7 +376,6 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
                    {
                     if((!map_textures[itt->Get_id()].Is_animation()) && viz_back.count(std::make_pair(i+dirx[dir],j+diry[dir]))==0)
                        {
-                        map_textures[itt->Get_id()].Set_light(true);
                         new_elements_background[map_textures[itt->Get_id()].Get_print_before_player()].push_back(std::make_pair(i+dirx[dir],j+diry[dir]));
                         viz_back[std::make_pair(i+dirx[dir],j+diry[dir])]=true;
                        }

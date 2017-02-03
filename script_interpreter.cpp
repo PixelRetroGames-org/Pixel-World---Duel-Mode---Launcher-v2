@@ -180,7 +180,7 @@ void Script_interpreter::Start(int X,int Y)
                {
                 SDL_Color aux;
                 int r,g,b,_x,_y;
-                char audio[TEXT_LENGTH_MAX]={"script/audio/"},aux1[TEXT_LENGTH_MAX]={NULL};
+                char audio[TEXT_LENGTH_MAX]={NULL},aux1[TEXT_LENGTH_MAX]={NULL};
                 int aux2;
                 switch(Get_command_id(command))
                        {
@@ -197,13 +197,17 @@ void Script_interpreter::Start(int X,int Y)
                                 text_color.push(aux);
                                 break;
                         case 3:
-                                fscanf(in," %s ",aux1);
+                                fgets(aux1,sizeof aux1,in);
+                                if(aux1[strlen(aux1)-1]=='\n')
+                                   aux1[strlen(aux1)-1]=NULL;
                                 strcat(audio,aux1);
                                 chunk=Mix_LoadWAV(audio);
                                 Start_line_audio(chunk);
                                 break;
                         case 4:
-                                fscanf(in," %s ",aux1);
+                                fgets(aux1,sizeof aux1,in);
+                                if(aux1[strlen(aux1)-1]=='\n')
+                                   aux1[strlen(aux1)-1]=NULL;
                                 strcat(audio,aux1);
                                 music=Mix_LoadMUS(audio);
                                 Start_background_audio(music); break;

@@ -145,7 +145,8 @@ void Level::Load()
  FILE *where=fopen(path,"r");
  if(where==NULL)
     return;
- int x,y,last_terrain_type=terrain_type;
+ int x,y;
+ last_terrain_type=terrain_type;
  fscanf(where,"%d %d %d ",&type,&terrain_type,&duration);
 
  fgets(player_name[1],sizeof player_name[1],where);
@@ -249,8 +250,6 @@ void Level::Load()
           strcat(path,".mp3");
           level_background_music[i]=Mix_LoadMUS(path);
          }
-     Change_music(1);
-     level_music_time.start();
     }
 
  fclose(where);
@@ -770,19 +769,25 @@ void Level::Time_Pass()
 
 bool Level::Player_is_on_light(int _player)
 {
+ const int dirx[]={0,0,1,0,-1,1,1,-1,-1};
+ const int diry[]={0,1,0,-1,0,1,-1,1,-1};
  bool rtn=arena.Is_light(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
  for(int x=player[_player].Get_map_positionX();x<arena.Get_number_of_columns() && x<player[_player].Get_map_positionX()+(player[_player].Get_skinW())/40;x++)
      for(int y=player[_player].Get_map_positionY();y<arena.Get_number_of_lines() && y<player[_player].Get_map_positionY()+(player[_player].Get_skinH())/40;y++)
-         rtn=(rtn || arena.Is_light(y,x));
+         for(int dir=0;dir<9;dir++)
+             rtn=(rtn || arena.Is_light(y+diry[dir],x+dirx[dir]));
  return rtn;
 }
 
 bool Level::Non_Playable_Character_is_on_light(int _npc_pos)
 {
+ const int dirx[]={0,0,1,0,-1,1,1,-1,-1};
+ const int diry[]={0,1,0,-1,0,1,-1,1,-1};
  bool rtn=arena.Is_light(non_playable_characters[_npc_pos].Get_map_positionY(),non_playable_characters[_npc_pos].Get_map_positionX());
  for(int x=non_playable_characters[_npc_pos].Get_map_positionX();x<arena.Get_number_of_columns() && x<non_playable_characters[_npc_pos].Get_map_positionX()+(non_playable_characters[_npc_pos].Get_skinW())/40;x++)
      for(int y=non_playable_characters[_npc_pos].Get_map_positionY();y<arena.Get_number_of_lines() && y<non_playable_characters[_npc_pos].Get_map_positionY()+(non_playable_characters[_npc_pos].Get_skinH())/40;y++)
-         rtn=(rtn || arena.Is_light(y,x));
+         for(int dir=0;dir<9;dir++)
+             rtn=(rtn || arena.Is_light(y+diry[dir],x+dirx[dir]));
  return rtn;
 }
 
@@ -1676,7 +1681,6 @@ void Level::Start(SDL_Surface *screen,bool cleanup)
  //Mix_HaltMusic();
  while(play)
        {
-        level_music_overseer=SDL_CreateThread(Level::Oversee_music,NULL);
         if(type==3)
            {
             Script_interpreter _script;
@@ -1686,6 +1690,12 @@ void Level::Start(SDL_Surface *screen,bool cleanup)
             SDL_Delay(100);
             _script.Start(screen,aux,0,0);
            }
+        if(terrain_type!=last_terrain_type || type==2)
+           {
+            Change_music(1);
+            level_music_time.start();
+           }
+        level_music_overseer=SDL_CreateThread(Level::Oversee_music,NULL);
         done=false;
         _screen=screen;
         static_screen=screen;
