@@ -1,5 +1,5 @@
-#ifndef SCRIPT_INTERPRETATOR_H
-#define SCRIPT_INTERPRETATOR_H
+#ifndef SCRIPT_INTERPRETER_H
+#define SCRIPT_INTERPRETER_H
 
 #include "library.h"
 #include "load_images.h"
@@ -46,4 +46,4 @@ class Script_interpreter
 
 int Get_command_id(char *_command);
 
-#endif // SCRIPT_INTERPRETATOR_H
+#endif // SCRIPT_INTERPRETER_H

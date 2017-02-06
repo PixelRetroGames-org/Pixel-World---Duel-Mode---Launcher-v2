@@ -545,6 +545,7 @@ bool Level::Move_player(int _player)
         {
          case 2:if((arena.Get_map_texture_map_name(y,x))[0]==NULL)
                    break;
+                Save_gamemode();
                 player[_player].Set_map_position(arena.Get_map_texture_player_pos_x(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()),arena.Get_map_texture_player_pos_y(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()));
                 strcpy(_aux,arena.Get_map_texture_map_name(y,x));
                 arena.Set_name(_aux);
@@ -565,11 +566,13 @@ bool Level::Move_player(int _player)
                 Oversee_music_quit=true;
                 SDL_UnlockMutex(music_overseer_mutex);
                 Change(_aux);
+                Save_gamemode();
                 player[_player].Set_map_position(y1,x1);
                 if(type==2)
                    {
                     Start(_screen);
                     Change(_map_name);
+                    Save_gamemode();
                     player[_player].Set_map_position(x-velocityX,y-velocityY);
                     Change_music(1);
                    }
@@ -1825,6 +1828,17 @@ void Level::Cleanup()
  SDL_Flip(static_screen);
 }
 
+void Level::Save_gamemode()
+{
+ int player_map_position_x,player_map_position_y;
+ FILE *where=fopen("saves/gamemodes/Story Mode.pwsav","w");
+ player_map_position_x=Get_player_map_position_x(1);
+ player_map_position_y=Get_player_map_position_y(1);
+ fprintf(where,"%d %d\n",player_map_position_x,player_map_position_y);
+ fprintf(where,"%s\n%s\n",Get_name(),player[1].Get_name());
+ fclose(where);
+}
+
 ///Launch
 void Launch_Story_Mode(Level *level,SDL_Surface *_screen)
 {
@@ -1835,7 +1849,7 @@ void Launch_Story_Mode(Level *level,SDL_Surface *_screen)
     {
      fclose(where);
      where=fopen("saves/gamemodes/Story Mode.pwsav","w");
-     fprintf(where,"%d %d\nTimy's Lab\nTimy",5,5);
+     fprintf(where,"%d %d\nTimy's Lab\nTimy",14,6);
      fclose(where);
      where=fopen("saves/gamemodes/Story Mode.pwsav","r");
      if(where==NULL)
@@ -1861,13 +1875,7 @@ void Launch_Story_Mode(Level *level,SDL_Surface *_screen)
  level->Setup(level_name);
  level->Set_player_map_position(player_map_position_x,player_map_position_y,1);
  level->Start(_screen,false);
- where=fopen("saves/gamemodes/Story Mode.pwsav","w");
- player_map_position_x=level->Get_player_map_position_x(1);
- player_map_position_y=level->Get_player_map_position_y(1);
- strcpy(level_name,level->Get_name());
- fprintf(where,"%d %d\n",player_map_position_x,player_map_position_y);
- fprintf(where,"%s\n%s\n",level_name,player_name);
- fclose(where);
+ level->Save_gamemode();
  level->Cleanup();
 }
 

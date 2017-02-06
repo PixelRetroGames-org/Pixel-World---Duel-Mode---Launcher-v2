@@ -22,7 +22,7 @@ extern Uint8 *keystates;
 extern const int PLAYER_INFO_POSX,PLAYER_INFO_LAST_POSX;
 extern const int MAP_POSX,MAP_POSY,MAP_LAST_POSX,MAP_LAST_POSY;
 
-#define NUMBER_OF_MAX_KEYS 20
+#define NUMBER_OF_MAX_KEYS 100
 #define TEXT_LENGTH_MAX 101
 
 void atoi(int &n, char s[]);

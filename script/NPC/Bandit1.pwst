@@ -3,7 +3,7 @@
 <img 0 0 Timy >
 
 
-<color 125 0 7 >Timy: </color > Who the fuck are you?</line >
+<color 125 0 7 >Timy: </color > Who the hell are you?</line >
 < flip >
 </page >
 
@@ -34,56 +34,6 @@
 
 <color 125 0 7 >Bandit: </color > Or what? </line >
 <we >
-< flip >
-</page >
-
-<page >
-<line >
-<img 0 0 Timy >
-
-
-<color 125 0 7 >Timy: </color > 1 </line >
-<we >
-< flip >
-</page >
-
-<page >
-<line >
-<img 0 0 Timy >
-
-
-<color 125 0 7 >Timy: </color > 2 </line >
-<sleep 1000 >
-< flip >
-</page >
-
-<page >
-<line >
-<img 0 0 Timy >
-
-
-<color 125 0 7 >Timy: </color > 3 </line >
-<sleep 1000 >
-< flip >
-</page >
-
-<page >
-<line >
-<img 0 0 Timy >
-
-
-<color 125 0 7 >Timy: </color > 4 </line >
-<sleep 1000 >
-< flip >
-</page >
-
-<page >
-<line >
-<img 0 0 Timy >
-
-
-<color 125 0 7 >Timy: </color > 5 </line >
-<sleep 1000 >
 < flip >
 </page >
 

@@ -23,7 +23,7 @@ const int FRAMES_PER_SECOND=27,ARENA_FRAMES_PER_SECOND=16,PLAYER_MOVES_PER_SECON
 
 const int MS_PER_UPDATE=25;
 
-const int MUSIC_PAUSE=5000;
+const int MUSIC_PAUSE=500;
 
 const int NUMBER_OF_NPC_MAX=20;
 
@@ -164,6 +164,7 @@ class Level
  void Setup(char *_level_name);
  void Start(SDL_Surface *_screen,bool cleanup=true);
  void Cleanup();
+ void Save_gamemode();
 };
 
 int Other_player(int _player);
