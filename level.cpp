@@ -67,7 +67,10 @@ void Level::Set_arena_size()
  arena_size.w=std::min(40*arena.Get_number_of_columns(),840);
  arena_size.h=std::min(40*arena.Get_number_of_lines(),680);
  arena_size.x=(RESOLUTION_X-arena_size.w+(arena_size.w%80==0?-40:0))/2;
- arena_size.y=(RESOLUTION_Y-arena_size.h+(arena_size.h%80==0?-40:0))/2-4;
+ if(arena_size.h==680)
+    arena_size.y=40;
+ else
+    arena_size.y=(RESOLUTION_Y-arena_size.h+(arena_size.h%80==0?-40:0))/2-4;
 }
 
 void Level::Set_name(char *_name)
@@ -1364,6 +1367,8 @@ bool Level::Interact_with_clue(int _player,int x,int y)
      player[_player].Update();
      arena.Get_Special_Clue_map_texture(x,y)->Start_action(_screen);
      reset_lag=true;
+     if(arena.Get_Clue_map_texture(x,y)->Get_type()!=0)
+        Fast_Reload();
      return true;
     }
  if(((arena.Get_Clue_map_texture(x,y))->Get_id())==0)
@@ -1373,7 +1378,8 @@ bool Level::Interact_with_clue(int _player,int x,int y)
  player[_player].Update();
  arena.Get_Clue_map_texture(x,y)->Start_action(_screen);
  reset_lag=true;
- Fast_Reload();
+ if(arena.Get_Clue_map_texture(x,y)->Get_type()!=0)
+    Fast_Reload();
  return true;
 }
 

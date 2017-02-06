@@ -1,0 +1,18 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > It's an expensive instrument. </line >
+< flip >
+</page >
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Better not touch it now. </line >
+<we >
+< flip >
+<we >
+</page >

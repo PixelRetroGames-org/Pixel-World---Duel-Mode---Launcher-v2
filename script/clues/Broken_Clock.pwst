@@ -1,0 +1,37 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Broken_Clock >
+
+
+<color 125 0 7 >Timy: </color > It looks like the clock fell... </line >
+< flip >
+</page >
+<page >
+<line >
+<img 0 0 Broken_Clock >
+
+
+<color 125 0 7 >Timy: </color > I was lucky with the earthquake. </line >
+<we >
+< flip >
+</page >
+<page >
+<line >
+<img 0 0 Broken_Clock >
+
+
+<color 125 0 7 >Timy: </color > I should go to the village and find out how much I slept. </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Broken_Clock >
+
+
+<color 125 0 7 >Timy: </color > To the <color 53 205 205 > Teleport Room </color >! </line >
+<we >
+< flip >
+<we >
+</page >

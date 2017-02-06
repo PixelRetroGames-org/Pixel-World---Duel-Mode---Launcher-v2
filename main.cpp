@@ -65,7 +65,7 @@ int main( int argc, char* args[] )
  LAUNCHER_BBACKGROUND.Update_size();
  LAUNCHER_BBACKGROUND.Load_Logo();
  static_screen=screen;
- #define SPLASH_SCREEN
+ //#define SPLASH_SCREEN
  #ifdef SPLASH_SCREEN
  splash_screen_mutex=SDL_CreateMutex();
  SDL_Thread *splash_screen=NULL;

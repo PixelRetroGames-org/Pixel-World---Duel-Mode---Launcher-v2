@@ -3,6 +3,7 @@
 
 #include "library.h"
 #include "settings.h"
+#include "script_interpreter.h"
 #include <bitset>
 
 const int NUMBER_OF_ANSWERS_MAX=10;

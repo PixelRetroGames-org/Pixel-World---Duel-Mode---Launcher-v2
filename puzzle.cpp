@@ -134,11 +134,14 @@ bool Puzzle::Start_Riddle(SDL_Surface *_screen)
  SDL_Color answer_color={102,153,0},title_color={169,57,255},text_color={243,238,120};
  SDL_Surface *text_typed_background_image=make_it_transparent("images/puzzle/riddle_type_background.bmp");
  title_image=TTF_RenderText_Solid(font,title,title_color);
- text_image=TTF_RenderText_Solid(font,text,text_color);
+ text_image=make_it_transparent("images/game/empty.bmp");
+ Script_interpreter script_interpreter;
+ script_interpreter.Start(text_image,text,0,0);
+ //text_image=TTF_RenderText_Solid(font,text,text_color);
  apply_surface(0,0,background_image,_screen);
+ apply_surface(0,0,text_image,_screen);
  apply_surface((RESOLUTION_X-text_typed_background_image->w)/2,title_image->h+10+(RESOLUTION_Y-text_typed_background_image->h)/2,text_typed_background_image,_screen);
  apply_surface((RESOLUTION_X-title_image->w)/2,0,title_image,_screen);
- apply_surface((RESOLUTION_X-text_image->w)/2,title_image->h+12,text_image,_screen);
  SDL_Flip(_screen);
  SDL_EnableUNICODE(SDL_ENABLE);
  SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL);
