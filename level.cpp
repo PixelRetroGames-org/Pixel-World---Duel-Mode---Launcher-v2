@@ -545,7 +545,6 @@ bool Level::Move_player(int _player)
         {
          case 2:if((arena.Get_map_texture_map_name(y,x))[0]==NULL)
                    break;
-                Save_gamemode();
                 player[_player].Set_map_position(arena.Get_map_texture_player_pos_x(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()),arena.Get_map_texture_player_pos_y(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()));
                 strcpy(_aux,arena.Get_map_texture_map_name(y,x));
                 arena.Set_name(_aux);
@@ -554,6 +553,7 @@ bool Level::Move_player(int _player)
                 effects.Clear();
                 effects.Set_name("Empty");
                 effects.Load(player[1].Get_keys());
+                Save_gamemode();
                 return false;
                 break;
          case 3:if((arena.Get_map_texture_map_name(y,x))[0]==NULL)
@@ -566,14 +566,14 @@ bool Level::Move_player(int _player)
                 Oversee_music_quit=true;
                 SDL_UnlockMutex(music_overseer_mutex);
                 Change(_aux);
-                Save_gamemode();
                 player[_player].Set_map_position(y1,x1);
+                Save_gamemode();
                 if(type==2)
                    {
                     Start(_screen);
                     Change(_map_name);
-                    Save_gamemode();
                     player[_player].Set_map_position(x-velocityX,y-velocityY);
+                    Save_gamemode();
                     Change_music(1);
                    }
                 level_music_overseer=SDL_CreateThread(Oversee_music,NULL);
@@ -639,7 +639,7 @@ void Level::Move_NPC()
  for(int i=0;i<number_of_non_playable_characters;i++)
      {
       if(non_playable_characters[i].Is_static() || non_playable_characters[i].Is_blocked())
-         return;
+         continue;
       int x,y;
       x=non_playable_characters[i].Get_map_positionX();
       y=non_playable_characters[i].Get_map_positionY();
@@ -662,7 +662,7 @@ void Level::Move_NPC()
                   }
               }
           if(possible_directions.size()==0)
-             return;
+             continue;
           int poz=rand()%(possible_directions.size());
           if(keep_direction)
              {
