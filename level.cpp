@@ -1306,10 +1306,10 @@ void Level::Interact_with_NPC(int _player,int _npc)
 
 void Level::Interact_with_NPC_around_player(int _player)
 {
- int dirx[]={1,0,-1,0};
- int diry[]={0,1,0,-1};
+ int dirx[]={1,0,-1,0,2,0,-2,0};
+ int diry[]={0,1,0,-1,0,2,0,-2};
  int x,y;
- for(int i=0;i<4;i++)
+ for(int i=0;i<8;i++)
      {
       x=player[_player].Get_map_positionX()+dirx[i];
       y=player[_player].Get_map_positionY()+diry[i];

@@ -1,0 +1,139 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Watchmaker >
+
+
+<color 125 0 7 >Watchmaker: </color >Good day! How can I help you?</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >Greetings! What's the time?</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Watchmaker >
+
+
+<color 125 0 7 >Watchmaker: </color >It's three o'clock, sir.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >And the year?</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Watchmaker >
+
+
+<color 125 0 7 >Watchmaker: </color >It's $year$.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >So I've been missing for ten years!</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >Your clock broke and I woke up 10 years later.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >Don't you remember me? I'm the wizard from the castle. </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Watchmaker >
+
+
+<color 125 0 7 >Watchmaker: </color >I'm so sorry master! We thought you left. </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Watchmaker >
+
+
+<color 125 0 7 >Watchmaker: </color >If there is anything that I can do for you, I'll be glad to help! </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >You can't turn back time, can't you. </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Watchmaker >
+
+
+<color 125 0 7 >Watchmaker: </color >I'm afraid I don't have such powers. </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >I thought so. Farewell...</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >I should check out the town.</line >
+<we >
+< flip >
+<we >
+</page >
