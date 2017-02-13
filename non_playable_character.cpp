@@ -268,6 +268,6 @@ void Non_Playable_Character::Print_skin(int x,int y,int mapX,int mapY,int mapW,i
  if(Get_map_positionX()-mapX+Get_skinW()/40-1>=mapW/40 && Get_map_positionX()-mapX<mapW/40)
     _skin_image_position.w=(mapW/40-(Get_map_positionX()-mapX))*40;
  if(Get_map_positionX()-mapX<0 && Get_map_positionX()-mapX+Get_skinW()/40-1>=0)
-    _skin_image_position.w=(Get_skinW()/40-(-Get_map_positionX()+mapX))*40,_skin_image_position.x=(0-(Get_map_positionX()-mapX))*40;
+    _skin_image_position.w=(Get_skinW()/40-(-Get_map_positionX()+mapX))*40,_skin_image_position.x+=(Get_skinW()/40+(Get_map_positionX()-mapX))*40;
  apply_surface(_skin_image_position.x,_skin_image_position.y,-skin_image_position.x+_skin_image_position.x+x+(map_positionX-mapX)*40,-skin_image_position.y+_skin_image_position.y+y+(map_positionY-mapY)*40,_skin_image_position.w,_skin_image_position.h,skin_image,_screen);
 }
