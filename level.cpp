@@ -1200,6 +1200,8 @@ void Level::Interact_with_map_texture(int _player,int x,int y)
                     script_interpreter.Start(_screen,"map_texture/Picklock failed");
                    }
                 break;
+         case 5:script_interpreter.Start(_screen,"map_texture/Picklock");
+                break;
          default:return;
         }
  Fast_Reload();

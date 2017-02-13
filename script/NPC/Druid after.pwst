@@ -1,0 +1,31 @@
+< bckimg background >
+
+<page >
+<line >
+<img 0 0 Druid >
+
+
+<color 125 0 7 >Druid: </color >Gods guide you! If you need anything else you'll find me here!</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >Yeah, sure...</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > <color 41 181 176 >(whispering) </color >Greedy bastard!..</line >
+<we >
+< flip >
+<we >
+</page >

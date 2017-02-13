@@ -255,10 +255,10 @@ void Non_Playable_Character::Print_skin(int x,int y,int mapX,int mapY,int mapW,i
 {
  if(type==0)
     return;
- if(Get_map_positionX()-mapX>=mapW/40 ||
-    Get_map_positionY()-mapY>=mapH/40 ||
-    Get_map_positionX()-mapX+Get_skinW()/40-1<0 ||
-    Get_map_positionY()-mapY+Get_skinH()/40-1<0)
+ if((Get_map_positionX()-(mapX>0?mapX:0)>=mapW/40) ||
+    (Get_map_positionY()-(mapY>0?mapY:0)>=mapH/40) ||
+    (Get_map_positionX()-(mapX>0?mapX:0)+Get_skinW()/40-1<0) ||
+    (Get_map_positionY()-(mapY>0?mapY:0)+Get_skinH()/40-1<0))
     return;
  SDL_Rect _skin_image_position=skin_image_position;
  if(Get_map_positionY()-mapY+Get_skinH()/40-1>=mapH/40 && Get_map_positionY()-mapY<mapH/40)

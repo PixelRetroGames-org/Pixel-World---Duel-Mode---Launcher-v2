@@ -1,0 +1,61 @@
+< bckimg background >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >Greetings! I've heard that you have what remained of my spell books.</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Druid >
+
+
+<color 125 0 7 >Druid: </color >Good day! I have some tomes but I can only give them to you for a fair price.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >..</line >
+<sleep 400 >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >...</line >
+<sleep 400 >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >Fuck it! I'll pay, show me what you got!</line >
+<sleep 400 >
+< flip >
+<we >
+</page >
