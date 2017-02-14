@@ -59,6 +59,7 @@ class Player
  void Set_money(int _money);
  void Set_experience(int _experience);
  void Load();
+ void Fast_Reload();
  void Update();
  int Buy(int _item_id);
  void Sell(int _item_id);

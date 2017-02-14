@@ -1,0 +1,16 @@
+0 - NULL
+1 - Durin
+2 - Gloin
+3 - Gloin revenge
+4 - Fror
+5 - Durin chill
+6 - Jimli
+7 - Werewolf
+8 - Gloin chill
+9 - Durin chill finish
+10 - Durin superchill
+11 - Fror chill
+12 - Shaytaan
+13 - Lumberjack
+14 - Bridge to the mountains
+15 - Bandit1

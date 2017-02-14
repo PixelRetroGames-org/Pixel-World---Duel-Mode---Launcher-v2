@@ -9,6 +9,7 @@
 #include "shop.h"
 #include "puzzle.h"
 #include "journal.h"
+#include "inventory.h"
 #include<ctime>
 #include<map>
 

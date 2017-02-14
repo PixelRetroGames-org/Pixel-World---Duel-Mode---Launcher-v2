@@ -219,6 +219,17 @@ void Player::Load()
  Set_mental_health(basic_mental_health);
 }
 
+void Player::Fast_Reload()
+{
+ int _map_positionX=map_positionX,_map_positionY=map_positionY;
+ char _name[TEXT_LENGTH_MAX]={NULL};
+ strcpy(_name,name);
+ Clear(true);
+ Set_name(_name);
+ Load();
+ Set_map_position(_map_positionX,_map_positionY);
+}
+
 const int MAX_MONEY=666013,MAX_EXPERIENCE=2000;
 
 void Player::Update()

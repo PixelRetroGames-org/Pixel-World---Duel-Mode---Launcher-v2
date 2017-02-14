@@ -178,7 +178,7 @@ int Shop_Screen::Start(SDL_Surface *screen)
                    player.Print_Character(player.Get_PLAYER_INFO_POSX(),0,screen);
                    player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,true,shop.Get_shop_page_type());
                   }
-               _item_id=player.Start_inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,&event,shop.Get_shop_page_type());;
+               _item_id=player.Start_inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,&event,shop.Get_shop_page_type());
                if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.sym==SDLK_ESCAPE))
                   quit=true;
                switch(message)
@@ -217,10 +217,10 @@ int Shop_Screen::Start(SDL_Surface *screen)
  player.Clear(true);
  shop.Reset();
  shop.Clear();
- while(SDL_PollEvent(&event))
-       SDL_PumpEvents();
  if(event.type==SDL_QUIT)
     return -1;
+ while(SDL_PollEvent(&event))
+       SDL_PumpEvents();
  return 0;
 }
 

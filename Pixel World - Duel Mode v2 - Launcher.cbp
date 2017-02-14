@@ -46,6 +46,8 @@
 		<Unit filename="errors.h" />
 		<Unit filename="interactive_map_texture.cpp" />
 		<Unit filename="interactive_map_texture.h" />
+		<Unit filename="inventory.cpp" />
+		<Unit filename="inventory.h" />
 		<Unit filename="item.cpp" />
 		<Unit filename="item.h" />
 		<Unit filename="journal.cpp" />

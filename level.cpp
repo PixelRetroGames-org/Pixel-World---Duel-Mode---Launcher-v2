@@ -996,6 +996,11 @@ void Level::Handle_Events(SDL_Surface *_screen)
     {
      Open_Journal(player[1].Get_progress(),_screen);
     }
+ if(keystates[SDLK_i] && type!=2)
+    {
+     player_inventory::Print_Inventory(_screen,player[1].Get_name());
+     player[1].Fast_Reload();
+    }
  #ifdef GOD_POWERS
  if(type!=2)
     {
