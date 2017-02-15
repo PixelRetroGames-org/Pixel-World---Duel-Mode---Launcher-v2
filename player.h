@@ -74,9 +74,9 @@ class Player
  int Get_experience();
  void Print_Character(int x,int y,SDL_Surface *_screen);
  void Print_items(int x,int y,SDL_Surface *_screen);
- void Print_Inventory(int x,int y,SDL_Surface *_screen,bool options=true,int type=0);
- void Print_Inventory_equipped_items(int x,int y,SDL_Surface *_screen,bool options=true,int type=1);
- int Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event,int type=0);
+ void Print_Inventory(int x,int y,SDL_Surface *_screen,bool options=true,int type=0,bool allow_sales=true);
+ void Print_Inventory_equipped_items(int x,int y,SDL_Surface *_screen,bool options=true,int type=1,bool allow_sales=true);
+ int Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event,int type=0,bool allow_sales=true);
 
  ///Game
  void Set_hp(int _hp);

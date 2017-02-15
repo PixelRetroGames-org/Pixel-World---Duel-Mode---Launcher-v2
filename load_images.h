@@ -77,6 +77,12 @@ extern bool JOURNAL_IMAGES_LOADED;
 void Load_journal_images();
 void Clear_journal_images();
 
+///INVENTORY
+extern SDL_Surface *INVENTORY_LARROW,*INVENTORY_RARROW;
+extern bool INVENTORY_IMAGES_LOADED;
+void Load_inventory_images();
+void Clear_inventory_images();
+
 ///ALL
 void Load_all_images();
 void Clear_all_images();

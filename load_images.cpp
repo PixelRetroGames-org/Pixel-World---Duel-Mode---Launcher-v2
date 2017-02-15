@@ -40,6 +40,10 @@ bool LEVEL_IMAGES_LOADED;
 SDL_Surface *JOURNAL_ENTRY_BACKGROUND,*JOURNAL_ENTRY_HOVER_BACKGROUND,*JOURNAL_ENTRY_CLICK_BACKGROUND;
 bool JOURNAL_IMAGES_LOADED;
 
+///INVENTORY
+SDL_Surface *INVENTORY_LARROW,*INVENTORY_RARROW;
+bool INVENTORY_IMAGES_LOADED;
+
 ///SETTINGS
 SDL_Surface *SETTINGS_option_background,*SETTINGS_option_background_selected,*SETTINGS_background,*SETTINGS_name;
 bool SETTINGS_IMAGES_LOADED;
@@ -218,6 +222,24 @@ void Clear_journal_images()
  SDL_FreeSurface(JOURNAL_ENTRY_HOVER_BACKGROUND);
 }
 
+void Load_inventory_images()
+{
+ if(INVENTORY_IMAGES_LOADED)
+    return;
+ INVENTORY_IMAGES_LOADED=true;
+ INVENTORY_LARROW=make_it_transparent("images/inventory/left_arrow.bmp");
+ INVENTORY_RARROW=make_it_transparent("images/inventory/right_arrow.bmp");
+}
+
+void Clear_inventory_images()
+{
+ if(!INVENTORY_IMAGES_LOADED)
+    return;
+ INVENTORY_IMAGES_LOADED=false;
+ SDL_FreeSurface(INVENTORY_LARROW);
+ SDL_FreeSurface(INVENTORY_RARROW);
+}
+
 void Load_global_images()
 {
  if(GLOBAL_IMAGES_LOADED)
@@ -303,6 +325,7 @@ void Load_all_images()
  Load_player_images();
  Load_level_images();
  Load_journal_images();
+ Load_inventory_images();
  Load_settings_images();
  Load_script_images();
 }
@@ -315,6 +338,7 @@ void Clear_all_images()
  Clear_player_images();
  Clear_level_images();
  Clear_journal_images();
+ Clear_inventory_images();
  Clear_settings_images();
  Clear_script_images();
 }

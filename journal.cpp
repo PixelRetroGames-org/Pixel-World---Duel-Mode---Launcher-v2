@@ -158,3 +158,8 @@ void Load_Journal()
 {
  journal.Load("Journal");
 }
+
+void Clear_Journal()
+{
+ journal.Clear();
+}

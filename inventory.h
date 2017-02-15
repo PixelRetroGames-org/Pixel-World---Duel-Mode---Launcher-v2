@@ -2,6 +2,8 @@
 #define INVENTORY_H
 
 #include "player.h"
+#include "shop.h"
+#include "load_images.h"
 
 namespace player_inventory
 {

@@ -204,6 +204,8 @@ int main( int argc, char* args[] )
                 case 1:{Graphic_Settings(screen);
                         Save_Settings();
                         LAUNCHER_BBACKGROUND.Update_size();
+                        Clear_Journal();
+                        Load_Journal();
                         main_menu.Load("menu/main_menu.pwm");
                         gamemode_menu.Load("menu/gamemode.pwm");
                         story_menu.Load("menu/story_menu.pwm");
@@ -231,5 +233,6 @@ int main( int argc, char* args[] )
        }
  Clear_all_images();
  Clear_Duel_Mode_effects();
+ Clear_Journal();
  return 0;
 }

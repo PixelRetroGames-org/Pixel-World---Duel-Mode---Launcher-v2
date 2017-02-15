@@ -37,4 +37,6 @@ extern Journal journal;
 
 void Load_Journal();
 
+void Clear_Journal();
+
 #endif // JOURNAL_H

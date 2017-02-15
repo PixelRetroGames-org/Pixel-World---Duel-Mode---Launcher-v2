@@ -486,7 +486,7 @@ void Player::Print_items(int x,int y,SDL_Surface *_screen)
  pos_last_y=y;
 }
 
-void Player::Print_Inventory(int x,int y,SDL_Surface *_screen,bool options,int type)
+void Player::Print_Inventory(int x,int y,SDL_Surface *_screen,bool options,int type,bool allow_sales)
 {
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",15);
  char message[TEXT_LENGTH_MAX]={'x',NULL};
@@ -547,7 +547,8 @@ void Player::Print_Inventory(int x,int y,SDL_Surface *_screen,bool options,int t
                              break;
                      }
              }
-          apply_surface(_x+42,_y+15,INVENTORY_SELL,_screen);
+          if(allow_sales)
+             apply_surface(_x+42,_y+15,INVENTORY_SELL,_screen);
           _x+=110;
           if(_x+110>PLAYER_INFO_LAST_POSX)
              _x=x,_y+=60;
@@ -556,7 +557,7 @@ void Player::Print_Inventory(int x,int y,SDL_Surface *_screen,bool options,int t
  TTF_CloseFont(font);
 }
 
-void Player::Print_Inventory_equipped_items(int x,int y,SDL_Surface *_screen,bool options,int type)
+void Player::Print_Inventory_equipped_items(int x,int y,SDL_Surface *_screen,bool options,int type,bool allow_sales)
 {
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",15);
  char message[TEXT_LENGTH_MAX]={'x',NULL};
@@ -606,7 +607,8 @@ void Player::Print_Inventory_equipped_items(int x,int y,SDL_Surface *_screen,boo
                   apply_surface(_x+40,_y+2,INVENTORY_EQUIPPED,_screen);
                  }
              }
-          apply_surface(_x+42,_y+15,INVENTORY_SELL,_screen);
+          if(allow_sales)
+             apply_surface(_x+42,_y+15,INVENTORY_SELL,_screen);
           _x+=110;
           if(_x+110>PLAYER_INFO_LAST_POSX)
              _x=x,_y+=60;
@@ -615,12 +617,12 @@ void Player::Print_Inventory_equipped_items(int x,int y,SDL_Surface *_screen,boo
  TTF_CloseFont(font);
 }
 
-int Player::Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event,int type)
+int Player::Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event,int type,bool allow_sales)
 {
  inventory_item_click=-1;
  int _x=x,_y=y;
  int mouse_x=event->button.x,mouse_y=event->button.y;
- bool _sell=false,_equip=false;
+ bool _sell=false,_equip=false,_equip_spell=false;
  if(event->type==SDL_MOUSEMOTION || event->type==SDL_MOUSEBUTTONDOWN)
     {
      inventory_item_selected=-1;
@@ -665,6 +667,7 @@ int Player::Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event,in
                                           spells[spell_pos].Clear(true);
                                           spells[spell_pos].Set_id(items_bought[i].Get_spell_id());
                                           spells[spell_pos].Load();
+                                          _equip_spell=true;
                                          }
                                      }
                                 }
@@ -683,17 +686,19 @@ int Player::Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event,in
     inventory_item_click=inventory_item_selected;
  if(inventory_item_click!=-1)
     {
-     if(_sell)
+     if(_sell && allow_sales)
         Sell(inventory_item_click);
      if(_equip)
         Equip(inventory_item_click);
     }
- Print_Character(PLAYER_INFO_POSX,0,_screen);
- Print_Inventory(x,y,_screen,true,type);
+ //Print_Character(PLAYER_INFO_POSX,0,_screen);
+ //Print_Inventory(x,y,_screen,true,type,allow_sales);
  if(_sell)
     return inventory_item_click;
  if(_equip)
     return -inventory_item_click;
+ if(_equip_spell)
+    return 666013;
  return 0;
 }
 
