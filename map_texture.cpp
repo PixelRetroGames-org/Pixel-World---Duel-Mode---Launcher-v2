@@ -77,6 +77,11 @@ int Texture::Get_number_of_frames()
  return number_of_frames;
 }
 
+int Texture::Get_frame_change_delay()
+{
+ return frame_change_delay;
+}
+
 void Texture::Load()
 {
  if(id==0)
@@ -99,7 +104,7 @@ void Texture::Load()
  fscanf(where,"%d ",&_light);
  fscanf(where,"%d ",&_animation);
  obstacle=(bool)_obstacle,light=(bool)_light,animation=(bool)_animation,print_before_player=(int)_print_before_player;
- fscanf(where,"%d ",&power);
+ fscanf(where,"%d %d ",&power,&frame_change_delay);
  buff.Set_id(buff_id);
  buff.Load();
  strcpy(path,"maps/textures/images/");

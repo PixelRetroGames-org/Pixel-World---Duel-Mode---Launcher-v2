@@ -186,7 +186,7 @@ void Map::Decrease_map_texture_id_remaining_time(bool before_player,bool lights)
       if(!map_textures_ids[it->first][it->second].Is_done())
          {
           map_textures_ids[it->first][it->second].Decrease_remaining_duration();
-          map_textures_ids[it->first][it->second].Update_texture_frame(map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_number_of_frames());
+          map_textures_ids[it->first][it->second].Update_texture_frame(map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_number_of_frames(),map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_frame_change_delay());
          }
      }
 }
@@ -198,7 +198,7 @@ void Map::Decrease_background_map_texture_id_remaining_time(bool before_player,b
       if(!map_textures_ids[it->first][it->second].Is_done())
          {
           background_map_textures_ids[it->first][it->second].Decrease_remaining_duration();
-          background_map_textures_ids[it->first][it->second].Update_texture_frame(map_textures[background_map_textures_ids[it->first][it->second].Get_texture_id()].Get_number_of_frames());
+          background_map_textures_ids[it->first][it->second].Update_texture_frame(map_textures[background_map_textures_ids[it->first][it->second].Get_texture_id()].Get_number_of_frames(),map_textures[background_map_textures_ids[it->first][it->second].Get_texture_id()].Get_frame_change_delay());
          }
      }
 }
@@ -210,7 +210,7 @@ void Map::Decrease_clues_map_texture_id_remaining_time(bool before_player,bool l
       if(!map_textures_ids[it->first][it->second].Is_done())
          {
           clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Decrease_remaining_duration();
-          clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Update_texture_frame(map_textures[clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Get_texture_id()].Get_number_of_frames());
+          clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Update_texture_frame(map_textures[clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Get_texture_id()].Get_number_of_frames(),map_textures[clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Get_texture_id()].Get_frame_change_delay());
          }
      }
 }
@@ -231,7 +231,7 @@ void Map::Decrease_special_clues_map_texture_id_remaining_time()
       if(!map_textures_ids[it->first][it->second].Is_done())
          {
           special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Decrease_remaining_duration();
-          special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Update_texture_frame(map_textures[special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Get_texture_id()].Get_number_of_frames());
+          special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Update_texture_frame(map_textures[special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Get_texture_id()].Get_number_of_frames(),map_textures[special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Get_texture_id()].Get_frame_change_delay());
          }
      }
 }

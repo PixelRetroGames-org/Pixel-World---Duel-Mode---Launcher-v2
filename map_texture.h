@@ -15,6 +15,7 @@ class Texture
  int type,damage;
  Buff buff;
  int number_of_frames=1;
+ int frame_change_delay=0;
  int power=0;
  bool print_before_player=false,obstacle=false,light=false,animation=false;
 
@@ -34,6 +35,7 @@ class Texture
  Buff Get_Buff();
  int Get_power();
  int Get_number_of_frames();
+ int Get_frame_change_delay();
  void Load();
  void Print_image(int x,int y,SDL_Surface *_screen,int frame);
 };

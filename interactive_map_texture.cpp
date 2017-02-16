@@ -21,6 +21,11 @@ void Map_texture_id::Set_frame(int _frame)
  frame=_frame;
 }
 
+void Map_texture_id::Set_frame_change_elapsed(int _frame_change_elapsed)
+{
+ frame_change_elapsed=_frame_change_elapsed;
+}
+
 void Map_texture_id::Set_player_map_pos(int x,int y)
 {
  player_map_pos_x=x;
@@ -88,10 +93,15 @@ void Map_texture_id::Decrease_remaining_duration()
     remaining_duration--;
 }
 
-void Map_texture_id::Update_frame(int _number_of_frames)
+void Map_texture_id::Update_frame(int _number_of_frames,int _frame_change_delay)
 {
- frame++;
- frame%=_number_of_frames;
+ frame_change_elapsed++;
+ if(frame_change_elapsed>=_frame_change_delay)
+    {
+     frame++;
+     frame%=_number_of_frames;
+     frame_change_elapsed=0;
+    }
 }
 
 ///Interactive map texture
@@ -181,10 +191,11 @@ void Interactive_map_texture::Load()
  for(int i=0;i<number_of_map_textures_ids_positions;i++)
      {
       int __id,duration;
-      fscanf(where,"%d %d",&__id,&duration);
+      fscanf(where,"%d %d ",&__id,&duration);
       _id.Set_id(__id);
       _id.Set_duration(duration);
       _id.Set_frame(0);
+      _id.Set_frame_change_elapsed(0);
       map_textures_ids.push_back(_id);
      }
  fclose(where);
@@ -267,9 +278,9 @@ void Interactive_map_texture::Decrease_remaining_duration()
  map_textures_ids[current_map_texture_id_position].Decrease_remaining_duration();
 }
 
-void Interactive_map_texture::Update_texture_frame(int _number_of_frames)
+void Interactive_map_texture::Update_texture_frame(int _number_of_frames,int _frame_change_delay)
 {
- map_textures_ids[current_map_texture_id_position].Update_frame(_number_of_frames);
+ map_textures_ids[current_map_texture_id_position].Update_frame(_number_of_frames,_frame_change_delay);
 }
 
 void Interactive_map_texture::Add_target(int x,int y)
