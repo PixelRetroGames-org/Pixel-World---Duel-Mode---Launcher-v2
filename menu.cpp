@@ -153,7 +153,7 @@ int Menu::Start(SDL_Surface *_screen)
         fps.start();
         if(SDL_PollEvent(&event))
            {
-            bool sqq=false;
+            bool event_action=false;
             if(event.type==SDL_MOUSEMOTION)
                {
                 x=event.motion.x;
@@ -162,11 +162,11 @@ int Menu::Start(SDL_Surface *_screen)
                 click_position=-1;
                 for(int i=0;i<number_of_options;i++)
                     {
-                     SDL_Rect sq=options[i].Get_screen_pos();
-                     if(x>=sq.x && x<=sq.x+sq.w && y>=sq.y && y<=sq.y+sq.h)
+                     SDL_Rect rect=options[i].Get_screen_pos();
+                     if(x>=rect.x && x<=rect.x+rect.w && y>=rect.y && y<=rect.y+rect.h)
                         selector_position=i;
                     }
-                sqq=true;
+                event_action=true;
                }
             if(event.type==SDL_MOUSEBUTTONDOWN)
                {
@@ -175,11 +175,11 @@ int Menu::Start(SDL_Surface *_screen)
                 click_position=-1;
                 for(int i=0;i<number_of_options;i++)
                     {
-                     SDL_Rect sq=options[i].Get_screen_pos();
-                     if(x>=sq.x && x<=sq.x+sq.w && y>=sq.y && y<=sq.y+sq.h)
+                     SDL_Rect rect=options[i].Get_screen_pos();
+                     if(x>=rect.x && x<=rect.x+rect.w && y>=rect.y && y<=rect.y+rect.h)
                         click_position=i;
                     }
-                sqq=true;
+                event_action=true;
                }
             if(event.type==SDL_MOUSEBUTTONUP)
                {
@@ -189,18 +189,18 @@ int Menu::Start(SDL_Surface *_screen)
                 selector_position=-1;
                 for(int i=0;i<number_of_options;i++)
                     {
-                     SDL_Rect sq=options[i].Get_screen_pos();
-                     if(x>=sq.x && x<=sq.x+sq.w && y>=sq.y && y<=sq.y+sq.h)
+                     SDL_Rect rect=options[i].Get_screen_pos();
+                     if(x>=rect.x && x<=rect.x+rect.w && y>=rect.y && y<=rect.y+rect.h)
                         selector_position=i;
                     }
                 if(selector_position!=-1 && selector_position==click_position)
                    done=true;
                 click_position=-1;
-                sqq=true;
+                event_action=true;
                }
             if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.sym==SDLK_ESCAPE))
-               quit=true,sqq=true;
-            if(!sqq)
+               quit=true,event_action=true;
+            if(!event_action)
                continue;
            }
         Print_options(_screen);

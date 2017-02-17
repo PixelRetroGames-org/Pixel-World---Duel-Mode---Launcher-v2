@@ -7,6 +7,7 @@
 #include "puzzle.h"
 #include <cstdio>
 #include <ctime>
+#include <cstdlib>
 SDL_Surface *screen;
 
 Script_interpreter script_interpreter;
@@ -19,6 +20,9 @@ Mix_Music *launcher_background_music=NULL;
 
 int main( int argc, char* args[] )
 {
+ ///Random
+ srand((unsigned int)(time(NULL)));
+ ///Random
  if(SDL_Init(SDL_INIT_EVERYTHING)<0)
     {
      FILE *log_file=fopen("err/logs.txt","w");
@@ -41,7 +45,6 @@ int main( int argc, char* args[] )
      fprintf(log_file,"Mix_Init() failed : %s ",Mix_GetError());
      fclose(log_file);
     }
- srand(time(NULL));
  SDL_WM_SetCaption("Pixel World",NULL);
  Set_icon("images/icon.bmp");
  Load_Settings();

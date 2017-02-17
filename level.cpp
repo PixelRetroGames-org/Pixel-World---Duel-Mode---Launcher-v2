@@ -330,6 +330,7 @@ void Level::Unpause_music()
 
 int Level::Change_music(bool play)
 {
+ srand((unsigned int)(time(NULL)));
  if(!MUSIC_MODULE_INIT)
     return 0;
  if(Mix_PlayingMusic()==0)
@@ -1723,7 +1724,6 @@ void Level::Start(SDL_Surface *screen,bool cleanup)
         level_duration.start();
         current_time.start();
         level_music_time.start();
-        srand(time(NULL));
         #ifdef AUDIO
         Change_music(1);
         //Start_music();
