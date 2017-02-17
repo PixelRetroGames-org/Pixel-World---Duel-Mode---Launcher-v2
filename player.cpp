@@ -674,7 +674,7 @@ int Player::Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event,in
                              break;
                      }
 
-              if(mouse_x>=_x+42 && mouse_x<=_x+42+INVENTORY_EQUIP->w && mouse_y>=_y+15 && mouse_y<=_y+15+INVENTORY_EQUIP->h)
+              if(mouse_x>=_x+42 && mouse_x<=_x+42+INVENTORY_EQUIP->w && mouse_y>=_y+3+INVENTORY_EQUIP->h && mouse_y<=_y+3+INVENTORY_EQUIP->h+INVENTORY_EQUIP->h)
                  _sell=true;
               _x+=110;
               if(_x+110>PLAYER_INFO_LAST_POSX)
