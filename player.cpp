@@ -264,10 +264,10 @@ void Player::Update()
       fprintf(where,"%d\n",spells[i].Get_id());
      }
  int number_of_keys=0;
- for(int i=0;i<keys.size();i++)
+ for(int i=0;i<NUMBER_OF_MAX_KEYS;i++)
      number_of_keys+=keys[i];
  fprintf(where,"%d\n",number_of_keys);
- for(int i=0;i<keys.size();i++)
+ for(int i=0;i<NUMBER_OF_MAX_KEYS;i++)
      if(keys[i])
         fprintf(where,"%d\n",i);
  number_of_keys=0;
@@ -1325,9 +1325,6 @@ void Player::Add_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids)
       progress[i]=true;
      }
  //keys|=(*_keys_ids);
- for(int i=0;i<keys.size();i++)
-     fprintf(stderr,"%d",keys[i]==true);
- fprintf(stderr,"\n");
 }
 
 void Player::Remove_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids)
@@ -1336,9 +1333,7 @@ void Player::Remove_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids)
  for(int i=0;i<_keys_ids->size();i++)
      {
       keys[i]=((*_keys_ids)[i])?false:keys[i];
-      fprintf(stderr,"%d",keys[i]==true);
      }
- fprintf(stderr,"\n");
 }
 
 void Player::Remove_key(int _key_id)

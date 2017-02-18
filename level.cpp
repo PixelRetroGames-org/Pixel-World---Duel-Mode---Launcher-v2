@@ -1257,6 +1257,9 @@ void Level::Interact_with_NPC(int _player,int _npc)
  char _map_name[TEXT_LENGTH_MAX]={NULL},_aux[TEXT_LENGTH_MAX]={NULL},afterscript[TEXT_LENGTH_MAX]={NULL};
  strcpy(afterscript,non_playable_characters[_npc].Get_afterscript_name());
  Puzzle puzzle;
+ std::bitset<NUMBER_OF_MAX_KEYS> npc_keys_to_take,npc_keys_to_give;
+ npc_keys_to_give=(*non_playable_characters[_npc].Get_keys());
+ npc_keys_to_take=(*non_playable_characters[_npc].Get_keys_to_take());
  switch(non_playable_characters[_npc].Get_type())
         {
          case 1:player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
@@ -1284,8 +1287,8 @@ void Level::Interact_with_NPC(int _player,int _npc)
                 if(type==2)
                    {
                     Start(_screen,false);
-                    player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
-                    player[_player].Remove_keys(non_playable_characters[_npc].Get_keys_to_take());
+                    player[_player].Add_keys(&npc_keys_to_give);
+                    player[_player].Remove_keys(&npc_keys_to_take);
                     player[_player].Update();
                     Cleanup();
                     Change(_map_name);

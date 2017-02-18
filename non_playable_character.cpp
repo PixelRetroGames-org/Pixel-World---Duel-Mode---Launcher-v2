@@ -13,6 +13,8 @@ void Non_Playable_Character::Clear()
  puzzle_name[0]=NULL;
  std::vector<std::pair<int,int> >().swap(map_accessible_positions);
  chance_to_move=0;
+ keys_to_give.reset();
+ keys_to_take.reset();
  if(skin_image!=NULL)
     SDL_FreeSurface(skin_image);
  skin_image=NULL;
