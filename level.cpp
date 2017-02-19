@@ -1287,14 +1287,18 @@ void Level::Interact_with_NPC(int _player,int _npc)
                 if(type==2)
                    {
                     Start(_screen,false);
-                    player[_player].Add_keys(&npc_keys_to_give);
-                    player[_player].Remove_keys(&npc_keys_to_take);
-                    player[_player].Update();
+                    if(winner==1)
+                       {
+                        player[_player].Add_keys(&npc_keys_to_give);
+                        player[_player].Remove_keys(&npc_keys_to_take);
+                        player[_player].Update();
+                       }
                     Cleanup();
                     Change(_map_name);
                     player[_player].Set_map_position(x,y);
                     Change_music(1);
-                    script_interpreter.Start(_screen,afterscript);
+                    if(winner==1)
+                       script_interpreter.Start(_screen,afterscript);
                    }
                 level_music_overseer=SDL_CreateThread(Oversee_music,NULL);
                 break;
@@ -1528,8 +1532,8 @@ bool Level::Duel_Mode_Finish_Screen(int _player_winner)
         SDL_Delay(100);
        }
  quit=false;
- if(event.key.keysym.sym==SDLK_ESCAPE && (player_type[2]!=0 && winner!=1))
-    exit(0);
+ /*if(event.key.keysym.sym==SDLK_ESCAPE && (player_type[2]!=0 && winner!=1))
+    exit(0);*/
  if(event.key.keysym.sym==SDLK_ESCAPE || (player_type[2]!=0 && winner==1))
     return false;
  return true;

@@ -145,6 +145,14 @@ void Player::Load()
      money=600;
      keys[1]=progress[1]=true;
      keys[15]=progress[15]=true;
+     keys[17]=progress[17]=true;
+     spells[0].Set_id(6);
+     spells[0].Load();
+     spells[0].Unblock();
+     number_of_items=1;
+     number_of_items_bought[44]=1;
+     items_bought[44].Set_id(44);
+     items_bought[44].Load();
      Update();
      //Load();
      return;

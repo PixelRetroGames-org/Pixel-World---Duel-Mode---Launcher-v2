@@ -42,7 +42,7 @@
 <img 0 0 Watchmaker >
 
 
-<color 125 0 7 >Watchmaker: </color >It's $year$.</line >
+<color 125 0 7 >Watchmaker: </color >It's 1253.</line >
 <we >
 < flip >
 </page >
@@ -89,6 +89,39 @@
 
 <page >
 <line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >What happened to the castle? </line >
+<line > I saw a lot of cracks and couldn't get past the blocked doors. </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Watchmaker >
+
+
+<color 125 0 7 >Watchmaker: </color >Much of it collapsed, and once the wall </line >
+<line >fell the thieves broke in... </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >And one of them took my <color 24 100 200>immortality stone</color >. </line >
+<line > That happened soon 'cause I didn't age. </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
 <img 0 0 Watchmaker >
 
 
@@ -102,7 +135,7 @@
 <img 0 0 Timy >
 
 
-<color 125 0 7 >Timy: </color >You can't turn back time, can't you. </line >
+<color 125 0 7 >Timy: </color >You can't turn back time, can't you? </line >
 <we >
 < flip >
 </page >
@@ -132,7 +165,7 @@
 <img 0 0 Timy >
 
 
-<color 125 0 7 >Timy: </color >I should check out the town.</line >
+<color 125 0 7 >Timy: </color >I should check out the town... and get that stone back as quick as possible.</line >
 <we >
 < flip >
 <we >

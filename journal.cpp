@@ -77,7 +77,8 @@ void Journal::Handle_Events(SDL_Event *event)
 void Journal::Print(SDL_Surface *_screen)
 {
  apply_surface(0,0,LEVEL_background_image,_screen);
- journal_entries[current_entry].Print_Page(_screen);
+ if(current_entry!=-1)
+    journal_entries[current_entry].Print_Page(_screen);
  apply_surface((RESOLUTION_X-name_image->w)/2,5,name_image,_screen);
  int X=20,Y=(RESOLUTION_Y-50*number_of_entries)/2;
  for(int i=0;i<number_of_entries;i++)

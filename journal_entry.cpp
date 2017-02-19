@@ -118,7 +118,7 @@ bool Journal_Entry::Is_started(std::bitset<NUMBER_OF_MAX_KEYS> *progress)
 
 bool Journal_Entry::Is_finished(std::bitset<NUMBER_OF_MAX_KEYS> *progress)
 {
- if(beginning_key==-1)
+ if(ending_key==-1)
     return false;
  return ((*progress)[ending_key]==true);
 }
