@@ -7,7 +7,7 @@
 const SDLKey player_keys[3][20]={{},{SDLK_UP,SDLK_DOWN,SDLK_LEFT,SDLK_RIGHT,SDLK_RCTRL,SDLK_j,SDLK_n,SDLK_u,SDLK_i,SDLK_o,SDLK_p,SDLK_RSHIFT},{SDLK_w,SDLK_s,SDLK_a,SDLK_d,SDLK_z,SDLK_BACKQUOTE,SDLK_TAB,SDLK_1,SDLK_2,SDLK_3,SDLK_4,SDLK_x}};
 const int SKEPTIC_VISION_MAX_ALPHA=100;
 
-#define GOD_POWERS
+//#define GOD_POWERS
 
 #ifdef GOD_POWERS
 bool OBSTACLES=true;
@@ -1260,6 +1260,7 @@ void Level::Interact_with_NPC(int _player,int _npc)
  std::bitset<NUMBER_OF_MAX_KEYS> npc_keys_to_take,npc_keys_to_give;
  npc_keys_to_give=(*non_playable_characters[_npc].Get_keys());
  npc_keys_to_take=(*non_playable_characters[_npc].Get_keys_to_take());
+ int npc_lose_posX=non_playable_characters[_npc].Get_lose_posX(),npc_lose_posY=non_playable_characters[_npc].Get_lose_posY();
  switch(non_playable_characters[_npc].Get_type())
         {
          case 1:player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
@@ -1295,7 +1296,10 @@ void Level::Interact_with_NPC(int _player,int _npc)
                        }
                     Cleanup();
                     Change(_map_name);
-                    player[_player].Set_map_position(x,y);
+                    if(winner==1)
+                       player[_player].Set_map_position(x,y);
+                    else
+                       player[_player].Set_map_position(npc_lose_posX,npc_lose_posY);
                     Change_music(1);
                     if(winner==1)
                        script_interpreter.Start(_screen,afterscript);

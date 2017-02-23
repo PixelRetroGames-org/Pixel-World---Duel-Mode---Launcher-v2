@@ -20,6 +20,7 @@ class Non_Playable_Character
  bool is_blocked=false;
  int last_dir=0;
  int range=0;
+ int lose_posX=0,lose_posY=0;
 
  public:
  void Clear();
@@ -44,6 +45,8 @@ class Non_Playable_Character
  char *Get_duel_mode_level_name();
  char *Get_puzzle_name();
  int Get_range();
+ int Get_lose_posX();
+ int Get_lose_posY();
  void Update_skin(int dir);
  void Block();
  void Unblock();

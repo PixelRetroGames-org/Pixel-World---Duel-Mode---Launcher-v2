@@ -20,6 +20,7 @@ void Non_Playable_Character::Clear()
  skin_image=NULL;
  skin_image_position.x=skin_image_position.y=0;
  skin_image_position.w=skin_image_position.h=40;
+ lose_posX=lose_posY=0;
 }
 
 void Non_Playable_Character::Set_name(char *_name)
@@ -130,6 +131,16 @@ int Non_Playable_Character::Get_range()
  return range;
 }
 
+int Non_Playable_Character::Get_lose_posX()
+{
+ return lose_posX;
+}
+
+int Non_Playable_Character::Get_lose_posY()
+{
+ return lose_posY;
+}
+
 void Non_Playable_Character::Update_skin(int dir)
 {
  int dirx[]={1,0,-1,0};
@@ -233,6 +244,7 @@ void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair
                 fgets(afterscript_name,sizeof afterscript_name,where);
                 if(afterscript_name[strlen(afterscript_name)-1]=='\n')
                    afterscript_name[strlen(afterscript_name)-1]=NULL;
+                fscanf(where,"%d %d ",&lose_posX,&lose_posY);
                 break;
          case 4:fgets(puzzle_name,sizeof puzzle_name,where);
                 if(puzzle_name[strlen(puzzle_name)-1]=='\n')

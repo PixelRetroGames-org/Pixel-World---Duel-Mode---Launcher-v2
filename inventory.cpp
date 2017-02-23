@@ -40,7 +40,7 @@ void player_inventory::Print_Inventory(SDL_Surface *screen,char *_player_name)
                 if(player.Get_PLAYER_INFO_POSX()-INVENTORY_LARROW->w<event.button.x && event.button.x<player.Get_PLAYER_INFO_POSX() &&
                    player.Get_pos_last_y()<event.button.y && event.button.y<player.Get_pos_last_y()+INVENTORY_LARROW->h)
                    {
-                    if(type-1>=0)
+                    if(type-1>0)
                        type--,redraw=true;
                    }
                 if(player.Get_PLAYER_INFO_LAST_POSX()<event.button.x && event.button.x<player.Get_PLAYER_INFO_LAST_POSX()+INVENTORY_RARROW->w &&

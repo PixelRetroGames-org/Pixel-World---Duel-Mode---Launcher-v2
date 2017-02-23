@@ -56,18 +56,24 @@ void Journal::Handle_Events(SDL_Event *event)
     {
      if(event->key.keysym.sym==SDLK_UP || event->key.keysym.sym==SDLK_w)
         {
-         current_entry--;
-         if(current_entry<0)
-            current_entry=0;
-         redraw=true;
+         if(current_entry-1>=0 && journal_entries[current_entry-1].Is_in_progress(progress))
+            {
+             current_entry--;
+             if(current_entry<0)
+                current_entry=0;
+             redraw=true;
+            }
          return;
         }
      if(event->key.keysym.sym==SDLK_DOWN || event->key.keysym.sym==SDLK_s)
         {
-         current_entry++;
-         if(current_entry>=number_of_entries)
-            current_entry=number_of_entries-1;
-         redraw=true;
+         if(current_entry+1<=number_of_entries && journal_entries[current_entry+1].Is_in_progress(progress))
+            {
+             current_entry++;
+             if(current_entry>=number_of_entries)
+                current_entry=number_of_entries-1;
+             redraw=true;
+            }
          return;
         }
     }
@@ -106,7 +112,7 @@ void Journal::Start(SDL_Surface *_screen)
         fps.start();
         if(SDL_PollEvent(&event) && !quit)
            {
-            if(event.type==SDL_KEYDOWN && event.key.keysym.sym==SDLK_ESCAPE)
+            if((event.type==SDL_KEYDOWN && event.key.keysym.sym==SDLK_ESCAPE) || (event.type==SDL_KEYDOWN && event.key.keysym.sym==SDLK_j))
                quit=true;
             Handle_Events(&event);
             if(redraw)

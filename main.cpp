@@ -150,11 +150,6 @@ int main( int argc, char* args[] )
                                                                       break;
                                                                      };
                                                               case 1:{
-                                                                      if(shop_screen.Start(screen,"Shop","Timy")==-1)
-                                                                         return 0;
-                                                                      break;
-                                                                     };
-                                                              case 2:{
                                                                       _option=-1;
                                                                       __option=-2;
                                                                       break;

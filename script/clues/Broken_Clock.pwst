@@ -33,5 +33,14 @@
 <color 125 0 7 >Timy: </color > To the <color 53 205 205 > Teleport Room </color >! </line >
 <we >
 < flip >
+</page >
+
+<page >
+<line >
+
+
+Press <color 123 234 50 >j</color > to open the journal and <color 123 234 50 > i </color > to open the inventory.</line >
+<we >
+< flip >
 <we >
 </page >
