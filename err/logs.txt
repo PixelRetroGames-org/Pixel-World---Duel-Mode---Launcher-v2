@@ -1,1 +1,1 @@
-Mix_PlayMusic failed : music parameter was NULL 
+SDL_SetVideoMode failed : No video mode large enough for 1280x800 

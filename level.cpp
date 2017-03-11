@@ -1810,7 +1810,7 @@ void Level::Start(SDL_Surface *screen,bool cleanup)
                play=Duel_Mode_Finish_Screen(winner=(player[1].Get_hp()<=0?2:1));
            }
         player[1].Update();
-        if(type==2)
+        if(type==2 && player_type[2]==0)
            player[2].Update();
         player_time_blocked[1]=player_time_blocked[2]=0;
         player[1].Unblock();
