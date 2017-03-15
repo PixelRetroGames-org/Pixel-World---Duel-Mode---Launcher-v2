@@ -1,5 +1,5 @@
 0 - NULL
-1 - Durin
+1 - Durin *
 2 - Gloin
 3 - Gloin revenge
 4 - Fror
@@ -13,8 +13,13 @@
 12 - Shaytaan
 13 - Lumberjack
 14 - Bridge to the mountains
-15 - Bandit1
+15 - Bandit1 *
 16 - Gloin-chill
-17 - Watchmaker
+17 - Watchmaker *
 18 - Watchmaker1
 19 - Broken Clock
+20 - Yu11 *
+21 - Yukig1
+22 - Yukig12
+23 - Yuzug1 *
+24 - Yukig2

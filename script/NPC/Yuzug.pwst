@@ -1,0 +1,43 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color > Move out of the way, I won!</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Yuzug >
+
+
+
+<color 125 0 7 >Yuzug: </color > After what you did to my brother?</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Yuzug >
+
+
+
+<color 125 0 7 >Yuzug: </color > Fight me if you are brave enough, not my little brother!</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color > So be it!</line >
+<we >
+< flip >
+<we >
+</page >

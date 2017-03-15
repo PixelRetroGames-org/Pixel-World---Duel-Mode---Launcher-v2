@@ -7,7 +7,7 @@
 const SDLKey player_keys[3][20]={{},{SDLK_UP,SDLK_DOWN,SDLK_LEFT,SDLK_RIGHT,SDLK_RCTRL,SDLK_j,SDLK_n,SDLK_u,SDLK_i,SDLK_o,SDLK_p,SDLK_RSHIFT},{SDLK_w,SDLK_s,SDLK_a,SDLK_d,SDLK_z,SDLK_BACKQUOTE,SDLK_TAB,SDLK_1,SDLK_2,SDLK_3,SDLK_4,SDLK_x}};
 const int SKEPTIC_VISION_MAX_ALPHA=100;
 
-//#define GOD_POWERS
+#define GOD_POWERS
 
 #ifdef GOD_POWERS
 bool OBSTACLES=true;
@@ -1276,6 +1276,8 @@ void Level::Interact_with_NPC(int _player,int _npc)
                 player[_player].Set_name(_aux);
                 player[_player].Load();
                 player[_player].Set_map_position(x,y);
+                if(type!=2)
+                   player[_player].Set_movement_speed(2);
                 SDL_Delay(100);
                 SDL_PumpEvents();
                 script_interpreter.Start(_screen,afterscript);
@@ -1349,8 +1351,7 @@ void Level::Interaction_NPC_player(int _player)
 {
  for(int i=0;i<number_of_non_playable_characters;i++)
      {
-      if(non_playable_characters[i].Get_type()==3 &&
-         std::max(std::abs(player[_player].Get_map_positionX()-non_playable_characters[i].Get_map_positionX()),
+      if(std::max(std::abs(player[_player].Get_map_positionX()-non_playable_characters[i].Get_map_positionX()),
                   std::abs(player[_player].Get_map_positionY()-non_playable_characters[i].Get_map_positionY()))<=non_playable_characters[i].Get_range())
          {
           Interact_with_NPC(_player,i);

@@ -253,6 +253,9 @@ void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair
                 if(afterscript_name[strlen(afterscript_name)-1]=='\n')
                    afterscript_name[strlen(afterscript_name)-1]=NULL;
                 break;
+         default:if(!feof(where))
+                    fscanf(where,"%d ",&range);
+                 break;
         }
  fclose(where);
 }
