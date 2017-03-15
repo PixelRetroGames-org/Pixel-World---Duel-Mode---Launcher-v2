@@ -1298,7 +1298,7 @@ void Level::Interact_with_NPC(int _player,int _npc)
                        }
                     Cleanup();
                     Change(_map_name);
-                    if(winner==1)
+                    if(winner==1 || npc_lose_posX==-1 || npc_lose_posY==-1)
                        player[_player].Set_map_position(x,y);
                     else
                        player[_player].Set_map_position(npc_lose_posX,npc_lose_posY);
@@ -1316,6 +1316,11 @@ void Level::Interact_with_NPC(int _player,int _npc)
                     player[_player].Remove_keys(non_playable_characters[_npc].Get_keys_to_take());
                     player[_player].Update();
                     script_interpreter.Start(_screen,afterscript);
+                   }
+                else
+                   {
+                    if(npc_lose_posX!=-1 && npc_lose_posY!=-1)
+                       player[_player].Set_map_position(npc_lose_posX,npc_lose_posY);
                    }
                 break;
         }

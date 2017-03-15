@@ -1,0 +1,66 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Yuzug >
+
+
+
+<color 125 0 7 >Yuzug: </color > Come on, apologize!</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color > Fine, fine, I'm sorry I hurt you.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Yukig >
+
+
+
+<color 125 0 7 >Yukig: </color > I forgive you, but if you want to pass</line >
+<line > you have to answer our riddles. </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color > I don't have time to play with you.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Yuzug >
+
+
+
+<color 125 0 7 >Yuzug: </color > So bad, it's the only way to get further. </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color > Go on, tell the riddle!</line >
+<we >
+< flip >
+<we >
+</page >

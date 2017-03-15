@@ -46,6 +46,8 @@ void Puzzle::Load()
  strcat(path,name);
  strcat(path,".pwp");
  FILE *where=fopen(path,"r");
+ if(where==NULL)
+    return;
  fscanf(where,"%d ",&type);
  fgets(title,sizeof title,where);
  if(title[strlen(title)-1]=='\n')

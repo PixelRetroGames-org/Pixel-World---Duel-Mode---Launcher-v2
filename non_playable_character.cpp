@@ -20,7 +20,8 @@ void Non_Playable_Character::Clear()
  skin_image=NULL;
  skin_image_position.x=skin_image_position.y=0;
  skin_image_position.w=skin_image_position.h=40;
- lose_posX=lose_posY=0;
+ lose_posX=-1;
+ lose_posY=-1;
 }
 
 void Non_Playable_Character::Set_name(char *_name)
@@ -228,6 +229,8 @@ void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair
  fgets(script_name,sizeof script_name,where);
  if(script_name[strlen(script_name)-1]=='\n')
     script_name[strlen(script_name)-1]=NULL;
+ lose_posX=-1;
+ lose_posY=-1;
  switch(type)
         {
          case 2:fgets(shop_name,sizeof shop_name,where);
@@ -252,11 +255,16 @@ void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair
                 fgets(afterscript_name,sizeof afterscript_name,where);
                 if(afterscript_name[strlen(afterscript_name)-1]=='\n')
                    afterscript_name[strlen(afterscript_name)-1]=NULL;
+                fscanf(where,"%d %d ",&lose_posX,&lose_posY);
                 break;
-         default:if(!feof(where))
-                    fscanf(where,"%d ",&range);
-                 break;
+         default:break;
         }
+ if(type!=3)
+    {
+     range=0;
+     if(!feof(where))
+        fscanf(where,"%d ",&range);
+    }
  fclose(where);
 }
 

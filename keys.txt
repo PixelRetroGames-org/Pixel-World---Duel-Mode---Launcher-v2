@@ -22,4 +22,8 @@
 21 - Yukig1
 22 - Yukig12
 23 - Yuzug1 *
-24 - Yukig2
+24 - Yukig211
+25 - Yukig2
+26 - Yuzug2 ->28
+27 - Yukig21
+28 - 

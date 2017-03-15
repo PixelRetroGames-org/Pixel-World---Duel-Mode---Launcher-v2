@@ -20,7 +20,7 @@ class Non_Playable_Character
  bool is_blocked=false;
  int last_dir=0;
  int range=0;
- int lose_posX=0,lose_posY=0;
+ int lose_posX=-1,lose_posY=-1;
 
  public:
  void Clear();
