@@ -27,3 +27,8 @@
 26 - Yuzug2 ->28
 27 - Yukig21
 28 - 
+29 - Teleport Room Door
+30 - Dungeon1 rocks1
+31 - Dungeon1 rocks2
+32 - Dungeon1 rocks3
+33 - Dungeon1 rocks4

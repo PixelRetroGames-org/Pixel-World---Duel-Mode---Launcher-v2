@@ -1395,7 +1395,7 @@ bool Level::Interact_with_clue(int _player,int x,int y)
      player[_player].Update();
      arena.Get_Special_Clue_map_texture(x,y)->Start_action(_screen);
      reset_lag=true;
-     if(arena.Get_Clue_map_texture(x,y)->Get_type()!=0)
+     if(arena.Get_Special_Clue_map_texture(x,y)->Get_type()!=0)
         Fast_Reload();
      return true;
     }
