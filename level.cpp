@@ -834,6 +834,8 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
     arena.Print_Clues(x,y,mapX,mapY,_screen,false);
 
  SDL_Rect _area=arena_size;
+ //_area.x=x;
+ _area.y=y;
  /*_area.h=MAP_IMAGE_HEIGHT*40-mapY*40;
  _area.w=MAP_IMAGE_WEIGHT*40-mapX*40;
  _area.x=x+mapX*40;
