@@ -4,8 +4,26 @@
 
 
 <color 125 0 7 >Timy: </color >He was killed by the <color 125 0 7 >werewolf</color >.</line >
-<line > It's good that I killed the beast before it could eat the body.</line >
-<line > I should go back to the tavern...</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Dead_Dwarf >
+
+
+<color 125 0 7 >Timy: </color >It's good that I killed the beast before it could eat the body.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Dead_Dwarf >
+
+
+<color 125 0 7 >Timy: </color > I should go back to the tavern...</line >
+<we >
 < flip >
 <we >
 </page >

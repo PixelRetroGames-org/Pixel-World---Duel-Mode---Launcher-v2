@@ -526,7 +526,11 @@ bool Level::Move_player(int _player)
      return false;
     }
  Buff aux;
- aux=arena.Get_map_texture_Buff(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
+ for(int x=player[_player].Get_map_positionX();aux.Get_id()==0 && x<player[_player].Get_map_positionX()+player[_player].Get_skinW()/40;x++)
+     {
+      for(int y=player[_player].Get_map_positionY();aux.Get_id()==0 && y<player[_player].Get_map_positionY()+player[_player].Get_skinH()/40;y++)
+          aux=arena.Get_map_texture_Buff(y,x);
+     }
  aux.Set_damage(aux.Get_damage()+((aux.Get_damage()/100)*player[Other_player(_player)].Get_spell_damage()));
  player[_player].Add_buff(aux);
  player[_player].Add_key(arena.Get_map_texture_key_id(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()));
@@ -1003,6 +1007,7 @@ void Level::Handle_Events(SDL_Surface *_screen)
     {
      player_inventory::Print_Inventory(_screen,player[1].Get_name());
      player[1].Fast_Reload();
+     player[1].Set_movement_speed(2);
     }
  #ifdef GOD_POWERS
  if(type!=2)
@@ -1424,8 +1429,11 @@ void Level::AI_Make_Move_player(int _player)
  player[_player].Set_velocityY(0);
  if(player[_player].Is_blocked())
     return;
+ int range=0;
+ int time[4]={0,0,0,0};
  switch(player_type[_player])
         {
+         ///The Greed
          case 1:
                 {
                  player[_player].Set_velocityX((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())>0?1:-1);
@@ -1448,6 +1456,77 @@ void Level::AI_Make_Move_player(int _player)
          ///Werewolf
          case 2:
                 {
+                 range=4;
+                 time[0]=12800;
+                 time[1]=12800;
+                 if(player[_player].counter==-1)
+                    {
+                     for(int i=0;i<4;i++)
+                         player[_player].spell_timer[i].start();
+                     player[_player].counter=0;
+                    }
+                 player[_player].Set_velocityX((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())>0?1:-1);
+                 player[_player].Set_velocityY((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())>0?1:-1);
+                 if((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==0)
+                    player[_player].Set_velocityX(0);
+                 if((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==0)
+                    player[_player].Set_velocityY(0);
+                 if((std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==1 &&
+                    std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==0) ||
+                    (std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==0 &&
+                    std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==1))
+                    player[_player].Set_velocityX(0),player[_player].Set_velocityY(0);
+                 if(player[_player].Get_hp()<=200)
+                    {
+                     if(player[Other_player(_player)].Get_map_positionX()<player[_player].Get_map_positionX()-range)
+                        player[_player].Set_velocityX(1);
+                     if(player[Other_player(_player)].Get_map_positionX()>player[_player].Get_map_positionX()+player[_player].Get_skinW()/40+range)
+                        player[_player].Set_velocityX(-1);
+                     if(player[Other_player(_player)].Get_map_positionX()>=player[_player].Get_map_positionX()-range &&
+                        player[Other_player(_player)].Get_map_positionX()<=player[_player].Get_map_positionX()+player[_player].Get_skinW()/40+range)
+                        {
+                         if(player[Other_player(_player)].Get_map_positionX()<std::abs(arena.Get_number_of_columns()-player[Other_player(_player)].Get_map_positionX()))
+                            player[_player].Set_velocityX(1);
+                         else
+                            player[_player].Set_velocityX(-1);
+                        }
+                     if(player[Other_player(_player)].Get_map_positionY()<player[_player].Get_map_positionY()-range)
+                        player[_player].Set_velocityY(1);
+                     if(player[Other_player(_player)].Get_map_positionY()>player[_player].Get_map_positionY()+player[_player].Get_skinH()/40+range)
+                        player[_player].Set_velocityY(-1);
+                     if(player[Other_player(_player)].Get_map_positionY()>=player[_player].Get_map_positionY()-range &&
+                        player[Other_player(_player)].Get_map_positionY()<=player[_player].Get_map_positionY()+player[_player].Get_skinH()/40+range)
+                        {
+                         if(player[Other_player(_player)].Get_map_positionY()<std::abs(arena.Get_number_of_columns()-player[Other_player(_player)].Get_map_positionY()))
+                            player[_player].Set_velocityY(1);
+                         else
+                            player[_player].Set_velocityY(-1);
+                        }
+                    }
+                 //player[_player].Block();
+                 //player_time_blocked[_player]=10;
+                 if(player[_player].Can_attack())
+                    Player_basic_attack(_player);
+                 if(player[_player].spell_timer[player[_player].counter].get_ticks()>=time[player[_player].counter])
+                    {
+                     Cast_Spell(_player,player[_player].counter);
+                     player[_player].spell_timer[player[_player].counter].start();
+                     player[_player].counter++;
+                     player[_player].counter%=2;
+                    }
+                 break;
+                }
+         ///Yukig
+         case 3:
+                {
+                 range=2;
+                 time[0]=14000;
+                 if(player[_player].counter==-1)
+                    {
+                     for(int i=0;i<4;i++)
+                         player[_player].spell_timer[i].start();
+                     player[_player].counter=0;
+                    }
                  player[_player].Set_velocityX((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())>0?1:-1);
                  player[_player].Set_velocityY((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())>0?1:-1);
                  if((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==0)
@@ -1463,7 +1542,99 @@ void Level::AI_Make_Move_player(int _player)
                  //player_time_blocked[_player]=10;
                  if(player[_player].Can_attack())
                     Player_basic_attack(_player);
-                 Cast_Spell(_player,0);
+                 if((player[_player].spell_timer[player[_player].counter].get_ticks()>=time[player[_player].counter] &&
+                    std::max(std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX()),
+                    std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY()))<=range))
+                    {
+                     if(player[_player].counter==-1)
+                        player[_player].counter=0;
+                     Cast_Spell(_player,player[_player].counter);
+                     player[_player].spell_timer[player[_player].counter].start();
+                     player[_player].counter++;
+                     player[_player].counter%=1;
+                    }
+                 break;
+                }
+         ///Yuzug
+         case 4:
+                {
+                 range=2;
+                 time[0]=14000;
+                 time[1]=14000;
+                 if(player[_player].counter==-1)
+                    {
+                     for(int i=0;i<4;i++)
+                         player[_player].spell_timer[i].start();
+                     player[_player].counter=0;
+                    }
+                 player[_player].Set_velocityX((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())>0?1:-1);
+                 player[_player].Set_velocityY((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())>0?1:-1);
+                 if((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==0)
+                    player[_player].Set_velocityX(0);
+                 if((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==0)
+                    player[_player].Set_velocityY(0);
+                 if((std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==1 &&
+                    std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==0) ||
+                    (std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==0 &&
+                    std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==1))
+                    player[_player].Set_velocityX(0),player[_player].Set_velocityY(0);
+                 //player[_player].Block();
+                 //player_time_blocked[_player]=10;
+                 if(player[_player].Can_attack())
+                    Player_basic_attack(_player);
+                 if((player[_player].spell_timer[player[_player].counter].get_ticks()>=time[player[_player].counter] &&
+                    std::max(std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX()),
+                    std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY()))<=range))
+                    {
+                     Cast_Spell(_player,player[_player].counter);
+                     player[_player].spell_timer[player[_player].counter].start();
+                     player[_player].counter++;
+                     player[_player].counter%=2;
+                    }
+                 break;
+                }
+         ///Wizard12
+         case 5:
+                {
+                 range=2;
+                 time[0]=3000;
+                 time[1]=2000;
+                 time[2]=1000;
+                 if(player[_player].counter==-1)
+                    {
+                     for(int i=0;i<4;i++)
+                         player[_player].spell_timer[i].start();
+                     player[_player].counter=0;
+                    }
+                 player[_player].Set_velocityX((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())>0?1:-1);
+                 player[_player].Set_velocityY((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())>0?1:-1);
+                 if((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==0)
+                    player[_player].Set_velocityX(0);
+                 if((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==0)
+                    player[_player].Set_velocityY(0);
+                 if((std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==1 &&
+                    std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==0) ||
+                    (std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==0 &&
+                    std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==1))
+                    player[_player].Set_velocityX(0),player[_player].Set_velocityY(0);
+                 if(player[_player].Can_attack())
+                    Player_basic_attack(_player);
+                 if(player[_player].spell_timer[player[_player].counter].get_ticks()>=time[player[_player].counter] &&
+                    std::max(std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX()),
+                    std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY()))<=range)
+                    {
+                     Cast_Spell(_player,player[_player].counter);
+                     if(player[_player].counter<=1)
+                        {
+                         player[_player].Block();
+                         player_time_blocked[_player]=70;
+                         if(player[_player].counter==1)
+                            player_time_blocked[_player]+=250;
+                        }
+                     player[_player].spell_timer[player[_player].counter].start();
+                     player[_player].counter++;
+                     player[_player].counter%=3;
+                    }
                  break;
                 }
         }

@@ -47,7 +47,9 @@ class Player
  std::bitset<NUMBER_OF_MAX_KEYS> keys,progress;
  bool is_immortal=false;
  int number_of_wins=0;
- ///Game
+ ///AI
+ public: Timer spell_timer[4],attack_timer,spell_cast_timer;
+ public: int counter=-1;
 
  public:
  Player();

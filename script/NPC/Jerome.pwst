@@ -1,0 +1,69 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Jerome >
+
+
+<color 125 0 7 >Jerome: </color > So you are an adventurer like me and my friend?</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > I like to call myself so!</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Jerome >
+
+
+<color 125 0 7 >Jerome: </color > How many beast have you slain, how many princess have you saved?</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > I'm more of a pacifist. I kill only if I don't have another option.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Jerome >
+
+
+<color 125 0 7 >Jerome: </color > You, my friend, you are a strange man.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Just when I'm mortal.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Jerome >
+
+
+<color 125 0 7 >Jerome: </color > Cheers!</line >
+<we >
+< flip >
+<we >
+</page >

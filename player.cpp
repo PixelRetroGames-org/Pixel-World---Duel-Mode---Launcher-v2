@@ -62,6 +62,7 @@ void Player::Clear(bool _delete)
  map_positionX=map_positionY=-10;
  keys.reset();
  progress.reset();
+ counter=-1;
 }
 
 void Player::Set_name(char *_name)

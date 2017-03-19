@@ -1,0 +1,89 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Asmund >
+
+
+<color 125 0 7 >Asmund: </color > I like your weapons, friend.</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > I like yours. How did you get them?</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Asmund >
+
+
+<color 125 0 7 >Asmund: </color > We had to run from an angry dragon, and we left the equipment behind.</line >
+<we >
+< flip >
+</page >
+
+page >
+<line >
+<img 0 0 Asmund >
+
+
+<color 125 0 7 >Asmund: </color > When we got here, we had to buy new ones from the blacksmith.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > I should pay him a visit.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Asmund >
+
+
+<color 125 0 7 >Asmund: </color > You always need weapons, as you need beer!</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Asmund >
+
+
+<color 125 0 7 >Asmund: </color > We shall meet in Valhalla!</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > If I don't hurry, I'll be there before you.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Farewell.</line >
+<we >
+< flip >
+<we >
+</page >

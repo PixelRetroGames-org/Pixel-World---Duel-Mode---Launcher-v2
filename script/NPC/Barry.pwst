@@ -1,0 +1,69 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Barry >
+
+
+<color 125 0 7 >Barry: </color > Our druid always quarrel us. He says that we should work instead of drinking.</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Where is this druid?</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Barry >
+
+
+<color 125 0 7 >Barry: </color > He is in <color 53 205 205 >The Glade of Light</color >, north-west of the village.</line >
+<we >
+< flip >
+</page >
+
+page >
+<line >
+<img 0 0 Barry >
+
+
+<color 125 0 7 >Barry: </color > We don't like him, but he's the only one who can cast spells. </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > I should ask him if he found my spell book.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Thanks!</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Barry >
+
+
+<color 125 0 7 >Barry: </color > Bye!</line >
+<we >
+< flip >
+<we >
+</page >

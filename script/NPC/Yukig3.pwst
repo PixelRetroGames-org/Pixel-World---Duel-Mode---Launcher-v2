@@ -1,0 +1,75 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Yukig >
+
+
+
+<color 125 0 7 >Yukig: </color > We agreed to let you pass if you promise to </line >
+<line > visit us and play together.</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Yuzug >
+
+
+
+<color 125 0 7 >Yuzug: </color > What do you say?</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color > Fine, I promise!</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color > Thank you!</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Yuzug >
+
+
+
+<color 125 0 7 >Yuzug: </color > Farewell!</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+
+<color 125 0 7 >Timy: </color > They aren't that stupid at all. </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+
+<color 125 0 7 >Timy: </color > You can't judge a book by its cover... </line >
+<we >
+< flip >
+<we >
+</page >
