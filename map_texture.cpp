@@ -62,6 +62,11 @@ bool Texture::Is_animation()
  return animation;
 }
 
+bool Texture::Is_trigger()
+{
+ return is_trigger;
+}
+
 Buff Texture::Get_Buff()
 {
  return buff;
@@ -107,6 +112,8 @@ void Texture::Load()
  fscanf(where,"%d ",&power);
  if(!feof(where))
     fscanf(where,"%d ",&frame_change_delay);
+ if(!feof(where))
+    fscanf(where,"%d ",&is_trigger);
  buff.Set_id(buff_id);
  buff.Load();
  strcpy(path,"maps/textures/images/");

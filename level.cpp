@@ -1137,6 +1137,8 @@ void Level::Trigger_player_map(int _player)
     return;
  if(arena.Get_type(player[_player].Get_map_positionY(),player[_player].Get_map_positionX())!=1)
     return;
+ if(!arena.Is_Trigger(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()))
+    return;
  arena.Trigger(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
 }
 
@@ -1157,7 +1159,8 @@ void Level::Trigger_around_player_map(int _player)
       y=player[_player].Get_map_positionY()+diry[i];
       if(x<0 || x>=arena.Get_number_of_columns() || y<0 || y>=arena.Get_number_of_lines())
          continue;
-      arena.Trigger(y,x);
+      if(arena.Is_Trigger(y,x))
+         arena.Trigger(y,x);
       /*int x,y,x1,y1,velocityX,velocityY;
       char _map_name[TEXT_LENGTH_MAX]={NULL};
       switch(arena.Get_map_texture_type(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()))

@@ -1,0 +1,55 @@
+< bckimg background > <page >
+<line >
+
+
+Timy ran enraged with his sword ready to finish the weakened wizard.</line >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+Suddenly, the wizard dissapeared.</line >
+<we >
+< flip >
+</page >
+ 
+<page >
+<line >
+
+
+<color 125 0 7 >Wizard: </color > You won this time...</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+<color 125 0 7 >Wizard: </color > But it won't happen again!</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > He fled.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > I should find another entrance in this dungeon.</line >
+<we >
+< flip >
+<we >
+</page >

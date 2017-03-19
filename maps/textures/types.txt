@@ -1,0 +1,7 @@
+0
+1
+2
+3 - Change level
+4 - Puzzled Door
+5 - Blocked Door
+6 - Trigger

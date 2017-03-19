@@ -1,0 +1,39 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Hey! Give me back the stone!</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Wizard >
+
+
+<color 125 0 7 >Wizard: </color > Ha ha ha! What will you do about it?</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Wizard >
+
+
+<color 125 0 7 >Wizard: </color > You're a mere mortal!</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Not for long...</line >
+<we >
+< flip >
+<we >
+</page >

@@ -98,6 +98,13 @@ bool Map::Is_light(int x,int y)
  return map_textures[map_textures_ids[x][y].Get_texture_id()].Is_light() || map_textures[background_map_textures_ids[x][y].Get_texture_id()].Is_light();
 }
 
+bool Map::Is_Trigger(int x,int y)
+{
+ if(x>=number_of_lines || x<0 || y<0 || y>=number_of_columns)
+    return false;
+ return map_textures[map_textures_ids[x][y].Get_texture_id()].Is_trigger();
+}
+
 char *Map::Get_name()
 {
  return name;

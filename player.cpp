@@ -152,6 +152,8 @@ void Player::Load()
      keys[35]=progress[35]=true;
      keys[36]=progress[36]=true;
      keys[37]=progress[37]=true;
+     keys[38]=progress[38]=true;
+     keys[41]=progress[41]=true;
      spells[0].Set_id(6);
      spells[0].Load();
      spells[0].Unblock();

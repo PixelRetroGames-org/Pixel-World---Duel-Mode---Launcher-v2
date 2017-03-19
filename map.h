@@ -57,6 +57,7 @@ class Map
  void Decrease_special_clues_map_texture_id_remaining_time();
  void Update_all_frames();
  bool Is_done();
+ bool Is_Trigger(int x,int y);
  void Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys);
  void Copy(int x,int y,Map *source);
  void Print(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights=false);

@@ -56,22 +56,29 @@ void Journal::Handle_Events(SDL_Event *event)
     {
      if(event->key.keysym.sym==SDLK_UP || event->key.keysym.sym==SDLK_w)
         {
-         if(current_entry-1>=0 && journal_entries[current_entry-1].Is_in_progress(progress))
+         if(current_entry-1>=0)
             {
              current_entry--;
              if(current_entry<0)
                 current_entry=0;
+             while(!journal_entries[current_entry].Is_in_progress(progress) && current_entry>0)
+                   current_entry--;
              redraw=true;
             }
          return;
         }
      if(event->key.keysym.sym==SDLK_DOWN || event->key.keysym.sym==SDLK_s)
         {
-         if(current_entry+1<=number_of_entries && journal_entries[current_entry+1].Is_in_progress(progress))
+         if(current_entry+1<=number_of_entries)
             {
+             int cpy=current_entry;
              current_entry++;
              if(current_entry>=number_of_entries)
                 current_entry=number_of_entries-1;
+             while(!journal_entries[current_entry].Is_in_progress(progress) && current_entry<number_of_entries-1)
+                   current_entry++;
+             if(!journal_entries[current_entry].Is_in_progress(progress))
+                current_entry=cpy;
              redraw=true;
             }
          return;

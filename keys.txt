@@ -32,3 +32,13 @@
 31 - Dungeon1 rocks2
 32 - Dungeon1 rocks3
 33 - Dungeon1 rocks4
+34 - Dungeon1 switch1
+35 - Dungeon1 switch2
+36 - Dungeon1 switch3
+37 - Dungeon1 switch4
+38 - Dungeon12 switch1
+39 - Dungeon12 rocks1
+40 - Dungeon13 Door
+41 - Wizard11 *
+42 - Wizard12
+43 - Dungeon2
