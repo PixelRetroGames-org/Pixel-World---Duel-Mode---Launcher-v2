@@ -48,8 +48,8 @@ class Player
  bool is_immortal=false;
  int number_of_wins=0;
  ///AI
- public: Timer spell_timer[4],attack_timer,spell_cast_timer;
- public: int counter=-1;
+ Timer spell_timer[4],attack_timer;
+ int counter=-1;
 
  public:
  Player();
@@ -162,6 +162,13 @@ class Player
  ///Score
  void Increase_number_of_wins();
  int Get_number_of_wins();
+ ///AI
+ void Start_spell_timer(int _spell_id);
+ int Get_spell_timer_ticks(int _spell_id);
+ void Start_attack_timer();
+ int Get_attack_timer_ticks();
+ void Set_counter(int _counter);
+ int Get_counter();
 };
 
 #endif //PLAYER_H

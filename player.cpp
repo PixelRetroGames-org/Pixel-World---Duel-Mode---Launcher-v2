@@ -1380,3 +1380,34 @@ int Player::Get_number_of_wins()
 {
  return number_of_wins;
 }
+
+ ///AI
+void Player::Start_spell_timer(int _spell_id)
+{
+ spell_timer[_spell_id].start();
+}
+
+int Player::Get_spell_timer_ticks(int _spell_id)
+{
+ return spell_timer[_spell_id].get_ticks();
+}
+
+void Player::Start_attack_timer()
+{
+ attack_timer.start();
+}
+
+int Player::Get_attack_timer_ticks()
+{
+ return attack_timer.get_ticks();
+}
+
+void Player::Set_counter(int _counter)
+{
+ counter=_counter;
+}
+
+int Player::Get_counter()
+{
+ return counter;
+}

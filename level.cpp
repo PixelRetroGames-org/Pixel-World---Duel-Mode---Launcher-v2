@@ -1459,11 +1459,11 @@ void Level::AI_Make_Move_player(int _player)
                  range=4;
                  time[0]=12800;
                  time[1]=12800;
-                 if(player[_player].counter==-1)
+                 if(player[_player].Get_counter()==-1)
                     {
                      for(int i=0;i<4;i++)
-                         player[_player].spell_timer[i].start();
-                     player[_player].counter=0;
+                         player[_player].Start_spell_timer(i);
+                     player[_player].Set_counter(0);
                     }
                  player[_player].Set_velocityX((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())>0?1:-1);
                  player[_player].Set_velocityY((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())>0?1:-1);
@@ -1507,12 +1507,12 @@ void Level::AI_Make_Move_player(int _player)
                  //player_time_blocked[_player]=10;
                  if(player[_player].Can_attack())
                     Player_basic_attack(_player);
-                 if(player[_player].spell_timer[player[_player].counter].get_ticks()>=time[player[_player].counter])
+                 if(player[_player].Get_spell_timer_ticks(player[_player].Get_counter())>=time[player[_player].Get_counter()])
                     {
-                     Cast_Spell(_player,player[_player].counter);
-                     player[_player].spell_timer[player[_player].counter].start();
-                     player[_player].counter++;
-                     player[_player].counter%=2;
+                     Cast_Spell(_player,player[_player].Get_counter());
+                     player[_player].Start_spell_timer(player[_player].Get_counter());
+                     player[_player].Set_counter(player[_player].Get_counter()+1);
+                     player[_player].Set_counter(player[_player].Get_counter()%2);
                     }
                  break;
                 }
@@ -1521,11 +1521,11 @@ void Level::AI_Make_Move_player(int _player)
                 {
                  range=2;
                  time[0]=14000;
-                 if(player[_player].counter==-1)
+                 if(player[_player].Get_counter()==-1)
                     {
                      for(int i=0;i<4;i++)
-                         player[_player].spell_timer[i].start();
-                     player[_player].counter=0;
+                         player[_player].Start_spell_timer(i);
+                     player[_player].Set_counter(0);
                     }
                  player[_player].Set_velocityX((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())>0?1:-1);
                  player[_player].Set_velocityY((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())>0?1:-1);
@@ -1542,16 +1542,16 @@ void Level::AI_Make_Move_player(int _player)
                  //player_time_blocked[_player]=10;
                  if(player[_player].Can_attack())
                     Player_basic_attack(_player);
-                 if((player[_player].spell_timer[player[_player].counter].get_ticks()>=time[player[_player].counter] &&
+                 if((player[_player].Get_spell_timer_ticks(player[_player].Get_counter())>=time[player[_player].Get_counter()] &&
                     std::max(std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX()),
                     std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY()))<=range))
                     {
-                     if(player[_player].counter==-1)
-                        player[_player].counter=0;
-                     Cast_Spell(_player,player[_player].counter);
-                     player[_player].spell_timer[player[_player].counter].start();
-                     player[_player].counter++;
-                     player[_player].counter%=1;
+                     if(player[_player].Get_counter()==-1)
+                        player[_player].Set_counter(0);
+                     Cast_Spell(_player,player[_player].Get_counter());
+                     player[_player].Start_spell_timer(player[_player].Get_counter());
+                     player[_player].Set_counter(player[_player].Get_counter()+1);
+                     player[_player].Set_counter(player[_player].Get_counter()%1);
                     }
                  break;
                 }
@@ -1561,11 +1561,11 @@ void Level::AI_Make_Move_player(int _player)
                  range=2;
                  time[0]=14000;
                  time[1]=14000;
-                 if(player[_player].counter==-1)
+                 if(player[_player].Get_counter()==-1)
                     {
                      for(int i=0;i<4;i++)
-                         player[_player].spell_timer[i].start();
-                     player[_player].counter=0;
+                         player[_player].Start_spell_timer(i);
+                     player[_player].Set_counter(0);
                     }
                  player[_player].Set_velocityX((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())>0?1:-1);
                  player[_player].Set_velocityY((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())>0?1:-1);
@@ -1582,14 +1582,14 @@ void Level::AI_Make_Move_player(int _player)
                  //player_time_blocked[_player]=10;
                  if(player[_player].Can_attack())
                     Player_basic_attack(_player);
-                 if((player[_player].spell_timer[player[_player].counter].get_ticks()>=time[player[_player].counter] &&
+                 if((player[_player].Get_spell_timer_ticks(player[_player].Get_counter())>=time[player[_player].Get_counter()] &&
                     std::max(std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX()),
                     std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY()))<=range))
                     {
-                     Cast_Spell(_player,player[_player].counter);
-                     player[_player].spell_timer[player[_player].counter].start();
-                     player[_player].counter++;
-                     player[_player].counter%=2;
+                     Cast_Spell(_player,player[_player].Get_counter());
+                     player[_player].Start_spell_timer(player[_player].Get_counter());
+                     player[_player].Set_counter(player[_player].Get_counter()+1);
+                     player[_player].Set_counter(player[_player].Get_counter()%2);
                     }
                  break;
                 }
@@ -1600,11 +1600,11 @@ void Level::AI_Make_Move_player(int _player)
                  time[0]=3000;
                  time[1]=2000;
                  time[2]=1000;
-                 if(player[_player].counter==-1)
+                 if(player[_player].Get_counter()==-1)
                     {
                      for(int i=0;i<4;i++)
-                         player[_player].spell_timer[i].start();
-                     player[_player].counter=0;
+                         player[_player].Start_spell_timer(i);
+                     player[_player].Set_counter(0);
                     }
                  player[_player].Set_velocityX((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())>0?1:-1);
                  player[_player].Set_velocityY((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())>0?1:-1);
@@ -1619,21 +1619,21 @@ void Level::AI_Make_Move_player(int _player)
                     player[_player].Set_velocityX(0),player[_player].Set_velocityY(0);
                  if(player[_player].Can_attack())
                     Player_basic_attack(_player);
-                 if(player[_player].spell_timer[player[_player].counter].get_ticks()>=time[player[_player].counter] &&
+                 if(player[_player].Get_spell_timer_ticks(player[_player].Get_counter())>=time[player[_player].Get_counter()] &&
                     std::max(std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX()),
                     std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY()))<=range)
                     {
-                     Cast_Spell(_player,player[_player].counter);
-                     if(player[_player].counter<=1)
+                     Cast_Spell(_player,player[_player].Get_counter());
+                     if(player[_player].Get_counter()<=1)
                         {
                          player[_player].Block();
                          player_time_blocked[_player]=70;
-                         if(player[_player].counter==1)
+                         if(player[_player].Get_counter()==1)
                             player_time_blocked[_player]+=250;
                         }
-                     player[_player].spell_timer[player[_player].counter].start();
-                     player[_player].counter++;
-                     player[_player].counter%=3;
+                     player[_player].Start_spell_timer(player[_player].Get_counter());
+                     player[_player].Set_counter(player[_player].Get_counter()+1);
+                     player[_player].Set_counter(player[_player].Get_counter()%3);
                     }
                  break;
                 }

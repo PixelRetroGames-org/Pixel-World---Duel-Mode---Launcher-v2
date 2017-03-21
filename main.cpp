@@ -94,15 +94,6 @@ int main( int argc, char* args[] )
      Mix_FadeInMusic(launcher_background_music,-1,8000);
     }
  Load_Journal();
- Puzzle test;
- test.Set_name("1");
- test.Load();
- if(false)
-    {
-     bool ret=test.Start(screen);
-     if(ret==false && false)
-        exit(666013);
-    }
  #ifdef SPLASH_SCREEN
  SDL_LockMutex(splash_screen_mutex);
  splash_screen_quit=true;
