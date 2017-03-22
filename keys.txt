@@ -42,3 +42,4 @@
 41 - Wizard11 *
 42 - Wizard12
 43 - Dungeon2
+44 - Dungeon Journal
