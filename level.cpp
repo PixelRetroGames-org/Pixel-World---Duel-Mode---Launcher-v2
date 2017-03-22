@@ -1256,7 +1256,7 @@ void Level::Interact_with_NPC(int _player,int _npc)
                  SDL_UnlockMutex(music_overseer_mutex);
                  SDL_WaitThread(level_music_overseer,&thread_return_value);
                  SDL_Delay(50);
-                 Pause_music();
+                 Stop_music();
                  Mix_PlayChannel(5,DUEL_MODE_START,-1);
                  break;
         }
