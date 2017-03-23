@@ -14,9 +14,9 @@
 #include "SDL/SDL_ttf.h"
 #include "SDL/SDL_mixer.h"
 //CSTRING
-#include<cstring>
+#include <cstring>
 //STRING
-#include<string>
+#include <string>
 
 extern Uint8 *keystates;
 extern const int PLAYER_INFO_POSX,PLAYER_INFO_LAST_POSX;

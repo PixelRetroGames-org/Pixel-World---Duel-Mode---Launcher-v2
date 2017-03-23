@@ -2,7 +2,7 @@
 #define SPELL_H
 
 #include "buff.h"
-#include<vector>
+#include <vector>
 
 class Spell
 {

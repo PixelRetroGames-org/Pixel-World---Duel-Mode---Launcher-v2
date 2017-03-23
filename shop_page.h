@@ -6,14 +6,14 @@
 #include "SDL/SDL_ttf.h"
 #include "SDL/SDL_image.h"
 ///CSTDIO
-#include<cstdio>
+#include <cstdio>
 ///VECTOR
-#include<vector>
+#include <vector>
 ///IIEMS
 #include "load_images.h"
 #include "item.h"
 #include "player.h"
-#include<vector>
+#include <vector>
 
 class Shop_Page
 {

@@ -1,6 +1,6 @@
 #include "item.h"
 ///CSTRING
-#include<cstring>
+#include <cstring>
 
 SDL_Color NAME_COLOR={255,255,255};
 SDL_Color MONEY_COLOR={236,242,4};

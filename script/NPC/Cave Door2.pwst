@@ -1,0 +1,28 @@
+< bckimg background > 
+<page >
+<line >
+
+
+Timy put the coin in place.</line >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+Click!</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >The door unlocked!</line >
+<we >
+< flip >
+<we >
+</page >

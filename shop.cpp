@@ -1,6 +1,6 @@
 #include "shop.h"
 //CSTRING
-#include<cstring>
+#include <cstring>
 
 ///SHOP
 Shop::Shop()

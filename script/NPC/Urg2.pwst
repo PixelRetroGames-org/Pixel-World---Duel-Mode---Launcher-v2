@@ -1,0 +1,59 @@
+< bckimg background > 
+<page >
+<line >
+<img 0 0 Urg >
+
+
+<color 125 0 7 >Urg: </color >Ey, do you want trouble? Don't you even look at my gold!</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >I have the flower. I need just one coin. What can I do for you to get it?</line >
+< we >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+Timy gave Urg the red flower from Jerry's garden.</line >
+< we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Urg >
+
+
+<color 125 0 7 >Urg: </color >Well, it's been a long time since I had my last brawl.</line >
+< we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Urg >
+
+
+<color 125 0 7 >Urg: </color >Defeat me in battle and the coin is yours.</line >
+< we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >Great!</line >
+< we >
+< flip >
+< we >
+</page >

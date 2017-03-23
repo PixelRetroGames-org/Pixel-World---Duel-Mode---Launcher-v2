@@ -1,6 +1,6 @@
 #include "shop_page.h"
 ///CSTRING
-#include<cstring>
+#include <cstring>
 
 const SDL_Color ITEM_NAME_COLOR={27,100,250};
 

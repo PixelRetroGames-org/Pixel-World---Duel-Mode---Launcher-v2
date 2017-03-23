@@ -2,7 +2,7 @@
 #include "menu.h"
 #include "settings.h"
 //CSTRING
-#include<cstring>
+#include <cstring>
 
 const int FRAMES_PER_SECOND_BACKGROUND=30,FRAMES_PER_SECOND_FIRE=25;
 

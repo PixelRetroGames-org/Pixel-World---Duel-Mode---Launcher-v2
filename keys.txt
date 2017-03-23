@@ -10,7 +10,7 @@
 9 - Durin chill finish
 10 - Durin superchill
 11 - Fror chill
-12 - Shaytaan
+12 - Shaytaan *
 13 - Lumberjack
 14 - Bridge to the mountains
 15 - Bandit1 *
@@ -41,5 +41,19 @@
 40 - Dungeon13 Door
 41 - Wizard11 *
 42 - Wizard12
-43 - Dungeon2
-44 - Dungeon Journal
+43 - Dungeon2, Lumberjack
+44 - Shaytaan investigation
+45 - Jerry1 *
+46 - Jerry2
+47 - Jerry3
+48 - Jerry4
+49 - Urg1 *
+50 - Urg2
+51 - Urg3
+52 - Urg4
+53 - Valgard *
+54 - Valgard Jounal entry
+55 - Cave Door1 *
+56 - Cave Door2
+57 - The Coin
+58 - Shaytaan2

@@ -1,0 +1,55 @@
+< bckimg background > 
+<page >
+<line >
+<img 0 0 Jerry >
+
+
+
+<color 125 0 7 >Jerry: </color >Are you deaf? Get away from my garden!</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color >I need one of your flowers. Lets make a deal.</line >
+< we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color >What do you want in exchange for one of your flowers?</line >
+< we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Jerry >
+
+
+
+<color 125 0 7 >Jerry: </color >Hmm... I will tell you a riddle and if you solve it you can take one flower.</line >
+< we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color >Deal!</line >
+< we >
+< flip >
+< we >
+</page >

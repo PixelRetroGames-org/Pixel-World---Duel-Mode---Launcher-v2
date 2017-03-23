@@ -2,7 +2,7 @@
 #define INTERACTIVE_MAP_TEXTURE_H
 
 #include "library.h"
-#include<vector>
+#include <vector>
 
 class Map_texture_id
 {

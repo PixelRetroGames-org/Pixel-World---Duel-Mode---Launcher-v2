@@ -10,7 +10,7 @@
 #include "load_images.h"
 #include "load_audio_effects.h"
 //CSTRING
-#include<cstring>
+#include <cstring>
 
 const int NUMBER_OF_OPTIONS_MAX=10;
 

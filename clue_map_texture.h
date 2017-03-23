@@ -3,7 +3,7 @@
 
 #include "library.h"
 #include "interactive_map_texture.h"
-#include<bitset>
+#include <bitset>
 
 class Clue_map_texture
 {

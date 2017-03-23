@@ -8,9 +8,9 @@
 #include "SDL/SDL_ttf.h"
 #include "SDL/SDL_image.h"
 ///CSTRING
-#include<cstring>
+#include <cstring>
 ///CSTDIO
-#include<cstdio>
+#include <cstdio>
 
 #include "buff.h"
 

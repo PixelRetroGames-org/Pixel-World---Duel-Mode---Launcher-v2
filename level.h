@@ -10,8 +10,8 @@
 #include "puzzle.h"
 #include "journal.h"
 #include "inventory.h"
-#include<ctime>
-#include<map>
+#include <ctime>
+#include <map>
 
 #include "SDL/SDL_thread.h"
 

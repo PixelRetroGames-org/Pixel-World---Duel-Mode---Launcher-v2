@@ -1,6 +1,6 @@
 #include "buff.h"
 
-#include<cstring>
+#include <cstring>
 
 //LOAD
 

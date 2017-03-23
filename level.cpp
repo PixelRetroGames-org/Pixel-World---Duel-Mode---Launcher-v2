@@ -7,7 +7,7 @@
 const SDLKey player_keys[3][20]={{},{SDLK_UP,SDLK_DOWN,SDLK_LEFT,SDLK_RIGHT,SDLK_RCTRL,SDLK_j,SDLK_n,SDLK_u,SDLK_i,SDLK_o,SDLK_p,SDLK_RSHIFT},{SDLK_w,SDLK_s,SDLK_a,SDLK_d,SDLK_z,SDLK_BACKQUOTE,SDLK_TAB,SDLK_1,SDLK_2,SDLK_3,SDLK_4,SDLK_x}};
 const int SKEPTIC_VISION_MAX_ALPHA=100;
 
-#define GOD_POWERS
+//#define GOD_POWERS
 
 #ifdef GOD_POWERS
 bool OBSTACLES=true;
@@ -1943,7 +1943,6 @@ void Level::Start(SDL_Surface *screen,bool cleanup)
                       Move_all_players();
                       if(arena.get_ticks()>1000/ARENA_FRAMES_PER_SECOND)
                          {
-                          //SDL_Flip(screen);
                           Update_all_arena_frames();
                           darkness.Update_frame();
                           arena.start();
@@ -1955,23 +1954,12 @@ void Level::Start(SDL_Surface *screen,bool cleanup)
                          }
                       lag-=MS_PER_UPDATE;
                      }
-               //Update_all_arena_frames();
                apply_surface(0,0,LEVEL_background_image,screen);
                if(type==2)
                   Print_players_informations(screen);
                Print_Map((RESOLUTION_X-840)/2,40,screen);
                if(!done)
                   SDL_Flip(screen);
-               /*if(arena.get_ticks()>1000/ARENA_FRAMES_PER_SECOND)
-                    {
-                     //SDL_Flip(screen);
-                     Update_all_arena_frames();
-                     arena.start();
-                    }
-                 if(fps.get_ticks()<1000/FRAMES_PER_SECOND)
-                    {
-                     SDL_Delay((1000/FRAMES_PER_SECOND)-fps.get_ticks());
-                    }*/
                if(type==2 && level_duration.get_ticks()>duration)
                   quit=true;
                if(type==2 && ((player[1].Get_hp()<=0 && !player[1].Is_immortal()) || (player[2].Get_hp()<=0 && !player[2].Is_immortal())))
@@ -2009,10 +1997,6 @@ void Level::Start(SDL_Surface *screen,bool cleanup)
  if(cleanup)
     Cleanup();
  play=false;
- /*SDL_LockMutex(music_overseer_mutex);
- Oversee_music_quit=true;
- SDL_UnlockMutex(music_overseer_mutex);
- SDL_WaitThread(level_music_overseer,&thread_return_value);*/
 }
 
 void Level::Cleanup()

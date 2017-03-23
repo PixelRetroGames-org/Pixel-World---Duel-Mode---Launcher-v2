@@ -1,0 +1,20 @@
+< bckimg background > 
+<page >
+<line >
+<img 0 0 Urg >
+
+
+<color 125 0 7 >Urg: </color >This is my gold, go away!</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Urg >
+
+
+<color 125 0 7 >Urg: </color >Um, wait, if you bring me one of Jerry's flowers, we can figure something out.</line >
+< we >
+< flip >
+< we >
+</page >

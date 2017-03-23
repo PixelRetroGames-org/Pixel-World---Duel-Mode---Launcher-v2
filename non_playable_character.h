@@ -2,8 +2,8 @@
 #define NPC_H
 
 #include "library.h"
-#include<bitset>
-#include<vector>
+#include <bitset>
+#include <vector>
 
 class Non_Playable_Character
 {

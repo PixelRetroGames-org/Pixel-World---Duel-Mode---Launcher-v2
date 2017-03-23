@@ -1,5 +1,5 @@
 #include "script_interpreter.h"
-#include<cstring>
+#include <cstring>
 
 const char *command_names[number_of_commands+1]={"set","line","color","la","ba","sleep","wla","we","bckimg","img","page","flip"};
 const SDL_Color default_text_color={255,255,255};

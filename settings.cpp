@@ -1,5 +1,5 @@
 #include "settings.h"
-#include<cstdio>
+#include <cstdio>
 
 const int NUMBER_OF_AVAILABLE_RESOLUTIONS=8;
 const int available_resolution_x[NUMBER_OF_AVAILABLE_RESOLUTIONS]={800,1024,1280,1280,1366,1440,1600,1920};

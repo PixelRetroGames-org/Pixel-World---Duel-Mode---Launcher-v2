@@ -4,9 +4,9 @@
 #include "map_texture.h"
 #include "interactive_map_texture.h"
 #include "clue_map_texture.h"
-#include<vector>
-#include<bitset>
-#include<map>
+#include <vector>
+#include <bitset>
+#include <map>
 
 const int NUMBER_OF_LINES_MAX=100,NUMBER_OF_COLUMNS_MAX=100,NUMBER_OF_TEXTURES_IDS=200;
 const int NAME_IMAGE_OPAQUE_TIME=50;

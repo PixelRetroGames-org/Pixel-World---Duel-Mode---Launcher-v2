@@ -5,7 +5,7 @@
 #include "shop_page.h"
 #include "settings.h"
 //VECTOR
-#include<vector>
+#include <vector>
 
 class Shop
 {

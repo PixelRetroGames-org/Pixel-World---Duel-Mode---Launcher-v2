@@ -4,7 +4,7 @@
 #include "SDL/SDL_ttf.h"
 #include "SDL/SDL_mixer.h"
 //CSTRING
-#include<cstring>
+#include <cstring>
 
 const SDL_Color NAME_COLOR={255,255,255},EXPERIENCE_COLOR={235,20,20},MONEY_COLOR={125,125,125},MONEY_COLOR1={236,242,4},NUMBER_OF_ITEMS_COLOR={255,128,0};
 const SDL_Color EQUIP_COLOR={15,30,90},BUY_COLOR={40,80,160},EQUIPPED_COLOR={255,128,0},SKIN_COLOR={193,20,20};
@@ -146,6 +146,7 @@ void Player::Load()
      money=600;
      keys[1]=progress[1]=true;
      keys[15]=progress[15]=true;
+     keys[12]=progress[12]=true;
      keys[17]=progress[17]=true;
      keys[20]=progress[20]=true;
      keys[23]=progress[23]=true;
@@ -155,6 +156,10 @@ void Player::Load()
      keys[37]=progress[37]=true;
      keys[38]=progress[38]=true;
      keys[41]=progress[41]=true;
+     keys[45]=progress[45]=true;
+     keys[49]=progress[49]=true;
+     keys[53]=progress[53]=true;
+     keys[55]=progress[55]=true;
      spells[0].Set_id(6);
      spells[0].Load();
      spells[0].Unblock();
@@ -168,6 +173,7 @@ void Player::Load()
     }
  fscanf(where,"%d %d %d",&money,&experience,&number_of_items);
  inventory_number_of_items=0;
+ inventory_number_of_spells=0;
  int id,quantity;
  for(int i=1;i<=number_of_items;i++)
      {
@@ -177,6 +183,8 @@ void Player::Load()
       items_bought[id].Load();
       if(items_bought[id].Get_type()!=10)
          inventory_number_of_items++;
+      if(items_bought[id].Get_type()==10)
+         inventory_number_of_spells++;
      }
  for(int i=0;i<9;i++)
      fscanf(where,"%d ",&equipped_items_ids[i]);

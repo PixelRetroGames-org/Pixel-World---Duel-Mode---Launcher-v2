@@ -4,8 +4,8 @@
 #include "library.h"
 #include "load_images.h"
 #include "settings.h"
-#include<algorithm>
-#include<stack>
+#include <algorithm>
+#include <stack>
 
 const int number_of_commands=12,LINE_HEIGHT=23;
 extern const char *command_names[number_of_commands+1];

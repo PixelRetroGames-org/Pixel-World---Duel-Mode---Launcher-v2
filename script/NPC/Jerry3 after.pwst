@@ -1,0 +1,32 @@
+< bckimg background > 
+<page >
+<line >
+<img 0 0 Jerry >
+
+
+
+<color 125 0 7 >Jerry: </color >You won, take this!</line >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+
+Jerry handed Timy a beautiful red flower.</line >
+< we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color >Thanks!</line >
+< we >
+< flip >
+< we >
+</page >
