@@ -525,20 +525,19 @@ bool Level::Move_player(int _player)
     {
      return false;
     }
- Buff aux;
- for(int x=player[_player].Get_map_positionX();aux.Get_id()==0 && x<player[_player].Get_map_positionX()+player[_player].Get_skinW()/40;x++)
-     {
-      for(int y=player[_player].Get_map_positionY();aux.Get_id()==0 && y<player[_player].Get_map_positionY()+player[_player].Get_skinH()/40;y++)
-          aux=arena.Get_map_texture_Buff(y,x);
-     }
- aux.Set_damage(aux.Get_damage()+((aux.Get_damage()/100)*player[Other_player(_player)].Get_spell_damage()));
- player[_player].Add_buff(aux);
+
  player[_player].Add_key(arena.Get_map_texture_key_id(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()));
 
  if(type==2)
     {
+     Buff aux;
      aux=effects.Get_map_texture_Buff(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
-     aux.Set_damage(aux.Get_damage()+(aux.Get_damage()*player[Other_player(_player)].Get_spell_damage()/100));
+     for(int x=player[_player].Get_map_positionX();aux.Get_id()==0 && x<player[_player].Get_map_positionX()+player[_player].Get_skinW()/40;x++)
+         {
+          for(int y=player[_player].Get_map_positionY();aux.Get_id()==0 && y<player[_player].Get_map_positionY()+player[_player].Get_skinH()/40;y++)
+              aux=effects.Get_map_texture_Buff(y,x);
+         }
+     aux.Set_damage(aux.Get_damage()+((aux.Get_damage()/100)*player[Other_player(_player)].Get_spell_damage()));
      player[_player].Add_buff(aux);
      aux.Clear(false);
     }
