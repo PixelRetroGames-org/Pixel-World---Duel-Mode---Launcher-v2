@@ -34,7 +34,7 @@ class Player
  int basic_hp=100,basic_mana=100,basic_mental_health=100;
  int basic_attack=5,basic_defense=0,basic_spell_damage=10,basic_spell_resistance=0,basic_movement_speed=2,basic_life_steal=0;
  int map_positionX=0,map_positionY=0;
- int skin_size_w=40,skin_size_h=40;
+ int skin_size_w=PIXELS_PER_INGAME_UNIT,skin_size_h=PIXELS_PER_INGAME_UNIT;
  int velocityX=0,velocityY=0;
  SDL_Surface *skin=NULL,*name_image=NULL,*hp_image=NULL,*mana_image=NULL;
  SDL_Rect skin_image_position;

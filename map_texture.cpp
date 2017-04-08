@@ -128,7 +128,7 @@ void Texture::Print_image(int x,int y,SDL_Surface *_screen,int frame)
 {
  if(image==NULL)
     return;
- image_position.x=frame*40;
+ image_position.x=frame*PIXELS_PER_INGAME_UNIT;
  image_position.y=0;
  image_position.h=40;
  image_position.w=40;

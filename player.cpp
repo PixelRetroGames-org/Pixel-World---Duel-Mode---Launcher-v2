@@ -15,7 +15,7 @@ const int INVENTORY_MAX_NUMBER_OF_ITEMS=10,INVENTORY_MAX_NUMBER_OF_POTIONS=5;
 Player::Player()
 {
  skin_image_position.x=skin_image_position.y=0;
- skin_image_position.h=skin_image_position.w=40;
+ skin_image_position.h=skin_image_position.w=PIXELS_PER_INGAME_UNIT;
  money=experience=number_of_items=0;
  name[0]=NULL;
  memset(number_of_items_bought,0,sizeof number_of_items_bought);
@@ -45,7 +45,7 @@ void Player::Clear(bool _delete)
  basic_hp=100,basic_mana=100,basic_mental_health=100;
  basic_attack=5,basic_defense=0,basic_spell_damage=10,basic_spell_resistance=0,basic_movement_speed=2,basic_life_steal=0;
  attack=defense=spell_damage=spell_resistance=movement_speed=life_steal=0;
- skin_image_position.h=skin_image_position.w=40;
+ skin_image_position.h=skin_image_position.w=PIXELS_PER_INGAME_UNIT;
  skin_image_position.x=skin_image_position.y=0;
  for(int i=0;!active_buffs.empty() && i<active_buffs.size();i++)
      active_buffs[i].Clear(false);
@@ -987,7 +987,7 @@ void Player::Print_mana(SDL_Surface *_screen)
 
 void Player::Print_skin(int x,int y,int mapX,int mapY,SDL_Surface *_screen)
 {
- apply_surface(skin_image_position.x,skin_image_position.y,x+(map_positionX-mapX)*40,y+(map_positionY-mapY)*40,skin_image_position.w,skin_image_position.h,skin,_screen);
+ apply_surface(skin_image_position.x,skin_image_position.y,x+(map_positionX-mapX)*PIXELS_PER_INGAME_UNIT,y+(map_positionY-mapY)*PIXELS_PER_INGAME_UNIT,skin_image_position.w,skin_image_position.h,skin,_screen);
 }
 
 void Player::Print_skin_free(int x,int y,SDL_Surface *_screen)

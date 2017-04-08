@@ -327,7 +327,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
            if(map_textures[map_textures_ids[i][j].Get_texture_id()].Is_animation())
               fast_access_map_textures_animations[map_textures[map_textures_ids[i][j].Get_texture_id()].Get_print_before_player()][map_textures[map_textures_ids[i][j].Get_texture_id()].Is_light()].push_back(std::make_pair(i,j));
            else
-              Print_image(j*40,i*40,map_image[map_textures[map_textures_ids[i][j].Get_texture_id()].Get_print_before_player()][map_textures[map_textures_ids[i][j].Get_texture_id()].Is_light()],&map_textures_ids[i][j]);
+              Print_image(j*PIXELS_PER_INGAME_UNIT,i*PIXELS_PER_INGAME_UNIT,map_image[map_textures[map_textures_ids[i][j].Get_texture_id()].Get_print_before_player()][map_textures[map_textures_ids[i][j].Get_texture_id()].Is_light()],&map_textures_ids[i][j]);
           }
      }
  for(int i=0;i<number_of_lines;i++)
@@ -352,7 +352,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
            if(map_textures[background_map_textures_ids[i][j].Get_texture_id()].Is_animation())
               fast_access_background_map_textures_animations[map_textures[background_map_textures_ids[i][j].Get_texture_id()].Get_print_before_player()][map_textures[background_map_textures_ids[i][j].Get_texture_id()].Is_light()].push_back(std::make_pair(i,j));
            else
-              Print_image(j*40,i*40,background_map_image[map_textures[background_map_textures_ids[i][j].Get_texture_id()].Get_print_before_player()][map_textures[background_map_textures_ids[i][j].Get_texture_id()].Is_light()],&background_map_textures_ids[i][j]);
+              Print_image(j*PIXELS_PER_INGAME_UNIT,i*PIXELS_PER_INGAME_UNIT,background_map_image[map_textures[background_map_textures_ids[i][j].Get_texture_id()].Get_print_before_player()][map_textures[background_map_textures_ids[i][j].Get_texture_id()].Is_light()],&background_map_textures_ids[i][j]);
           }
      }
 
@@ -423,11 +423,15 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
       int x,y,x1,y1,_texture;
       char map_name[TEXT_LENGTH_MAX];
       fscanf(where,"%d %d %d %d %d ",&_texture,&x,&y,&x1,&y1);
-      fgets(map_name,sizeof map_name,where);
-      if(map_name[strlen(map_name)-1]=='\n')
-         map_name[strlen(map_name)-1]=NULL;
+      if(Get_type(x,y)!=6)
+         {
+          fgets(map_name,sizeof map_name,where);
+          if(map_name[strlen(map_name)-1]=='\n')
+             map_name[strlen(map_name)-1]=NULL;
+         }
       map_textures_ids[x][y].Set_texture_player_map_pos(_texture,x1,y1);
-      map_textures_ids[x][y].Set_texture_map_name(_texture,map_name);
+      if(Get_type(x,y)!=6)
+         map_textures_ids[x][y].Set_texture_map_name(_texture,map_name);
      }
  int number_of_keys=0;
  fscanf(where,"%d ",&number_of_keys);
@@ -513,7 +517,7 @@ const int MAP_IMAGE_HEIGHT=840,MAP_IMAGE_WEIGHT=680;
 void Map::Print(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights)
 {
  //apply_surface(screen_x,screen_y,map_image[before_player][lights],_screen);
- apply_surface(map_x*40,map_y*40,screen_x,screen_y,MAP_IMAGE_HEIGHT,MAP_IMAGE_WEIGHT,map_image[before_player][lights],_screen);
+ apply_surface(map_x*PIXELS_PER_INGAME_UNIT,map_y*PIXELS_PER_INGAME_UNIT,screen_x,screen_y,MAP_IMAGE_HEIGHT,MAP_IMAGE_WEIGHT,map_image[before_player][lights],_screen);
 }
 
 void Map::Print_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights)
@@ -528,7 +532,7 @@ void Map::Print_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Sur
 void Map::Print_background(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights)
 {
  //apply_surface(screen_x,screen_y,background_map_image[before_player][lights],_screen);
- apply_surface(map_x*40,map_y*40,screen_x,screen_y,MAP_IMAGE_HEIGHT,MAP_IMAGE_WEIGHT,background_map_image[before_player][lights],_screen);
+ apply_surface(map_x*PIXELS_PER_INGAME_UNIT,map_y*PIXELS_PER_INGAME_UNIT,screen_x,screen_y,MAP_IMAGE_HEIGHT,MAP_IMAGE_WEIGHT,background_map_image[before_player][lights],_screen);
 }
 
 void Map::Print_background_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights)

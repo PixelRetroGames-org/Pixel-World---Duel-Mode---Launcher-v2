@@ -4,6 +4,7 @@
 Map_texture_id::Map_texture_id()
 {
  id=duration=remaining_duration=0;
+ player_map_pos_x=player_map_pos_y=-1;
 }
 
 void Map_texture_id::Set_id(int _id)

@@ -10,6 +10,8 @@ const int PLAYER_INFO_POSX=760,PLAYER_INFO_LAST_POSX=1130;
 
 const int MAP_POSX=0,MAP_POSY=0,MAP_LAST_POSX=760,MAP_LAST_POSY=1130;
 
+const int PIXELS_PER_INGAME_UNIT=40;
+
 void Set_icon(char *filename)
 {
  Uint32 colorkey;

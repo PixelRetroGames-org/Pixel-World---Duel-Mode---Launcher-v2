@@ -44,6 +44,9 @@
 		<Unit filename="darkness.h" />
 		<Unit filename="errors.cpp" />
 		<Unit filename="errors.h" />
+		<Unit filename="icon.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
 		<Unit filename="interactive_map_texture.cpp" />
 		<Unit filename="interactive_map_texture.h" />
 		<Unit filename="inventory.cpp" />

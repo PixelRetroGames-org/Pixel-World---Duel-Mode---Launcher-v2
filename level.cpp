@@ -7,7 +7,7 @@
 const SDLKey player_keys[3][20]={{},{SDLK_UP,SDLK_DOWN,SDLK_LEFT,SDLK_RIGHT,SDLK_RCTRL,SDLK_j,SDLK_n,SDLK_u,SDLK_i,SDLK_o,SDLK_p,SDLK_RSHIFT},{SDLK_w,SDLK_s,SDLK_a,SDLK_d,SDLK_z,SDLK_BACKQUOTE,SDLK_TAB,SDLK_1,SDLK_2,SDLK_3,SDLK_4,SDLK_x}};
 const int SKEPTIC_VISION_MAX_ALPHA=100;
 
-//#define GOD_POWERS
+#define GOD_POWERS
 
 #ifdef GOD_POWERS
 bool OBSTACLES=true;
@@ -64,8 +64,8 @@ void Level::Clear(bool terminal)
 
 void Level::Set_arena_size()
 {
- arena_size.w=std::min(40*arena.Get_number_of_columns(),840);
- arena_size.h=std::min(40*arena.Get_number_of_lines(),680);
+ arena_size.w=std::min(PIXELS_PER_INGAME_UNIT*arena.Get_number_of_columns(),840);
+ arena_size.h=std::min(PIXELS_PER_INGAME_UNIT*arena.Get_number_of_lines(),680);
  arena_size.x=(RESOLUTION_X-arena_size.w+(arena_size.w%80==0?-40:0))/2;
  if(arena_size.h==680)
     arena_size.y=40;
@@ -134,9 +134,6 @@ char *Level::Get_name()
 {
  return name;
 }
-
-/*int static_number_of_background_music_tracks;
-Mix_Music *static_background_music[NUMBER_OF_SONGS_MAX];*/
 
 void Level::Load()
 {
@@ -583,6 +580,14 @@ bool Level::Move_player(int _player)
                 level_music_overseer=SDL_CreateThread(Oversee_music,NULL);
                 return false;
                 break;
+         case 6:if(arena.Get_map_texture_player_pos_x(player[_player].Get_map_positionY(),player[_player].Get_map_positionX())==-1 ||
+                   arena.Get_map_texture_player_pos_y(player[_player].Get_map_positionY(),player[_player].Get_map_positionX())==-1)
+                   break;
+                player[_player].Set_map_position(arena.Get_map_texture_player_pos_x(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()),arena.Get_map_texture_player_pos_y(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()));
+                Block_player(_player);
+                player_time_blocked[_player]=30;
+                return false;
+                break;
         }
 
  if(player[_player].Is_blocked())
@@ -801,19 +806,19 @@ bool Level::Non_Playable_Character_is_on_light(int _npc_pos)
  return rtn;
 }
 
-const int MAP_IMAGE_HEIGHT=21,MAP_IMAGE_WEIGHT=17;
+const int MAP_IMAGE_WEIGHT=21,MAP_IMAGE_HEIGHT=17;
 
 void Level::Print_Map(int x,int y,SDL_Surface *_screen)
 {
  int mapX=0,mapY=0;
  if(type!=2)
     {
-     mapX=std::min(std::max(0,player[1].Get_map_positionX()-(MAP_IMAGE_HEIGHT-1)/2),arena.Get_number_of_columns()-(MAP_IMAGE_HEIGHT));
-     mapY=std::min(std::max(0,player[1].Get_map_positionY()-(MAP_IMAGE_WEIGHT-1)/2),arena.Get_number_of_lines()-(MAP_IMAGE_WEIGHT));
-     if(arena.Get_number_of_columns()<MAP_IMAGE_HEIGHT)
-        mapX=-(MAP_IMAGE_HEIGHT-arena.Get_number_of_columns())/2;
-     if(arena.Get_number_of_lines()<MAP_IMAGE_WEIGHT)
-        mapY=-(MAP_IMAGE_WEIGHT-arena.Get_number_of_lines())/2;
+     mapX=std::min(std::max(0,player[1].Get_map_positionX()-(MAP_IMAGE_WEIGHT-1)/2),arena.Get_number_of_columns()-(MAP_IMAGE_WEIGHT));
+     mapY=std::min(std::max(0,player[1].Get_map_positionY()-(MAP_IMAGE_HEIGHT-1)/2),arena.Get_number_of_lines()-(MAP_IMAGE_HEIGHT));
+     if(arena.Get_number_of_columns()<MAP_IMAGE_WEIGHT)
+        mapX=-(MAP_IMAGE_WEIGHT-arena.Get_number_of_columns())/2;
+     if(arena.Get_number_of_lines()<MAP_IMAGE_HEIGHT)
+        mapY=-(MAP_IMAGE_HEIGHT-arena.Get_number_of_lines())/2;
     }
  arena.Print_background(x,y,mapX,mapY,_screen,true,false);
  arena.Print_background_Animations(x,y,mapX,mapY,_screen,true,false);
@@ -838,11 +843,13 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
 
  SDL_Rect _area=arena_size;
  //_area.x=x;
- _area.y=y;
- /*_area.h=MAP_IMAGE_HEIGHT*40-mapY*40;
- _area.w=MAP_IMAGE_WEIGHT*40-mapX*40;
- _area.x=x+mapX*40;
- _area.y=y+mapY*40;*/
+ ///TREBUIE SCHIMBAT
+ if(_area.h<MAP_IMAGE_HEIGHT*PIXELS_PER_INGAME_UNIT)
+    _area.y=y+(MAP_IMAGE_HEIGHT-_area.h/40)/2*PIXELS_PER_INGAME_UNIT;
+ /*_area.h=MAP_IMAGE_WEIGHT*PIXELS_PER_INGAME_UNIT-mapY*PIXELS_PER_INGAME_UNIT;
+ _area.w=MAP_IMAGE_HEIGHT*PIXELS_PER_INGAME_UNIT-mapX*PIXELS_PER_INGAME_UNIT;
+ _area.x=x+mapX*PIXELS_PER_INGAME_UNIT;
+ _area.y=y+mapY*PIXELS_PER_INGAME_UNIT;*/
  darkness.Enshroud(_area,_screen);
 
  arena.Print_background(x,y,mapX,mapY,_screen,true,true);

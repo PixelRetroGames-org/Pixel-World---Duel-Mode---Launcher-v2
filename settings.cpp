@@ -73,6 +73,7 @@ void Graphic_Settings(SDL_Surface *_screen)
         Graphic_Change_Volume((RESOLUTION_X-SETTINGS_option_background->w)/2,200,_screen,&event);
         //Graphic_Power_Saver((RESOLUTION_X-SETTINGS_option_background->w)/2,240,_screen,&event);
         Graphic_Auto_Attack((RESOLUTION_X-SETTINGS_option_background->w)/2,240,_screen,&event);
+        Graphic_Reset_Saves((RESOLUTION_X-SETTINGS_option_background->w)/2,280,_screen,&event);
         quit=Graphic_Back((RESOLUTION_X-SETTINGS_option_background->w)/2,400,_screen,&event);
         SDL_Flip(_screen);
         SDL_PollEvent(&event);
@@ -92,7 +93,9 @@ void Graphic_Settings(SDL_Surface *_screen,SDL_Event *event)
         Graphic_Change_Resolution((RESOLUTION_X-SETTINGS_option_background->w)/2,120,_screen,event);
         Graphic_Change_Display_Mode((RESOLUTION_X-SETTINGS_option_background->w)/2,160,_screen,event);
         Graphic_Change_Volume((RESOLUTION_X-SETTINGS_option_background->w)/2,200,_screen,event);
-        Graphic_Power_Saver((RESOLUTION_X-SETTINGS_option_background->w)/2,240,_screen,event);
+        //Graphic_Power_Saver((RESOLUTION_X-SETTINGS_option_background->w)/2,240,_screen,event);
+        Graphic_Auto_Attack((RESOLUTION_X-SETTINGS_option_background->w)/2,240,_screen,event);
+        Graphic_Reset_Saves((RESOLUTION_X-SETTINGS_option_background->w)/2,280,_screen,event);
         quit=Graphic_Back((RESOLUTION_X-SETTINGS_option_background->w)/2,400,_screen,event);
         SDL_Flip(_screen);
         SDL_PollEvent(event);
@@ -222,6 +225,23 @@ void Graphic_Auto_Attack(int x,int y,SDL_Surface *_screen,SDL_Event *event)
  apply_surface(x+image->w+20,y+10,image1,_screen);
  TTF_CloseFont(font);
  SDL_FreeSurface(image1);
+ SDL_FreeSurface(image);
+}
+
+void Graphic_Reset_Saves(int x,int y,SDL_Surface *_screen,SDL_Event *event)
+{
+ apply_surface(x,y,SETTINGS_option_background,_screen);
+ if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
+    {
+     system("reset-saves.bat");
+     SDL_Delay(75);
+    }
+ TTF_Font *font;
+ font=TTF_OpenFont("fonts/pixel.ttf",20);
+ SDL_Surface *image=NULL;
+ image=TTF_RenderText_Solid(font,"Reset Saves",settings_color);
+ apply_surface(x+20,y+10,image,_screen);
+ TTF_CloseFont(font);
  SDL_FreeSurface(image);
 }
 

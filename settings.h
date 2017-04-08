@@ -23,6 +23,7 @@ void Graphic_Change_Display_Mode(int x,int y,SDL_Surface *_screen,SDL_Event *eve
 void Graphic_Change_Volume(int x,int y,SDL_Surface *_screen,SDL_Event *event);
 void Graphic_Power_Saver(int x,int y,SDL_Surface *_screen,SDL_Event *event);
 void Graphic_Auto_Attack(int x,int y,SDL_Surface *_screen,SDL_Event *event);
+void Graphic_Reset_Saves(int x,int y,SDL_Surface *_screen,SDL_Event *event);
 bool Graphic_Back(int x,int y,SDL_Surface *_screen,SDL_Event *event);
 
 #endif // SETTINGS_H
