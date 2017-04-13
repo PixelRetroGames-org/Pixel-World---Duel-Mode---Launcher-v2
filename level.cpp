@@ -534,9 +534,12 @@ bool Level::Move_player(int _player)
           for(int y=player[_player].Get_map_positionY();aux.Get_id()==0 && y<player[_player].Get_map_positionY()+player[_player].Get_skinH()/40;y++)
               aux=effects.Get_map_texture_Buff(y,x);
          }
-     aux.Set_damage(aux.Get_damage()+((aux.Get_damage()/100)*player[Other_player(_player)].Get_spell_damage()));
-     player[_player].Add_buff(aux);
-     aux.Clear(false);
+     if(aux.Get_id()!=0)
+        {
+         aux.Set_damage(aux.Get_damage()+((aux.Get_damage()/100)*player[Other_player(_player)].Get_spell_damage()));
+         player[_player].Add_buff(aux);
+         aux.Clear(false);
+        }
     }
 
  int x,y,x1,y1,velocityX,velocityY;
@@ -1633,9 +1636,9 @@ void Level::AI_Make_Move_player(int _player)
                      if(player[_player].Get_counter()<=1)
                         {
                          player[_player].Block();
-                         player_time_blocked[_player]=70;
+                         player_time_blocked[_player]=110;
                          if(player[_player].Get_counter()==1)
-                            player_time_blocked[_player]+=250;
+                            player_time_blocked[_player]+=270;
                         }
                      player[_player].Start_spell_timer(player[_player].Get_counter());
                      player[_player].Set_counter(player[_player].Get_counter()+1);
@@ -1662,29 +1665,11 @@ void Level::AI_Block_player(int _player)
 void Level::Pause_Menu()
 {
  Menu menu;
- if(type!=2)
-    {
-     menu.Load("menu/pause_menu.pwm");
-     int option=0;
-     while(option!=-2)
-           {
-            option=menu.Start(_screen);
-            switch(option)
-                   {
-                    case 0:option=-2;
-                           break;
-                    case 1:option=-2;
-                           done=true;
-                           break;
-                    case 2:exit(0);
-                   }
-           }
-     SDL_Delay(100);
-    }
- if(type==2)
+ Script_interpreter run_script;
+ if(type==2 && (player_type[1]!=0 || player_type[2]!=0))
     {
      Pause_music();
-     menu.Load("menu/pause_menu.pwm");
+     menu.Load("menu/pause_menu_duel.pwm");
      int option=0;
      while(option!=-2)
            {
@@ -1695,6 +1680,26 @@ void Level::Pause_Menu()
                             break;
                     case 0:Unpause_music();
                            option=-2;
+                           break;
+                    case 1:run_script.Start(_screen,"Run",0,0);
+                           option=-2;
+                           done=true;
+                           break;
+                    case 2:exit(0);
+                   }
+           }
+     SDL_Delay(100);
+    }
+ else
+    {
+     menu.Load("menu/pause_menu.pwm");
+     int option=0;
+     while(option!=-2)
+           {
+            option=menu.Start(_screen);
+            switch(option)
+                   {
+                    case 0:option=-2;
                            break;
                     case 1:option=-2;
                            done=true;
@@ -1714,7 +1719,8 @@ bool Level::Duel_Mode_Finish_Screen(int _player_winner)
  bool quit=false;
  Print_Duel_Mode_Finish_Screen(_player_winner);
  SDL_Event event;
- SDL_Delay(500);
+ while(SDL_PollEvent(&event));
+ SDL_Delay(2000);
  while(SDL_PollEvent(&event));
  while(!quit)
        {

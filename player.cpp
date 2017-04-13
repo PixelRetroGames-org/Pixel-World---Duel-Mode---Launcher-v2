@@ -1096,7 +1096,7 @@ void Player::Apply_buff(Buff *_buff)
                 break;
          ///HP
          case 2:if(_buff->Get_damage()<0)
-                   hp+=(_buff->Get_damage())+_buff->Get_damage()*Get_spell_resistance()/100;
+                   hp+=(_buff->Get_damage())-_buff->Get_damage()*Get_spell_resistance()/100;
                 else
                    hp+=_buff->Get_damage();
                 Set_hp(std::min(basic_hp,hp));
