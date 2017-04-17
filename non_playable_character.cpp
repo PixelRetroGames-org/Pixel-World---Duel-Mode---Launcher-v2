@@ -24,7 +24,7 @@ void Non_Playable_Character::Clear()
  lose_posY=-1;
 }
 
-void Non_Playable_Character::Set_name(char *_name)
+void Non_Playable_Character::Set_name(char* _name)
 {
  strcpy(name,_name);
 }
@@ -92,37 +92,37 @@ int Non_Playable_Character::Get_type()
  return type;
 }
 
-std::bitset<NUMBER_OF_MAX_KEYS> *Non_Playable_Character::Get_keys()
+std::bitset<NUMBER_OF_MAX_KEYS>* Non_Playable_Character::Get_keys()
 {
  return &keys_to_give;
 }
 
-std::bitset<NUMBER_OF_MAX_KEYS> *Non_Playable_Character::Get_keys_to_take()
+std::bitset<NUMBER_OF_MAX_KEYS>* Non_Playable_Character::Get_keys_to_take()
 {
  return &keys_to_take;
 }
 
-char *Non_Playable_Character::Get_script_name()
+char* Non_Playable_Character::Get_script_name()
 {
  return script_name;
 }
 
-char *Non_Playable_Character::Get_afterscript_name()
+char* Non_Playable_Character::Get_afterscript_name()
 {
  return afterscript_name;
 }
 
-char *Non_Playable_Character::Get_shop_name()
+char* Non_Playable_Character::Get_shop_name()
 {
  return shop_name;
 }
 
-char *Non_Playable_Character::Get_duel_mode_level_name()
+char* Non_Playable_Character::Get_duel_mode_level_name()
 {
  return duel_mode_level_name;
 }
 
-char *Non_Playable_Character::Get_puzzle_name()
+char* Non_Playable_Character::Get_puzzle_name()
 {
  return puzzle_name;
 }
@@ -163,13 +163,13 @@ void Non_Playable_Character::Unblock()
  is_blocked=false;
 }
 
-void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair<int,int> player_pos)
+void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS>* key,std::pair<int,int> player_pos)
 {
  char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"NPC/");
  strcat(path,name);
  strcat(path,".pwnpc");
- FILE *where=fopen(path,"r");
+ FILE* where=fopen(path,"r");
  if(where==NULL)
     return;
  int key_id=0;
@@ -268,15 +268,13 @@ void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair
  fclose(where);
 }
 
-void Non_Playable_Character::Load(char *_name,std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair<int,int> player_pos)
+void Non_Playable_Character::Load(char* _name,std::bitset<NUMBER_OF_MAX_KEYS>* key,std::pair<int,int> player_pos)
 {
  Set_name(_name);
  Load(key,player_pos);
 }
 
-//void Non_Playable_Character::Interact(char *player_name)
-
-void Non_Playable_Character::Print_skin(int x,int y,int mapX,int mapY,int mapW,int mapH,SDL_Surface *_screen)
+void Non_Playable_Character::Print_skin(int x,int y,int mapX,int mapY,int mapW,int mapH,SDL_Surface* _screen)
 {
  if(type==0)
     return;

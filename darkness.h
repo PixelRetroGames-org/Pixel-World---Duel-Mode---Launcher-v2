@@ -13,7 +13,7 @@ class Darkness
 {
  private:
  int alpha=0;
- SDL_Surface *image=NULL;
+ SDL_Surface* image=NULL;
  int number_of_frames=0,current_frame=0;
  char image_name[TEXT_LENGTH_MAX]={NULL};
  int frameW=DARKNESS_FRAME_X;
@@ -21,7 +21,7 @@ class Darkness
  public:
  Darkness();
  void Clear();
- void Set_image_name(char *_image_name);
+ void Set_image_name(char* _image_name);
  void Load_image();
  void Set_frameW(int _frameW);
  void Set_current_frame(int _current_frame);
@@ -31,7 +31,7 @@ class Darkness
 
  void Update_frame();
  void Update_image();
- void Enshroud(SDL_Rect area,SDL_Surface *_screen);
+ void Enshroud(SDL_Rect area,SDL_Surface* _screen);
  void Set_aplha(int _aplha);
  void Set_number_of_frames(int _number_of_frames);
  void Increase();

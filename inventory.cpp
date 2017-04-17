@@ -1,8 +1,8 @@
 #include "inventory.h"
 
-void player_inventory::Print_Inventory(SDL_Surface *screen,char *_player_name)
+void player_inventory::Print_Inventory(SDL_Surface* screen,char* _player_name)
 {
- SDL_Thread *_loading_image=NULL;
+ SDL_Thread* _loading_image=NULL;
  static_screen=screen;
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Player player;

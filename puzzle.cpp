@@ -33,7 +33,7 @@ void Puzzle::Clear(bool _delete)
  background_image=NULL;
 }
 
-void Puzzle::Set_name(char *_name)
+void Puzzle::Set_name(char* _name)
 {
  strcpy(name,_name);
 }
@@ -45,7 +45,7 @@ void Puzzle::Load()
  strcpy(path,"puzzles/");
  strcat(path,name);
  strcat(path,".pwp");
- FILE *where=fopen(path,"r");
+ FILE* where=fopen(path,"r");
  if(where==NULL)
     return;
  fscanf(where,"%d ",&type);
@@ -78,7 +78,7 @@ void Puzzle::Load()
  fclose(where);
 }
 
-bool Puzzle::Start(SDL_Surface *_screen)
+bool Puzzle::Start(SDL_Surface* _screen)
 {
  switch(type)
         {
@@ -95,12 +95,12 @@ bool Puzzle::Validate_Riddle()
  return false;
 }
 
-void Puzzle::Print_Verdict(bool verdict,SDL_Surface *_screen)
+void Puzzle::Print_Verdict(bool verdict,SDL_Surface* _screen)
 {
- TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",50);
+ TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",50);
  SDL_Color right_color={0,205,0},wrong_color={207,0,0};
- SDL_Surface *right_message=TTF_RenderText_Solid(font,"Right!",right_color);
- SDL_Surface *wrong_message=TTF_RenderText_Solid(font,"Wrong!",wrong_color);
+ SDL_Surface* right_message=TTF_RenderText_Solid(font,"Right!",right_color);
+ SDL_Surface* wrong_message=TTF_RenderText_Solid(font,"Wrong!",wrong_color);
  TTF_CloseFont(font);
  apply_surface(0,0,background_image,_screen);
  if(verdict==false)
@@ -126,15 +126,15 @@ int Get_Key(char ch)
  return 0;
 }
 
-bool Puzzle::Start_Riddle(SDL_Surface *_screen)
+bool Puzzle::Start_Riddle(SDL_Surface* _screen)
 {
  bool quit=false,text_typed_modified=false;
  SDL_Event event;
  SDL_PollEvent(&event);
  char ch[2]={NULL,NULL};
- TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
+ TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",30);
  SDL_Color answer_color={102,153,0},title_color={169,57,255},text_color={243,238,120};
- SDL_Surface *text_typed_background_image=make_it_transparent("images/puzzle/riddle_type_background.bmp");
+ SDL_Surface* text_typed_background_image=make_it_transparent("images/puzzle/riddle_type_background.bmp");
  title_image=TTF_RenderText_Solid(font,title,title_color);
  text_image=make_it_transparent("images/game/empty.bmp");
  Script_interpreter script_interpreter;

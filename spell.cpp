@@ -1,7 +1,5 @@
 #include "spell.h"
 
-#include <cstring>
-
 Spell::Spell()
 {
  type=id=0;
@@ -36,7 +34,7 @@ void Spell::Load()
  strcpy(filename,"spells/");
  strcat(filename,aux);
  strcat(filename,".pws");
- FILE *where=fopen(filename,"r");
+ FILE* where=fopen(filename,"r");
  fscanf(where,"%d ",&type);
  fgets(name,sizeof name,where);
  if(name[strlen(name)-1]=='\n')
@@ -88,9 +86,9 @@ int Spell::Get_type()
  return type;
 }
 
-void Spell::Get_Buffs(std::vector<Buff> *_buffs)
+void Spell::Get_Buffs(std::vector<Buff>* _buffs)
 {
- *_buffs=buffs;
+* _buffs=buffs;
 }
 
 int Spell::Get_range()
@@ -98,7 +96,7 @@ int Spell::Get_range()
  return range;
 }
 
-char *Spell::Get_map_name()
+char* Spell::Get_map_name()
 {
  return map_name;
 }
@@ -125,7 +123,7 @@ void Spell::Unblock()
  time_blocked=0;
 }
 
-bool Spell::Pay(int *_mana,int *_health,int *_mental_health)
+bool Spell::Pay(int* _mana,int* _health,int* _mental_health)
 {
  if((*_mana)<mana_cost || (*_health)<health_cost || (*_mental_health)<mental_health_cost)
     return false;
@@ -142,7 +140,7 @@ bool Spell::Can_Pay(int _mana,int _health,int _mental_health)
  return true;
 }
 
-void Spell::Print_image(int x,int y,SDL_Surface *_screen)
+void Spell::Print_image(int x,int y,SDL_Surface* _screen)
 {
  apply_surface(x,y,image,_screen);
 }

@@ -10,8 +10,12 @@
 #include "puzzle.h"
 #include "journal.h"
 #include "inventory.h"
-#include <ctime>
+#include "load_audio_effects.h"
+#include "settings.h"
+#include "menu.h"
+
 #include <map>
+#include <ctime>
 
 #include "SDL/SDL_thread.h"
 
@@ -29,13 +33,13 @@ const int MUSIC_PAUSE=500;
 const int NUMBER_OF_NPC_MAX=20;
 
 extern int number_of_background_music_tracks;
-extern Mix_Music *background_music[NUMBER_OF_SONGS_MAX];
+extern Mix_Music* background_music[NUMBER_OF_SONGS_MAX];
 extern Timer music_time;
 extern bool paused_music;
 extern int last_track_played;
-extern SDL_Thread *level_music_overseer;
+extern SDL_Thread* level_music_overseer;
 extern bool Oversee_music_quit;
-extern SDL_mutex *music_overseer_mutex;
+extern SDL_mutex* music_overseer_mutex;
 
 class Level
 {
@@ -48,13 +52,6 @@ class Level
  char player_name[3][TEXT_LENGTH_MAX];
  int player_type[3],player_time_blocked[3]={0,0,0},player_time_blocked_attack[3]={0,0,0};
  char arena_name[TEXT_LENGTH_MAX]={NULL},background_music_name[TEXT_LENGTH_MAX]={NULL};
- //Music
- //int number_of_background_music_tracks;
- //Mix_Music *background_music[NUMBER_OF_SONGS_MAX];
- //Timer music_time;
- //bool paused_music;
- //int last_track_played;
- //
  Player player[3];
  Map arena,effects;
  Map aux;
@@ -63,7 +60,7 @@ class Level
  SDL_Rect arena_size;
  Darkness darkness;
  Timer level_duration;
- SDL_Surface *_screen;
+ SDL_Surface* _screen;
  bool level_changed=false,reset_lag=false;
  int number_of_non_playable_characters=0;
  Non_Playable_Character non_playable_characters[NUMBER_OF_NPC_MAX];
@@ -79,7 +76,7 @@ class Level
  void Clear(bool terminal=false);
  ///Set
  void Set_arena_size();
- void Set_name(char *_name);
+ void Set_name(char* _name);
  void Set_player_map_position(int x,int y,int _player);
  void Set_player_mana(int _mana,int _player);
  void Set_player_hp(int _hp,int _player);
@@ -91,11 +88,11 @@ class Level
  ///Get
  int Get_player_map_position_x(int _player);
  int Get_player_map_position_y(int _player);
- char *Get_name();
+ char* Get_name();
  ///Load
  void Load();
  void Fast_Reload();
- void Change(char *_level_name);
+ void Change(char* _level_name);
  ///Update
  void Update_players();
  void Update_all_arena_frames();
@@ -105,7 +102,7 @@ class Level
  void Unpause_music();
  static int Change_music(bool play);
  void Stop_music();
- static int Oversee_music(void *data);
+ static int Oversee_music(void* data);
  ///Move
  bool Move_player_X(int _player);
  bool Move_player_Y(int _player);
@@ -127,12 +124,12 @@ class Level
  ///Print
  bool Player_is_on_light(int _player);
  bool Non_Playable_Character_is_on_light(int _npc_pos);
- void Print_Map(int x,int y,SDL_Surface *_screen);
- void Print_players_informations(SDL_Surface *_screen);
- void Print_player_information(int _player,SDL_Surface *_screen);
+ void Print_Map(int x,int y,SDL_Surface* _screen);
+ void Print_players_informations(SDL_Surface* _screen);
+ void Print_player_information(int _player,SDL_Surface* _screen);
  ///Handle Events
  void Handle_Event(int _player);
- void Handle_Events(SDL_Surface *_screen);
+ void Handle_Events(SDL_Surface* _screen);
  ///Darkness
  void Darkness_increase();
  void Darkness_decrease();
@@ -158,12 +155,12 @@ class Level
  void AI_Block_player(int _player);
 
  ///Start
- void Set_screen(SDL_Surface *screen);
+ void Set_screen(SDL_Surface* screen);
  void Pause_Menu();
  bool Duel_Mode_Finish_Screen(int _player_winner);
  void Print_Duel_Mode_Finish_Screen(int _player_winner);
- void Setup(char *_level_name);
- void Start(SDL_Surface *_screen,bool cleanup=true);
+ void Setup(char* _level_name);
+ void Start(SDL_Surface* _screen,bool cleanup=true);
  void Cleanup();
  void Save_gamemode();
 };
@@ -171,10 +168,10 @@ class Level
 int Other_player(int _player);
 
 ///Launch
-void Launch_Story_Mode(Level *level,SDL_Surface *_screen);
-void Launch_Duel_Mode(Level *level,SDL_Surface *_screen);
+void Launch_Story_Mode(Level* level,SDL_Surface* _screen);
+void Launch_Duel_Mode(Level* level,SDL_Surface* _screen);
 
 ///Journal
-void Open_Journal(std::bitset<NUMBER_OF_MAX_KEYS> *progress,SDL_Surface *_screen);
+void Open_Journal(std::bitset<NUMBER_OF_MAX_KEYS>* progress,SDL_Surface* _screen);
 
 #endif //LEVEL_H

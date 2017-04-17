@@ -32,7 +32,7 @@ void Buff::Load()
  strcpy(filename,"buffs/ids/");
  strcat(filename,aux);
  strcat(filename,".pwb");
- FILE *where=fopen(filename,"r");
+ FILE* where=fopen(filename,"r");
  if(where==NULL)
     return;
  fscanf(where,"%d %d %d %d ",&type,&duration,&printable,&self);
@@ -91,7 +91,7 @@ void Buff::Set_type(int _type)
  type=_type;
 }
 
-void Buff::Set_name(char *_name)
+void Buff::Set_name(char* _name)
 {
  strcpy(name,_name);
 }
@@ -231,7 +231,7 @@ void Buff::Reset()
     remaining_duration--;
 }
 
-void Buff::Print_image(int x,int y,SDL_Surface *_screen)
+void Buff::Print_image(int x,int y,SDL_Surface* _screen)
 {
  apply_surface(x,y,image,_screen);
 }
@@ -243,7 +243,7 @@ Buff All_BUFFS[NUMBER_OF_ALL_BUFFS];
 
 void Load_all_buffs()
 {
- FILE *where=fopen("buffs/all_buffs.pwab","r");
+ FILE* where=fopen("buffs/all_buffs.pwab","r");
  fscanf(where,"%d ",&NUMBER_OF_BUFFS);
  for(int i=0;i<NUMBER_OF_BUFFS;i++)
      {

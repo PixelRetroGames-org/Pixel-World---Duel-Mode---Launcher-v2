@@ -20,7 +20,7 @@ void Journal::Load()
  strcpy(path,"journal/");
  strcat(path,name);
  strcat(path,".pwj");
- FILE *where=fopen(path,"r");
+ FILE* where=fopen(path,"r");
  if(where==NULL)
     return;
  fscanf(where,"%d ",&number_of_entries);
@@ -32,24 +32,24 @@ void Journal::Load()
       journal_entries[i].Load(journal_entries_names[i]);
      }
  fclose(where);
- TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",40);
+ TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",40);
  SDL_Color color={52,124,191};
  name_image=TTF_RenderText_Solid(font,name,color);
  TTF_CloseFont(font);
 }
 
-void Journal::Load(char *_name)
+void Journal::Load(char* _name)
 {
  Set_name(_name);
  Load();
 }
 
-void Journal::Set_name(char *_name)
+void Journal::Set_name(char* _name)
 {
  strcpy(name,_name);
 }
 
-void Journal::Handle_Events(SDL_Event *event)
+void Journal::Handle_Events(SDL_Event* event)
 {
  redraw=false;
  if(event->type==SDL_KEYDOWN)
@@ -87,7 +87,7 @@ void Journal::Handle_Events(SDL_Event *event)
  redraw=journal_entries[current_entry].Handle_Events(event);
 }
 
-void Journal::Print(SDL_Surface *_screen)
+void Journal::Print(SDL_Surface* _screen)
 {
  apply_surface(0,0,LEVEL_background_image,_screen);
  if(current_entry!=-1)
@@ -105,7 +105,7 @@ void Journal::Print(SDL_Surface *_screen)
 
 const int FRAMES_PER_SECOND=27;
 
-void Journal::Start(SDL_Surface *_screen)
+void Journal::Start(SDL_Surface* _screen)
 {
  SDL_Event event;
  SDL_Delay(100);
@@ -137,9 +137,9 @@ void Journal::Start(SDL_Surface *_screen)
  while(SDL_PollEvent(&event));
 }
 
-void Journal::Start(char *_name,std::bitset<NUMBER_OF_MAX_KEYS> *_progress,SDL_Surface *_screen)
+void Journal::Start(char* _name,std::bitset<NUMBER_OF_MAX_KEYS>* _progress,SDL_Surface* _screen)
 {
- SDL_Thread *_loading_image=NULL;
+ SDL_Thread* _loading_image=NULL;
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Load(_name);
  SDL_LockMutex(loading_image_mutex);
@@ -160,7 +160,7 @@ void Journal::Start(char *_name,std::bitset<NUMBER_OF_MAX_KEYS> *_progress,SDL_S
  SDL_Flip(static_screen);
 }
 
-void Journal::Start(std::bitset<NUMBER_OF_MAX_KEYS> *_progress,SDL_Surface *_screen)
+void Journal::Start(std::bitset<NUMBER_OF_MAX_KEYS>* _progress,SDL_Surface* _screen)
 {
  progress=_progress;
  Start(_screen);

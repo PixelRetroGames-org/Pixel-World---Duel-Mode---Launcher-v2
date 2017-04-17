@@ -1,6 +1,4 @@
 #include "shop_page.h"
-///CSTRING
-#include <cstring>
 
 const SDL_Color ITEM_NAME_COLOR={27,100,250};
 
@@ -40,7 +38,7 @@ void Shop_Page::Set_LAST_POSX(int _x)
  LAST_POSX=_x;
 }
 
-void Shop_Page::Set_name(char *_name)
+void Shop_Page::Set_name(char* _name)
 {
  strcpy(name,_name);
 }
@@ -51,7 +49,7 @@ void Shop_Page::Load()
  strcpy(path,"shop/shop_page/");
  strcat(path,name);
  strcat(path,".pwsp");
- FILE *where=fopen(path,"r");
+ FILE* where=fopen(path,"r");
  fscanf(where,"%d ",&type);
  fscanf(where,"%d %d %d ",&number_of_items,&number_of_lines,&number_of_columns);
  int _id;
@@ -70,7 +68,7 @@ void Shop_Page::Load()
  strcat(path,name);
  strcat(path,".bmp");
  image=make_it_transparent(path);
- TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",36);
+ TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",36);
  name_image=TTF_RenderText_Solid(font,name,ITEM_NAME_COLOR);
  TTF_CloseFont(font);
 }
@@ -85,7 +83,7 @@ int Shop_Page::Get_type()
  return type;
 }
 
-void Shop_Page::Print_Title(int x,int y,SDL_Surface *_screen,bool selected=false,bool click=false)
+void Shop_Page::Print_Title(int x,int y,SDL_Surface* _screen,bool selected=false,bool click=false)
 {
  title_size=image->w;
  if(click)
@@ -126,7 +124,7 @@ void Shop_Page::Print_Title(int x,int y,SDL_Surface *_screen,bool selected=false
     apply_surface(x+title_size-10,y,SHOP_title_background_right_frame,_screen);
 }
 
-void Shop_Page::Print(int x,int y,SDL_Surface *_screen)
+void Shop_Page::Print(int x,int y,SDL_Surface* _screen)
 {
  apply_surface(x,y-10,LAST_POSX-x,900,SHOP_shop_page_background,_screen);
  int _x=x,_y=y;
@@ -154,7 +152,7 @@ void Shop_Page::Reset()
  item_click=item_selected=-1;
 }
 
-int Shop_Page::Start(SDL_Surface *_screen,SDL_Event *event)
+int Shop_Page::Start(SDL_Surface* _screen,SDL_Event* event)
 {
  int _x=POSX,_y=60,x,y;
  item_click=-1;

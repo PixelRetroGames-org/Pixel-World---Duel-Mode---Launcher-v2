@@ -41,7 +41,7 @@
 40 - Dungeon13 Door
 41 - Wizard11 *
 42 - Wizard12
-43 - Dungeon2, Lumberjack
+43 - Dungeon1
 44 - Shaytaan investigation
 45 - Jerry1 *
 46 - Jerry2
@@ -57,3 +57,4 @@
 56 - Cave Door2
 57 - The Coin
 58 - Shaytaan2
+59 - Dungeon2

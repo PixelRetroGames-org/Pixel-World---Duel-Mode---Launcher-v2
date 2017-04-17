@@ -1,6 +1,4 @@
 #include "shop.h"
-//CSTRING
-#include <cstring>
 
 ///SHOP
 Shop::Shop()
@@ -37,7 +35,7 @@ void Shop::Set_LAST_POSX(int _x)
  LAST_POSX=_x;
 }
 
-void Shop::Set_name(char *_name)
+void Shop::Set_name(char* _name)
 {
  strcpy(name,_name);
 }
@@ -48,7 +46,7 @@ void Shop::Load()
  strcpy(path,"shop/");
  strcat(path,name);
  strcat(path,".pwsh");
- FILE *where=fopen(path,"r");
+ FILE* where=fopen(path,"r");
  fscanf(where,"%d ",&number_of_pages);
  Shop_Page aux;
  for(int i=0;i<number_of_pages;i++)
@@ -65,7 +63,7 @@ void Shop::Load()
  fclose(where);
 }
 
-void Shop::Print(SDL_Surface *_screen)
+void Shop::Print(SDL_Surface* _screen)
 {
  int _x=0,_y=0;
  for(int i=0;i<number_of_pages;i++)
@@ -89,7 +87,7 @@ void Shop::Reset()
  page_click=page_selected=0;
 }
 
-inline int Shop::Start(SDL_Surface *_screen,SDL_Event *event)
+inline int Shop::Start(SDL_Surface* _screen,SDL_Event* event)
 {
  if(event->type==SDL_MOUSEMOTION || event->type==SDL_MOUSEBUTTONDOWN)
     {
@@ -115,9 +113,9 @@ inline int Shop::Start(SDL_Surface *_screen,SDL_Event *event)
 SDL_Color MESSAGE_COLOR={255,255,255};
 const int FRAMES_PER_SECOND=27;
 
-int Shop_Screen::Start(SDL_Surface *screen)
+int Shop_Screen::Start(SDL_Surface* screen)
 {
- SDL_Thread *_loading_image=NULL;
+ SDL_Thread* _loading_image=NULL;
  static_screen=screen;
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  player.Set_PLAYER_INFO_LAST_POSX(RESOLUTION_X);
@@ -147,9 +145,9 @@ int Shop_Screen::Start(SDL_Surface *screen)
  SDL_Flip(screen);
  bool quit=false;
  SDL_Event event;
- TTF_Font *font=NULL;
+ TTF_Font* font=NULL;
  font=TTF_OpenFont("fonts/pixel.ttf",30);
- SDL_Surface *not_enough_money=NULL,*not_enough_space_items=NULL,*not_enough_space_spells=NULL,*not_enough_space_potions=NULL,*not_enough_background=NULL;
+ SDL_Surface* not_enough_money=NULL,*not_enough_space_items=NULL,*not_enough_space_spells=NULL,*not_enough_space_potions=NULL,*not_enough_background=NULL;
  not_enough_money=TTF_RenderText_Solid(font,"You don't have enough money to buy this!",MESSAGE_COLOR);
  not_enough_space_items=TTF_RenderText_Solid(font,"Not enough space, sell some items!",MESSAGE_COLOR);
  not_enough_space_spells=TTF_RenderText_Solid(font,"Not enough space, sell some spells!",MESSAGE_COLOR);
@@ -224,7 +222,7 @@ int Shop_Screen::Start(SDL_Surface *screen)
  return 0;
 }
 
-int Shop_Screen::Start(SDL_Surface *screen,char *shop_name,char *player_name)
+int Shop_Screen::Start(SDL_Surface* screen,char* shop_name,char* player_name)
 {
  player.Set_name(player_name);
  shop.Set_name(shop_name);

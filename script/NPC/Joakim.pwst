@@ -3,7 +3,7 @@
 <img 0 0 Joakim >
 
 
-<color 125 0 7 >Joakim: </color > Greetings! If you enter the Dark Forest, beware of the monsters.</line >
+<color 125 0 7 >Joakim: </color > If you enter the Dark Forest, beware of the monsters.</line >
 < flip >
 </page >
 
@@ -12,7 +12,7 @@
 <img 0 0 Timy >
 
 
-<color 125 0 7 >Timy: </color > Good day! Where, when did the monsters come?</line >
+<color 125 0 7 >Timy: </color > Where and when did the monsters come?</line >
 <we >
 < flip >
 </page >
@@ -42,7 +42,7 @@ page >
 <img 0 0 Timy >
 
 
-<color 125 0 7 >Timy: </color > Hm, so where are monsters, there is an entrance to this dungeon!</line >
+<color 125 0 7 >Timy: </color > Hmm, so where are monsters, there is an entrance to this dungeon!</line >
 <we >
 < flip >
 </page >

@@ -6,12 +6,24 @@
 <color 125 0 7 >Werewolf: </color > Rrrraaaargggghhh!!</line >
 < flip >
 </page >
+
 <page >
 <line >
 <img 0 0 Timy >
 
 
-<color 125 0 7 >Timy: </color > I killed you, beast!</line >
+<color 125 0 7 >Timy: </color > Shut up!</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+
+With one last slash Timy killed the beast. The werewolf's dead body burst in flames.</line >
+<line > The fire faded and the corpse was gone. </line >
 <we >
 < flip >
 <we >

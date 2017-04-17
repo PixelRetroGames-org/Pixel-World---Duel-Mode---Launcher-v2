@@ -1,11 +1,20 @@
 < bckimg background > 
 <page >
 <line >
+
+
+he was wrong...</line >
+< flip >
+</page >
+
+<page >
+<line >
 <img 0 0 Yuzug >
 
 
 
 <color 125 0 7 >Yuzug: </color > Hey, human, what do you want?</line >
+<we >
 < flip >
 </page >
 
@@ -15,7 +24,7 @@
 
 
 
-<color 125 0 7 >Yukig: </color > I think he wants to fight!</line >
+<color 125 0 7 >Yukig: </color > Maybe he wanna fight! It will be a pleasure defeating this skinny man.</line >
 <we >
 < flip >
 </page >
@@ -60,7 +69,7 @@
 
 
 
-<color 125 0 7 >Yukig: </color > Human, I challange you to fight!</line >
+<color 125 0 7 >Yukig: </color > Hey, I challange you to fight!</line >
 <line >If you win, we let you go further.</line >
 <we >
 < flip >

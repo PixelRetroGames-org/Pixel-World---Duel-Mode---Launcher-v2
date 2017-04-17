@@ -3,29 +3,27 @@
 
 #include "load_images.h"
 #include "library.h"
-///SDL
+#include "buff.h"
+
 #include "SDL/SDL.h"
 #include "SDL/SDL_ttf.h"
 #include "SDL/SDL_image.h"
-///CSTRING
-#include <cstring>
-///CSTDIO
-#include <cstdio>
 
-#include "buff.h"
+#include <cstring>
+#include <cstdio>
 
 #ifndef DESCRIPTION_LINES_MAX_DEFINED
 const int DESCRIPTION_LINES_MAX=8;
 #define DESCRIPTION_LINES_MAX_DEFINED
 #endif // DESCRIPTION_LINES_MAX_DEFINED
 
-extern const char *type_name[11];
+extern const char* type_name[11];
 
 class Item
 {
  private:
  int id,cost,spell_id;
- SDL_Surface *image,*inventory_image,*name_image,*price_image,*description_image[DESCRIPTION_LINES_MAX];
+ SDL_Surface* image,*inventory_image,*name_image,*price_image,*description_image[DESCRIPTION_LINES_MAX];
  int description_lines=0;
  char name[TEXT_LENGTH_MAX],description[4*TEXT_LENGTH_MAX];
  int attack,defense,extra_money,spell_damage,spell_resistance,mana,hp,movement_speed;
@@ -47,16 +45,16 @@ class Item
  int Get_movement_speed();
  int Get_mana();
  int Get_hp();
- SDL_Surface *Get_image();
- SDL_Surface *Get_inventory_image();
- SDL_Surface *Get_skin();
+ SDL_Surface* Get_image();
+ SDL_Surface* Get_inventory_image();
+ SDL_Surface* Get_skin();
  void Set_type(int _type);
  void Set_id(int _id);
  int Load();
- void Print(int x,int y,SDL_Surface *_screen,bool selected);
- void Print_description(int x,int y,SDL_Surface *_screen,bool selected);
- void Print_image(int x,int y,SDL_Surface *_screen);
- void Print_inventory_image(int x,int y,SDL_Surface *_screen);
+ void Print(int x,int y,SDL_Surface* _screen,bool selected);
+ void Print_description(int x,int y,SDL_Surface* _screen,bool selected);
+ void Print_image(int x,int y,SDL_Surface* _screen);
+ void Print_inventory_image(int x,int y,SDL_Surface* _screen);
 
  //BUFFS
  int Get_buff_id();

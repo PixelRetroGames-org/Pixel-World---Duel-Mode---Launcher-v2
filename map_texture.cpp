@@ -22,7 +22,7 @@ void Texture::Set_id(int _id)
  id=_id;
 }
 
-void Texture::Set_name(char *_name)
+void Texture::Set_name(char* _name)
 {
  strcpy(name,_name);
 }
@@ -97,7 +97,7 @@ void Texture::Load()
  strcpy(path,"maps/textures/");
  strcat(path,aux);
  strcat(path,".pwt");
- FILE *where=fopen(path,"r");
+ FILE* where=fopen(path,"r");
  int buff_id,_print_before_player;
  fscanf(where,"%d ",&number_of_frames);
  fscanf(where,"%d ",&type);
@@ -120,11 +120,10 @@ void Texture::Load()
  strcat(path,name);
  strcat(path,".bmp");
  image=make_it_transparent(path);
- ///
  fclose(where);
 }
 
-void Texture::Print_image(int x,int y,SDL_Surface *_screen,int frame)
+void Texture::Print_image(int x,int y,SDL_Surface* _screen,int frame)
 {
  if(image==NULL)
     return;

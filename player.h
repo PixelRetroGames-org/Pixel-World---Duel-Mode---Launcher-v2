@@ -5,9 +5,11 @@
 #include "library.h"
 #include "item.h"
 #include "spell.h"
+
 #include <vector>
 #include <algorithm>
 #include <bitset>
+#include <cstring>
 
 const int NUMBER_OF_ITEMS_IDS=100;
 
@@ -36,7 +38,7 @@ class Player
  int map_positionX=0,map_positionY=0;
  int skin_size_w=PIXELS_PER_INGAME_UNIT,skin_size_h=PIXELS_PER_INGAME_UNIT;
  int velocityX=0,velocityY=0;
- SDL_Surface *skin=NULL,*name_image=NULL,*hp_image=NULL,*mana_image=NULL;
+ SDL_Surface* skin=NULL,*name_image=NULL,*hp_image=NULL,*mana_image=NULL;
  SDL_Rect skin_image_position;
  SDL_Rect original_skin_image_position;
  bool is_blocked=false,can_attack=true;
@@ -54,7 +56,7 @@ class Player
  public:
  Player();
  void Clear(bool _delete=false);
- void Set_name(char *_name);
+ void Set_name(char* _name);
  void Set_PLAYER_INFO_POSX(int _x);
  void Set_PLAYER_INFO_LAST_POSX(int _x);
  void Set_SKIN_POSX(int _x);
@@ -74,11 +76,11 @@ class Player
  int Get_PLAYER_INFO_LAST_POSX();
  int Get_money();
  int Get_experience();
- void Print_Character(int x,int y,SDL_Surface *_screen);
- void Print_items(int x,int y,SDL_Surface *_screen);
- void Print_Inventory(int x,int y,SDL_Surface *_screen,bool options=true,int type=0,bool allow_sales=true);
- void Print_Inventory_equipped_items(int x,int y,SDL_Surface *_screen,bool options=true,int type=1,bool allow_sales=true);
- int Start_inventory(int x,int y,SDL_Surface *_screen,SDL_Event *event,int type=0,bool allow_sales=true);
+ void Print_Character(int x,int y,SDL_Surface* _screen);
+ void Print_items(int x,int y,SDL_Surface* _screen);
+ void Print_Inventory(int x,int y,SDL_Surface* _screen,bool options=true,int type=0,bool allow_sales=true);
+ void Print_Inventory_equipped_items(int x,int y,SDL_Surface* _screen,bool options=true,int type=1,bool allow_sales=true);
+ int Start_inventory(int x,int y,SDL_Surface* _screen,SDL_Event* event,int type=0,bool allow_sales=true);
 
  ///Game
  void Set_hp(int _hp);
@@ -110,18 +112,18 @@ class Player
  int Get_velocityY();
  int Get_skinW();
  int Get_skinH();
- char *Get_name();
- void Set_skin(char *skin_name);
+ char* Get_name();
+ void Set_skin(char* skin_name);
  void Load_skin();
  void Update_skin_image_position();
- void Print_name(int x,int y,SDL_Surface *_screen);
- void Print_name(SDL_Surface *_screen);
- void Print_hp(int x,int y,SDL_Surface *_screen);
- void Print_hp(SDL_Surface *_screen);
- void Print_mana(int x,int y,SDL_Surface *_screen);
- void Print_mana(SDL_Surface *_screen);
- void Print_skin(int x,int y,int mapX,int mapY,SDL_Surface *_screen);
- void Print_skin_free(int x,int y,SDL_Surface *_screen);
+ void Print_name(int x,int y,SDL_Surface* _screen);
+ void Print_name(SDL_Surface* _screen);
+ void Print_hp(int x,int y,SDL_Surface* _screen);
+ void Print_hp(SDL_Surface* _screen);
+ void Print_mana(int x,int y,SDL_Surface* _screen);
+ void Print_mana(SDL_Surface* _screen);
+ void Print_skin(int x,int y,int mapX,int mapY,SDL_Surface* _screen);
+ void Print_skin_free(int x,int y,SDL_Surface* _screen);
  void Equip_items();
  bool Is_blocked();
  bool Can_attack();
@@ -134,15 +136,15 @@ class Player
  ///Game
 
  ///Buffs
- void Apply_buff(Buff *_buff);
- void Remove_buff(Buff *_buff);
+ void Apply_buff(Buff* _buff);
+ void Remove_buff(Buff* _buff);
  void Apply_all_buffs();
  void Apply_new_active_buff();
  void Apply_active_buffs();
  void Apply_item_buffs();
  void Add_buff(Buff _buff);
- void Get_transmitted_buffs(std::vector<Buff> *_buffs);
- void Print_buffs(int x,int y,SDL_Surface *_screen);
+ void Get_transmitted_buffs(std::vector<Buff>* _buffs);
+ void Print_buffs(int x,int y,SDL_Surface* _screen);
  ///Spells
  bool Pay_Spell(int spell_pos);
  Spell Get_Spell(int spell_pos);
@@ -151,14 +153,14 @@ class Player
  void Decrease_Spell_time_blocked(int spell_pos);
  void Decrease_all_Spells_time_blocked();
  bool Spell_Is_blocked(int spell_pos);
- void Print_spells(int x,int y,SDL_Surface *_screen);
+ void Print_spells(int x,int y,SDL_Surface* _screen);
  ///Keys
  void Add_key(int _key_id);
- void Add_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids);
+ void Add_keys(std::bitset<NUMBER_OF_MAX_KEYS>* _keys_ids);
  void Remove_key(int _key_id);
- void Remove_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids);
- std::bitset<NUMBER_OF_MAX_KEYS> *Get_keys();
- std::bitset<NUMBER_OF_MAX_KEYS> *Get_progress();
+ void Remove_keys(std::bitset<NUMBER_OF_MAX_KEYS>* _keys_ids);
+ std::bitset<NUMBER_OF_MAX_KEYS>* Get_keys();
+ std::bitset<NUMBER_OF_MAX_KEYS>* Get_progress();
  ///Score
  void Increase_number_of_wins();
  int Get_number_of_wins();

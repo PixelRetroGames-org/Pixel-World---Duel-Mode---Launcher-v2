@@ -1,9 +1,31 @@
-< bckimg background > <page >
+< bckimg background > 
+
+<page >
 <line >
 <img 0 0 Timy >
 
 
-<color 125 0 7 >Timy: </color >A lot of blood. He can't be far away...</line >
+<color 125 0 7 >Timy: </color >Hmm, he got dressed and then the beast attacked.</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >Heavy bleeding. I don't think he survived...</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >The smell is so strong! He's close!</line >
+<we >
 < flip >
 <we >
 </page >

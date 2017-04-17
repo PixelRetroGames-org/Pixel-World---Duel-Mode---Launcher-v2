@@ -1,8 +1,4 @@
 #include "level.h"
-#include "load_audio_effects.h"
-#include "settings.h"
-#include "menu.h"
-#include "SDL/SDL_thread.h"
 
 const SDLKey player_keys[3][20]={{},{SDLK_UP,SDLK_DOWN,SDLK_LEFT,SDLK_RIGHT,SDLK_RCTRL,SDLK_j,SDLK_n,SDLK_u,SDLK_i,SDLK_o,SDLK_p,SDLK_RSHIFT},{SDLK_w,SDLK_s,SDLK_a,SDLK_d,SDLK_z,SDLK_BACKQUOTE,SDLK_TAB,SDLK_1,SDLK_2,SDLK_3,SDLK_4,SDLK_x}};
 const int SKEPTIC_VISION_MAX_ALPHA=100;
@@ -14,12 +10,12 @@ bool OBSTACLES=true;
 #endif // GOD_POWERS
 
 int level_number_of_background_music_tracks;
-Mix_Music *level_background_music[NUMBER_OF_SONGS_MAX];
+Mix_Music* level_background_music[NUMBER_OF_SONGS_MAX];
 Timer level_music_time;
 bool level_paused_music;
 int level_last_track_played;
-SDL_Thread *level_music_overseer=NULL;
-SDL_mutex *music_overseer_mutex;
+SDL_Thread* level_music_overseer=NULL;
+SDL_mutex* music_overseer_mutex;
 
 Level::Level()
 {
@@ -73,7 +69,7 @@ void Level::Set_arena_size()
     arena_size.y=(RESOLUTION_Y-arena_size.h+(arena_size.h%80==0?-40:0))/2-4;
 }
 
-void Level::Set_name(char *_name)
+void Level::Set_name(char* _name)
 {
  strcpy(name,_name);
 }
@@ -130,7 +126,7 @@ int Level::Get_player_map_position_y(int _player)
  return player[_player].Get_map_positionY();
 }
 
-char *Level::Get_name()
+char* Level::Get_name()
 {
  return name;
 }
@@ -142,7 +138,7 @@ void Level::Load()
  strcpy(path,"levels/");
  strcat(path,name);
  strcat(path,".pwl");
- FILE *where=fopen(path,"r");
+ FILE* where=fopen(path,"r");
  if(where==NULL)
     return;
  int x,y;
@@ -274,10 +270,10 @@ void Level::Fast_Reload()
      }
 }
 
-void Level::Change(char *_level_name)
+void Level::Change(char* _level_name)
 {
  level_changed=true;
- SDL_Thread *_loading_image=NULL;
+ SDL_Thread* _loading_image=NULL;
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Clear();
  int thread_return_value=0;
@@ -343,7 +339,7 @@ int Level::Change_music(bool play)
          level_last_track_played=x;
          if(Mix_PlayMusic(level_background_music[x],0)==-1)
             {
-             FILE *log_file=fopen("err/logs.txt","w");
+             FILE* log_file=fopen("err/logs.txt","w");
              fprintf(log_file,"Mix_PlayMusic failed : %s ",SDL_GetError());
              fclose(log_file);
              exit(-3);
@@ -361,7 +357,7 @@ void Level::Stop_music()
 
 bool Oversee_music_quit;
 
-int Level::Oversee_music(void *data)
+int Level::Oversee_music(void* data)
 {
  if(!MUSIC_MODULE_INIT)
     return -1;
@@ -811,7 +807,7 @@ bool Level::Non_Playable_Character_is_on_light(int _npc_pos)
 
 const int MAP_IMAGE_WEIGHT=21,MAP_IMAGE_HEIGHT=17;
 
-void Level::Print_Map(int x,int y,SDL_Surface *_screen)
+void Level::Print_Map(int x,int y,SDL_Surface* _screen)
 {
  int mapX=0,mapY=0;
  if(type!=2)
@@ -904,13 +900,13 @@ void Level::Print_Map(int x,int y,SDL_Surface *_screen)
  arena.Print_name_image(_screen);
 }
 
-void Level::Print_players_informations(SDL_Surface *_screen)
+void Level::Print_players_informations(SDL_Surface* _screen)
 {
  Print_player_information(1,_screen);
  Print_player_information(2,_screen);
 }
 
-void Level::Print_player_information(int _player,SDL_Surface *_screen)
+void Level::Print_player_information(int _player,SDL_Surface* _screen)
 {
  player[_player].Print_name(_screen);
  player[_player].Print_hp(_screen);
@@ -989,7 +985,7 @@ void Level::Handle_Event(int _player)
     player[_player].Block();
 }
 
-void Level::Handle_Events(SDL_Surface *_screen)
+void Level::Handle_Events(SDL_Surface* _screen)
 {
  Handle_Event(1);
  if(type==2)
@@ -1761,8 +1757,8 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
      apply_surface(_screen->w/2+(_screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,_screen);
      player[2].Print_name(_screen->w/2+(_screen->w/2-LEVEL_LOSER->w)/2,5+LEVEL_LOSER->h,_screen);
     }
- SDL_Surface *player_xp,*player_money,*player_xp_gain,*player_money_gain;
- TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
+ SDL_Surface* player_xp,*player_money,*player_xp_gain,*player_money_gain;
+ TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",30);
  SDL_Color xp_color={75,0,130},MONEY_COLOR={236,242,4},wins_color={241,188,48};
  char aux[TEXT_LENGTH_MAX]={NULL};
 
@@ -1863,16 +1859,16 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
  SDL_Flip(_screen);
 }
 
-void Level::Set_screen(SDL_Surface *screen)
+void Level::Set_screen(SDL_Surface* screen)
 {
  _screen=screen;
  static_screen=screen;
 }
 
-void Level::Setup(char *_level_name)
+void Level::Setup(char* _level_name)
 {
  Set_name(_level_name);
- SDL_Thread *_loading_image=NULL;
+ SDL_Thread* _loading_image=NULL;
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Load();
  //SDL_Delay(1000);
@@ -1895,7 +1891,7 @@ void Level::Setup(char *_level_name)
  Set_player_LAST_POSX(2,(RESOLUTION_X+(RESOLUTION_X-840)/2+840)/2+100);
 }
 
-void Level::Start(SDL_Surface *screen,bool cleanup)
+void Level::Start(SDL_Surface* screen,bool cleanup)
 {
  winner=0;
  bool play=true;
@@ -2013,7 +2009,7 @@ void Level::Start(SDL_Surface *screen,bool cleanup)
 
 void Level::Cleanup()
 {
- SDL_Thread *_loading_image=NULL;
+ SDL_Thread* _loading_image=NULL;
  _loading_image=SDL_CreateThread(Loading_image,NULL);
  Clear();
  SDL_LockMutex(loading_image_mutex);
@@ -2027,7 +2023,7 @@ void Level::Cleanup()
 void Level::Save_gamemode()
 {
  int player_map_position_x,player_map_position_y;
- FILE *where=fopen("saves/gamemodes/Story Mode.pwsav","w");
+ FILE* where=fopen("saves/gamemodes/Story Mode.pwsav","w");
  player_map_position_x=Get_player_map_position_x(1);
  player_map_position_y=Get_player_map_position_y(1);
  fprintf(where,"%d %d\n",player_map_position_x,player_map_position_y);
@@ -2036,11 +2032,11 @@ void Level::Save_gamemode()
 }
 
 ///Launch
-void Launch_Story_Mode(Level *level,SDL_Surface *_screen)
+void Launch_Story_Mode(Level* level,SDL_Surface* _screen)
 {
  int player_map_position_x,player_map_position_y;
  char level_name[TEXT_LENGTH_MAX],player_name[TEXT_LENGTH_MAX];
- FILE *where=fopen("saves/gamemodes/Story Mode.pwsav","r");
+ FILE* where=fopen("saves/gamemodes/Story Mode.pwsav","r");
  if(where==NULL)
     {
      fclose(where);
@@ -2050,7 +2046,7 @@ void Launch_Story_Mode(Level *level,SDL_Surface *_screen)
      where=fopen("saves/gamemodes/Story Mode.pwsav","r");
      if(where==NULL)
         {
-         FILE *log_file=fopen("err/logs.txt","w");
+         FILE* log_file=fopen("err/logs.txt","w");
          fprintf(log_file,"\"saves/gamemodes/Story Mode.pwsav\" is missing");
          fclose(log_file);
          exit(5);
@@ -2075,14 +2071,14 @@ void Launch_Story_Mode(Level *level,SDL_Surface *_screen)
  level->Cleanup();
 }
 
-void Launch_Duel_Mode(Level *level,SDL_Surface *_screen)
+void Launch_Duel_Mode(Level* level,SDL_Surface* _screen)
 {
  level->Set_screen(_screen);
  level->Setup("Duel Mode");
  level->Start(_screen);
 }
 
-void Open_Journal(std::bitset<NUMBER_OF_MAX_KEYS> *progress,SDL_Surface *_screen)
+void Open_Journal(std::bitset<NUMBER_OF_MAX_KEYS>* progress,SDL_Surface* _screen)
 {
  journal.Start(progress,_screen);
 }

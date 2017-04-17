@@ -9,16 +9,15 @@
 #define AUDIO
 ///
 
-//SDL
 #include "SDL/SDL.h"
 #include "SDL/SDL_ttf.h"
 #include "SDL/SDL_mixer.h"
-//CSTRING
+
 #include <cstring>
-//STRING
+
 #include <string>
 
-extern Uint8 *keystates;
+extern Uint8* keystates;
 extern const int PLAYER_INFO_POSX,PLAYER_INFO_LAST_POSX;
 extern const int MAP_POSX,MAP_POSY,MAP_LAST_POSX,MAP_LAST_POSY;
 extern const int PIXELS_PER_INGAME_UNIT;
@@ -29,14 +28,14 @@ extern const int PIXELS_PER_INGAME_UNIT;
 void atoi(int &n, char s[]);
 void itoa(int n, char s[]);
 void reverse(char s[]);
-void Set_icon(char *filename);
-void Make_Fullscreen(SDL_Surface *_screen,bool *fullscreen);
-SDL_Surface *load_image(std::string filename);
+void Set_icon(char* filename);
+void Make_Fullscreen(SDL_Surface* _screen,bool* fullscreen);
+SDL_Surface* load_image(std::string filename);
 void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination );
 void apply_surface( int x, int y,int w,int h, SDL_Surface* source, SDL_Surface* destination );
-void apply_surface(int xImage,int yImage,int xScreen,int yScreen,int w,int h,SDL_Surface *source,SDL_Surface *destination);
-SDL_Surface *make_it_transparent( char *filename );
-void make_it_transparent(SDL_Surface *image);
+void apply_surface(int xImage,int yImage,int xScreen,int yScreen,int w,int h,SDL_Surface* source,SDL_Surface* destination);
+SDL_Surface* make_it_transparent( char* filename );
+void make_it_transparent(SDL_Surface* image);
 class Timer
 {
  private:

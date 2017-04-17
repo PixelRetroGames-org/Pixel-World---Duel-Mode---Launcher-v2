@@ -1,5 +1,4 @@
 #include "map.h"
-#include "settings.h"
 
 /*Map::~Map()
 {
@@ -57,7 +56,7 @@ void Map::Clear(bool _delete,bool _delete_all)
     }
 }
 
-void Map::Set_name(char *_name)
+void Map::Set_name(char* _name)
 {
  strcpy(name,_name);
 }
@@ -105,7 +104,7 @@ bool Map::Is_Trigger(int x,int y)
  return map_textures[map_textures_ids[x][y].Get_texture_id()].Is_trigger();
 }
 
-char *Map::Get_name()
+char* Map::Get_name()
 {
  return name;
 }
@@ -150,12 +149,12 @@ int Map::Get_map_texture_player_pos_y(int x,int y)
  return map_textures_ids[x][y].Get_texture_player_map_pos_y();
 }
 
-char *Map::Get_map_texture_map_name(int x,int y)
+char* Map::Get_map_texture_map_name(int x,int y)
 {
  return map_textures_ids[x][y].Get_texture_map_name();
 }
 
-char *Map::Get_map_texture_puzzle_name(int x,int y)
+char* Map::Get_map_texture_puzzle_name(int x,int y)
 {
  return map_textures_ids[x][y].Get_texture_puzzle_name();
 }
@@ -165,7 +164,7 @@ int Map::Get_map_texture_key_id(int x,int y)
  return map_textures_ids[x][y].Get_key_id();
 }
 
-void Map::Copy(int x,int y,Map *source)
+void Map::Copy(int x,int y,Map* source)
 {
  for(int i=0;i<source->Get_number_of_lines();i++)
      for(int j=0;j<source->Get_number_of_columns();j++)
@@ -257,13 +256,13 @@ bool Map::Is_done()
  return (current_number_of_updates>number_of_updates && number_of_updates>0);
 }
 
-void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
+void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS>* _keys)
 {
  char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"maps/");
  strcat(path,name);
  strcat(path,".pwm");
- FILE *where=fopen(path,"r");
+ FILE* where=fopen(path,"r");
  int _is_interest_point,_is_static;
  fscanf(where,"%d %d %d %d %d ",&_is_interest_point,&_is_static,&number_of_updates,&number_of_lines,&number_of_columns);
  is_interest_point=_is_interest_point;
@@ -271,9 +270,9 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
 
  if(is_interest_point)
     {
-     TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
+     TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",30);
      SDL_Color color={255,255,255};
-     SDL_Surface *image=TTF_RenderText_Solid(font,name,color);
+     SDL_Surface* image=TTF_RenderText_Solid(font,name,color);
      name_image=make_it_transparent("images/game/map_name_background.bmp");
      apply_surface((name_image->w-image->w)/2,(name_image->h-image->h)/2,image,name_image);
      SDL_Flip(name_image);
@@ -514,13 +513,13 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
 
 const int MAP_IMAGE_HEIGHT=840,MAP_IMAGE_WEIGHT=680;
 
-void Map::Print(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights)
+void Map::Print(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface* _screen,bool before_player,bool lights)
 {
  //apply_surface(screen_x,screen_y,map_image[before_player][lights],_screen);
  apply_surface(map_x*PIXELS_PER_INGAME_UNIT,map_y*PIXELS_PER_INGAME_UNIT,screen_x,screen_y,MAP_IMAGE_HEIGHT,MAP_IMAGE_WEIGHT,map_image[before_player][lights],_screen);
 }
 
-void Map::Print_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights)
+void Map::Print_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface* _screen,bool before_player,bool lights)
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_map_textures_animations[before_player][lights].begin();it!=fast_access_map_textures_animations[before_player][lights].end();it++)
      {
@@ -529,13 +528,13 @@ void Map::Print_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Sur
      }
 }
 
-void Map::Print_background(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights)
+void Map::Print_background(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface* _screen,bool before_player,bool lights)
 {
  //apply_surface(screen_x,screen_y,background_map_image[before_player][lights],_screen);
  apply_surface(map_x*PIXELS_PER_INGAME_UNIT,map_y*PIXELS_PER_INGAME_UNIT,screen_x,screen_y,MAP_IMAGE_HEIGHT,MAP_IMAGE_WEIGHT,background_map_image[before_player][lights],_screen);
 }
 
-void Map::Print_background_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights)
+void Map::Print_background_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface* _screen,bool before_player,bool lights)
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_background_map_textures_animations[before_player][lights].begin();it!=fast_access_background_map_textures_animations[before_player][lights].end();it++)
      {
@@ -544,7 +543,7 @@ void Map::Print_background_Animations(int screen_x,int screen_y,int map_x,int ma
      }
 }
 
-void Map::Print_image(int screen_x,int screen_y,SDL_Surface *_screen,Interactive_map_texture *source)
+void Map::Print_image(int screen_x,int screen_y,SDL_Surface* _screen,Interactive_map_texture* source)
 {
  map_textures[source->Get_texture_id()].Print_image(screen_x,screen_y,_screen,source->Get_texture_frame());
 }
@@ -563,7 +562,7 @@ void Map::Trigger(int x,int y)
      Trigger(it->first,it->second);
 }
 
-void Map::Print_name_image(SDL_Surface *_screen)
+void Map::Print_name_image(SDL_Surface* _screen)
 {
  if(!is_interest_point)
     return;
@@ -581,7 +580,7 @@ void Map::Update_name_image()
  SDL_SetAlpha(name_image,SDL_SRCALPHA,name_image_alpha);
 }
 
-void Map::Print_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen,bool before_player,bool lights)
+void Map::Print_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface* _screen,bool before_player,bool lights)
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_clues_map_textures[before_player][lights].begin();it!=fast_access_clues_map_textures[before_player][lights].end();it++)
      {
@@ -590,7 +589,7 @@ void Map::Print_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface 
      }
 }
 
-void Map::Print_Special_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface *_screen)
+void Map::Print_Special_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface* _screen)
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_special_clues_map_textures.begin();it!=fast_access_special_clues_map_textures.end();it++)
      {
@@ -599,12 +598,12 @@ void Map::Print_Special_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_
      }
 }
 
-Clue_map_texture *Map::Get_Clue_map_texture(int x,int y)
+Clue_map_texture* Map::Get_Clue_map_texture(int x,int y)
 {
  return &clues_map_textures_ids[x][y];
 }
 
-Clue_map_texture *Map::Get_Special_Clue_map_texture(int x,int y)
+Clue_map_texture* Map::Get_Special_Clue_map_texture(int x,int y)
 {
  return &special_clues_map_textures_ids[x][y];
 }

@@ -24,38 +24,8 @@
 <img 0 0 Timy >
 
 
-<color 125 0 7 >Timy: </color >.</line >
-<we >
-< flip >
-</page >
-
-<page >
-<line >
-<img 0 0 Timy >
-
-
-<color 125 0 7 >Timy: </color >..</line >
-<sleep 400 >
-< flip >
-</page >
-
-<page >
-<line >
-<img 0 0 Timy >
-
-
-<color 125 0 7 >Timy: </color >...</line >
-<sleep 400 >
-< flip >
-</page >
-
-<page >
-<line >
-<img 0 0 Timy >
-
-
 <color 125 0 7 >Timy: </color >Fine! I'll pay, show me what you got!</line >
-<sleep 400 >
+<we >
 < flip >
 <we >
 </page >

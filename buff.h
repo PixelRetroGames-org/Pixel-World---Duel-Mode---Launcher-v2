@@ -19,7 +19,7 @@ class Buff
  int id,duration,type;
  int remaining_duration;
  char name[TEXT_LENGTH_MAX]={NULL};
- SDL_Surface *image=NULL;
+ SDL_Surface* image=NULL;
 
  public:
  Buff();
@@ -28,7 +28,7 @@ class Buff
  void Set_id(int _id);
  void Set_duration(int _duration);
  void Set_type(int _type);
- void Set_name(char *_name);
+ void Set_name(char* _name);
  void Set_damage(int _damage);
  void Set_transmitted_buff_id(int _id);
 
@@ -60,7 +60,7 @@ class Buff
 
  void Decrease_remaining_duration();
  void Reset();
- void Print_image(int x,int y,SDL_Surface *_screen);
+ void Print_image(int x,int y,SDL_Surface* _screen);
 };
 
 const int NUMBER_OF_ALL_BUFFS=10;

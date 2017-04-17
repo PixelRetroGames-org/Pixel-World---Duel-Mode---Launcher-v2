@@ -59,30 +59,10 @@ page >
 
 <page >
 <line >
-<img 0 0 Asmund >
-
-
-<color 125 0 7 >Asmund: </color > We shall meet in Valhalla!</line >
-<we >
-< flip >
-</page >
-
-<page >
-<line >
 <img 0 0 Timy >
 
 
-<color 125 0 7 >Timy: </color > If I don't hurry, I'll be there before you.</line >
-<we >
-< flip >
-</page >
-
-<page >
-<line >
-<img 0 0 Timy >
-
-
-<color 125 0 7 >Timy: </color > Farewell.</line >
+<color 125 0 7 >Timy: </color > I know exactly what you mean!</line >
 <we >
 < flip >
 <we >

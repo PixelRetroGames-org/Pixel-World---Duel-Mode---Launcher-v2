@@ -2,7 +2,9 @@
 #define SPELL_H
 
 #include "buff.h"
+
 #include <vector>
+#include <cstring>
 
 class Spell
 {
@@ -12,8 +14,8 @@ class Spell
  int range,mana_cost,health_cost,mental_health_cost,cooldown;
  int time_blocked=0;
  std::vector<Buff> buffs;
- SDL_Surface *image=NULL;
- Mix_Chunk *sound_effect=NULL;
+ SDL_Surface* image=NULL;
+ Mix_Chunk* sound_effect=NULL;
 
  public:
  Spell();
@@ -22,16 +24,16 @@ class Spell
  void Set_id(int _id);
  int Get_id();
  int Get_type();
- void Get_Buffs(std::vector<Buff> *_buffs);
+ void Get_Buffs(std::vector<Buff>* _buffs);
  int Get_range();
- char *Get_map_name();
+ char* Get_map_name();
  bool Is_blocked();
  void Decrease_time_blocked();
  void Block();
  void Unblock();
- bool Pay(int *_mana,int *_health,int *_mental_health);
+ bool Pay(int* _mana,int* _health,int* _mental_health);
  bool Can_Pay(int _mana,int _health,int _mental_health);
- void Print_image(int x,int y,SDL_Surface *_screen);
+ void Print_image(int x,int y,SDL_Surface* _screen);
  void Play_sound_effect(int channel);
 };
 

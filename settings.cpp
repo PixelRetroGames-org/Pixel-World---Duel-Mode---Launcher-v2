@@ -1,11 +1,10 @@
 #include "settings.h"
-#include <cstdio>
 
-const int NUMBER_OF_AVAILABLE_RESOLUTIONS=8;
-const int available_resolution_x[NUMBER_OF_AVAILABLE_RESOLUTIONS]={800,1024,1280,1280,1366,1440,1600,1920};
-const int available_resolution_y[NUMBER_OF_AVAILABLE_RESOLUTIONS]={600,768, 800, 1024, 768, 900, 900, 1080};
+const int NUMBER_OF_AVAILABLE_RESOLUTIONS=4;
+const int available_resolution_x[NUMBER_OF_AVAILABLE_RESOLUTIONS]={1366,1440,1600,1920};
+const int available_resolution_y[NUMBER_OF_AVAILABLE_RESOLUTIONS]={ 768, 900, 900, 1080};
 const int NUMBER_OF_AVAILABLE_VOLUMES=5,available_volumes[5]={0,25,50,75,100};
-char *available_volumes_names[5]={"Mute","25%","50%","75%","100%"};
+char* available_volumes_names[5]={"Mute","25%","50%","75%","100%"};
 
 const SDL_Color settings_color={255,255,255};
 
@@ -16,7 +15,7 @@ bool POWER_SAVER=false,AUTO_ATTACK=false;
 
 void Load_Settings()
 {
- FILE *where=fopen("settings/settings.set","r");
+ FILE* where=fopen("settings/settings.set","r");
  if(where==NULL)
     {
      Save_Settings();
@@ -33,7 +32,7 @@ void Load_Settings()
 
 void Save_Settings()
 {
- FILE *where=fopen("settings/settings.set","w");
+ FILE* where=fopen("settings/settings.set","w");
  int dm=0;
  fprintf(where,"%d %d %d %d %d",RESOLUTION,DISPLAY_MODE==SDL_FULLSCREEN?0:1,VOL,POWER_SAVER,AUTO_ATTACK);
  fclose(where);
@@ -54,13 +53,13 @@ void Set_DISPLAY_MODE(int MODE)
  DISPLAY_MODE=(Uint32)MODE;
 }
 
-void Print_Settings_Background(SDL_Surface *_screen)
+void Print_Settings_Background(SDL_Surface* _screen)
 {
  apply_surface(0,0,SETTINGS_background,_screen);
  apply_surface((RESOLUTION_X-SETTINGS_name->w)/2,40,SETTINGS_name,_screen);
 }
 
-void Graphic_Settings(SDL_Surface *_screen)
+void Graphic_Settings(SDL_Surface* _screen)
 {
  bool quit=false;
  SDL_Event event;
@@ -83,7 +82,7 @@ void Graphic_Settings(SDL_Surface *_screen)
        }
 }
 
-void Graphic_Settings(SDL_Surface *_screen,SDL_Event *event)
+void Graphic_Settings(SDL_Surface* _screen,SDL_Event* event)
 {
  bool quit=false;
  SDL_PumpEvents();
@@ -105,7 +104,7 @@ void Graphic_Settings(SDL_Surface *_screen,SDL_Event *event)
        }
 }
 
-void Graphic_Change_Resolution(int x,int y,SDL_Surface *_screen,SDL_Event *event)
+void Graphic_Change_Resolution(int x,int y,SDL_Surface* _screen,SDL_Event* event)
 {
  apply_surface(x,y,SETTINGS_option_background,_screen);
  if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
@@ -117,9 +116,9 @@ void Graphic_Change_Resolution(int x,int y,SDL_Surface *_screen,SDL_Event *event
      _screen=SDL_SetVideoMode(RESOLUTION_X,RESOLUTION_Y,32,DISPLAY_MODE);
      return;
     }
- TTF_Font *font;
+ TTF_Font* font;
  font=TTF_OpenFont("fonts/pixel.ttf",20);
- SDL_Surface *image=NULL;
+ SDL_Surface* image=NULL;
  char text[TEXT_LENGTH_MAX]={NULL},aux[TEXT_LENGTH_MAX]={NULL};
  itoa(RESOLUTION_X,text);
  itoa(RESOLUTION_Y,aux);
@@ -131,7 +130,7 @@ void Graphic_Change_Resolution(int x,int y,SDL_Surface *_screen,SDL_Event *event
  SDL_FreeSurface(image);
 }
 
-void Graphic_Change_Display_Mode(int x,int y,SDL_Surface *_screen,SDL_Event *event)
+void Graphic_Change_Display_Mode(int x,int y,SDL_Surface* _screen,SDL_Event* event)
 {
  apply_surface(x,y,SETTINGS_option_background,_screen);
  if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
@@ -143,9 +142,9 @@ void Graphic_Change_Display_Mode(int x,int y,SDL_Surface *_screen,SDL_Event *eve
      _screen=SDL_SetVideoMode(RESOLUTION_X,RESOLUTION_Y,32,DISPLAY_MODE);
      return;
     }
- TTF_Font *font;
+ TTF_Font* font;
  font=TTF_OpenFont("fonts/pixel.ttf",20);
- SDL_Surface *image=NULL,*image1=NULL;
+ SDL_Surface* image=NULL,*image1=NULL;
  image=TTF_RenderText_Solid(font,"Fullscreen:",settings_color);
  apply_surface(x+20,y+10,image,_screen);
  if(DISPLAY_MODE==SDL_FULLSCREEN)
@@ -158,7 +157,7 @@ void Graphic_Change_Display_Mode(int x,int y,SDL_Surface *_screen,SDL_Event *eve
  SDL_FreeSurface(image);
 }
 
-void Graphic_Change_Volume(int x,int y,SDL_Surface *_screen,SDL_Event *event)
+void Graphic_Change_Volume(int x,int y,SDL_Surface* _screen,SDL_Event* event)
 {
  apply_surface(x,y,SETTINGS_option_background,_screen);
  if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
@@ -170,9 +169,9 @@ void Graphic_Change_Volume(int x,int y,SDL_Surface *_screen,SDL_Event *event)
      Mix_VolumeMusic(MIX_MAX_VOLUME*VOLUME/100);
      SDL_Delay(75);
     }
- TTF_Font *font;
+ TTF_Font* font;
  font=TTF_OpenFont("fonts/pixel.ttf",20);
- SDL_Surface *image=NULL,*image1=NULL;
+ SDL_Surface* image=NULL,*image1=NULL;
  image=TTF_RenderText_Solid(font,"Volume:",settings_color);
  apply_surface(x+20,y+10,image,_screen);
  image1=TTF_RenderText_Solid(font,available_volumes_names[VOL],settings_color);
@@ -182,7 +181,7 @@ void Graphic_Change_Volume(int x,int y,SDL_Surface *_screen,SDL_Event *event)
  SDL_FreeSurface(image);
 }
 
-void Graphic_Power_Saver(int x,int y,SDL_Surface *_screen,SDL_Event *event)
+void Graphic_Power_Saver(int x,int y,SDL_Surface* _screen,SDL_Event* event)
 {
  apply_surface(x,y,SETTINGS_option_background,_screen);
  if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
@@ -190,9 +189,9 @@ void Graphic_Power_Saver(int x,int y,SDL_Surface *_screen,SDL_Event *event)
      POWER_SAVER=!POWER_SAVER;
      SDL_Delay(75);
     }
- TTF_Font *font;
+ TTF_Font* font;
  font=TTF_OpenFont("fonts/pixel.ttf",20);
- SDL_Surface *image=NULL,*image1=NULL;
+ SDL_Surface* image=NULL,*image1=NULL;
  image=TTF_RenderText_Solid(font,"Power Saver:",settings_color);
  apply_surface(x+20,y+10,image,_screen);
  if(POWER_SAVER)
@@ -205,7 +204,7 @@ void Graphic_Power_Saver(int x,int y,SDL_Surface *_screen,SDL_Event *event)
  SDL_FreeSurface(image);
 }
 
-void Graphic_Auto_Attack(int x,int y,SDL_Surface *_screen,SDL_Event *event)
+void Graphic_Auto_Attack(int x,int y,SDL_Surface* _screen,SDL_Event* event)
 {
  apply_surface(x,y,SETTINGS_option_background,_screen);
  if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
@@ -213,9 +212,9 @@ void Graphic_Auto_Attack(int x,int y,SDL_Surface *_screen,SDL_Event *event)
      AUTO_ATTACK=!AUTO_ATTACK;
      SDL_Delay(75);
     }
- TTF_Font *font;
+ TTF_Font* font;
  font=TTF_OpenFont("fonts/pixel.ttf",20);
- SDL_Surface *image=NULL,*image1=NULL;
+ SDL_Surface* image=NULL,*image1=NULL;
  image=TTF_RenderText_Solid(font,"Auto Attack:",settings_color);
  apply_surface(x+20,y+10,image,_screen);
  if(AUTO_ATTACK)
@@ -228,33 +227,35 @@ void Graphic_Auto_Attack(int x,int y,SDL_Surface *_screen,SDL_Event *event)
  SDL_FreeSurface(image);
 }
 
-void Graphic_Reset_Saves(int x,int y,SDL_Surface *_screen,SDL_Event *event)
+void Graphic_Reset_Saves(int x,int y,SDL_Surface* _screen,SDL_Event* event)
 {
  apply_surface(x,y,SETTINGS_option_background,_screen);
  if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
     {
      system("reset-saves.bat");
+     system("reset-saves.bat");
+     system("reset-saves.bat");
      SDL_Delay(75);
     }
- TTF_Font *font;
+ TTF_Font* font;
  font=TTF_OpenFont("fonts/pixel.ttf",20);
- SDL_Surface *image=NULL;
+ SDL_Surface* image=NULL;
  image=TTF_RenderText_Solid(font,"Reset Saves",settings_color);
  apply_surface(x+20,y+10,image,_screen);
  TTF_CloseFont(font);
  SDL_FreeSurface(image);
 }
 
-bool Graphic_Back(int x,int y,SDL_Surface *_screen,SDL_Event *event)
+bool Graphic_Back(int x,int y,SDL_Surface* _screen,SDL_Event* event)
 {
  apply_surface(x,y,SETTINGS_option_background,_screen);
  if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
     {
      return true;
     }
- TTF_Font *font;
+ TTF_Font* font;
  font=TTF_OpenFont("fonts/pixel.ttf",20);
- SDL_Surface *image=NULL;
+ SDL_Surface* image=NULL;
  image=TTF_RenderText_Solid(font,"Back",settings_color);
  apply_surface(x+20,y+10,image,_screen);
  TTF_CloseFont(font);

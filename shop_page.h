@@ -1,19 +1,17 @@
 #ifndef SHOP_PAGE_H
 #define SHOP_PAGE_H
 
-///SDL
 #include "SDL/SDL.h"
 #include "SDL/SDL_ttf.h"
 #include "SDL/SDL_image.h"
-///CSTDIO
+
 #include <cstdio>
-///VECTOR
 #include <vector>
-///IIEMS
+#include <cstring>
+
 #include "load_images.h"
 #include "item.h"
 #include "player.h"
-#include <vector>
 
 class Shop_Page
 {
@@ -21,7 +19,7 @@ class Shop_Page
  int POSX=0,LAST_POSX=0;
  int type=0;
  char name[TEXT_LENGTH_MAX];
- SDL_Surface *image=NULL,*name_image=NULL;
+ SDL_Surface* image=NULL,*name_image=NULL;
  int item_ids[100];
  std::vector<Item> items;
  int item_selected,item_click;
@@ -33,14 +31,14 @@ class Shop_Page
  void Clear(bool _delete=false);
  void Set_POSX(int _x);
  void Set_LAST_POSX(int _x);
- void Set_name(char *_name);
+ void Set_name(char* _name);
  void Load();
  int Get_title_size();
  int Get_type();
- void Print(int x,int y,SDL_Surface *_screen);
- void Print_Title(int x,int y,SDL_Surface *_screen,bool selected,bool click);
+ void Print(int x,int y,SDL_Surface* _screen);
+ void Print_Title(int x,int y,SDL_Surface* _screen,bool selected,bool click);
  void Reset();
- int Start(SDL_Surface *_screen,SDL_Event *event);
+ int Start(SDL_Surface* _screen,SDL_Event* event);
 };
 
 #endif // SHOP_PAGE_H

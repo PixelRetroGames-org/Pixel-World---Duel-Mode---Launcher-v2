@@ -6,7 +6,7 @@ SDL_Color NAME_COLOR={255,255,255};
 SDL_Color MONEY_COLOR={236,242,4};
 SDL_Color DESCRIPTION_COLOR={50,70,90};
 
-const char *type_name[11]={"Helmet","Chestplate","Trousers","Boots","Sword","Shield","Amulet","Ring","Timy Skin","Potion","Spell"};
+const char* type_name[11]={"Helmet","Chestplate","Trousers","Boots","Sword","Shield","Amulet","Ring","Timy Skin","Potion","Spell"};
 
 Item::Item()
 {
@@ -114,16 +114,16 @@ SDL_Surface* Item::Get_image()
  return image;
 }
 
-SDL_Surface *Item::Get_inventory_image()
+SDL_Surface* Item::Get_inventory_image()
 {
  return inventory_image;
 }
 
-SDL_Surface *Item::Get_skin()
+SDL_Surface* Item::Get_skin()
 {
  if(type!=8)
     return NULL;
- SDL_Surface *_skin;
+ SDL_Surface* _skin;
  char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"shop/skins/");
  strcat(path,name);
@@ -145,7 +145,7 @@ void Item::Set_id(int _id)
 int Item::Load()
 {
  char path[TEXT_LENGTH_MAX]={NULL},aux[TEXT_LENGTH_MAX]={NULL};
- TTF_Font *font=NULL;
+ TTF_Font* font=NULL;
  for(int i=0;i<DESCRIPTION_LINES_MAX;i++)
      if(description_image[i]!=NULL)
         {
@@ -168,7 +168,7 @@ int Item::Load()
  strcpy(path,"shop/items/");
  strcat(path,aux);
  strcat(path,".pwi");
- FILE *where=fopen(path,"r");
+ FILE* where=fopen(path,"r");
  if(where==NULL)
     return true;
  fscanf(where,"%d %d ",&cost,&spell_id);
@@ -198,7 +198,7 @@ int Item::Load()
  inventory_image=make_it_transparent(path);
  fclose(where);
  //Create description image
- SDL_Surface *message=NULL;
+ SDL_Surface* message=NULL;
  font=TTF_OpenFont("fonts/pixel3.ttf",25);
  int N=strlen(description);
  memset(aux,0,sizeof aux);
@@ -223,9 +223,9 @@ int Item::Load()
  return false;
 }
 
-void Item::Print(int x,int y,SDL_Surface *_screen,bool selected=false)
+void Item::Print(int x,int y,SDL_Surface* _screen,bool selected=false)
 {
- SDL_Surface *message=NULL;
+ SDL_Surface* message=NULL;
  if(!selected)
     message=SHOP_shop_background;
  else
@@ -242,9 +242,9 @@ void Item::Print(int x,int y,SDL_Surface *_screen,bool selected=false)
     Print_description(x,y,_screen,true);
 }
 
-void Item::Print_description(int x,int y,SDL_Surface *_screen,bool selected=false)
+void Item::Print_description(int x,int y,SDL_Surface* _screen,bool selected=false)
 {
- SDL_Surface *_image=NULL;
+ SDL_Surface* _image=NULL;
  _image=SHOP_shop_rope;
  int _x=x,_y=y;
  _y=y+120;
@@ -260,12 +260,12 @@ void Item::Print_description(int x,int y,SDL_Surface *_screen,bool selected=fals
      }
 }
 
-void Item::Print_image(int x,int y,SDL_Surface *_screen)
+void Item::Print_image(int x,int y,SDL_Surface* _screen)
 {
  apply_surface(x,y,image,_screen);
 }
 
-void Item::Print_inventory_image(int x,int y,SDL_Surface *_screen)
+void Item::Print_inventory_image(int x,int y,SDL_Surface* _screen)
 {
  apply_surface(x,y,inventory_image,_screen);
 }

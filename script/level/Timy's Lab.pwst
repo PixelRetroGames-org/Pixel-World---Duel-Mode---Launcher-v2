@@ -1,17 +1,32 @@
 < bckimg background >
 <ba audio/Eluveitie - Alesia (8-bit version).mp3 
-> <page >
+> 
+
+<page >
+<line >
+
+
+</line >
+< line > Timy is a legendary adventurer and a great wizard. He lived many years </line >
+< line > and the only thing that keeps him from aging and dying is the <color 24 100 200>Immortality Stone</color >. </line >
+< line > Without it he wouldn't survive more than a few days. He keeps it in his castle's </line >
+< line > most secure room, under a strong spell that protects the bond between </line >
+< line > him and the artifact. </line > 
+< flip >
+</page >
+
+<page >
 <line >
 
 
 </line >
 < line > The lab is full of dusty books and all kinds of expensive instruments. </line >
-< line > Our hero is sleeping with his head on the desk. He is experimenting </line >
-< line > a spell that let him explore his own mind. The spell will lift only </line >
+< line > Our hero is sleeping with his head on the desk. He was experimenting </line >
+< line > a spell that would let him explore his own mind. The spell would lift only </line >
 < line > when the clock rings, and it should rang a long time ago. </line >
 < line > The clock broke and Timy is still trapped in his own head. </line > 
-< flip >
 < we >
+< flip >
 </page >
 
 <page >
@@ -20,6 +35,7 @@
 
 </line >
 <line > . </line >
+< we >
 <flip >
 <sleep 400>
 </page >
@@ -66,7 +82,7 @@
 <img 0 0 Timy >
 
 
-<color 125 0 7 >Timy: </color > It worked very well this time! </line >
+<color 125 0 7 >Timy: </color > It worked better than the last time! </line >
 <we >
 < flip >
 </page >
@@ -76,10 +92,9 @@
 <img 0 0 Timy >
 
 
-<color 125 0 7 >Timy: </color > What happened here? </line >
+<color 125 0 7 >Timy: </color > What happened here? Why is everything so dusty? </line >
 <we >
 < flip >
-<we >
 </page >
 
 <page >
@@ -88,6 +103,7 @@
 
 </line >
 <line > . </line >
+< we >
 <flip >
 <sleep 400>
 </page >

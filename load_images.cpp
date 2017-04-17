@@ -1,55 +1,54 @@
 #include "load_images.h"
-#include "library.h"
 
 ///GLOBAL
-SDL_Surface *COIN,*HEART,*MANA;
+SDL_Surface* COIN,*HEART,*MANA;
 bool GLOBAL_IMAGES_LOADED;
 
 ///LAUNCHER
 Big_Background LAUNCHER_BBACKGROUND;
-SDL_Surface *MENU_big_background=NULL;
-SDL_Surface *MENU_background=NULL,*MENU_background_click=NULL,*MENU_background_selected=NULL;
+SDL_Surface* MENU_big_background=NULL;
+SDL_Surface* MENU_background=NULL,*MENU_background_click=NULL,*MENU_background_selected=NULL;
 bool LAUNCHER_IMAGES_LOADED,MENU_IMAGES_LOADED;
 
 ///SHOP
-SDL_Surface *SHOP_title_clear,*SHOP_title_background_line,*SHOP_title_background_click;
-SDL_Surface *SHOP_title_background_click_right_frame,*SHOP_title_background_right_frame;
-SDL_Surface *SHOP_title_background_selected,*SHOP_title_background,*SHOP_shop_page_background,*SHOP_shop_big_background;
-SDL_Surface *SHOP_shop_rope,*SHOP_shop_background,*SHOP_shop_background_selected,*SHOP_description_background;
-SDL_Surface *SHOP_inventory_background,*SHOP_item_background_selected,*SHOP_item_background;
-SDL_Surface *SHOP_inventory_spell_background,*SHOP_inventory_spell_background_equipped;
-SDL_Surface *INVENTORY_EQUIP,*INVENTORY_EQUIPPED,*INVENTORY_SELL;
-SDL_Surface *INVENTORY_spell_position[4];
+SDL_Surface* SHOP_title_clear,*SHOP_title_background_line,*SHOP_title_background_click;
+SDL_Surface* SHOP_title_background_click_right_frame,*SHOP_title_background_right_frame;
+SDL_Surface* SHOP_title_background_selected,*SHOP_title_background,*SHOP_shop_page_background,*SHOP_shop_big_background;
+SDL_Surface* SHOP_shop_rope,*SHOP_shop_background,*SHOP_shop_background_selected,*SHOP_description_background;
+SDL_Surface* SHOP_inventory_background,*SHOP_item_background_selected,*SHOP_item_background;
+SDL_Surface* SHOP_inventory_spell_background,*SHOP_inventory_spell_background_equipped;
+SDL_Surface* INVENTORY_EQUIP,*INVENTORY_EQUIPPED,*INVENTORY_SELL;
+SDL_Surface* INVENTORY_spell_position[4];
 bool SHOP_IMAGES_LOADED;
 const SDL_Color EQUIP_COLOR={15,30,90},BUY_COLOR={40,80,160},EQUIPPED_COLOR={255,128,0};
 
 ///PLAYER
-SDL_Surface *PLAYER_name_background,*PLAYER_name_background_right_layer,*PLAYER_details_background,*PLAYER_experience_background,*PLAYER_money_background;
-SDL_Surface *PLAYER_HP_background,*PLAYER_MANA_background,*PLAYER_CASE_background,*PLAYER_CASE_front;
-SDL_Surface *PLAYER_name_background_shop;
-SDL_Surface *PLAYER_SPELLS_background,*PLAYER_SPELLS_front,*PLAYER_SPELLS_no_mana,*PLAYER_SPELLS_not_ready;
+SDL_Surface* PLAYER_name_background,*PLAYER_name_background_right_layer,*PLAYER_details_background,*PLAYER_experience_background,*PLAYER_money_background;
+SDL_Surface* PLAYER_HP_background,*PLAYER_MANA_background,*PLAYER_CASE_background,*PLAYER_CASE_front;
+SDL_Surface* PLAYER_name_background_shop;
+SDL_Surface* PLAYER_SPELLS_background,*PLAYER_SPELLS_front,*PLAYER_SPELLS_no_mana,*PLAYER_SPELLS_not_ready;
 bool PLAYER_IMAGES_LOADED;
 
 ///LEVEL
-SDL_Surface *LEVEL_background_image,*LEVEL_loading_image;
-SDL_Surface *LEVEL_WINNER,*LEVEL_LOSER,*LEVEL_MONEY,*LEVEL_XP,*LEVEL_LINE,*LEVEL_WINS;
-SDL_Surface *MAP_NAME_background,*SKEPTIC_VISION_image;
+SDL_Surface* LEVEL_background_image,*LEVEL_loading_image;
+SDL_Surface* LEVEL_WINNER,*LEVEL_LOSER,*LEVEL_MONEY,*LEVEL_XP,*LEVEL_LINE,*LEVEL_WINS;
+SDL_Surface* MAP_NAME_background,*SKEPTIC_VISION_image;
 bool LEVEL_IMAGES_LOADED;
 
 ///JOURNAL
-SDL_Surface *JOURNAL_ENTRY_BACKGROUND,*JOURNAL_ENTRY_HOVER_BACKGROUND,*JOURNAL_ENTRY_CLICK_BACKGROUND;
+SDL_Surface* JOURNAL_ENTRY_BACKGROUND,*JOURNAL_ENTRY_HOVER_BACKGROUND,*JOURNAL_ENTRY_CLICK_BACKGROUND;
 bool JOURNAL_IMAGES_LOADED;
 
 ///INVENTORY
-SDL_Surface *INVENTORY_LARROW,*INVENTORY_RARROW;
+SDL_Surface* INVENTORY_LARROW,*INVENTORY_RARROW;
 bool INVENTORY_IMAGES_LOADED;
 
 ///SETTINGS
-SDL_Surface *SETTINGS_option_background,*SETTINGS_option_background_selected,*SETTINGS_background,*SETTINGS_name;
+SDL_Surface* SETTINGS_option_background,*SETTINGS_option_background_selected,*SETTINGS_background,*SETTINGS_name;
 bool SETTINGS_IMAGES_LOADED;
 
 ///SCRIPT
-SDL_Surface *SCRIPT_default_background_image;
+SDL_Surface* SCRIPT_default_background_image;
 bool SCRIPT_IMAGES_LOADED;
 
 void Load_shop_images()
@@ -75,7 +74,7 @@ void Load_shop_images()
  SHOP_item_background=load_image("images/shop/item_background.bmp");
  SHOP_inventory_spell_background=load_image("images/shop/spell_background.bmp");
  SHOP_inventory_spell_background_equipped=load_image("images/shop/spell_background_equipped.bmp");
- TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",15);
+ TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",15);
  SDL_Color color{65,105,225};
  INVENTORY_EQUIP=TTF_RenderText_Solid(font,"Equip",EQUIP_COLOR);
  INVENTORY_EQUIPPED=TTF_RenderText_Solid(font,"Equipped",EQUIPPED_COLOR);
@@ -169,7 +168,7 @@ void Load_level_images()
  LEVEL_IMAGES_LOADED=true;
  LEVEL_background_image=load_image("images/game/background.bmp");
  LEVEL_loading_image=make_it_transparent("images/game/loading.bmp");
- TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",50),*font1=TTF_OpenFont("fonts/pixel.ttf",30);
+ TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",50),*font1=TTF_OpenFont("fonts/pixel.ttf",30);
  SDL_Color winner_color={0,205,0},loser_color={207,0,0},xp_color={75,0,130},MONEY_COLOR={125,125,125},wins_color={241,188,48};
  LEVEL_WINNER=TTF_RenderText_Solid(font,"Winner",winner_color);
  LEVEL_LOSER=TTF_RenderText_Solid(font,"Loser",loser_color);
@@ -264,7 +263,7 @@ void Load_settings_images()
  SETTINGS_option_background=load_image("images/settings/option_background.bmp");
  SETTINGS_option_background_selected=load_image("images/settings/option_background_selected.bmp");
  SETTINGS_background=load_image("images/settings/background.bmp");
- TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",40);
+ TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",40);
  SETTINGS_name=TTF_RenderText_Solid(font,"Settings",SDL_Color{255,255,255});
 }
 
@@ -343,10 +342,10 @@ void Clear_all_images()
  Clear_script_images();
 }
 
-SDL_Surface *static_screen;
+SDL_Surface* static_screen;
 bool Loading_image_quit=false;
-SDL_mutex *loading_image_mutex;
-int Loading_image(void *data)
+SDL_mutex* loading_image_mutex;
+int Loading_image(void* data)
 {
  int frame=0;
  SDL_LockMutex(loading_image_mutex);
@@ -365,10 +364,10 @@ int Loading_image(void *data)
 }
 
 bool splash_screen_quit;
-SDL_mutex *splash_screen_mutex;
+SDL_mutex* splash_screen_mutex;
 const int FOG_UPDATE_INTERVAL=125,FOG_OPACITY_DECREASE_INTERVAL=200;
 const int FRAMES_PER_SECOND=30,FRAMES_PER_SECOND_FIRE=25;
-int Splash_Screen(void *data)
+int Splash_Screen(void* data)
 {
  SDL_LockMutex(splash_screen_mutex);
  splash_screen_quit=false;

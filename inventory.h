@@ -8,6 +8,6 @@
 namespace player_inventory
 {
  const int FRAMES_PER_SECOND=27;
- void Print_Inventory(SDL_Surface *screen,char *_player_name);
+ void Print_Inventory(SDL_Surface* screen,char* _player_name);
 }
 #endif // INVENTORY_H

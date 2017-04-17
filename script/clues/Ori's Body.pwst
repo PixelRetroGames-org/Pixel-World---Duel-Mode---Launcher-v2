@@ -12,7 +12,7 @@
 <img 0 0 Dead_Dwarf >
 
 
-<color 125 0 7 >Timy: </color >It's good that I killed the beast before it could eat the body.</line >
+<color 125 0 7 >Timy: </color >There's nothing more I can do for him...</line >
 <we >
 < flip >
 </page >
@@ -22,7 +22,17 @@
 <img 0 0 Dead_Dwarf >
 
 
-<color 125 0 7 >Timy: </color > I should go back to the tavern...</line >
+<color 125 0 7 >Timy: </color >His friends will take care of the body.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Dead_Dwarf >
+
+
+<color 125 0 7 >Timy: </color >Let's go back to the Tavern and tell them!</line >
 <we >
 < flip >
 <we >

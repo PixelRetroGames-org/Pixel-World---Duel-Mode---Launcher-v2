@@ -10,7 +10,7 @@ class Texture
  private:
  int id=0;
  char name[TEXT_LENGTH_MAX]={NULL};
- SDL_Surface *image=NULL;
+ SDL_Surface* image=NULL;
  SDL_Rect image_position;
  int type,damage;
  Buff buff;
@@ -22,7 +22,7 @@ class Texture
  public:
  Texture();
  void Clear(bool _delete=true);
- void Set_name(char *_name);
+ void Set_name(char* _name);
  void Set_type(int _type);
  void Set_id(int _id);
  int Get_id();
@@ -38,7 +38,7 @@ class Texture
  int Get_number_of_frames();
  int Get_frame_change_delay();
  void Load();
- void Print_image(int x,int y,SDL_Surface *_screen,int frame);
+ void Print_image(int x,int y,SDL_Surface* _screen,int frame);
 };
 
 #endif //MAP_TEXTURE_H

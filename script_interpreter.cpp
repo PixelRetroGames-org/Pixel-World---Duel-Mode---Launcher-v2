@@ -1,7 +1,6 @@
 #include "script_interpreter.h"
-#include <cstring>
 
-const char *command_names[number_of_commands+1]={"set","line","color","la","ba","sleep","wla","we","bckimg","img","page","flip"};
+const char* command_names[number_of_commands+1]={"set","line","color","la","ba","sleep","wla","we","bckimg","img","page","flip"};
 const SDL_Color default_text_color={255,255,255};
 
 //Script_interpreter::Script_interpreter();
@@ -28,7 +27,7 @@ void Script_interpreter::Clear()
  big_buffer=NULL;
 }
 
-void Script_interpreter::Start_line_audio(Mix_Chunk *line_audio)
+void Script_interpreter::Start_line_audio(Mix_Chunk* line_audio)
 {
  Mix_PlayChannel(2,line_audio,0);
 }
@@ -50,7 +49,7 @@ void Script_interpreter::Stop_line_audio()
  Mix_HaltChannel(2);
 }
 
-void Script_interpreter::Start_background_audio(Mix_Music *background_audio)
+void Script_interpreter::Start_background_audio(Mix_Music* background_audio)
 {
  if(Mix_PlayingMusic()==0)
     Mix_PlayMusic(background_audio,-1);
@@ -73,10 +72,10 @@ void Script_interpreter::Stop_background_audio()
  Mix_HaltMusic();
 }
 
-void Script_interpreter::Print_line(int &x,int y,char *_line,bool on_screen)
+void Script_interpreter::Print_line(int &x,int y,char* _line,bool on_screen)
 {
- SDL_Surface *image=NULL;
- TTF_Font *font=TTF_OpenFont("fonts/pixel3.ttf",50);
+ SDL_Surface* image=NULL;
+ TTF_Font* font=TTF_OpenFont("fonts/pixel3.ttf",50);
  image=TTF_RenderText_Solid(font,_line,text_color.top());
  if(image!=NULL)
     {
@@ -98,18 +97,18 @@ void Script_interpreter::Print_line(int &x,int y,char *_line,bool on_screen)
  TTF_CloseFont(font);
 }
 
-void Script_interpreter::Print_image(int &x,int y,char *_name)
+void Script_interpreter::Print_image(int &x,int y,char* _name)
 {
  char aux[TEXT_LENGTH_MAX]={NULL};
  strcpy(aux,"script/images/");
  strcat(aux,_name);
  strcat(aux,".bmp");
- SDL_Surface *image=make_it_transparent(aux);
+ SDL_Surface* image=make_it_transparent(aux);
  apply_surface((RESOLUTION_X-image->w)/2,y,image,big_buffer);
  SDL_FreeSurface(image);
 }
 
-void Script_interpreter::Set_background_image(char *_name)
+void Script_interpreter::Set_background_image(char* _name)
 {
  char aux[TEXT_LENGTH_MAX]={NULL};
  strcpy(aux,"script/images/");
@@ -119,12 +118,12 @@ void Script_interpreter::Set_background_image(char *_name)
  apply_surface(0,0,background_image,big_buffer);
 }
 
-void Script_interpreter::Set_script_name(char *_script_name)
+void Script_interpreter::Set_script_name(char* _script_name)
 {
  strcpy(script_name,_script_name);
 }
 
-void Script_interpreter::Set_screen(SDL_Surface *_screen)
+void Script_interpreter::Set_screen(SDL_Surface* _screen)
 {
  screen=_screen;
 }
@@ -138,9 +137,9 @@ void Script_interpreter::Start(int X,int Y)
  strcpy(path,"script\\");
  strcat(path,script_name);
  strcat(path,".pwst");
- //FILE *out=fopen(script_name,"w");
+ //FILE* out=fopen(script_name,"w");
  //fclose(out);
- FILE *in=fopen(path,"r");
+ FILE* in=fopen(path,"r");
  //system("cd ..");
  bool quit=false,line=false;
  char ch=NULL,command[TEXT_LENGTH_MAX]={NULL},script_line[TEXT_LENGTH_MAX]={NULL};
@@ -263,7 +262,7 @@ void Script_interpreter::Start(int X,int Y)
  Clear();
 }
 
-void Script_interpreter::Start(SDL_Surface *_screen,char *_script_name,int X,int Y)
+void Script_interpreter::Start(SDL_Surface* _screen,char* _script_name,int X,int Y)
 {
  text_color.push(default_text_color);
  Set_screen(_screen);
@@ -272,7 +271,7 @@ void Script_interpreter::Start(SDL_Surface *_screen,char *_script_name,int X,int
  Clear();
 }
 
-int Get_command_id(char *_command)
+int Get_command_id(char* _command)
 {
  for(int id=0;id<number_of_commands;id++)
      if(strcmp(_command,command_names[id])==0)

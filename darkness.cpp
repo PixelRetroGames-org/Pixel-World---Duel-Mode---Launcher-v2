@@ -16,7 +16,7 @@ void Darkness::Clear()
     }
 }
 
-void Darkness::Set_image_name(char *_image_name)
+void Darkness::Set_image_name(char* _image_name)
 {
  strcpy(image_name,_image_name);
 }
@@ -63,9 +63,8 @@ void Darkness::Update_image()
  SDL_SetAlpha(image,SDL_SRCALPHA,alpha);
 }
 
-void Darkness::Enshroud(SDL_Rect area,SDL_Surface *_screen)
+void Darkness::Enshroud(SDL_Rect area,SDL_Surface* _screen)
 {
-// apply_surface((int)area.x,(int)area.y,(int)area.w,(int)area.h,image,_screen);
  apply_surface(current_frame*frameW,0,area.x,area.y,area.w,area.h,image,_screen);
 }
 

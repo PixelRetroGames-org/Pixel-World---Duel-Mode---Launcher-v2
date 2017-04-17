@@ -4,7 +4,30 @@
 
 
 
-<color 125 0 7 >Valgard: </color > You're not welcome here.</line >
+<color 125 0 7 >Valgard: </color > You're not welcome here...</line >
+< flip >
+< we >
+</page >
+
+<page >
+<line >
+<img 0 0 Valgard >
+
+
+
+<color 125 0 7 >Valgard: </color > Run while you can.</line >
+< we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color > I'm not afraid of you!</line >
+<we >
 < flip >
 < we >
 </page >

@@ -5,10 +5,12 @@
 #include "level.h"
 #include "load_audio_effects.h"
 #include "puzzle.h"
+
 #include <cstdio>
 #include <ctime>
 #include <cstdlib>
-SDL_Surface *screen;
+
+SDL_Surface* screen;
 
 Script_interpreter script_interpreter;
 
@@ -16,7 +18,7 @@ Shop_Screen shop_screen;
 
 Level level;
 
-Mix_Music *launcher_background_music=NULL;
+Mix_Music* launcher_background_music=NULL;
 
 int main( int argc, char* args[] )
 {
@@ -25,14 +27,14 @@ int main( int argc, char* args[] )
  ///Random
  if(SDL_Init(SDL_INIT_EVERYTHING)<0)
     {
-     FILE *log_file=fopen("err/logs.txt","w");
+     FILE* log_file=fopen("err/logs.txt","w");
      fprintf(log_file,"SDL_Init() failed : %s ",SDL_GetError());
      fclose(log_file);
      exit(-1);
     }
  if(TTF_Init()==-1)
     {
-     FILE *log_file=fopen("err/logs.txt","w");
+     FILE* log_file=fopen("err/logs.txt","w");
      fprintf(log_file,"TTF_Init() failed : %s ",TTF_GetError());
      fclose(log_file);
      exit(-2);
@@ -41,7 +43,7 @@ int main( int argc, char* args[] )
  if(Mix_Init(MIX_INIT_MP3)&(MIX_INIT_MP3)!=MIX_INIT_MP3)
     {
      MUSIC_MODULE_INIT=false;
-     FILE *log_file=fopen("err/logs.txt","w");
+     FILE* log_file=fopen("err/logs.txt","w");
      fprintf(log_file,"Mix_Init() failed : %s ",Mix_GetError());
      fclose(log_file);
     }
@@ -51,7 +53,7 @@ int main( int argc, char* args[] )
  screen=SDL_SetVideoMode(RESOLUTION_X,RESOLUTION_Y,32,DISPLAY_MODE);
  if(screen==NULL)
     {
-     FILE *log_file=fopen("err/logs.txt","w");
+     FILE* log_file=fopen("err/logs.txt","w");
      fprintf(log_file,"SDL_SetVideoMode failed : %s ",SDL_GetError());
      fclose(log_file);
      exit(-1);
@@ -60,7 +62,7 @@ int main( int argc, char* args[] )
  if(Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096)==-1)
     {
      MUSIC_MODULE_INIT=false;
-     FILE *log_file=fopen("err/logs.txt","w");
+     FILE* log_file=fopen("err/logs.txt","w");
      fprintf(log_file,"Mix_OpenAudio failed : %s ",Mix_GetError());
      fclose(log_file);
     }
@@ -71,7 +73,7 @@ int main( int argc, char* args[] )
  #define SPLASH_SCREEN
  #ifdef SPLASH_SCREEN
  splash_screen_mutex=SDL_CreateMutex();
- SDL_Thread *splash_screen=NULL;
+ SDL_Thread* splash_screen=NULL;
  splash_screen=SDL_CreateThread(Splash_Screen,NULL);
  #endif // SPLASH_SCREEN
  Menu main_menu,gamemode_menu,story_menu,duel_menu;

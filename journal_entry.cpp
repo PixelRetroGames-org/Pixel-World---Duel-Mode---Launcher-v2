@@ -23,7 +23,7 @@ void Journal_Entry::Load()
  strcpy(path,"journal/journal entries/");
  strcat(path,title);
  strcat(path,".pwje");
- FILE *where=fopen(path,"r");
+ FILE* where=fopen(path,"r");
  if(where==NULL)
     return;
  fgets(title_image_name,sizeof title_image_name,where);
@@ -47,10 +47,10 @@ void Journal_Entry::Load()
  strcpy(path,"journal/journal entries/images/");
  strcat(path,title_image_name);
  strcat(path,".bmp");
- SDL_Surface *image=make_it_transparent(path);
- TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",20);
+ SDL_Surface* image=make_it_transparent(path);
+ TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",20);
  SDL_Color color={52,124,191};
- SDL_Surface *text_image=TTF_RenderText_Solid(font,title,color);
+ SDL_Surface* text_image=TTF_RenderText_Solid(font,title,color);
  title_image=make_it_transparent("images/journal/title_background_empty.bmp");
  apply_surface(5,5,text_image,title_image);
  apply_surface(5+text_image->w,5,image,title_image);
@@ -60,18 +60,18 @@ void Journal_Entry::Load()
  current_page=0;
 }
 
-void Journal_Entry::Load(char *_title)
+void Journal_Entry::Load(char* _title)
 {
  Set_title(_title);
  Load();
 }
 
-void Journal_Entry::Set_title(char *_title)
+void Journal_Entry::Set_title(char* _title)
 {
  strcpy(title,_title);
 }
 
-bool Journal_Entry::Handle_Events(SDL_Event *event)
+bool Journal_Entry::Handle_Events(SDL_Event* event)
 {
  if(event->type==SDL_KEYDOWN)
     {
@@ -93,7 +93,7 @@ bool Journal_Entry::Handle_Events(SDL_Event *event)
  return false;
 }
 
-void Journal_Entry::Print_Title(int x,int y,SDL_Surface *_screen,bool click,bool hover)
+void Journal_Entry::Print_Title(int x,int y,SDL_Surface* _screen,bool click,bool hover)
 {
  if(!hover && !click)
     apply_surface(x,y,JOURNAL_ENTRY_BACKGROUND,_screen);
@@ -104,26 +104,26 @@ void Journal_Entry::Print_Title(int x,int y,SDL_Surface *_screen,bool click,bool
  apply_surface(x,y,title_image,_screen);
 }
 
-void Journal_Entry::Print_Page(SDL_Surface *_screen)
+void Journal_Entry::Print_Page(SDL_Surface* _screen)
 {
  apply_surface(0,0,pages_images[current_page],_screen);
 }
 
-bool Journal_Entry::Is_started(std::bitset<NUMBER_OF_MAX_KEYS> *progress)
+bool Journal_Entry::Is_started(std::bitset<NUMBER_OF_MAX_KEYS>* progress)
 {
  if(beginning_key==-1)
     return true;
  return ((*progress)[beginning_key]==true);
 }
 
-bool Journal_Entry::Is_finished(std::bitset<NUMBER_OF_MAX_KEYS> *progress)
+bool Journal_Entry::Is_finished(std::bitset<NUMBER_OF_MAX_KEYS>* progress)
 {
  if(ending_key==-1)
     return false;
  return ((*progress)[ending_key]==true);
 }
 
-bool Journal_Entry::Is_in_progress(std::bitset<NUMBER_OF_MAX_KEYS> *progress)
+bool Journal_Entry::Is_in_progress(std::bitset<NUMBER_OF_MAX_KEYS>* progress)
 {
  return (Is_started(progress) && !Is_finished(progress));
 }
