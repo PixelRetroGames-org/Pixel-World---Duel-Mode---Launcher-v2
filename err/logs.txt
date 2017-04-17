@@ -1,1 +1,1 @@
-SDL_SetVideoMode failed : No video mode large enough for 1280x800 
+"saves/gamemodes/Story Mode.pwsav" is missing
