@@ -25,6 +25,8 @@ class Journal_Entry
  void Load();
  void Load(char* _title);
  void Set_title(char* _title);
+ int Get_title_sizeW();
+ int Get_title_sizeH();
  bool Handle_Events(SDL_Event* event);
  void Print_Title(int x,int y,SDL_Surface* _screen,bool click=false,bool hover=false);
  void Print_Page(SDL_Surface* _screen);

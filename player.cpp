@@ -57,6 +57,7 @@ void Player::Clear(bool _delete)
  keys.reset();
  progress.reset();
  counter=-1;
+ number_of_wins=0;
 }
 
 void Player::Set_name(char* _name)

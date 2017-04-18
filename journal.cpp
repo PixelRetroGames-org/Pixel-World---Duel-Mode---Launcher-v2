@@ -65,7 +65,6 @@ void Journal::Handle_Events(SDL_Event* event)
                    current_entry--;
              redraw=true;
             }
-         return;
         }
      if(event->key.keysym.sym==SDLK_DOWN || event->key.keysym.sym==SDLK_s)
         {
@@ -81,9 +80,30 @@ void Journal::Handle_Events(SDL_Event* event)
                 current_entry=cpy;
              redraw=true;
             }
-         return;
         }
     }
+ if(event->type==SDL_MOUSEMOTION || event->type==SDL_MOUSEBUTTONDOWN)
+    {
+     int _x=20,_y=(RESOLUTION_Y-50*number_of_entries)/2,mouse_x=0,mouse_y=0;
+     mouse_x=event->button.x,mouse_y=event->button.y;
+     hover_entry=-1;
+     for(int i=0;i<number_of_entries;i++)
+         {
+          if(!journal_entries[i].Is_in_progress(progress))
+             continue;
+          if(mouse_x>=_x && mouse_x<=_x+journal_entries[i].Get_title_sizeW() && mouse_y>=_y && mouse_y<=_y+journal_entries[i].Get_title_sizeH())
+             hover_entry=i;
+          _y+=journal_entries[i].Get_title_sizeH();
+         }
+     redraw=true;
+    }
+ if(event->type==SDL_MOUSEBUTTONDOWN && hover_entry!=-1)
+    {
+     current_entry=hover_entry;
+     redraw=true;
+    }
+ if(redraw)
+    return;
  redraw=journal_entries[current_entry].Handle_Events(event);
 }
 
@@ -98,8 +118,8 @@ void Journal::Print(SDL_Surface* _screen)
      {
       if(!journal_entries[i].Is_in_progress(progress))
          continue;
-      journal_entries[i].Print_Title(X,Y,_screen,i==current_entry,false);
-      Y+=50;
+      journal_entries[i].Print_Title(X,Y,_screen,i==current_entry,i==hover_entry);
+      Y+=journal_entries[i].Get_title_sizeH();
      }
 }
 

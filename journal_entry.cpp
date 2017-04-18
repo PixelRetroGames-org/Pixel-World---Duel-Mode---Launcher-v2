@@ -71,6 +71,16 @@ void Journal_Entry::Set_title(char* _title)
  strcpy(title,_title);
 }
 
+int Journal_Entry::Get_title_sizeW()
+{
+ return title_image->w;
+}
+
+int Journal_Entry::Get_title_sizeH()
+{
+ return title_image->h;
+}
+
 bool Journal_Entry::Handle_Events(SDL_Event* event)
 {
  if(event->type==SDL_KEYDOWN)

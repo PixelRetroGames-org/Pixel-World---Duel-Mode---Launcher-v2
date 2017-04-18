@@ -14,7 +14,7 @@ const int NUMBER_OF_MAX_JOURNAL_ENTRIES=10;
 class Journal
 {
  private:
- int number_of_entries=0,current_entry=0;
+ int number_of_entries=0,current_entry=0,hover_entry=-1;
  char journal_entries_names[NUMBER_OF_MAX_JOURNAL_ENTRIES][TEXT_LENGTH_MAX];
  Journal_Entry journal_entries[NUMBER_OF_MAX_JOURNAL_ENTRIES];
  char name[TEXT_LENGTH_MAX];
