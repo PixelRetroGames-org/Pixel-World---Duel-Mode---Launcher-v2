@@ -291,6 +291,7 @@ void Interactive_map_texture::Add_target(int x,int y)
 
 void Interactive_map_texture::Trigger()
 {
+ map_textures_ids[current_map_texture_id_position].Set_frame(0);
  current_map_texture_id_position++;
  current_map_texture_id_position%=number_of_map_textures_ids_positions;
 }

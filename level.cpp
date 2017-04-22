@@ -131,6 +131,11 @@ char* Level::Get_name()
  return name;
 }
 
+int Level::Get_terrain_type()
+{
+ return terrain_type;
+}
+
 void Level::Load()
 {
  done=false;
@@ -1715,8 +1720,9 @@ bool Level::Duel_Mode_Finish_Screen(int _player_winner)
  bool quit=false;
  Print_Duel_Mode_Finish_Screen(_player_winner);
  SDL_Event event;
+ SDL_Delay(500);
  while(SDL_PollEvent(&event));
- SDL_Delay(2000);
+ SDL_Delay(500);
  while(SDL_PollEvent(&event));
  while(!quit)
        {
@@ -2067,7 +2073,8 @@ void Launch_Story_Mode(Level* level,SDL_Surface* _screen)
  level->Setup(level_name);
  level->Set_player_map_position(player_map_position_x,player_map_position_y,1);
  level->Start(_screen,false);
- level->Save_gamemode();
+ if(level->Get_terrain_type()!=LEVEL_PUZZLE_TYPE)
+    level->Save_gamemode();
  level->Cleanup();
 }
 

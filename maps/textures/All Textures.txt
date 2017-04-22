@@ -249,8 +249,8 @@
 249 - walltopR
 250 - walltopD
 251 - walltopL
-252 - wallcornerL
-253 - wallcornerR
+252 - wallcornerR
+253 - wallcornerL
 254 - wallLU
 255 - wallRU
 256 - torch
@@ -346,3 +346,15 @@
 354 - bricks_holeLU1
 355 - bricks_holeRU1
 356 - bricks_holeLD1
+357 - bricks_holeRD1
+358 - walltopLR
+359 - wallcornerLR
+360 - wallLRU
+361 - spikes_on
+362 - spikes_off 
+363 - wall_on_spikes_on
+364 - wall_on_spikes_off
+365 - wall_on_spikes_off_animation
+366 - wall_on_spikes_on_animation
+367 - spikes_off_animation
+368 - spikes_off_animation

@@ -17,7 +17,7 @@ class Texture
  int number_of_frames=1;
  int frame_change_delay=0;
  int power=0;
- bool print_before_player=false,obstacle=false,light=false,animation=false,is_trigger=false;
+ bool print_before_player=false,obstacle=false,light=false,animation=false,is_trigger=false,is_passer=false;
 
  public:
  Texture();
@@ -33,6 +33,7 @@ class Texture
  bool Is_animation();
  bool Is_done();
  bool Is_trigger();
+ bool Is_passer();
  Buff Get_Buff();
  int Get_power();
  int Get_number_of_frames();

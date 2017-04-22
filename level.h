@@ -32,6 +32,8 @@ const int MUSIC_PAUSE=500;
 
 const int NUMBER_OF_NPC_MAX=20;
 
+const int LEVEL_PUZZLE_TYPE=4;
+
 extern int number_of_background_music_tracks;
 extern Mix_Music* background_music[NUMBER_OF_SONGS_MAX];
 extern Timer music_time;
@@ -89,6 +91,7 @@ class Level
  int Get_player_map_position_x(int _player);
  int Get_player_map_position_y(int _player);
  char* Get_name();
+ int Get_terrain_type();
  ///Load
  void Load();
  void Fast_Reload();

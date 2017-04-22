@@ -15,6 +15,9 @@ void Texture::Clear(bool _delete)
     }
  id=0;
  buff.Clear(_delete);
+ frame_change_delay=0;
+ is_trigger=false;
+ is_passer=false;
 }
 
 void Texture::Set_id(int _id)
@@ -67,6 +70,11 @@ bool Texture::Is_trigger()
  return is_trigger;
 }
 
+bool Texture::Is_passer()
+{
+ return is_passer;
+}
+
 Buff Texture::Get_Buff()
 {
  return buff;
@@ -114,6 +122,8 @@ void Texture::Load()
     fscanf(where,"%d ",&frame_change_delay);
  if(!feof(where))
     fscanf(where,"%d ",&is_trigger);
+ if(!feof(where))
+    fscanf(where,"%d ",&is_passer);
  buff.Set_id(buff_id);
  buff.Load();
  strcpy(path,"maps/textures/images/");
