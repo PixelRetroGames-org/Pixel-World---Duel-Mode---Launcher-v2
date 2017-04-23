@@ -233,8 +233,6 @@ void Graphic_Reset_Saves(int x,int y,SDL_Surface* _screen,SDL_Event* event)
  if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
     {
      system("reset-saves.bat");
-     system("reset-saves.bat");
-     system("reset-saves.bat");
      SDL_Delay(75);
     }
  TTF_Font* font;
