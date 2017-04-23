@@ -1,6 +1,6 @@
 #include "level.h"
 
-const SDLKey player_keys[3][20]={{},{SDLK_UP,SDLK_DOWN,SDLK_LEFT,SDLK_RIGHT,SDLK_RCTRL,SDLK_j,SDLK_n,SDLK_u,SDLK_i,SDLK_o,SDLK_p,SDLK_RSHIFT},{SDLK_w,SDLK_s,SDLK_a,SDLK_d,SDLK_z,SDLK_BACKQUOTE,SDLK_TAB,SDLK_1,SDLK_2,SDLK_3,SDLK_4,SDLK_x}};
+const SDLKey player_keys[3][20]={{},{SDLK_UP,SDLK_DOWN,SDLK_LEFT,SDLK_RIGHT,SDLK_RCTRL,SDLK_j,SDLK_n,SDLK_u,SDLK_i,SDLK_o,SDLK_p,SDLK_RSHIFT,SDLK_h},{SDLK_w,SDLK_s,SDLK_a,SDLK_d,SDLK_z,SDLK_BACKQUOTE,SDLK_TAB,SDLK_1,SDLK_2,SDLK_3,SDLK_4,SDLK_x,SDLK_h}};
 const int SKEPTIC_VISION_MAX_ALPHA=100;
 
 //#define GOD_POWERS
@@ -975,6 +975,15 @@ void Level::Handle_Event(int _player)
          else
             player[_player].Set_movement_speed(2);
         }
+     if(keystates[player_keys[keys][12]] || keystates[player_keys[Other_player(keys)][11]] && !player[_player].Is_blocked())
+        {
+         SDL_Thread *Meditation_Screen_Thread=NULL;
+         Meditation_Screen_Thread=SDL_CreateThread(Meditation_Screen,NULL);
+         Fast_Reload();
+         int thread_return_value=0;
+         SDL_WaitThread(Meditation_Screen_Thread,&thread_return_value);
+         SDL_PumpEvents();
+        }
     }
  else
     {
@@ -1727,7 +1736,7 @@ bool Level::Duel_Mode_Finish_Screen(int _player_winner)
  while(!quit)
        {
         SDL_PollEvent(&event);
-        if(event.type==SDL_KEYDOWN)
+        if(event.type==SDL_KEYDOWN && (event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_ESCAPE))
            quit=true;
         SDL_Delay(100);
        }
@@ -1850,13 +1859,13 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
 
  if(player_type[2]!=0 && winner==1)
     {
-     player_money=TTF_RenderText_Solid(font,"Press any key to continue!",{255,255,255});
+     player_money=TTF_RenderText_Solid(font,"Press ENTER to continue!",{255,255,255});
      apply_surface((_screen->w-player_money->w)/2,_screen->h/2+(_screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,_screen);
      SDL_FreeSurface(player_money);
     }
  else
     {
-     player_money=TTF_RenderText_Solid(font,"Press ESC to exit or any other key to rematch!",{255,255,255});
+     player_money=TTF_RenderText_Solid(font,"Press ESC to exit or ENTER to rematch!",{255,255,255});
      apply_surface((_screen->w-player_money->w)/2,_screen->h/2+(_screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,_screen);
      SDL_FreeSurface(player_money);
     }

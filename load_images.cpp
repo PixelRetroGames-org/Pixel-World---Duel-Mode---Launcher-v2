@@ -30,7 +30,7 @@ SDL_Surface* PLAYER_SPELLS_background,*PLAYER_SPELLS_front,*PLAYER_SPELLS_no_man
 bool PLAYER_IMAGES_LOADED;
 
 ///LEVEL
-SDL_Surface* LEVEL_background_image,*LEVEL_loading_image;
+SDL_Surface* LEVEL_background_image,*LEVEL_loading_image,*LEVEL_meditation_image;
 SDL_Surface* LEVEL_WINNER,*LEVEL_LOSER,*LEVEL_MONEY,*LEVEL_XP,*LEVEL_LINE,*LEVEL_WINS;
 SDL_Surface* MAP_NAME_background,*SKEPTIC_VISION_image;
 bool LEVEL_IMAGES_LOADED;
@@ -168,6 +168,7 @@ void Load_level_images()
  LEVEL_IMAGES_LOADED=true;
  LEVEL_background_image=load_image("images/game/background.bmp");
  LEVEL_loading_image=make_it_transparent("images/game/loading.bmp");
+ LEVEL_meditation_image=make_it_transparent("images/game/meditation.bmp");
  TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",50),*font1=TTF_OpenFont("fonts/pixel.ttf",30);
  SDL_Color winner_color={0,205,0},loser_color={207,0,0},xp_color={75,0,130},MONEY_COLOR={125,125,125},wins_color={241,188,48};
  LEVEL_WINNER=TTF_RenderText_Solid(font,"Winner",winner_color);
@@ -433,4 +434,18 @@ int Splash_Screen(void* data)
        }
  fog[0].Clear();
  fog[1].Clear();
+}
+
+int Meditation_Screen(void *data)
+{
+ const int number_of_frames=8;
+ int frame=0;
+ while(frame!=number_of_frames)
+       {
+        apply_surface(0,0,LEVEL_background_image,static_screen);
+        apply_surface(320*frame,0,((static_screen->w)-320)/2,((static_screen->h)-LEVEL_meditation_image->h)/2,320,LEVEL_meditation_image->h,LEVEL_meditation_image,static_screen);
+        SDL_Flip(static_screen);
+        SDL_Delay(180);
+        frame++;
+       }
 }

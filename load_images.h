@@ -48,7 +48,7 @@ void Load_player_images();
 void Clear_player_images();
 
 ///LEVEL
-extern SDL_Surface* LEVEL_background_image,*LEVEL_loading_image;
+extern SDL_Surface* LEVEL_background_image,*LEVEL_loading_image,*LEVEL_meditation_image;
 extern SDL_Surface* LEVEL_WINNER,*LEVEL_LOSER,*LEVEL_MONEY,*LEVEL_XP,*LEVEL_LINE,*LEVEL_WINS;
 extern SDL_Surface* MAP_NAME_background,*SKEPTIC_VISION_image;
 extern bool LEVEL_IMAGES_LOADED;
@@ -88,6 +88,9 @@ extern SDL_Surface* static_screen;
 extern bool Loading_image_quit;
 extern SDL_mutex* loading_image_mutex;
 int Loading_image(void* data);
+
+///Meditation Screen
+int Meditation_Screen(void *data);
 
 ///Splash Screen
 extern bool splash_screen_quit;
