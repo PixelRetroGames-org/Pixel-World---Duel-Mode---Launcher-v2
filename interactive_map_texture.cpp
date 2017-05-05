@@ -83,6 +83,11 @@ int Map_texture_id::Get_key_id()
  return key_id;
 }
 
+int Map_texture_id::Get_frame_change_elapsed()
+{
+ return frame_change_elapsed;
+}
+
 bool Map_texture_id::Is_done()
 {
  return remaining_duration==0;
@@ -251,6 +256,11 @@ char* Interactive_map_texture::Get_texture_map_name()
 char* Interactive_map_texture::Get_texture_puzzle_name()
 {
  return map_textures_ids[current_map_texture_id_position].Get_puzzle_name();
+}
+
+int Interactive_map_texture::Get_texture_frame_change_elapsed()
+{
+ return map_textures_ids[current_map_texture_id_position].Get_frame_change_elapsed();
 }
 
 int Interactive_map_texture::Get_key_id()

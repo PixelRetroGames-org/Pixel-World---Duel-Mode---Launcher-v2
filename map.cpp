@@ -191,12 +191,31 @@ void Map::Decrease_map_texture_id_remaining_time(bool before_player,bool lights)
      {
       if(!map_textures_ids[it->first][it->second].Is_done())
          {
+          if(map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Is_passer() &&
+             map_textures_ids[it->first][it->second].Get_texture_frame()==map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_number_of_frames()-1)
+             {
+              if(map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_number_of_frames()==1)
+                 {
+                  if(map_textures_ids[it->first][it->second].Get_texture_frame_change_elapsed()>=map_textures[map_textures_ids[it->first][it->second].Get_id()].Get_frame_change_delay()-1)
+                     {
+                      map_textures_ids[it->first][it->second].Trigger();
+                      //map_textures_ids[it->first][it->second].Update_texture_frame(map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_number_of_frames(),map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_frame_change_delay());
+                     }
+                 }
+              else
+                 {
+                  map_textures_ids[it->first][it->second].Trigger();
+                  //map_textures_ids[it->first][it->second].Update_texture_frame(map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_number_of_frames(),map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_frame_change_delay());
+                 }
+             }
+         }
+     }
+ for(std::vector<std::pair<int,int> >::iterator it=fast_access_map_textures_animations[before_player][lights].begin();it!=fast_access_map_textures_animations[before_player][lights].end();it++)
+     {
+      if(!map_textures_ids[it->first][it->second].Is_done())
+         {
           map_textures_ids[it->first][it->second].Decrease_remaining_duration();
           map_textures_ids[it->first][it->second].Update_texture_frame(map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_number_of_frames(),map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_frame_change_delay());
-          if(map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Is_passer() && map_textures_ids[it->first][it->second].Get_texture_frame()==map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_number_of_frames()-1)
-             {
-              map_textures_ids[it->first][it->second].Trigger();
-             }
          }
      }
 }

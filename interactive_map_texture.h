@@ -34,6 +34,7 @@ class Map_texture_id
  char* Get_map_name();
  char* Get_puzzle_name();
  int Get_key_id();
+ int Get_frame_change_elapsed();
  bool Is_done();
  void Decrease_remaining_duration();
  void Update_frame(int _number_of_frames,int _frame_change_delay);
@@ -70,6 +71,7 @@ class Interactive_map_texture
  int Get_key_id();
  char* Get_texture_map_name();
  char* Get_texture_puzzle_name();
+ int Get_texture_frame_change_elapsed();
  bool Is_done();
  void Decrease_remaining_duration();
  void Update_texture_frame(int _number_of_frames,int _frame_change_delay);
