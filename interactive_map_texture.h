@@ -63,6 +63,7 @@ class Interactive_map_texture
  void Set_key_id(int _texture,int _key_id);
  int Get_id();
  int Get_texture_id();
+ int Get_texture_id(int _texture_position);
  void Get_all_textures_ids(std::vector<Map_texture_id> &textures_ids);
  void Get_all_targets_map_positions(std::vector<std::pair<int,int> > &_target_map_position);
  int Get_texture_frame();

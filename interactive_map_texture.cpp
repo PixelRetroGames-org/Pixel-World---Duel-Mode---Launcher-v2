@@ -223,6 +223,11 @@ int Interactive_map_texture::Get_texture_id()
  return map_textures_ids[current_map_texture_id_position].Get_id();
 }
 
+int Interactive_map_texture::Get_texture_id(int _texture_position)
+{
+ return map_textures_ids[_texture_position].Get_id();
+}
+
 void Interactive_map_texture::Get_all_textures_ids(std::vector<Map_texture_id> &textures_ids)
 {
  textures_ids=map_textures_ids;

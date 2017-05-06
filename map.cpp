@@ -114,6 +114,11 @@ int Map::Get_type(int x,int y)
  return map_textures[map_textures_ids[x][y].Get_texture_id()].Get_type();
 }
 
+int Map::Get_map_texture_type(int _texture_position,int x,int y)
+{
+ return map_textures[map_textures_ids[x][y].Get_texture_id(_texture_position)].Get_type();
+}
+
 int Map::Get_number_of_lines()
 {
  return number_of_lines;
@@ -196,16 +201,14 @@ void Map::Decrease_map_texture_id_remaining_time(bool before_player,bool lights)
              {
               if(map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_number_of_frames()==1)
                  {
-                  if(map_textures_ids[it->first][it->second].Get_texture_frame_change_elapsed()>=map_textures[map_textures_ids[it->first][it->second].Get_id()].Get_frame_change_delay()-1)
+                  if(map_textures_ids[it->first][it->second].Get_texture_frame_change_elapsed()>=map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_frame_change_delay()-1)
                      {
                       map_textures_ids[it->first][it->second].Trigger();
-                      //map_textures_ids[it->first][it->second].Update_texture_frame(map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_number_of_frames(),map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_frame_change_delay());
                      }
                  }
               else
                  {
                   map_textures_ids[it->first][it->second].Trigger();
-                  //map_textures_ids[it->first][it->second].Update_texture_frame(map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_number_of_frames(),map_textures[map_textures_ids[it->first][it->second].Get_texture_id()].Get_frame_change_delay());
                  }
              }
          }
@@ -457,14 +460,14 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS>* _keys)
       int x,y,x1,y1,_texture;
       char map_name[TEXT_LENGTH_MAX];
       fscanf(where,"%d %d %d %d %d ",&_texture,&x,&y,&x1,&y1);
-      if(Get_type(x,y)!=6)
+      if(Get_map_texture_type(_texture,x,y)!=6)
          {
           fgets(map_name,sizeof map_name,where);
           if(map_name[strlen(map_name)-1]=='\n')
              map_name[strlen(map_name)-1]=NULL;
          }
       map_textures_ids[x][y].Set_texture_player_map_pos(_texture,x1,y1);
-      if(Get_type(x,y)!=6)
+      if(Get_map_texture_type(_texture,x,y)!=6)
          map_textures_ids[x][y].Set_texture_map_name(_texture,map_name);
      }
  int number_of_keys=0;

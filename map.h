@@ -40,6 +40,7 @@ class Map
  bool Is_light(int x,int y);
  char* Get_name();
  int Get_type(int x,int y);
+ int Get_map_texture_type(int _texture_position,int x,int y);
  int Get_number_of_lines();
  int Get_number_of_columns();
  Buff Get_map_texture_Buff(int x,int y);
