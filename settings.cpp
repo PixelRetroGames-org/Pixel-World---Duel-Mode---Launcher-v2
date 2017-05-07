@@ -56,7 +56,7 @@ void Set_DISPLAY_MODE(int MODE)
 void Print_Settings_Background(SDL_Surface* _screen)
 {
  apply_surface(0,0,SETTINGS_background,_screen);
- apply_surface((RESOLUTION_X-SETTINGS_name->w)/2,40,SETTINGS_name,_screen);
+ apply_surface((RESOLUTION_X-SETTINGS_name->w)/2,PIXELS_PER_INGAME_UNIT,SETTINGS_name,_screen);
 }
 
 void Graphic_Settings(SDL_Surface* _screen)

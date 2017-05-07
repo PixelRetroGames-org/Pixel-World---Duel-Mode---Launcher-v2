@@ -2,8 +2,8 @@
 
 Texture::Texture()
 {
- image_position.h=40;
- image_position.w=40;
+ image_position.h=PIXELS_PER_INGAME_UNIT;
+ image_position.w=PIXELS_PER_INGAME_UNIT;
 }
 
 void Texture::Clear(bool _delete)
@@ -139,7 +139,7 @@ void Texture::Print_image(int x,int y,SDL_Surface* _screen,int frame)
     return;
  image_position.x=frame*PIXELS_PER_INGAME_UNIT;
  image_position.y=0;
- image_position.h=40;
- image_position.w=40;
+ image_position.h=PIXELS_PER_INGAME_UNIT;
+ image_position.w=PIXELS_PER_INGAME_UNIT;
  apply_surface(image_position.x,image_position.y,x,y,image_position.h,image_position.w,image,_screen);
 }

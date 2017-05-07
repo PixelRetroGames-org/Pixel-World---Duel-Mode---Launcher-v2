@@ -19,7 +19,7 @@ void Non_Playable_Character::Clear()
     SDL_FreeSurface(skin_image);
  skin_image=NULL;
  skin_image_position.x=skin_image_position.y=0;
- skin_image_position.w=skin_image_position.h=40;
+ skin_image_position.w=skin_image_position.h=PIXELS_PER_INGAME_UNIT;
  lose_posX=-1;
  lose_posY=-1;
 }
@@ -220,7 +220,7 @@ void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS>* key,std::pair
  std::vector<int> available_positions;
  for(int i=0;i<number_of_map_accessible_positions;i++)
      {
-      if(map_accessible_positions[i].first<=player_pos.first || map_accessible_positions[i].first+skin_image_position.w/40>=player_pos.first || map_accessible_positions[i].second<=player_pos.second || map_accessible_positions[i].second+skin_image_position.h/40>=player_pos.second)
+      if(map_accessible_positions[i].first<=player_pos.first || map_accessible_positions[i].first+skin_image_position.w/PIXELS_PER_INGAME_UNIT>=player_pos.first || map_accessible_positions[i].second<=player_pos.second || map_accessible_positions[i].second+skin_image_position.h/PIXELS_PER_INGAME_UNIT>=player_pos.second)
          available_positions.push_back(i);
      }
  int random_position=rand()%available_positions.size();
@@ -278,19 +278,19 @@ void Non_Playable_Character::Print_skin(int x,int y,int mapX,int mapY,int mapW,i
 {
  if(type==0)
     return;
- if((Get_map_positionX()-(mapX>0?mapX:0)>=mapW/40) ||
-    (Get_map_positionY()-(mapY>0?mapY:0)>=mapH/40) ||
-    (Get_map_positionX()-(mapX>0?mapX:0)+Get_skinW()/40-1<0) ||
-    (Get_map_positionY()-(mapY>0?mapY:0)+Get_skinH()/40-1<0))
+ if((Get_map_positionX()-(mapX>0?mapX:0)>=mapW/PIXELS_PER_INGAME_UNIT) ||
+    (Get_map_positionY()-(mapY>0?mapY:0)>=mapH/PIXELS_PER_INGAME_UNIT) ||
+    (Get_map_positionX()-(mapX>0?mapX:0)+Get_skinW()/PIXELS_PER_INGAME_UNIT-1<0) ||
+    (Get_map_positionY()-(mapY>0?mapY:0)+Get_skinH()/PIXELS_PER_INGAME_UNIT-1<0))
     return;
  SDL_Rect _skin_image_position=skin_image_position;
- if(Get_map_positionY()-mapY+Get_skinH()/40-1>=mapH/40 && Get_map_positionY()-mapY<mapH/40)
-    _skin_image_position.h=(mapH/40-(Get_map_positionY()-mapY))*40;
- if(Get_map_positionY()-mapY<0 && Get_map_positionY()-mapY+Get_skinH()/40-1>=0)
-    _skin_image_position.h=(Get_skinH()/40-(-Get_map_positionY()+mapY))*40,_skin_image_position.y=(0-(Get_map_positionY()-mapY))*40;
- if(Get_map_positionX()-mapX+Get_skinW()/40-1>=mapW/40 && Get_map_positionX()-mapX<mapW/40)
-    _skin_image_position.w=(mapW/40-(Get_map_positionX()-mapX))*40;
- if(Get_map_positionX()-mapX<0 && Get_map_positionX()-mapX+Get_skinW()/40-1>=0)
-    _skin_image_position.w=(Get_skinW()/40-(-Get_map_positionX()+mapX))*40,_skin_image_position.x+=(Get_skinW()/40+(Get_map_positionX()-mapX))*40;
- apply_surface(_skin_image_position.x,_skin_image_position.y,-skin_image_position.x+_skin_image_position.x+x+(map_positionX-mapX)*40,-skin_image_position.y+_skin_image_position.y+y+(map_positionY-mapY)*40,_skin_image_position.w,_skin_image_position.h,skin_image,_screen);
+ if(Get_map_positionY()-mapY+Get_skinH()/PIXELS_PER_INGAME_UNIT-1>=mapH/PIXELS_PER_INGAME_UNIT && Get_map_positionY()-mapY<mapH/PIXELS_PER_INGAME_UNIT)
+    _skin_image_position.h=(mapH/PIXELS_PER_INGAME_UNIT-(Get_map_positionY()-mapY))*PIXELS_PER_INGAME_UNIT;
+ if(Get_map_positionY()-mapY<0 && Get_map_positionY()-mapY+Get_skinH()/PIXELS_PER_INGAME_UNIT-1>=0)
+    _skin_image_position.h=(Get_skinH()/PIXELS_PER_INGAME_UNIT-(-Get_map_positionY()+mapY))*PIXELS_PER_INGAME_UNIT,_skin_image_position.y=(0-(Get_map_positionY()-mapY))*PIXELS_PER_INGAME_UNIT;
+ if(Get_map_positionX()-mapX+Get_skinW()/PIXELS_PER_INGAME_UNIT-1>=mapW/PIXELS_PER_INGAME_UNIT && Get_map_positionX()-mapX<mapW/PIXELS_PER_INGAME_UNIT)
+    _skin_image_position.w=(mapW/PIXELS_PER_INGAME_UNIT-(Get_map_positionX()-mapX))*PIXELS_PER_INGAME_UNIT;
+ if(Get_map_positionX()-mapX<0 && Get_map_positionX()-mapX+Get_skinW()/PIXELS_PER_INGAME_UNIT-1>=0)
+    _skin_image_position.w=(Get_skinW()/PIXELS_PER_INGAME_UNIT-(-Get_map_positionX()+mapX))*PIXELS_PER_INGAME_UNIT,_skin_image_position.x+=(Get_skinW()/PIXELS_PER_INGAME_UNIT+(Get_map_positionX()-mapX))*PIXELS_PER_INGAME_UNIT;
+ apply_surface(_skin_image_position.x,_skin_image_position.y,-skin_image_position.x+_skin_image_position.x+x+(map_positionX-mapX)*PIXELS_PER_INGAME_UNIT,-skin_image_position.y+_skin_image_position.y+y+(map_positionY-mapY)*PIXELS_PER_INGAME_UNIT,_skin_image_position.w,_skin_image_position.h,skin_image,_screen);
 }

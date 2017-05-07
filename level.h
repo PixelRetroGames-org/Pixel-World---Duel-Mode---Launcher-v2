@@ -80,9 +80,9 @@ class Level
  void Set_arena_size();
  void Set_name(char* _name);
  void Set_player_map_position(int x,int y,int _player);
- void Set_player_mana(int _mana,int _player);
- void Set_player_hp(int _hp,int _player);
- void Set_player_mental_health(int _mental_health,int _player);
+ void Set_player_mana(double _mana,int _player);
+ void Set_player_hp(double _hp,int _player);
+ void Set_player_mental_health(double _mental_health,int _player);
  void Set_player_POSX(int _player,int _x);
  void Set_player_LAST_POSX(int _player,int _x);
  void Set_player_velocityX(int _player,int _velocityX);

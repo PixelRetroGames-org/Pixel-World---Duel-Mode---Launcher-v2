@@ -96,7 +96,7 @@ inline int Shop::Start(SDL_Surface* _screen,SDL_Event* event)
      page_selected=-1;
      for(int i=0;i<number_of_pages;i++)
          {
-          if(mouse_x>=_x && mouse_x<=_x+pages[i].Get_title_size() && mouse_y>=_y && mouse_y<=_y+40)
+          if(mouse_x>=_x && mouse_x<=_x+pages[i].Get_title_size() && mouse_y>=_y && mouse_y<=_y+PIXELS_PER_INGAME_UNIT)
              page_selected=i;
           _x+=pages[i].Get_title_size();
          }

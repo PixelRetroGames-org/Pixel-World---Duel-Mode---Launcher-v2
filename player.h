@@ -31,9 +31,9 @@ class Player
  int pos_last_y;
  int PLAYER_INFO_POSX=760,PLAYER_INFO_LAST_POSX=1130,SKIN_POSX=1130;
  ///Game
- int hp,mana,mental_health;
+ double hp,mana,mental_health;
  int attack=0,defense=0,extra_money=0,spell_damage=0,spell_resistance=0,movement_speed=0,life_steal=0;
- int basic_hp=100,basic_mana=100,basic_mental_health=100;
+ double basic_hp=100.0,basic_mana=100.0,basic_mental_health=100.0;
  int basic_attack=5,basic_defense=0,basic_spell_damage=10,basic_spell_resistance=0,basic_movement_speed=2,basic_life_steal=0;
  int map_positionX=0,map_positionY=0;
  int skin_size_w=PIXELS_PER_INGAME_UNIT,skin_size_h=PIXELS_PER_INGAME_UNIT;
@@ -83,9 +83,9 @@ class Player
  int Start_inventory(int x,int y,SDL_Surface* _screen,SDL_Event* event,int type=0,bool allow_sales=true);
 
  ///Game
- void Set_hp(int _hp);
- void Set_mana(int _mana);
- void Set_mental_health(int _mental_health);
+ void Set_hp(double _hp);
+ void Set_mana(double _mana);
+ void Set_mental_health(double _mental_health);
  void Set_map_position(int x,int y);
  void Set_skin_image_position(int x,int y);
  void Set_skin_image_position(SDL_Rect _skin_image_position);
@@ -97,8 +97,8 @@ class Player
  void Block_attack();
  void Unblock();
  void Unblock_attack();
- int Get_hp();
- int Get_mana();
+ double Get_hp();
+ double Get_mana();
  int Get_attack();
  int Get_defense();
  int Get_extra_money();

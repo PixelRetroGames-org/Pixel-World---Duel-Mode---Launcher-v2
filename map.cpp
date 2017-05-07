@@ -561,8 +561,8 @@ void Map::Print_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Sur
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_map_textures_animations[before_player][lights].begin();it!=fast_access_map_textures_animations[before_player][lights].end();it++)
      {
-      if(!map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/40 && it->second<map_x+MAP_IMAGE_HEIGHT/40)
-         Print_image((it->second-map_x)*40+screen_x,(it->first-map_y)*40+screen_y,_screen,&map_textures_ids[it->first][it->second]);
+      if(!map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/PIXELS_PER_INGAME_UNIT && it->second<map_x+MAP_IMAGE_HEIGHT/PIXELS_PER_INGAME_UNIT)
+         Print_image((it->second-map_x)*PIXELS_PER_INGAME_UNIT+screen_x,(it->first-map_y)*PIXELS_PER_INGAME_UNIT+screen_y,_screen,&map_textures_ids[it->first][it->second]);
      }
 }
 
@@ -576,8 +576,8 @@ void Map::Print_background_Animations(int screen_x,int screen_y,int map_x,int ma
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_background_map_textures_animations[before_player][lights].begin();it!=fast_access_background_map_textures_animations[before_player][lights].end();it++)
      {
-      if(!background_map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/40 && it->second<map_x+MAP_IMAGE_HEIGHT/40)
-         Print_image((it->second-map_x)*40+screen_x,(it->first-map_y)*40+screen_y,_screen,&background_map_textures_ids[it->first][it->second]);
+      if(!background_map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/PIXELS_PER_INGAME_UNIT && it->second<map_x+MAP_IMAGE_HEIGHT/PIXELS_PER_INGAME_UNIT)
+         Print_image((it->second-map_x)*PIXELS_PER_INGAME_UNIT+screen_x,(it->first-map_y)*PIXELS_PER_INGAME_UNIT+screen_y,_screen,&background_map_textures_ids[it->first][it->second]);
      }
 }
 
@@ -604,7 +604,7 @@ void Map::Print_name_image(SDL_Surface* _screen)
 {
  if(!is_interest_point)
     return;
- apply_surface((RESOLUTION_X-name_image->w)/2,40,name_image,_screen);
+ apply_surface((RESOLUTION_X-name_image->w)/2,PIXELS_PER_INGAME_UNIT,name_image,_screen);
  Update_name_image();
 }
 
@@ -622,8 +622,8 @@ void Map::Print_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface*
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_clues_map_textures[before_player][lights].begin();it!=fast_access_clues_map_textures[before_player][lights].end();it++)
      {
-      if(!clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/40 && it->second<map_x+MAP_IMAGE_HEIGHT/40)
-         Print_image((it->second-map_x)*40+screen_x,(it->first-map_y)*40+screen_y,_screen,clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture());
+      if(!clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/PIXELS_PER_INGAME_UNIT && it->second<map_x+MAP_IMAGE_HEIGHT/PIXELS_PER_INGAME_UNIT)
+         Print_image((it->second-map_x)*PIXELS_PER_INGAME_UNIT+screen_x,(it->first-map_y)*PIXELS_PER_INGAME_UNIT+screen_y,_screen,clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture());
      }
 }
 
@@ -631,8 +631,8 @@ void Map::Print_Special_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_special_clues_map_textures.begin();it!=fast_access_special_clues_map_textures.end();it++)
      {
-      if(!special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/40 && it->second<map_x+MAP_IMAGE_HEIGHT/40)
-         Print_image((it->second-map_x)*40+screen_x,(it->first-map_y)*40+screen_y,_screen,special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture());
+      if(!special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/PIXELS_PER_INGAME_UNIT && it->second<map_x+MAP_IMAGE_HEIGHT/PIXELS_PER_INGAME_UNIT)
+         Print_image((it->second-map_x)*PIXELS_PER_INGAME_UNIT+screen_x,(it->first-map_y)*PIXELS_PER_INGAME_UNIT+screen_y,_screen,special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture());
      }
 }
 

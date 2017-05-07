@@ -348,6 +348,7 @@ bool Loading_image_quit=false;
 SDL_mutex* loading_image_mutex;
 int Loading_image(void* data)
 {
+ const int loading_image_frameW=160;
  int frame=0;
  SDL_LockMutex(loading_image_mutex);
  Loading_image_quit=false;
@@ -355,7 +356,7 @@ int Loading_image(void* data)
        {
         SDL_UnlockMutex(loading_image_mutex);
         apply_surface(0,0,LEVEL_background_image,static_screen);
-        apply_surface(160*frame,0,((static_screen->w)-160)/2,((static_screen->h)-LEVEL_loading_image->h)/2,160,LEVEL_loading_image->h,LEVEL_loading_image,static_screen);
+        apply_surface(loading_image_frameW*frame,0,((static_screen->w)-loading_image_frameW)/2,((static_screen->h)-LEVEL_loading_image->h)/2,loading_image_frameW,LEVEL_loading_image->h,LEVEL_loading_image,static_screen);
         SDL_Flip(static_screen);
         SDL_Delay(100);
         frame++;
@@ -438,12 +439,13 @@ int Splash_Screen(void* data)
 
 int Meditation_Screen(void *data)
 {
+ const int meditation_frameW=320;
  const int number_of_frames=8;
  int frame=0;
  while(frame!=number_of_frames)
        {
         apply_surface(0,0,LEVEL_background_image,static_screen);
-        apply_surface(320*frame,0,((static_screen->w)-320)/2,((static_screen->h)-LEVEL_meditation_image->h)/2,320,LEVEL_meditation_image->h,LEVEL_meditation_image,static_screen);
+        apply_surface(meditation_frameW*frame,0,((static_screen->w)-meditation_frameW)/2,((static_screen->h)-LEVEL_meditation_image->h)/2,meditation_frameW,LEVEL_meditation_image->h,LEVEL_meditation_image,static_screen);
         SDL_Flip(static_screen);
         SDL_Delay(180);
         frame++;

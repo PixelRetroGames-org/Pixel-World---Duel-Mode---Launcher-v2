@@ -123,13 +123,13 @@ void Spell::Unblock()
  time_blocked=0;
 }
 
-bool Spell::Pay(int* _mana,int* _health,int* _mental_health)
+bool Spell::Pay(double* _mana,double* _health,double* _mental_health)
 {
  if((*_mana)<mana_cost || (*_health)<health_cost || (*_mental_health)<mental_health_cost)
     return false;
- (*_mana)-=mana_cost;
- (*_health)-=health_cost;
- (*_mental_health)-=mental_health_cost;
+ (*_mana)-=1.0*mana_cost;
+ (*_health)-=1.0*health_cost;
+ (*_mental_health)-=1.0*mental_health_cost;
  return true;
 }
 

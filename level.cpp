@@ -62,11 +62,11 @@ void Level::Set_arena_size()
 {
  arena_size.w=std::min(PIXELS_PER_INGAME_UNIT*arena.Get_number_of_columns(),840);
  arena_size.h=std::min(PIXELS_PER_INGAME_UNIT*arena.Get_number_of_lines(),680);
- arena_size.x=(RESOLUTION_X-arena_size.w+(arena_size.w%80==0?-40:0))/2;
+ arena_size.x=(RESOLUTION_X-arena_size.w+(arena_size.w%(2*PIXELS_PER_INGAME_UNIT)==0?-PIXELS_PER_INGAME_UNIT:0))/2;
  if(arena_size.h==680)
-    arena_size.y=40;
+    arena_size.y=PIXELS_PER_INGAME_UNIT;
  else
-    arena_size.y=(RESOLUTION_Y-arena_size.h+(arena_size.h%80==0?-40:0))/2-4;
+    arena_size.y=(RESOLUTION_Y-arena_size.h+(arena_size.h%(2*PIXELS_PER_INGAME_UNIT)==0?-PIXELS_PER_INGAME_UNIT:0))/2-4;
 }
 
 void Level::Set_name(char* _name)
@@ -81,17 +81,17 @@ void Level::Set_player_map_position(int x,int y,int _player)
  player[_player].Set_map_position(x,y);
 }
 
-void Level::Set_player_mana(int _mana,int _player)
+void Level::Set_player_mana(double _mana,int _player)
 {
  player[_player].Set_mana(_mana);
 }
 
-void Level::Set_player_hp(int _hp,int _player)
+void Level::Set_player_hp(double _hp,int _player)
 {
  player[_player].Set_hp(_hp);
 }
 
-void Level::Set_player_mental_health(int _mental_health,int _player)
+void Level::Set_player_mental_health(double _mental_health,int _player)
 {
  player[_player].Set_mental_health(_mental_health);
 }
@@ -394,11 +394,11 @@ bool Level::Move_player_X(int _player)
  bool move_possible=true;
  int x=player[_player].Get_map_positionX(),y=player[_player].Get_map_positionY();
  x+=player[_player].Get_velocityX();
- if(x<0 || x+(player[_player].Get_skinW()/40)>arena.Get_number_of_columns() || y<0 || y+(player[_player].Get_skinH()/40)>arena.Get_number_of_lines())
+ if(x<0 || x+(player[_player].Get_skinW()/PIXELS_PER_INGAME_UNIT)>arena.Get_number_of_columns() || y<0 || y+(player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT)>arena.Get_number_of_lines())
     return false;
- for(int _x=x;_x<=x+(player[_player].Get_skinW()/40)-1 && move_possible;_x++)
-     for(int _y=y;_y<=y+(player[_player].Get_skinH()/40)-1 && move_possible;_y++)
-         if((/*(_x!=x-1 && _y!=y-1) && */(arena.Is_obstacle(_y,_x) || effects.Is_obstacle(_y,_x)))/* || (player[Other_player(_player)].Get_map_positionY()+player[Other_player(_player)].Get_skinH()/40<=_y+player[_player].Get_skinH()/40 && player[Other_player(_player)].Get_map_positionY()>=_y && player[Other_player(_player)].Get_map_positionX()+player[Other_player(_player)].Get_skinW()/40<=_x+player[_player].Get_skinW()/40 && player[Other_player(_player)].Get_map_positionX()>=_x)*/)
+ for(int _x=x;_x<=x+(player[_player].Get_skinW()/PIXELS_PER_INGAME_UNIT)-1 && move_possible;_x++)
+     for(int _y=y;_y<=y+(player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT)-1 && move_possible;_y++)
+         if((/*(_x!=x-1 && _y!=y-1) && */(arena.Is_obstacle(_y,_x) || effects.Is_obstacle(_y,_x)))/* || (player[Other_player(_player)].Get_map_positionY()+player[Other_player(_player)].Get_skinH()/PIXELS_PER_INGAME_UNIT<=_y+player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT && player[Other_player(_player)].Get_map_positionY()>=_y && player[Other_player(_player)].Get_map_positionX()+player[Other_player(_player)].Get_skinW()/PIXELS_PER_INGAME_UNIT<=_x+player[_player].Get_skinW()/PIXELS_PER_INGAME_UNIT && player[Other_player(_player)].Get_map_positionX()>=_x)*/)
             {
              #ifdef GOD_POWERS
              if(!OBSTACLES)
@@ -406,9 +406,9 @@ bool Level::Move_player_X(int _player)
              #endif // GOD_POWERS
              move_possible=false;
             }
- int LX=x+player[_player].Get_skinW()/40-1,LY=y+player[_player].Get_skinH()/40-1;
+ int LX=x+player[_player].Get_skinW()/PIXELS_PER_INGAME_UNIT-1,LY=y+player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT-1;
  int X1=player[Other_player(_player)].Get_map_positionX(),Y1=player[Other_player(_player)].Get_map_positionY();
- int LX1=X1+player[Other_player(_player)].Get_skinW()/40-1,LY1=Y1+player[Other_player(_player)].Get_skinH()/40-1;
+ int LX1=X1+player[Other_player(_player)].Get_skinW()/PIXELS_PER_INGAME_UNIT-1,LY1=Y1+player[Other_player(_player)].Get_skinH()/PIXELS_PER_INGAME_UNIT-1;
 
  bool collision_x=false,collision_y=false;
 
@@ -423,9 +423,9 @@ bool Level::Move_player_X(int _player)
 
  for(int i=0;i<number_of_non_playable_characters && move_possible;i++)
      {
-      LX=x+player[_player].Get_skinW()/40-1,LY=y+player[_player].Get_skinH()/40-1;
+      LX=x+player[_player].Get_skinW()/PIXELS_PER_INGAME_UNIT-1,LY=y+player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT-1;
       X1=non_playable_characters[i].Get_map_positionX(),Y1=non_playable_characters[i].Get_map_positionY();
-      LX1=X1+non_playable_characters[i].Get_skinW()/40-1,LY1=Y1+non_playable_characters[i].Get_skinH()/40-1;
+      LX1=X1+non_playable_characters[i].Get_skinW()/PIXELS_PER_INGAME_UNIT-1,LY1=Y1+non_playable_characters[i].Get_skinH()/PIXELS_PER_INGAME_UNIT-1;
 
       collision_x=collision_y=false;
 
@@ -458,10 +458,10 @@ bool Level::Move_player_Y(int _player)
  bool move_possible=true;
  int x=player[_player].Get_map_positionX(),y=player[_player].Get_map_positionY();
  y+=player[_player].Get_velocityY();
- if(x<0 || x+(player[_player].Get_skinW()/40)>arena.Get_number_of_columns() || y<0 || y+(player[_player].Get_skinH()/40)>arena.Get_number_of_lines())
+ if(x<0 || x+(player[_player].Get_skinW()/PIXELS_PER_INGAME_UNIT)>arena.Get_number_of_columns() || y<0 || y+(player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT)>arena.Get_number_of_lines())
     return false;
- for(int _x=x;_x<=x+(player[_player].Get_skinW()/40)-1 && move_possible;_x++)
-     for(int _y=y;_y<=y+(player[_player].Get_skinH()/40)-1 && move_possible;_y++)
+ for(int _x=x;_x<=x+(player[_player].Get_skinW()/PIXELS_PER_INGAME_UNIT)-1 && move_possible;_x++)
+     for(int _y=y;_y<=y+(player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT)-1 && move_possible;_y++)
          if(arena.Is_obstacle(_y,_x) || effects.Is_obstacle(_y,_x))
             {
              #ifdef GOD_POWERS
@@ -470,9 +470,9 @@ bool Level::Move_player_Y(int _player)
              #endif // GOD_POWERS
              move_possible=false;
             }
- int LX=x+player[_player].Get_skinW()/40-1,LY=y+player[_player].Get_skinH()/40-1;
+ int LX=x+player[_player].Get_skinW()/PIXELS_PER_INGAME_UNIT-1,LY=y+player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT-1;
  int X1=player[Other_player(_player)].Get_map_positionX(),Y1=player[Other_player(_player)].Get_map_positionY();
- int LX1=X1+player[Other_player(_player)].Get_skinW()/40-1,LY1=Y1+player[Other_player(_player)].Get_skinH()/40-1;
+ int LX1=X1+player[Other_player(_player)].Get_skinW()/PIXELS_PER_INGAME_UNIT-1,LY1=Y1+player[Other_player(_player)].Get_skinH()/PIXELS_PER_INGAME_UNIT-1;
 
  bool collision_x=false,collision_y=false;
 
@@ -487,9 +487,9 @@ bool Level::Move_player_Y(int _player)
 
  for(int i=0;i<number_of_non_playable_characters && move_possible;i++)
      {
-      LX=x+player[_player].Get_skinW()/40-1,LY=y+player[_player].Get_skinH()/40-1;
+      LX=x+player[_player].Get_skinW()/PIXELS_PER_INGAME_UNIT-1,LY=y+player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT-1;
       X1=non_playable_characters[i].Get_map_positionX(),Y1=non_playable_characters[i].Get_map_positionY();
-      LX1=X1+non_playable_characters[i].Get_skinW()/40-1,LY1=Y1+non_playable_characters[i].Get_skinH()/40-1;
+      LX1=X1+non_playable_characters[i].Get_skinW()/PIXELS_PER_INGAME_UNIT-1,LY1=Y1+non_playable_characters[i].Get_skinH()/PIXELS_PER_INGAME_UNIT-1;
 
       collision_x=collision_y=false;
 
@@ -503,7 +503,7 @@ bool Level::Move_player_Y(int _player)
          move_possible=false;
      }
 
- /*if((player[Other_player(_player)].Get_map_positionY()+player[Other_player(_player)].Get_skinH()/40-1<=y+player[_player].Get_skinH()/40-1 && player[Other_player(_player)].Get_map_positionY()>=y && player[Other_player(_player)].Get_map_positionX()+player[Other_player(_player)].Get_skinW()/40-1<=x+player[_player].Get_skinW()/40-1 && player[Other_player(_player)].Get_map_positionX()>=x))
+ /*if((player[Other_player(_player)].Get_map_positionY()+player[Other_player(_player)].Get_skinH()/PIXELS_PER_INGAME_UNIT-1<=y+player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT-1 && player[Other_player(_player)].Get_map_positionY()>=y && player[Other_player(_player)].Get_map_positionX()+player[Other_player(_player)].Get_skinW()/PIXELS_PER_INGAME_UNIT-1<=x+player[_player].Get_skinW()/PIXELS_PER_INGAME_UNIT-1 && player[Other_player(_player)].Get_map_positionX()>=x))
     move_possible=false;*/
  if(move_possible && player[_player].Get_velocityY()!=0)
     {
@@ -530,9 +530,9 @@ bool Level::Move_player(int _player)
     {
      Buff aux;
      aux=effects.Get_map_texture_Buff(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
-     for(int x=player[_player].Get_map_positionX();aux.Get_id()==0 && x<player[_player].Get_map_positionX()+player[_player].Get_skinW()/40;x++)
+     for(int x=player[_player].Get_map_positionX();aux.Get_id()==0 && x<player[_player].Get_map_positionX()+player[_player].Get_skinW()/PIXELS_PER_INGAME_UNIT;x++)
          {
-          for(int y=player[_player].Get_map_positionY();aux.Get_id()==0 && y<player[_player].Get_map_positionY()+player[_player].Get_skinH()/40;y++)
+          for(int y=player[_player].Get_map_positionY();aux.Get_id()==0 && y<player[_player].Get_map_positionY()+player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT;y++)
               aux=effects.Get_map_texture_Buff(y,x);
          }
      if(aux.Get_id()!=0)
@@ -599,10 +599,10 @@ bool Level::Move_player(int _player)
  bool player_moved_x=Move_player_X(_player),player_moved_y=Move_player_Y(_player);
  player_moved_x=player_moved_x || player_moved_y;
  player[_player].Update_skin_image_position();
- while(player[_player].Get_map_positionX()+player[_player].Get_skinW()/40>arena.Get_number_of_columns())
+ while(player[_player].Get_map_positionX()+player[_player].Get_skinW()/PIXELS_PER_INGAME_UNIT>arena.Get_number_of_columns())
        player[_player].Set_map_position(player[_player].Get_map_positionX()-1,player[_player].Get_map_positionY());
 
- while(player[_player].Get_map_positionY()+player[_player].Get_skinH()/40>arena.Get_number_of_lines())
+ while(player[_player].Get_map_positionY()+player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT>arena.Get_number_of_lines())
        player[_player].Set_map_position(player[_player].Get_map_positionX(),player[_player].Get_map_positionY()-1);
  return player_moved_x;
 }
@@ -664,10 +664,10 @@ void Level::Move_NPC()
           for(int j=0;j<4;j++)
               {
                if(non_playable_characters[i].Is_accessible(x+dirx[j],y+diry[j]) && (
-                  (player[1].Get_map_positionX()+player[1].Get_skinW()/40-1<x+dirx[j] ||
-                   player[1].Get_map_positionX()>x+dirx[j]+non_playable_characters[i].Get_skinW()/40-1) ||
-                  (player[1].Get_map_positionY()+player[1].Get_skinH()/40-1<y+diry[j] ||
-                   player[1].Get_map_positionY()>y+diry[j]+non_playable_characters[i].Get_skinH()/40-1)))
+                  (player[1].Get_map_positionX()+player[1].Get_skinW()/PIXELS_PER_INGAME_UNIT-1<x+dirx[j] ||
+                   player[1].Get_map_positionX()>x+dirx[j]+non_playable_characters[i].Get_skinW()/PIXELS_PER_INGAME_UNIT-1) ||
+                  (player[1].Get_map_positionY()+player[1].Get_skinH()/PIXELS_PER_INGAME_UNIT-1<y+diry[j] ||
+                   player[1].Get_map_positionY()>y+diry[j]+non_playable_characters[i].Get_skinH()/PIXELS_PER_INGAME_UNIT-1)))
                   {
                    possible_directions.push_back(j);
                    if(j==non_playable_characters[i].Get_last_dir())
@@ -692,7 +692,7 @@ void Level::Move_NPC()
           non_playable_characters[i].Set_map_positionX(x);
           non_playable_characters[i].Set_map_positionY(y);
          }
-      non_playable_character_time_blocked[i]=40;
+      non_playable_character_time_blocked[i]=PIXELS_PER_INGAME_UNIT;
       non_playable_characters[i].Block();
      }
 }
@@ -700,13 +700,13 @@ void Level::Move_NPC()
 bool Level::Players_can_attack(int _player)
 {
  if(((player[_player].Get_map_positionX()>=player[Other_player(_player)].Get_map_positionX() &&
-    player[_player].Get_map_positionX()<=player[Other_player(_player)].Get_map_positionX()+player[Other_player(_player)].Get_skinH()/40) ||
-    (player[_player].Get_map_positionX()+player[_player].Get_skinH()/40>=player[Other_player(_player)].Get_map_positionX() &&
-    player[_player].Get_map_positionX()+player[_player].Get_skinH()/40<=player[Other_player(_player)].Get_map_positionX()+player[Other_player(_player)].Get_skinH()/40)) &&
+    player[_player].Get_map_positionX()<=player[Other_player(_player)].Get_map_positionX()+player[Other_player(_player)].Get_skinH()/PIXELS_PER_INGAME_UNIT) ||
+    (player[_player].Get_map_positionX()+player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT>=player[Other_player(_player)].Get_map_positionX() &&
+    player[_player].Get_map_positionX()+player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT<=player[Other_player(_player)].Get_map_positionX()+player[Other_player(_player)].Get_skinH()/PIXELS_PER_INGAME_UNIT)) &&
     ((player[_player].Get_map_positionY()>=player[Other_player(_player)].Get_map_positionY() &&
-    player[_player].Get_map_positionY()<=player[Other_player(_player)].Get_map_positionY()+player[Other_player(_player)].Get_skinH()/40) ||
-    (player[_player].Get_map_positionY()+player[_player].Get_skinH()/40>=player[Other_player(_player)].Get_map_positionY() &&
-    player[_player].Get_map_positionY()+player[_player].Get_skinH()/40<=player[Other_player(_player)].Get_map_positionY()+player[Other_player(_player)].Get_skinH()/40)))
+    player[_player].Get_map_positionY()<=player[Other_player(_player)].Get_map_positionY()+player[Other_player(_player)].Get_skinH()/PIXELS_PER_INGAME_UNIT) ||
+    (player[_player].Get_map_positionY()+player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT>=player[Other_player(_player)].Get_map_positionY() &&
+    player[_player].Get_map_positionY()+player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT<=player[Other_player(_player)].Get_map_positionY()+player[Other_player(_player)].Get_skinH()/PIXELS_PER_INGAME_UNIT)))
     return true;
  return false;
 }
@@ -726,8 +726,8 @@ void Level::Player_basic_attack(int _player)
      player[_player].Set_velocityX(0);
      player[Other_player(_player)].Set_velocityX(0);
 
-     player[_player].Set_hp(player[_player].Get_hp()+player[_player].Get_life_steal()*((std::max(player[_player].Get_attack()-player[Other_player(_player)].Get_defense()*3/8,10))/10)/100);
-     player[Other_player(_player)].Set_hp(player[Other_player(_player)].Get_hp()-(std::max(player[_player].Get_attack()-player[Other_player(_player)].Get_defense()*3/8,10))/10);
+     player[_player].Set_hp(player[_player].Get_hp()+1.0*player[_player].Get_life_steal()*(1.0*(std::max(1.0*player[_player].Get_attack()-1.0*player[Other_player(_player)].Get_defense()*3.0/8.0,10.0))/10)/100);
+     player[Other_player(_player)].Set_hp(player[Other_player(_player)].Get_hp()-1.0*(std::max(1.0*player[_player].Get_attack()-1.0*player[Other_player(_player)].Get_defense()*3.0/8.0,10.0))/10.0);
      player[_player].Block_attack(),player_time_blocked_attack[_player]=7-player[_player].Get_movement_speed();
      if(player_time_blocked_attack[_player]<=0)
         player_time_blocked_attack[_player]=4;
@@ -791,8 +791,8 @@ bool Level::Player_is_on_light(int _player)
  const int dirx[]={0,0,1,0,-1,1,1,-1,-1};
  const int diry[]={0,1,0,-1,0,1,-1,1,-1};
  bool rtn=arena.Is_light(player[_player].Get_map_positionY(),player[_player].Get_map_positionX());
- for(int x=player[_player].Get_map_positionX();x<arena.Get_number_of_columns() && x<player[_player].Get_map_positionX()+(player[_player].Get_skinW())/40;x++)
-     for(int y=player[_player].Get_map_positionY();y<arena.Get_number_of_lines() && y<player[_player].Get_map_positionY()+(player[_player].Get_skinH())/40;y++)
+ for(int x=player[_player].Get_map_positionX();x<arena.Get_number_of_columns() && x<player[_player].Get_map_positionX()+(player[_player].Get_skinW())/PIXELS_PER_INGAME_UNIT;x++)
+     for(int y=player[_player].Get_map_positionY();y<arena.Get_number_of_lines() && y<player[_player].Get_map_positionY()+(player[_player].Get_skinH())/PIXELS_PER_INGAME_UNIT;y++)
          for(int dir=0;dir<9;dir++)
              rtn=(rtn || arena.Is_light(y+diry[dir],x+dirx[dir]));
  return rtn;
@@ -803,8 +803,8 @@ bool Level::Non_Playable_Character_is_on_light(int _npc_pos)
  const int dirx[]={0,0,1,0,-1,1,1,-1,-1};
  const int diry[]={0,1,0,-1,0,1,-1,1,-1};
  bool rtn=arena.Is_light(non_playable_characters[_npc_pos].Get_map_positionY(),non_playable_characters[_npc_pos].Get_map_positionX());
- for(int x=non_playable_characters[_npc_pos].Get_map_positionX();x<arena.Get_number_of_columns() && x<non_playable_characters[_npc_pos].Get_map_positionX()+(non_playable_characters[_npc_pos].Get_skinW())/40;x++)
-     for(int y=non_playable_characters[_npc_pos].Get_map_positionY();y<arena.Get_number_of_lines() && y<non_playable_characters[_npc_pos].Get_map_positionY()+(non_playable_characters[_npc_pos].Get_skinH())/40;y++)
+ for(int x=non_playable_characters[_npc_pos].Get_map_positionX();x<arena.Get_number_of_columns() && x<non_playable_characters[_npc_pos].Get_map_positionX()+(non_playable_characters[_npc_pos].Get_skinW())/PIXELS_PER_INGAME_UNIT;x++)
+     for(int y=non_playable_characters[_npc_pos].Get_map_positionY();y<arena.Get_number_of_lines() && y<non_playable_characters[_npc_pos].Get_map_positionY()+(non_playable_characters[_npc_pos].Get_skinH())/PIXELS_PER_INGAME_UNIT;y++)
          for(int dir=0;dir<9;dir++)
              rtn=(rtn || arena.Is_light(y+diry[dir],x+dirx[dir]));
  return rtn;
@@ -849,7 +849,7 @@ void Level::Print_Map(int x,int y,SDL_Surface* _screen)
  //_area.x=x;
  ///TREBUIE SCHIMBAT
  if(_area.h<MAP_IMAGE_HEIGHT*PIXELS_PER_INGAME_UNIT)
-    _area.y=y+(MAP_IMAGE_HEIGHT-_area.h/40)/2*PIXELS_PER_INGAME_UNIT;
+    _area.y=y+(MAP_IMAGE_HEIGHT-_area.h/PIXELS_PER_INGAME_UNIT)/2*PIXELS_PER_INGAME_UNIT;
  /*_area.h=MAP_IMAGE_WEIGHT*PIXELS_PER_INGAME_UNIT-mapY*PIXELS_PER_INGAME_UNIT;
  _area.w=MAP_IMAGE_HEIGHT*PIXELS_PER_INGAME_UNIT-mapX*PIXELS_PER_INGAME_UNIT;
  _area.x=x+mapX*PIXELS_PER_INGAME_UNIT;
@@ -1372,7 +1372,7 @@ void Level::Interact_with_NPC_around_player(int _player)
          continue;
       for(int j=0;j<number_of_non_playable_characters;j++)
           {
-           if(x>=non_playable_characters[j].Get_map_positionX() && x<non_playable_characters[j].Get_map_positionX()+non_playable_characters[j].Get_skinW()/40 && y>=non_playable_characters[j].Get_map_positionY() && y<non_playable_characters[j].Get_map_positionY()+non_playable_characters[j].Get_skinH()/40)
+           if(x>=non_playable_characters[j].Get_map_positionX() && x<non_playable_characters[j].Get_map_positionX()+non_playable_characters[j].Get_skinW()/PIXELS_PER_INGAME_UNIT && y>=non_playable_characters[j].Get_map_positionY() && y<non_playable_characters[j].Get_map_positionY()+non_playable_characters[j].Get_skinH()/PIXELS_PER_INGAME_UNIT)
               {
                Interact_with_NPC(_player,j);
                return;
@@ -1499,10 +1499,10 @@ void Level::AI_Make_Move_player(int _player)
                     {
                      if(player[Other_player(_player)].Get_map_positionX()<player[_player].Get_map_positionX()-range)
                         player[_player].Set_velocityX(1);
-                     if(player[Other_player(_player)].Get_map_positionX()>player[_player].Get_map_positionX()+player[_player].Get_skinW()/40+range)
+                     if(player[Other_player(_player)].Get_map_positionX()>player[_player].Get_map_positionX()+player[_player].Get_skinW()/PIXELS_PER_INGAME_UNIT+range)
                         player[_player].Set_velocityX(-1);
                      if(player[Other_player(_player)].Get_map_positionX()>=player[_player].Get_map_positionX()-range &&
-                        player[Other_player(_player)].Get_map_positionX()<=player[_player].Get_map_positionX()+player[_player].Get_skinW()/40+range)
+                        player[Other_player(_player)].Get_map_positionX()<=player[_player].Get_map_positionX()+player[_player].Get_skinW()/PIXELS_PER_INGAME_UNIT+range)
                         {
                          if(player[Other_player(_player)].Get_map_positionX()<std::abs(arena.Get_number_of_columns()-player[Other_player(_player)].Get_map_positionX()))
                             player[_player].Set_velocityX(1);
@@ -1511,10 +1511,10 @@ void Level::AI_Make_Move_player(int _player)
                         }
                      if(player[Other_player(_player)].Get_map_positionY()<player[_player].Get_map_positionY()-range)
                         player[_player].Set_velocityY(1);
-                     if(player[Other_player(_player)].Get_map_positionY()>player[_player].Get_map_positionY()+player[_player].Get_skinH()/40+range)
+                     if(player[Other_player(_player)].Get_map_positionY()>player[_player].Get_map_positionY()+player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT+range)
                         player[_player].Set_velocityY(-1);
                      if(player[Other_player(_player)].Get_map_positionY()>=player[_player].Get_map_positionY()-range &&
-                        player[Other_player(_player)].Get_map_positionY()<=player[_player].Get_map_positionY()+player[_player].Get_skinH()/40+range)
+                        player[Other_player(_player)].Get_map_positionY()<=player[_player].Get_map_positionY()+player[_player].Get_skinH()/PIXELS_PER_INGAME_UNIT+range)
                         {
                          if(player[Other_player(_player)].Get_map_positionY()<std::abs(arena.Get_number_of_columns()-player[Other_player(_player)].Get_map_positionY()))
                             player[_player].Set_velocityY(1);
@@ -1980,7 +1980,7 @@ void Level::Start(SDL_Surface* screen,bool cleanup)
                apply_surface(0,0,LEVEL_background_image,screen);
                if(type==2)
                   Print_players_informations(screen);
-               Print_Map((RESOLUTION_X-840)/2,40,screen);
+               Print_Map((RESOLUTION_X-840)/2,PIXELS_PER_INGAME_UNIT,screen);
                if(!done)
                   SDL_Flip(screen);
                if(type==2 && level_duration.get_ticks()>duration)

@@ -189,7 +189,11 @@ void Player::Load()
       equipped_items[i].Set_type(i);
       equipped_items[i].Load();
      }
- fscanf(where,"%d %d %d",&basic_hp,&basic_mana,&basic_mental_health);
+ int basic_hp_int,basic_mana_int,basic_mental_health_int;
+ fscanf(where,"%d %d %d",&basic_hp_int,&basic_mana_int,&basic_mental_health_int);
+ basic_hp=1.0*basic_hp_int;
+ basic_mana=1.0*basic_mana_int;
+ basic_mental_health=1.0*basic_mental_health_int;
  fscanf(where,"%d %d %d %d %d %d",&basic_attack,&basic_defense,&basic_spell_damage,&basic_spell_resistance,&basic_movement_speed,&basic_life_steal);
  int w,h;
  fscanf(where,"%d %d ",&w,&h);
@@ -272,9 +276,9 @@ void Player::Update()
  if(basic_hp<1000 && experience!=0)
     {
      basic_hp=100+experience*500/100;
-     basic_hp=std::min(1000,basic_hp);
+     basic_hp=std::min(1000.0,basic_hp);
     }
- fprintf(where,"\n%d %d %d\n",basic_hp,basic_mana,basic_mental_health);
+ fprintf(where,"\n%d %d %d\n",(int)basic_hp,(int)basic_mana,(int)basic_mental_health);
  fprintf(where,"%d %d %d %d %d %d\n",basic_attack,basic_defense,basic_spell_damage,basic_spell_resistance,basic_movement_speed,basic_life_steal);
  int w=original_skin_image_position.w,h=original_skin_image_position.h;
  fprintf(where,"%d %d\n",w,h);
@@ -551,18 +555,18 @@ void Player::Print_Inventory(int x,int y,SDL_Surface* _screen,bool options,int t
               switch(type)
                      {
                       case 1:if(equipped_items_ids[items_bought[i].Get_type()]!=i)
-                                apply_surface(_x+40,_y+2,INVENTORY_EQUIP,_screen);
+                                apply_surface(_x+PIXELS_PER_INGAME_UNIT,_y+2,INVENTORY_EQUIP,_screen);
                              else
-                                apply_surface(_x+40,_y+2,INVENTORY_EQUIPPED,_screen);
+                                apply_surface(_x+PIXELS_PER_INGAME_UNIT,_y+2,INVENTORY_EQUIPPED,_screen);
                              break;
 
                       case 2:for(int spell_pos=0;spell_pos<4;spell_pos++)
                                  {
                                   if(spells[spell_pos].Get_id()==items_bought[i].Get_spell_id())
-                                     apply_surface(_x+40+spell_pos*SHOP_inventory_spell_background->w,_y+2,SHOP_inventory_spell_background_equipped,_screen);
+                                     apply_surface(_x+PIXELS_PER_INGAME_UNIT+spell_pos*SHOP_inventory_spell_background->w,_y+2,SHOP_inventory_spell_background_equipped,_screen);
                                   else
-                                     apply_surface(_x+40+spell_pos*SHOP_inventory_spell_background->w,_y+2,SHOP_inventory_spell_background,_screen);
-                                  apply_surface(_x+40+spell_pos*SHOP_inventory_spell_background->w,_y+2,INVENTORY_spell_position[spell_pos],_screen);
+                                     apply_surface(_x+PIXELS_PER_INGAME_UNIT+spell_pos*SHOP_inventory_spell_background->w,_y+2,SHOP_inventory_spell_background,_screen);
+                                  apply_surface(_x+PIXELS_PER_INGAME_UNIT+spell_pos*SHOP_inventory_spell_background->w,_y+2,INVENTORY_spell_position[spell_pos],_screen);
                                  }
                              break;
                      }
@@ -621,10 +625,10 @@ void Player::Print_Inventory_equipped_items(int x,int y,SDL_Surface* _screen,boo
           if(!Is_potion(i))
              {
               if(equipped_items_ids[items_bought[i].Get_type()]!=i)
-                 apply_surface(_x+40,_y+2,INVENTORY_EQUIP,_screen);
+                 apply_surface(_x+PIXELS_PER_INGAME_UNIT,_y+2,INVENTORY_EQUIP,_screen);
               else
                  {
-                  apply_surface(_x+40,_y+2,INVENTORY_EQUIPPED,_screen);
+                  apply_surface(_x+PIXELS_PER_INGAME_UNIT,_y+2,INVENTORY_EQUIPPED,_screen);
                  }
              }
           if(allow_sales)
@@ -665,11 +669,11 @@ int Player::Start_inventory(int x,int y,SDL_Surface* _screen,SDL_Event* event,in
 
               switch(type)
                      {
-                      case 1:if(mouse_x>=_x+40 && mouse_x<=_x+40+INVENTORY_EQUIP->w && mouse_y>=_y+2 && mouse_y<=_y+2+INVENTORY_EQUIP->h)
+                      case 1:if(mouse_x>=_x+PIXELS_PER_INGAME_UNIT && mouse_x<=_x+PIXELS_PER_INGAME_UNIT+INVENTORY_EQUIP->w && mouse_y>=_y+2 && mouse_y<=_y+2+INVENTORY_EQUIP->h)
                                  _equip=true;
                              break;
 
-                      case 2:if(mouse_x>=_x+40 && mouse_x<=_x+40+4*SHOP_inventory_spell_background->w && mouse_y>=_y+2 && mouse_y<=_y+2+INVENTORY_EQUIP->h && (event->type==SDL_MOUSEBUTTONDOWN))
+                      case 2:if(mouse_x>=_x+PIXELS_PER_INGAME_UNIT && mouse_x<=_x+PIXELS_PER_INGAME_UNIT+4*SHOP_inventory_spell_background->w && mouse_y>=_y+2 && mouse_y<=_y+2+INVENTORY_EQUIP->h && (event->type==SDL_MOUSEBUTTONDOWN))
                                 {
                                  for(int spell_pos=0;spell_pos<4;spell_pos++)
                                      {
@@ -682,7 +686,7 @@ int Player::Start_inventory(int x,int y,SDL_Surface* _screen,SDL_Event* event,in
                                      }
                                  for(int spell_pos=0;spell_pos<4;spell_pos++)
                                      {
-                                      if(mouse_x-_x-40>=spell_pos*SHOP_inventory_spell_background->w && mouse_x-_x-40<(spell_pos+1)*SHOP_inventory_spell_background->w)
+                                      if(mouse_x-_x-PIXELS_PER_INGAME_UNIT>=spell_pos*SHOP_inventory_spell_background->w && mouse_x-_x-PIXELS_PER_INGAME_UNIT<(spell_pos+1)*SHOP_inventory_spell_background->w)
                                          {
                                           spells[spell_pos].Clear(true);
                                           spells[spell_pos].Set_id(items_bought[i].Get_spell_id());
@@ -724,7 +728,7 @@ int Player::Start_inventory(int x,int y,SDL_Surface* _screen,SDL_Event* event,in
 
 ///Game
 
-void Player::Set_hp(int _hp)
+void Player::Set_hp(double _hp)
 {
  hp=_hp;
  if(hp<0)
@@ -735,13 +739,13 @@ void Player::Set_hp(int _hp)
     hp=1;
  TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",30);
  char aux[TEXT_LENGTH_MAX]={NULL};
- itoa(hp,aux);
+ itoa((int)hp,aux);
  SDL_FreeSurface(hp_image);
  hp_image=TTF_RenderText_Solid(font,aux,HP_COLOR);
  TTF_CloseFont(font);
 }
 
-void Player::Set_mana(int _mana)
+void Player::Set_mana(double _mana)
 {
  mana=_mana;
  if(mana<0)
@@ -751,13 +755,13 @@ void Player::Set_mana(int _mana)
  TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",30);
  SDL_Surface* _image=NULL;
  char aux[TEXT_LENGTH_MAX]={NULL};
- itoa(mana,aux);
+ itoa((int)mana,aux);
  SDL_FreeSurface(mana_image);
  mana_image=TTF_RenderText_Solid(font,aux,MANA_COLOR);
  TTF_CloseFont(font);
 }
 
-void Player::Set_mental_health(int _mental_health)
+void Player::Set_mental_health(double _mental_health)
 {
  mental_health=_mental_health;
 }
@@ -825,12 +829,12 @@ void Player::Unblock_attack()
  can_attack=true;
 }
 
-int Player::Get_hp()
+double Player::Get_hp()
 {
  return hp;
 }
 
-int Player::Get_mana()
+double Player::Get_mana()
 {
  return mana;
 }
@@ -957,10 +961,10 @@ void Player::Print_hp(int x,int y,SDL_Surface* _screen)
 
 void Player::Print_hp(SDL_Surface* _screen)
 {
- apply_surface(PLAYER_INFO_POSX,40,PLAYER_CASE_background,_screen);
- apply_surface(PLAYER_INFO_POSX,40,PLAYER_HP_background->w*hp/basic_hp,PLAYER_HP_background->h,PLAYER_HP_background,_screen);
- apply_surface(PLAYER_INFO_POSX,40,PLAYER_CASE_front,_screen);
- apply_surface(PLAYER_INFO_POSX+(PLAYER_INFO_LAST_POSX-PLAYER_INFO_POSX+1-hp_image->w+10)/2,40+(40-hp_image->h)/2,hp_image,_screen);
+ apply_surface(PLAYER_INFO_POSX,PIXELS_PER_INGAME_UNIT,PLAYER_CASE_background,_screen);
+ apply_surface(PLAYER_INFO_POSX,PIXELS_PER_INGAME_UNIT,PLAYER_HP_background->w*hp/basic_hp,PLAYER_HP_background->h,PLAYER_HP_background,_screen);
+ apply_surface(PLAYER_INFO_POSX,PIXELS_PER_INGAME_UNIT,PLAYER_CASE_front,_screen);
+ apply_surface(PLAYER_INFO_POSX+(PLAYER_INFO_LAST_POSX-PLAYER_INFO_POSX+1-hp_image->w+10)/2,PIXELS_PER_INGAME_UNIT+(PIXELS_PER_INGAME_UNIT-hp_image->h)/2,hp_image,_screen);
 }
 
 void Player::Print_mana(int x,int y,SDL_Surface* _screen)
@@ -977,7 +981,7 @@ void Player::Print_mana(SDL_Surface* _screen)
  apply_surface(PLAYER_INFO_POSX,80,PLAYER_CASE_background,_screen);
  apply_surface(PLAYER_INFO_POSX,80,PLAYER_MANA_background->w*mana/basic_mana,PLAYER_MANA_background->h,PLAYER_MANA_background,_screen);
  apply_surface(PLAYER_INFO_POSX,80,PLAYER_CASE_front,_screen);
- apply_surface(PLAYER_INFO_POSX+(PLAYER_INFO_LAST_POSX-PLAYER_INFO_POSX+1-mana_image->w+10)/2,80+(40-mana_image->h)/2,mana_image,_screen);
+ apply_surface(PLAYER_INFO_POSX+(PLAYER_INFO_LAST_POSX-PLAYER_INFO_POSX+1-mana_image->w+10)/2,80+(PIXELS_PER_INGAME_UNIT-mana_image->h)/2,mana_image,_screen);
 }
 
 void Player::Print_skin(int x,int y,int mapX,int mapY,SDL_Surface* _screen)
@@ -1248,7 +1252,7 @@ void Player::Print_buffs(int x,int y,SDL_Surface* _screen)
       if(aux.Get_id()!=0)
          {
           aux.Print_image(x,y,_screen);
-          x+=40;
+          x+=PIXELS_PER_INGAME_UNIT;
          }
      }
  for(std::vector<Buff>::iterator i=active_buffs.begin();i!=active_buffs.end();i++)
@@ -1256,7 +1260,7 @@ void Player::Print_buffs(int x,int y,SDL_Surface* _screen)
       if((*i).Get_id()!=0)
          {
           (*i).Print_image(x,y,_screen);
-          x+=40;
+          x+=PIXELS_PER_INGAME_UNIT;
          }
      }
 }
@@ -1316,7 +1320,7 @@ void Player::Print_spells(int x,int y,SDL_Surface* _screen)
           if(Spell_Is_blocked(spell_pos))
              apply_surface(x,y,PLAYER_SPELLS_not_ready,_screen);
           else
-             if(!spells[spell_pos].Can_Pay(mana,hp,mental_health))
+             if(!spells[spell_pos].Can_Pay((int)mana,(int)hp,(int)mental_health))
                 apply_surface(x,y,PLAYER_SPELLS_no_mana,_screen);
          }
       apply_surface(x,y,PLAYER_SPELLS_front,_screen);

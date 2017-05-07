@@ -31,7 +31,7 @@ class Spell
  void Decrease_time_blocked();
  void Block();
  void Unblock();
- bool Pay(int* _mana,int* _health,int* _mental_health);
+ bool Pay(double* _mana,double* _health,double* _mental_health);
  bool Can_Pay(int _mana,int _health,int _mental_health);
  void Print_image(int x,int y,SDL_Surface* _screen);
  void Play_sound_effect(int channel);
