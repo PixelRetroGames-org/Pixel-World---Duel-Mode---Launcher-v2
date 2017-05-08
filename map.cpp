@@ -407,7 +407,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS>* _keys)
 
                for(std::vector<Map_texture_id>::iterator itt=textures_ids.begin();itt!=textures_ids.end();itt++)
                    {
-                    if((!map_textures[itt->Get_id()].Is_animation()) && viz.count(std::make_pair(i+dirx[dir],j+diry[dir]))==0)
+                    if(viz.count(std::make_pair(i+dirx[dir],j+diry[dir]))==0)
                        {
                         new_elements[map_textures[itt->Get_id()].Get_print_before_player()].push_back(std::make_pair(i+dirx[dir],j+diry[dir]));
                         viz[std::make_pair(i+dirx[dir],j+diry[dir])]=true;
@@ -418,7 +418,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS>* _keys)
 
                for(std::vector<Map_texture_id>::iterator itt=textures_ids.begin();itt!=textures_ids.end();itt++)
                    {
-                    if((!map_textures[itt->Get_id()].Is_animation()) && viz_back.count(std::make_pair(i+dirx[dir],j+diry[dir]))==0)
+                    if(viz_back.count(std::make_pair(i+dirx[dir],j+diry[dir]))==0)
                        {
                         new_elements_background[map_textures[itt->Get_id()].Get_print_before_player()].push_back(std::make_pair(i+dirx[dir],j+diry[dir]));
                         viz_back[std::make_pair(i+dirx[dir],j+diry[dir])]=true;
@@ -430,10 +430,40 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS>* _keys)
      {
       for(std::vector<std::pair<int,int> >::iterator it=new_elements[before_player].begin();it!=new_elements[before_player].end();it++)
           {
+           map_textures_ids[it->first][it->second].Get_all_textures_ids(textures_ids);
+           for(std::vector<Map_texture_id>::iterator itt=textures_ids.begin();itt!=textures_ids.end();itt++)
+               {
+                if(map_textures[itt->Get_id()].Is_animation())
+                   {
+                    for(std::vector<std::pair<int,int> >::iterator _it=fast_access_map_textures_animations[map_textures[itt->Get_id()].Get_print_before_player()][map_textures[itt->Get_id()].Is_light()].begin();_it!=fast_access_map_textures_animations[map_textures[itt->Get_id()].Get_print_before_player()][map_textures[itt->Get_id()].Is_light()].end();_it++)
+                        {
+                         if(_it->first==it->first && _it->second==it->second)
+                            {
+                             fast_access_map_textures_animations[map_textures[itt->Get_id()].Get_print_before_player()][map_textures[itt->Get_id()].Is_light()].erase(_it);
+                             break;
+                            }
+                        }
+                   }
+               }
            fast_access_map_textures_animations[before_player][true].push_back(*it);
           }
       for(std::vector<std::pair<int,int> >::iterator it=new_elements_background[before_player].begin();it!=new_elements_background[before_player].end();it++)
           {
+           background_map_textures_ids[it->first][it->second].Get_all_textures_ids(textures_ids);
+           for(std::vector<Map_texture_id>::iterator itt=textures_ids.begin();itt!=textures_ids.end();itt++)
+               {
+                if(map_textures[itt->Get_id()].Is_animation())
+                   {
+                    for(std::vector<std::pair<int,int> >::iterator _it=fast_access_background_map_textures_animations[map_textures[itt->Get_id()].Get_print_before_player()][map_textures[itt->Get_id()].Is_light()].begin();_it!=fast_access_background_map_textures_animations[map_textures[itt->Get_id()].Get_print_before_player()][map_textures[itt->Get_id()].Is_light()].end();_it++)
+                        {
+                         if(_it->first==it->first && _it->second==it->second)
+                            {
+                             fast_access_background_map_textures_animations[map_textures[itt->Get_id()].Get_print_before_player()][map_textures[itt->Get_id()].Is_light()].erase(_it);
+                             break;
+                            }
+                        }
+                   }
+               }
            fast_access_background_map_textures_animations[before_player][true].push_back(*it);
           }
      }
