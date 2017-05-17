@@ -1,0 +1,20 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Shady_Merchant >
+
+
+<color 125 0 7 >Shady Merchant: </color >Psst! Want some stuff?</line >
+< flip >
+
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >Sure!</line >
+<we >
+< flip >
+<we >
+</page >
