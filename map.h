@@ -18,7 +18,7 @@ class Map
  private:
  char name[TEXT_LENGTH_MAX]={NULL};
  int number_of_lines=0,number_of_columns=0;
- std::map<int,Texture> map_textures;
+ std::map<int,Map_Texture> map_textures;
  Interactive_map_texture map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX],background_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX];
  std::vector<std::pair<int,int> > fast_access_map_textures_animations[2][2],fast_access_background_map_textures_animations[2][2];
  Clue_map_texture clues_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX],special_clues_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX];
