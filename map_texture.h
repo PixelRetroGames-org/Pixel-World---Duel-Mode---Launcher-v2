@@ -5,7 +5,7 @@
 #include "load_images.h"
 #include "buff.h"
 
-class Texture
+class Map_Texture
 {
  private:
  int id=0;
@@ -20,7 +20,7 @@ class Texture
  bool print_before_player=false,obstacle=false,light=false,animation=false,is_trigger=false,is_passer=false;
 
  public:
- Texture();
+ Map_Texture();
  void Clear(bool _delete=true);
  void Set_name(char* _name);
  void Set_type(int _type);

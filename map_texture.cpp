@@ -1,12 +1,12 @@
 #include "map_texture.h"
 
-Texture::Texture()
+Map_Texture::Map_Texture()
 {
  image_position.h=PIXELS_PER_INGAME_UNIT;
  image_position.w=PIXELS_PER_INGAME_UNIT;
 }
 
-void Texture::Clear(bool _delete)
+void Map_Texture::Clear(bool _delete)
 {
  if(image!=NULL && _delete)
     {
@@ -20,82 +20,82 @@ void Texture::Clear(bool _delete)
  is_passer=false;
 }
 
-void Texture::Set_id(int _id)
+void Map_Texture::Set_id(int _id)
 {
  id=_id;
 }
 
-void Texture::Set_name(char* _name)
+void Map_Texture::Set_name(char* _name)
 {
  strcpy(name,_name);
 }
 
-void Texture::Set_type(int _type)
+void Map_Texture::Set_type(int _type)
 {
  type=_type;
 }
 
-int Texture::Get_id()
+int Map_Texture::Get_id()
 {
  return id;
 }
 
-int Texture::Get_type()
+int Map_Texture::Get_type()
 {
  return type;
 }
 
-bool Texture::Get_print_before_player()
+bool Map_Texture::Get_print_before_player()
 {
  return print_before_player;
 }
 
-bool Texture::Is_obstacle()
+bool Map_Texture::Is_obstacle()
 {
  return obstacle;
 }
 
-bool Texture::Is_light()
+bool Map_Texture::Is_light()
 {
  return light;
 }
 
-bool Texture::Is_animation()
+bool Map_Texture::Is_animation()
 {
  return animation;
 }
 
-bool Texture::Is_trigger()
+bool Map_Texture::Is_trigger()
 {
  return is_trigger;
 }
 
-bool Texture::Is_passer()
+bool Map_Texture::Is_passer()
 {
  return is_passer;
 }
 
-Buff Texture::Get_Buff()
+Buff Map_Texture::Get_Buff()
 {
  return buff;
 }
 
-int Texture::Get_power()
+int Map_Texture::Get_power()
 {
  return power;
 }
 
-int Texture::Get_number_of_frames()
+int Map_Texture::Get_number_of_frames()
 {
  return number_of_frames;
 }
 
-int Texture::Get_frame_change_delay()
+int Map_Texture::Get_frame_change_delay()
 {
  return frame_change_delay;
 }
 
-void Texture::Load()
+void Map_Texture::Load()
 {
  if(id==0)
     return;
@@ -133,7 +133,7 @@ void Texture::Load()
  fclose(where);
 }
 
-void Texture::Print_image(int x,int y,SDL_Surface* _screen,int frame)
+void Map_Texture::Print_image(int x,int y,SDL_Surface* _screen,int frame)
 {
  if(image==NULL)
     return;
