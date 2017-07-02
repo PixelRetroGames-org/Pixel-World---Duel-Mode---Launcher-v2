@@ -1,28 +1,28 @@
 #include "inventory.h"
 
-void player_inventory::Print_Inventory(SDL_Surface* screen,char* _player_name)
+void player_inventory::Print_Inventory(Texture *screen,char *_player_name)
 {
- SDL_Thread* _loading_image=NULL;
+ SDL_Thread *_loading_image=NULL;
  static_screen=screen;
- _loading_image=SDL_CreateThread(Loading_image,NULL);
+ _loading_image=SDL_CreateThread(Loading_image,"Inventory Loading",NULL);
  Player player;
  player.Set_name(_player_name);
  player.Load();
- player.Set_PLAYER_INFO_LAST_POSX((RESOLUTION_X-550)/2+550);
- player.Set_PLAYER_INFO_POSX((RESOLUTION_X-550)/2);
- player.Set_SKIN_POSX((RESOLUTION_X-550)/2+550-190);
+ player.Set_PLAYER_INFO_LAST_POSX((RESOLUTION_W-550)/2+550);
+ player.Set_PLAYER_INFO_POSX((RESOLUTION_W-550)/2);
+ player.Set_SKIN_POSX((RESOLUTION_W-550)/2+550-190);
  int thread_return_value=0;
  SDL_LockMutex(loading_image_mutex);
  Loading_image_quit=true;
  SDL_UnlockMutex(loading_image_mutex);
  SDL_WaitThread(_loading_image,&thread_return_value);
- SDL_Flip(static_screen);
- apply_surface(0,0,SHOP_shop_big_background,screen);
+ Flip_Buffers(screen);
+ Apply_Texture(0,0,SHOP_shop_big_background,screen);
  player.Print_Character(player.Get_PLAYER_INFO_POSX(),0,screen);
  player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,true,1,false);
- apply_surface(player.Get_PLAYER_INFO_POSX()-INVENTORY_LARROW->w,player.Get_pos_last_y(),INVENTORY_LARROW,screen);
- apply_surface(player.Get_PLAYER_INFO_LAST_POSX(),player.Get_pos_last_y(),INVENTORY_RARROW,screen);
- SDL_Flip(screen);
+ Apply_Texture(player.Get_PLAYER_INFO_POSX()-INVENTORY_LARROW->w,player.Get_pos_last_y(),INVENTORY_LARROW,screen);
+ Apply_Texture(player.Get_PLAYER_INFO_LAST_POSX(),player.Get_pos_last_y(),INVENTORY_RARROW,screen);
+ Flip_Buffers(screen);
  Timer fps;
  int type=1;
  bool quit=false;
@@ -54,15 +54,15 @@ void player_inventory::Print_Inventory(SDL_Surface* screen,char* _player_name)
             if(_item_id<0 || redraw || _item_id==666013)
                {
                 redraw=false;
-                apply_surface(0,0,SHOP_shop_big_background,screen);
+                Apply_Texture(0,0,SHOP_shop_big_background,screen);
                 player.Print_Character(player.Get_PLAYER_INFO_POSX(),0,screen);
                 player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,true,type,false);
-                apply_surface(player.Get_PLAYER_INFO_POSX()-INVENTORY_LARROW->w,player.Get_pos_last_y(),INVENTORY_LARROW,screen);
-                apply_surface(player.Get_PLAYER_INFO_LAST_POSX(),player.Get_pos_last_y(),INVENTORY_RARROW,screen);
+                Apply_Texture(player.Get_PLAYER_INFO_POSX()-INVENTORY_LARROW->w,player.Get_pos_last_y(),INVENTORY_LARROW,screen);
+                Apply_Texture(player.Get_PLAYER_INFO_LAST_POSX(),player.Get_pos_last_y(),INVENTORY_RARROW,screen);
                }
-            if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.sym==SDLK_ESCAPE) || (event.type==SDL_KEYDOWN && event.key.keysym.sym==SDLK_i))
+            if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_ESCAPE) || (event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_I))
                quit=true;
-            SDL_Flip(screen);
+            Flip_Buffers(screen);
            }
         if(fps.get_ticks()<1000/FRAMES_PER_SECOND)
            {

@@ -26,12 +26,12 @@ void Map::Clear(bool _delete,bool _delete_all)
          {
           if(map_image[i][j]!=NULL && _delete)
              {
-              SDL_FreeSurface(map_image[i][j]);
+              Destroy_Texture(map_image[i][j]);
               map_image[i][j]=NULL;
              }
           if(background_map_image[i][j]!=NULL && _delete)
              {
-              SDL_FreeSurface(background_map_image[i][j]);
+              Destroy_Texture(background_map_image[i][j]);
               background_map_image[i][j]=NULL;
              }
           std::vector<std::pair<int,int> >().swap(fast_access_map_textures_animations[i][j]);
@@ -49,14 +49,14 @@ void Map::Clear(bool _delete,bool _delete_all)
          }
  if(_delete)
     {
-     SDL_FreeSurface(name_image);
+     Destroy_Texture(name_image);
      name_image=NULL;
      name_image_opaque_time=NAME_IMAGE_OPAQUE_TIME;
      name_image_alpha=SDL_ALPHA_OPAQUE;
     }
 }
 
-void Map::Set_name(char* _name)
+void Map::Set_name(char *_name)
 {
  strcpy(name,_name);
 }
@@ -104,7 +104,7 @@ bool Map::Is_Trigger(int x,int y)
  return map_textures[map_textures_ids[x][y].Get_texture_id()].Is_trigger();
 }
 
-char* Map::Get_name()
+char *Map::Get_name()
 {
  return name;
 }
@@ -154,12 +154,12 @@ int Map::Get_map_texture_player_pos_y(int x,int y)
  return map_textures_ids[x][y].Get_texture_player_map_pos_y();
 }
 
-char* Map::Get_map_texture_map_name(int x,int y)
+char *Map::Get_map_texture_map_name(int x,int y)
 {
  return map_textures_ids[x][y].Get_texture_map_name();
 }
 
-char* Map::Get_map_texture_puzzle_name(int x,int y)
+char *Map::Get_map_texture_puzzle_name(int x,int y)
 {
  return map_textures_ids[x][y].Get_texture_puzzle_name();
 }
@@ -169,7 +169,7 @@ int Map::Get_map_texture_key_id(int x,int y)
  return map_textures_ids[x][y].Get_key_id();
 }
 
-void Map::Copy(int x,int y,Map* source)
+void Map::Copy(int x,int y,Map *source)
 {
  for(int i=0;i<source->Get_number_of_lines();i++)
      for(int j=0;j<source->Get_number_of_columns();j++)
@@ -294,13 +294,13 @@ bool Map::Is_done()
  return (current_number_of_updates>number_of_updates && number_of_updates>0);
 }
 
-void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS>* _keys)
+void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
 {
  char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"maps/");
  strcat(path,name);
  strcat(path,".pwm");
- FILE* where=fopen(path,"r");
+ FILE *where=fopen(path,"r");
  int _is_interest_point,_is_static;
  fscanf(where,"%d %d %d %d %d ",&_is_interest_point,&_is_static,&number_of_updates,&number_of_lines,&number_of_columns);
  is_interest_point=_is_interest_point;
@@ -308,14 +308,17 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS>* _keys)
 
  if(is_interest_point)
     {
-     TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",30);
+     TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
      SDL_Color color={255,255,255};
-     SDL_Surface* image=TTF_RenderText_Solid(font,name,color);
-     name_image=make_it_transparent("images/game/map_name_background.bmp");
-     apply_surface((name_image->w-image->w)/2,(name_image->h-image->h)/2,image,name_image);
-     SDL_Flip(name_image);
-     SDL_FreeSurface(image);
+     Texture *image=Create_TTF_Texture(font,name,color);
+     Texture *aux=Load_Transparent_Texture("images/game/map_name_background.png");
+     name_image=Create_Transparent_Texture(aux->w,aux->h);
+     Apply_Texture(0,0,aux,name_image);
+     Destroy_Texture(aux);
+     Apply_Texture((name_image->w-image->w)/2,(name_image->h-image->h)/2,image,name_image);
+     Destroy_Texture(image);
      TTF_CloseFont(font);
+     Set_Texture_Blend_Mode(name_image,SDL_BLENDMODE_BLEND);
      name_image_opaque_time=NAME_IMAGE_OPAQUE_TIME;
      name_image_alpha=SDL_ALPHA_OPAQUE;
     }
@@ -323,8 +326,8 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS>* _keys)
  for(int i=0;i<=1 && is_static;i++)
      for(int j=0;j<=1;j++)
          {
-          map_image[i][j]=make_it_transparent("images/game/empty.bmp");
-          background_map_image[i][j]=make_it_transparent("images/game/empty.bmp");
+          map_image[i][j]=Create_Transparent_Texture(50*PIXELS_PER_INGAME_UNIT,50*PIXELS_PER_INGAME_UNIT);
+          background_map_image[i][j]=Create_Transparent_Texture(50*PIXELS_PER_INGAME_UNIT,50*PIXELS_PER_INGAME_UNIT);
          }
 
  int number_of_locks=0;
@@ -579,39 +582,39 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS>* _keys)
  fclose(where);
 }
 
-const int MAP_IMAGE_HEIGHT=840,MAP_IMAGE_WEIGHT=680;
+const int MAP_IMAGE_WEIGHT=840,MAP_IMAGE_HEIGHT=680;
 
-void Map::Print(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface* _screen,bool before_player,bool lights)
+void Map::Print(int screen_x,int screen_y,int map_x,int map_y,Texture *_screen,bool before_player,bool lights)
 {
- //apply_surface(screen_x,screen_y,map_image[before_player][lights],_screen);
- apply_surface(map_x*PIXELS_PER_INGAME_UNIT,map_y*PIXELS_PER_INGAME_UNIT,screen_x,screen_y,MAP_IMAGE_HEIGHT,MAP_IMAGE_WEIGHT,map_image[before_player][lights],_screen);
+ //Apply_Texture(screen_x,screen_y,map_image[before_player][lights],_screen);
+ Apply_Texture(map_x*PIXELS_PER_INGAME_UNIT,map_y*PIXELS_PER_INGAME_UNIT,screen_x,screen_y,std::min(MAP_IMAGE_WEIGHT,number_of_columns*PIXELS_PER_INGAME_UNIT),std::min(MAP_IMAGE_HEIGHT,number_of_lines*PIXELS_PER_INGAME_UNIT),map_image[before_player][lights],_screen);
 }
 
-void Map::Print_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface* _screen,bool before_player,bool lights)
+void Map::Print_Animations(int screen_x,int screen_y,int map_x,int map_y,Texture *_screen,bool before_player,bool lights)
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_map_textures_animations[before_player][lights].begin();it!=fast_access_map_textures_animations[before_player][lights].end();it++)
      {
-      if(!map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/PIXELS_PER_INGAME_UNIT && it->second<map_x+MAP_IMAGE_HEIGHT/PIXELS_PER_INGAME_UNIT)
+      if(!map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_HEIGHT/PIXELS_PER_INGAME_UNIT && it->second<map_x+MAP_IMAGE_WEIGHT/PIXELS_PER_INGAME_UNIT)
          Print_image((it->second-map_x)*PIXELS_PER_INGAME_UNIT+screen_x,(it->first-map_y)*PIXELS_PER_INGAME_UNIT+screen_y,_screen,&map_textures_ids[it->first][it->second]);
      }
 }
 
-void Map::Print_background(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface* _screen,bool before_player,bool lights)
+void Map::Print_background(int screen_x,int screen_y,int map_x,int map_y,Texture *_screen,bool before_player,bool lights)
 {
- //apply_surface(screen_x,screen_y,background_map_image[before_player][lights],_screen);
- apply_surface(map_x*PIXELS_PER_INGAME_UNIT,map_y*PIXELS_PER_INGAME_UNIT,screen_x,screen_y,MAP_IMAGE_HEIGHT,MAP_IMAGE_WEIGHT,background_map_image[before_player][lights],_screen);
+ //Apply_Texture(screen_x,screen_y,background_map_image[before_player][lights],_screen);
+ Apply_Texture(map_x*PIXELS_PER_INGAME_UNIT,map_y*PIXELS_PER_INGAME_UNIT,screen_x,screen_y,std::min(MAP_IMAGE_WEIGHT,number_of_columns*PIXELS_PER_INGAME_UNIT),std::min(MAP_IMAGE_HEIGHT,number_of_lines*PIXELS_PER_INGAME_UNIT),background_map_image[before_player][lights],_screen);
 }
 
-void Map::Print_background_Animations(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface* _screen,bool before_player,bool lights)
+void Map::Print_background_Animations(int screen_x,int screen_y,int map_x,int map_y,Texture *_screen,bool before_player,bool lights)
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_background_map_textures_animations[before_player][lights].begin();it!=fast_access_background_map_textures_animations[before_player][lights].end();it++)
      {
-      if(!background_map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/PIXELS_PER_INGAME_UNIT && it->second<map_x+MAP_IMAGE_HEIGHT/PIXELS_PER_INGAME_UNIT)
+      if(!background_map_textures_ids[it->first][it->second].Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_HEIGHT/PIXELS_PER_INGAME_UNIT && it->second<map_x+MAP_IMAGE_WEIGHT/PIXELS_PER_INGAME_UNIT)
          Print_image((it->second-map_x)*PIXELS_PER_INGAME_UNIT+screen_x,(it->first-map_y)*PIXELS_PER_INGAME_UNIT+screen_y,_screen,&background_map_textures_ids[it->first][it->second]);
      }
 }
 
-void Map::Print_image(int screen_x,int screen_y,SDL_Surface* _screen,Interactive_map_texture* source)
+void Map::Print_image(int screen_x,int screen_y,Texture *_screen,Interactive_map_texture *source)
 {
  map_textures[source->Get_texture_id()].Print_image(screen_x,screen_y,_screen,source->Get_texture_frame());
 }
@@ -630,12 +633,11 @@ void Map::Trigger(int x,int y)
      Trigger(it->first,it->second);
 }
 
-void Map::Print_name_image(SDL_Surface* _screen)
+void Map::Print_name_image(Texture *_screen)
 {
  if(!is_interest_point)
     return;
- apply_surface((RESOLUTION_X-name_image->w)/2,PIXELS_PER_INGAME_UNIT,name_image,_screen);
- Update_name_image();
+ Apply_Texture((RESOLUTION_W-name_image->w)/2,PIXELS_PER_INGAME_UNIT,name_image,_screen);
 }
 
 void Map::Update_name_image()
@@ -645,33 +647,33 @@ void Map::Update_name_image()
  name_image_alpha-=10;
  if(name_image_alpha<0)
     name_image_alpha=0;
- SDL_SetAlpha(name_image,SDL_SRCALPHA,name_image_alpha);
+ Set_Texture_Alpha(name_image,name_image_alpha);
 }
 
-void Map::Print_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface* _screen,bool before_player,bool lights)
+void Map::Print_Clues(int screen_x,int screen_y,int map_x,int map_y,Texture *_screen,bool before_player,bool lights)
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_clues_map_textures[before_player][lights].begin();it!=fast_access_clues_map_textures[before_player][lights].end();it++)
      {
-      if(!clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/PIXELS_PER_INGAME_UNIT && it->second<map_x+MAP_IMAGE_HEIGHT/PIXELS_PER_INGAME_UNIT)
+      if(!clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_HEIGHT/PIXELS_PER_INGAME_UNIT && it->second<map_x+MAP_IMAGE_WEIGHT/PIXELS_PER_INGAME_UNIT)
          Print_image((it->second-map_x)*PIXELS_PER_INGAME_UNIT+screen_x,(it->first-map_y)*PIXELS_PER_INGAME_UNIT+screen_y,_screen,clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture());
      }
 }
 
-void Map::Print_Special_Clues(int screen_x,int screen_y,int map_x,int map_y,SDL_Surface* _screen)
+void Map::Print_Special_Clues(int screen_x,int screen_y,int map_x,int map_y,Texture *_screen)
 {
  for(std::vector<std::pair<int,int> >::iterator it=fast_access_special_clues_map_textures.begin();it!=fast_access_special_clues_map_textures.end();it++)
      {
-      if(!special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_WEIGHT/PIXELS_PER_INGAME_UNIT && it->second<map_x+MAP_IMAGE_HEIGHT/PIXELS_PER_INGAME_UNIT)
+      if(!special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture()->Is_done() && it->second>=map_x && it->first>=map_y && it->first<map_y+MAP_IMAGE_HEIGHT/PIXELS_PER_INGAME_UNIT && it->second<map_x+MAP_IMAGE_WEIGHT/PIXELS_PER_INGAME_UNIT)
          Print_image((it->second-map_x)*PIXELS_PER_INGAME_UNIT+screen_x,(it->first-map_y)*PIXELS_PER_INGAME_UNIT+screen_y,_screen,special_clues_map_textures_ids[it->first][it->second].Get_interactive_map_texture());
      }
 }
 
-Clue_map_texture* Map::Get_Clue_map_texture(int x,int y)
+Clue_map_texture *Map::Get_Clue_map_texture(int x,int y)
 {
  return &clues_map_textures_ids[x][y];
 }
 
-Clue_map_texture* Map::Get_Special_Clue_map_texture(int x,int y)
+Clue_map_texture *Map::Get_Special_Clue_map_texture(int x,int y)
 {
  return &special_clues_map_textures_ids[x][y];
 }

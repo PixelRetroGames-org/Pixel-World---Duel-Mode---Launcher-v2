@@ -1,16 +1,26 @@
-< bckimg background > <page > <line >
+< bckimg background > <page >
+< flip >
+< sleep 1000>
+<line >
 
 
 
  <color 255 255 255>Credits:</color > 
 
 </line >
+< flip >
+< sleep 1000>
 <line ><color 255 0 0>Laura Talaat <color 199 0 255>
 </line >
+< flip >
+< sleep 1000>
 <line ><color 199 0 255>and</c ></line >
+< flip >
+< sleep 1000>
 <line >
 <color 255 0 0>Alex Cioltan <color 199 0 255>@</c > <color 89 255 0>AlexTheCoder</c ></c ></line >
 < img 0 50 logo >
 < flip >
+< sleep 1000>
 <we >
 </page >

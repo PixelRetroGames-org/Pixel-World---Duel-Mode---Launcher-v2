@@ -2,6 +2,7 @@
 #define BUFF_H
 
 #include "library.h"
+#include "texture.h"
 
 #define BUFF_PERMANENT -1
 
@@ -19,7 +20,7 @@ class Buff
  int id,duration,type;
  int remaining_duration;
  char name[TEXT_LENGTH_MAX]={NULL};
- SDL_Surface* image=NULL;
+ Texture *image=NULL;
 
  public:
  Buff();
@@ -28,7 +29,7 @@ class Buff
  void Set_id(int _id);
  void Set_duration(int _duration);
  void Set_type(int _type);
- void Set_name(char* _name);
+ void Set_name(char *_name);
  void Set_damage(int _damage);
  void Set_transmitted_buff_id(int _id);
 
@@ -36,7 +37,7 @@ class Buff
  int Get_duration();
  int Get_remaining_duration();
  int Get_type();
- char* Get_name();
+ char *Get_name();
  int Get_transmissible_buff_id();
  int Get_transmitted_buff_id();
  int Get_damage();
@@ -50,7 +51,7 @@ class Buff
  int Get_movement_speed();
  int Get_life_steal();
 
- char* Get_skin_name();
+ char *Get_skin_name();
  SDL_Rect Get_skin_image_position();
 
  bool Is_done();
@@ -60,7 +61,7 @@ class Buff
 
  void Decrease_remaining_duration();
  void Reset();
- void Print_image(int x,int y,SDL_Surface* _screen);
+ void Print_image(int x,int y,Texture *_screen=NULL);
 };
 
 const int NUMBER_OF_ALL_BUFFS=10;

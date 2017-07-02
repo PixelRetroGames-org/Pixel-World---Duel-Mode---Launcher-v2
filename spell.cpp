@@ -20,7 +20,7 @@ void Spell::Clear(bool _delete)
  for(int i=0;i<buffs.size() && !buffs.empty();i++)
      buffs[i].Clear(_delete);
  std::vector<Buff>().swap(buffs);
- SDL_FreeSurface(image);
+ Destroy_Texture(image);
  image=NULL;
  Mix_FreeChunk(sound_effect);
  sound_effect=NULL;
@@ -34,15 +34,15 @@ void Spell::Load()
  strcpy(filename,"spells/");
  strcat(filename,aux);
  strcat(filename,".pws");
- FILE* where=fopen(filename,"r");
+ FILE *where=fopen(filename,"r");
  fscanf(where,"%d ",&type);
  fgets(name,sizeof name,where);
  if(name[strlen(name)-1]=='\n')
     name[strlen(name)-1]=NULL;
  strcpy(aux,"shop/items/inventory/images/");
  strcat(aux,name);
- strcat(aux,".bmp");
- image=make_it_transparent(aux);
+ strcat(aux,".png");
+ image=Load_Transparent_Texture(aux);
  int number_of_buffs=0;
  fscanf(where,"%d ",&number_of_buffs);
  Buff aux_buff;
@@ -86,9 +86,9 @@ int Spell::Get_type()
  return type;
 }
 
-void Spell::Get_Buffs(std::vector<Buff>* _buffs)
+void Spell::Get_Buffs(std::vector<Buff> *_buffs)
 {
-* _buffs=buffs;
+ *_buffs=buffs;
 }
 
 int Spell::Get_range()
@@ -96,7 +96,7 @@ int Spell::Get_range()
  return range;
 }
 
-char* Spell::Get_map_name()
+char *Spell::Get_map_name()
 {
  return map_name;
 }
@@ -123,7 +123,7 @@ void Spell::Unblock()
  time_blocked=0;
 }
 
-bool Spell::Pay(double* _mana,double* _health,double* _mental_health)
+bool Spell::Pay(double *_mana,double *_health,double *_mental_health)
 {
  if((*_mana)<mana_cost || (*_health)<health_cost || (*_mental_health)<mental_health_cost)
     return false;
@@ -140,9 +140,9 @@ bool Spell::Can_Pay(int _mana,int _health,int _mental_health)
  return true;
 }
 
-void Spell::Print_image(int x,int y,SDL_Surface* _screen)
+void Spell::Print_image(int x,int y,Texture *_screen)
 {
- apply_surface(x,y,image,_screen);
+ Apply_Texture(x,y,image,_screen);
 }
 
 void Spell::Play_sound_effect(int channel)

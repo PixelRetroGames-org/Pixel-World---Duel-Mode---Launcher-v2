@@ -33,12 +33,12 @@ void Map_texture_id::Set_player_map_pos(int x,int y)
  player_map_pos_y=y;
 }
 
-void Map_texture_id::Set_map_name(char* _map_name)
+void Map_texture_id::Set_map_name(char *_map_name)
 {
  strcpy(map_name,_map_name);
 }
 
-void Map_texture_id::Set_puzzle_name(char* _puzzle_name)
+void Map_texture_id::Set_puzzle_name(char *_puzzle_name)
 {
  strcpy(puzzle_name,_puzzle_name);
 }
@@ -68,12 +68,12 @@ int Map_texture_id::Get_player_map_pos_y()
  return player_map_pos_y;
 }
 
-char* Map_texture_id::Get_map_name()
+char *Map_texture_id::Get_map_name()
 {
  return map_name;
 }
 
-char* Map_texture_id::Get_puzzle_name()
+char *Map_texture_id::Get_puzzle_name()
 {
  return puzzle_name;
 }
@@ -154,12 +154,12 @@ void Interactive_map_texture::Set_texture_player_map_pos(int _texture,int x,int 
  map_textures_ids[_texture].Set_player_map_pos(x,y);
 }
 
-void Interactive_map_texture::Set_texture_map_name(int _texture,char* _map_name)
+void Interactive_map_texture::Set_texture_map_name(int _texture,char *_map_name)
 {
  map_textures_ids[_texture].Set_map_name(_map_name);
 }
 
-void Interactive_map_texture::Set_texture_puzzle_name(int _texture,char* _puzzle_name)
+void Interactive_map_texture::Set_texture_puzzle_name(int _texture,char *_puzzle_name)
 {
  map_textures_ids[_texture].Set_puzzle_name(_puzzle_name);
 }
@@ -179,7 +179,7 @@ void Interactive_map_texture::Load()
  strcpy(path,"maps/interactive textures/");
  strcat(path,aux);
  strcat(path,".pwit");
- FILE* where=fopen(path,"r");
+ FILE *where=fopen(path,"r");
  if(where==NULL)
     {
      Map_texture_id _id;
@@ -253,12 +253,12 @@ int Interactive_map_texture::Get_texture_player_map_pos_y()
  return map_textures_ids[current_map_texture_id_position].Get_player_map_pos_y();
 }
 
-char* Interactive_map_texture::Get_texture_map_name()
+char *Interactive_map_texture::Get_texture_map_name()
 {
  return map_textures_ids[current_map_texture_id_position].Get_map_name();
 }
 
-char* Interactive_map_texture::Get_texture_puzzle_name()
+char *Interactive_map_texture::Get_texture_puzzle_name()
 {
  return map_textures_ids[current_map_texture_id_position].Get_puzzle_name();
 }

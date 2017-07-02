@@ -9,7 +9,7 @@ void Journal::Clear()
      }
  number_of_entries=current_entry=0;
  name[0]=NULL;
- SDL_FreeSurface(name_image);
+ Destroy_Texture(name_image);
  name_image=NULL;
  redraw=true;
 }
@@ -20,7 +20,7 @@ void Journal::Load()
  strcpy(path,"journal/");
  strcat(path,name);
  strcat(path,".pwj");
- FILE* where=fopen(path,"r");
+ FILE *where=fopen(path,"r");
  if(where==NULL)
     return;
  fscanf(where,"%d ",&number_of_entries);
@@ -32,29 +32,29 @@ void Journal::Load()
       journal_entries[i].Load(journal_entries_names[i]);
      }
  fclose(where);
- TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",40);
+ TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",40);
  SDL_Color color={52,124,191};
- name_image=TTF_RenderText_Solid(font,name,color);
+ name_image=Create_TTF_Texture(font,name,color);
  TTF_CloseFont(font);
 }
 
-void Journal::Load(char* _name)
+void Journal::Load(char *_name)
 {
  Set_name(_name);
  Load();
 }
 
-void Journal::Set_name(char* _name)
+void Journal::Set_name(char *_name)
 {
  strcpy(name,_name);
 }
 
-void Journal::Handle_Events(SDL_Event* event)
+void Journal::Handle_Events(SDL_Event *event)
 {
  redraw=false;
  if(event->type==SDL_KEYDOWN)
     {
-     if(event->key.keysym.sym==SDLK_UP || event->key.keysym.sym==SDLK_w)
+     if(event->key.keysym.scancode==SDL_SCANCODE_UP || event->key.keysym.scancode==SDL_SCANCODE_W)
         {
          if(current_entry-1>=0)
             {
@@ -66,7 +66,7 @@ void Journal::Handle_Events(SDL_Event* event)
              redraw=true;
             }
         }
-     if(event->key.keysym.sym==SDLK_DOWN || event->key.keysym.sym==SDLK_s)
+     if(event->key.keysym.scancode==SDL_SCANCODE_DOWN || event->key.keysym.scancode==SDL_SCANCODE_S)
         {
          if(current_entry+1<=number_of_entries)
             {
@@ -84,7 +84,7 @@ void Journal::Handle_Events(SDL_Event* event)
     }
  if(event->type==SDL_MOUSEMOTION || event->type==SDL_MOUSEBUTTONDOWN)
     {
-     int _x=20,_y=(RESOLUTION_Y-50*number_of_entries)/2,mouse_x=0,mouse_y=0;
+     int _x=20,_y=(RESOLUTION_H-50*number_of_entries)/2,mouse_x=0,mouse_y=0;
      mouse_x=event->button.x,mouse_y=event->button.y;
      hover_entry=-1;
      for(int i=0;i<number_of_entries;i++)
@@ -107,13 +107,13 @@ void Journal::Handle_Events(SDL_Event* event)
  redraw=journal_entries[current_entry].Handle_Events(event);
 }
 
-void Journal::Print(SDL_Surface* _screen)
+void Journal::Print(Texture *_screen)
 {
- apply_surface(0,0,LEVEL_background_image,_screen);
+ Apply_Texture(0,0,LEVEL_background_image,_screen);
  if(current_entry!=-1)
     journal_entries[current_entry].Print_Page(_screen);
- apply_surface((RESOLUTION_X-name_image->w)/2,5,name_image,_screen);
- int X=20,Y=(RESOLUTION_Y-50*number_of_entries)/2;
+ Apply_Texture((RESOLUTION_W-name_image->w)/2,5,name_image,_screen);
+ int X=20,Y=(RESOLUTION_H-50*number_of_entries)/2;
  for(int i=0;i<number_of_entries;i++)
      {
       if(!journal_entries[i].Is_in_progress(progress))
@@ -125,27 +125,27 @@ void Journal::Print(SDL_Surface* _screen)
 
 const int FRAMES_PER_SECOND=27;
 
-void Journal::Start(SDL_Surface* _screen)
+void Journal::Start(Texture *_screen)
 {
  SDL_Event event;
  SDL_Delay(100);
  while(SDL_PollEvent(&event));
  bool quit=false;
  Print(_screen);
- SDL_Flip(_screen);
+ Flip_Buffers(_screen);
  Timer fps;
  while(!quit)
        {
         fps.start();
         if(SDL_PollEvent(&event) && !quit)
            {
-            if((event.type==SDL_KEYDOWN && event.key.keysym.sym==SDLK_ESCAPE) || (event.type==SDL_KEYDOWN && event.key.keysym.sym==SDLK_j))
+            if((event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_ESCAPE) || (event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_J))
                quit=true;
             Handle_Events(&event);
             if(redraw)
                {
                 Print(_screen);
-                SDL_Flip(_screen);
+                Flip_Buffers(_screen);
                }
            }
         if(fps.get_ticks()<1000/FRAMES_PER_SECOND)
@@ -157,30 +157,30 @@ void Journal::Start(SDL_Surface* _screen)
  while(SDL_PollEvent(&event));
 }
 
-void Journal::Start(char* _name,std::bitset<NUMBER_OF_MAX_KEYS>* _progress,SDL_Surface* _screen)
+void Journal::Start(char *_name,std::bitset<NUMBER_OF_MAX_KEYS> *_progress,Texture *_screen)
 {
- SDL_Thread* _loading_image=NULL;
- _loading_image=SDL_CreateThread(Loading_image,NULL);
+ SDL_Thread *_loading_image=NULL;
+ _loading_image=SDL_CreateThread(Loading_image,"Journal Loading",NULL);
  Load(_name);
  SDL_LockMutex(loading_image_mutex);
  Loading_image_quit=true;
  SDL_UnlockMutex(loading_image_mutex);
  int thread_return_value=0;
  SDL_WaitThread(_loading_image,&thread_return_value);
- SDL_Flip(static_screen);
+ Flip_Buffers(_screen);
  progress=_progress;
  Start(_screen);
- _loading_image=SDL_CreateThread(Loading_image,NULL);
+ _loading_image=SDL_CreateThread(Loading_image,"Journal Clear Loading",NULL);
  Clear();
  SDL_LockMutex(loading_image_mutex);
  Loading_image_quit=true;
  SDL_UnlockMutex(loading_image_mutex);
  thread_return_value=0;
  SDL_WaitThread(_loading_image,&thread_return_value);
- SDL_Flip(static_screen);
+ Flip_Buffers(_screen);
 }
 
-void Journal::Start(std::bitset<NUMBER_OF_MAX_KEYS>* _progress,SDL_Surface* _screen)
+void Journal::Start(std::bitset<NUMBER_OF_MAX_KEYS> *_progress,Texture *_screen)
 {
  progress=_progress;
  Start(_screen);

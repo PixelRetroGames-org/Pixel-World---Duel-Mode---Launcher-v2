@@ -10,7 +10,7 @@
 #include <ctime>
 #include <cstdlib>
 
-SDL_Surface* screen;
+Texture *screen;
 
 Script_interpreter script_interpreter;
 
@@ -18,63 +18,86 @@ Shop_Screen shop_screen;
 
 Level level;
 
-Mix_Music* launcher_background_music=NULL;
+Mix_Music *launcher_background_music=NULL;
 
-int main( int argc, char* args[] )
+int main( int argc, char *args[] )
 {
  ///Random
  srand((unsigned int)(time(NULL)));
  ///Random
  if(SDL_Init(SDL_INIT_EVERYTHING)<0)
     {
-     FILE* log_file=fopen("err/logs.txt","w");
+     FILE *log_file=fopen("err/logs.txt","w");
      fprintf(log_file,"SDL_Init() failed : %s ",SDL_GetError());
      fclose(log_file);
+     char message[TEXT_LENGTH_MAX];
+     strcpy(message,"SDL_Init() failed : ");
+     strcat(message,SDL_GetError());
+     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"SDL failure",message,NULL);
      exit(-1);
     }
  if(TTF_Init()==-1)
     {
-     FILE* log_file=fopen("err/logs.txt","w");
+     FILE *log_file=fopen("err/logs.txt","w");
      fprintf(log_file,"TTF_Init() failed : %s ",TTF_GetError());
      fclose(log_file);
+     char message[TEXT_LENGTH_MAX];
+     strcpy(message,"TTF_Init() failed : ");
+     strcat(message,SDL_GetError());
+     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"SDL_TTF module failure",message,NULL);
      exit(-2);
     }
  MUSIC_MODULE_INIT=true;
  if(Mix_Init(MIX_INIT_MP3)&(MIX_INIT_MP3)!=MIX_INIT_MP3)
     {
      MUSIC_MODULE_INIT=false;
-     FILE* log_file=fopen("err/logs.txt","w");
+     FILE *log_file=fopen("err/logs.txt","w");
      fprintf(log_file,"Mix_Init() failed : %s ",Mix_GetError());
      fclose(log_file);
+     char message[TEXT_LENGTH_MAX];
+     strcpy(message,"Mix_Init() failed : ");
+     strcat(message,SDL_GetError());
+     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"SDL_mixer module failure",message,NULL);
     }
- SDL_WM_SetCaption("Pixel World",NULL);
- Set_icon("images/icon.bmp");
  Load_Settings();
- screen=SDL_SetVideoMode(RESOLUTION_X,RESOLUTION_Y,32,DISPLAY_MODE);
+ Open_Window_and_Renderer(RESOLUTION_W,RESOLUTION_H,DISPLAY_MODE);
+ screen=new Texture;
+ screen->w=RESOLUTION_W;
+ screen->h=RESOLUTION_H;
+ screen->image=NULL;
+ SCREEN=screen;
  if(screen==NULL)
     {
-     FILE* log_file=fopen("err/logs.txt","w");
-     fprintf(log_file,"SDL_SetVideoMode failed : %s ",SDL_GetError());
+     FILE *log_file=fopen("err/logs.txt","w");
+     fprintf(log_file,"Open_Window_and_Renderer failed : %s ",SDL_GetError());
      fclose(log_file);
+     char message[TEXT_LENGTH_MAX];
+     strcpy(message,"Open_Window_and_Renderer failed : ");
+     strcat(message,SDL_GetError());
+     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"SDL video module failure",message,NULL);
      exit(-1);
     }
  MUSIC_MODULE_INIT=true;
  if(Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096)==-1)
     {
      MUSIC_MODULE_INIT=false;
-     FILE* log_file=fopen("err/logs.txt","w");
+     FILE *log_file=fopen("err/logs.txt","w");
      fprintf(log_file,"Mix_OpenAudio failed : %s ",Mix_GetError());
      fclose(log_file);
+     char message[TEXT_LENGTH_MAX];
+     strcpy(message,"Mix_OpenAudio() failed : ");
+     strcat(message,SDL_GetError());
+     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"SDL_mixer module failure",message,NULL);
     }
- SDL_Flip(screen);
- LAUNCHER_BBACKGROUND.Update_size();
+ Flip_Buffers(screen);
+ LAUNCHER_BBACKGROUND.Load();
  LAUNCHER_BBACKGROUND.Load_Logo();
  static_screen=screen;
  #define SPLASH_SCREEN
  #ifdef SPLASH_SCREEN
  splash_screen_mutex=SDL_CreateMutex();
- SDL_Thread* splash_screen=NULL;
- splash_screen=SDL_CreateThread(Splash_Screen,NULL);
+ SDL_Thread *splash_screen=NULL;
+ splash_screen=SDL_CreateThread(Splash_Screen,"Splash Screen",NULL);
  #endif // SPLASH_SCREEN
  Menu main_menu,gamemode_menu,story_menu,duel_menu;
  Load_all_images();
@@ -102,7 +125,7 @@ int main( int argc, char* args[] )
  SDL_UnlockMutex(splash_screen_mutex);
  int thread_return_value=0;
  SDL_WaitThread(splash_screen,&thread_return_value);
- SDL_Flip(static_screen);
+ Flip_Buffers(screen);
  SDL_DestroyMutex(splash_screen_mutex);
  #endif // SPLASH_SCREEN
  int option=-1;
@@ -194,7 +217,7 @@ int main( int argc, char* args[] )
                         /*Run the game*/break;};
                 case 1:{Graphic_Settings(screen);
                         Save_Settings();
-                        LAUNCHER_BBACKGROUND.Update_size();
+                        LAUNCHER_BBACKGROUND.Load();
                         Clear_Journal();
                         Load_Journal();
                         main_menu.Load("menu/main_menu.pwm");

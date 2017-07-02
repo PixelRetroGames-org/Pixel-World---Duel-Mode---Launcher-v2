@@ -1,1 +1,239 @@
-"saves/gamemodes/Story Mode.pwsav" is missing
+Window 1 size changed to 1920x1080
+Window 1 minimized
+Window 1 lost keyboard focus
+Window 1 exposed
+Mouse left window 1
+Window 1 size changed to 1920x1080
+Window 1 moved to 3,26
+Window 1 restored
+Window 1 gained keyboard focus
+Mouse entered window 1
+Mouse left window 1
+Mouse entered window 1
+Window 1 exposed
+Window 1 moved to 0,0
+Window 1 resized to 1920x1080
+Window 1 size changed to 1920x1080
+Window 1 exposed
+Window 1 size changed to 1920x1080
+Window 1 minimized
+Window 1 lost keyboard focus
+Window 1 exposed
+Mouse left window 1
+Window 1 size changed to 1920x1080
+Window 1 moved to 3,26
+Window 1 restored
+Window 1 gained keyboard focus
+Window 1 size changed to 1920x1080
+Window 1 minimized
+Window 1 lost keyboard focus
+Window 1 exposed
+Mouse left window 1
+Window 1 size changed to 1920x1080
+Window 1 moved to 3,26
+Window 1 restored
+Window 1 gained keyboard focus
+Mouse entered window 1
+Mouse left window 1
+Mouse entered window 1
+Window 1 exposed
+Window 1 moved to 0,0
+Window 1 resized to 1920x1080
+Window 1 size changed to 1920x1080
+Window 1 exposed
+Window 1 size changed to 1920x1080
+Window 1 minimized
+Window 1 lost keyboard focus
+Window 1 exposed
+Mouse left window 1
+Window 1 size changed to 1920x1080
+Window 1 moved to 3,26
+Window 1 restored
+Window 1 gained keyboard focus
+Mouse entered window 1
+Mouse left window 1
+Mouse entered window 1
+Window 1 exposed
+Window 1 moved to 0,0
+Window 1 resized to 1920x1080
+Window 1 size changed to 1920x1080
+Window 1 exposed
+Window 1 moved to 3,26
+Window 1 size changed to 1920x1080
+Window 1 minimized
+Window 1 lost keyboard focus
+Window 1 exposed
+Mouse left window 1
+Window 1 size changed to 1920x1080
+Window 1 moved to 6,52
+Window 1 restored
+Window 1 gained keyboard focus
+Mouse entered window 1
+Mouse left window 1
+Mouse entered window 1
+Window 1 exposed
+Window 1 moved to 0,0
+Window 1 resized to 1920x1080
+Window 1 size changed to 1920x1080
+Window 1 exposed
+Window 1 moved to 6,52
+Window 1 size changed to 1920x1080
+Window 1 minimized
+Window 1 lost keyboard focus
+Window 1 exposed
+Mouse left window 1
+Window 1 size changed to 1920x1080
+Window 1 moved to 9,78
+Window 1 restored
+Window 1 gained keyboard focus
+Mouse entered window 1
+Mouse left window 1
+Mouse entered window 1
+Window 1 exposed
+Window 1 moved to 0,0
+Window 1 resized to 1920x1080
+Window 1 size changed to 1920x1080
+Window 1 exposed
+Window 1 moved to 9,78
+Window 1 size changed to 1920x1080
+Window 1 minimized
+Window 1 lost keyboard focus
+Window 1 exposed
+Mouse left window 1
+Window 1 size changed to 1920x1080
+Window 1 moved to 12,104
+Window 1 restored
+Window 1 gained keyboard focus
+Mouse entered window 1
+Mouse left window 1
+Mouse entered window 1
+Window 1 exposed
+Window 1 moved to 0,0
+Window 1 resized to 1920x1080
+Window 1 size changed to 1920x1080
+Window 1 exposed
+Window 1 moved to 12,104
+Window 1 size changed to 1920x1080
+Window 1 minimized
+Window 1 lost keyboard focus
+Window 1 exposed
+Mouse left window 1
+Window 1 size changed to 1920x1080
+Window 1 moved to 15,130
+Window 1 restored
+Window 1 gained keyboard focus
+Mouse entered window 1
+Mouse left window 1
+Mouse entered window 1
+Window 1 exposed
+Window 1 moved to 0,0
+Window 1 size changed to 1920x1080
+Window 1 resized to 1920x1080
+Window 1 exposed
+Window 1 size changed to 1920x1080
+Window 1 minimized
+Window 1 lost keyboard focus
+Window 1 size changed to 1920x1080
+Window 1 minimized
+Window 1 resized to 1920x1063
+Window 1 size changed to 1920x1063
+Window 1 exposed
+Window 1 lost keyboard focus
+Window 1 size changed to 1920x1080
+Window 1 minimized
+Window 1 lost keyboard focus
+Window 1 exposed
+Mouse left window 1
+Window 1 size changed to 1920x1080
+Window 1 moved to 3,26
+Window 1 restored
+Window 1 gained keyboard focus
+Mouse entered window 1
+Mouse left window 1
+Mouse entered window 1
+Window 1 exposed
+Window 1 moved to 0,0
+Window 1 resized to 1920x1080
+Window 1 size changed to 1920x1080
+Window 1 exposed
+Window 1 moved to 3,26
+Window 1 size changed to 1920x1080
+Window 1 minimized
+Window 1 lost keyboard focus
+Window 1 exposed
+Mouse left window 1
+Window 1 size changed to 1920x1080
+Window 1 moved to 6,52
+Window 1 restored
+Window 1 gained keyboard focus
+Mouse entered window 1
+Mouse left window 1
+Mouse entered window 1
+Window 1 exposed
+Window 1 moved to 0,0
+Window 1 resized to 1920x1080
+Window 1 size changed to 1920x1080
+Window 1 exposed
+Window 1 moved to 6,52
+Window 1 size changed to 1920x1080
+Window 1 minimized
+Window 1 lost keyboard focus
+Window 1 exposed
+Mouse left window 1
+Window 1 size changed to 1920x1080
+Window 1 moved to 9,78
+Window 1 restored
+Window 1 gained keyboard focus
+Mouse entered window 1
+Mouse left window 1
+Mouse entered window 1
+Window 1 exposed
+Window 1 moved to 0,0
+Window 1 resized to 1920x1080
+Window 1 size changed to 1920x1080
+Window 1 exposed
+Window 1 moved to 9,78
+Window 1 size changed to 1920x1080
+Window 1 minimized
+Window 1 lost keyboard focus
+Window 1 exposed
+Mouse left window 1
+Window 1 size changed to 1920x1080
+Window 1 moved to 12,104
+Window 1 restored
+Window 1 gained keyboard focus
+Mouse entered window 1
+Mouse left window 1
+Mouse entered window 1
+Window 1 exposed
+Window 1 moved to 0,0
+Window 1 resized to 1920x1080
+Window 1 size changed to 1920x1080
+Window 1 exposed
+Window 1 moved to 12,104
+Window 1 size changed to 1920x1080
+Window 1 minimized
+Window 1 lost keyboard focus
+Window 1 exposed
+Mouse left window 1
+Window 1 size changed to 1920x1080
+Window 1 moved to 15,130
+Window 1 restored
+Window 1 gained keyboard focus
+Mouse entered window 1
+Mouse left window 1
+Window 1 exposed
+Window 1 moved to 0,0
+Window 1 resized to 1920x1080
+Window 1 size changed to 1920x1080
+Window 1 exposed
+Mouse entered window 1
+Window 1 size changed to 1920x1080
+Window 1 minimized
+Window 1 lost keyboard focus
+Window 1 exposed
+Mouse left window 1
+Window 1 size changed to 1920x1080
+Window 1 moved to 3,26
+Window 1 restored
+Window 1 gained keyboard focus

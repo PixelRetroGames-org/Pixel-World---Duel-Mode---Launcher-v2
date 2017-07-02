@@ -33,7 +33,14 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add directory="E:/SDL/SDL2-2.0.4/i686-w64-mingw32/include/SDL2" />
+			<Add directory="../../SDL/SDL2-2.0.4/SDL2_ttf-2.0.14/i686-w64-mingw32/include" />
 		</Compiler>
+		<Linker>
+			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_mixer -lSDL2_image" />
+			<Add directory="E:/SDL/SDL2-2.0.4/i686-w64-mingw32/lib" />
+			<Add directory="../../SDL/SDL2-2.0.4/SDL2_ttf-2.0.14/i686-w64-mingw32/include" />
+		</Linker>
 		<Unit filename="big_background.cpp" />
 		<Unit filename="big_background.h" />
 		<Unit filename="buff.cpp" />
@@ -88,6 +95,8 @@
 		<Unit filename="shop_page.h" />
 		<Unit filename="spell.cpp" />
 		<Unit filename="spell.h" />
+		<Unit filename="texture.cpp" />
+		<Unit filename="texture.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

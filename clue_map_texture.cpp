@@ -14,7 +14,7 @@ void Clue_map_texture::Load()
  itoa(id,aux);
  strcat(filename,aux);
  strcat(filename,".pwcmt");
- FILE* where=fopen(filename,"r");
+ FILE *where=fopen(filename,"r");
  if(where==NULL)
     return;
  int interactive_map_texture_id;
@@ -57,17 +57,17 @@ void Clue_map_texture::Set_id(int _id)
  id=_id;
 }
 
-Interactive_map_texture* Clue_map_texture::Get_interactive_map_texture()
+Interactive_map_texture *Clue_map_texture::Get_interactive_map_texture()
 {
  return &interactive_map_texture;
 }
 
-std::bitset<NUMBER_OF_MAX_KEYS>* Clue_map_texture::Get_keys()
+std::bitset<NUMBER_OF_MAX_KEYS> *Clue_map_texture::Get_keys()
 {
  return &keys_to_give;
 }
 
-std::bitset<NUMBER_OF_MAX_KEYS>* Clue_map_texture::Get_keys_to_take()
+std::bitset<NUMBER_OF_MAX_KEYS> *Clue_map_texture::Get_keys_to_take()
 {
  return &keys_to_take;
 }
@@ -82,14 +82,14 @@ int Clue_map_texture::Get_type()
  return type;
 }
 
-char* Clue_map_texture::Get_script_name()
+char *Clue_map_texture::Get_script_name()
 {
  if(type==0)
     return NULL;
  return script_name;
 }
 
-void Clue_map_texture::Start_action(SDL_Surface* _screen)
+void Clue_map_texture::Start_action(Texture *_screen)
 {
  if(type==0)
     return;

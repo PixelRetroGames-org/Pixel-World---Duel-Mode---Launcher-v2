@@ -4,7 +4,7 @@
 
 
 <color 125 0 7 >Timy: </color > Hey! Who are you and what are you doing in my castle?</line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -14,7 +14,7 @@
 
 <color 125 0 7 >Bandit: </color > How did you get here? We were here first, it's our loot! </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -24,7 +24,7 @@
 
 <color 125 0 7 >Timy: </color > You have 5 seconds to leave...</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -34,7 +34,7 @@
 
 <color 125 0 7 >Bandit: </color > Or what, old man? </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -44,7 +44,7 @@
 
 <color 125 0 7 >Timy: </color > You die, punk!</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -53,6 +53,6 @@
 
 Use <color 123 234 50 >1,2,3,4/u,i,o,p</color > to cast <color 24 100 200>spells</color >, <color 123 234 50 >TILDE/j</color > for <color 24 100 200>health potions</color > and <color 123 234 50 >TAB/n</color > for <color 24 100 200>mana potions</color >.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

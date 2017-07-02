@@ -23,17 +23,17 @@ void Puzzle::Clear(bool _delete)
      answers[i][0]=NULL;
  if(_delete)
     {
-     SDL_FreeSurface(title_image);
-     SDL_FreeSurface(text_image);
-     SDL_FreeSurface(text_typed_image);
-     SDL_FreeSurface(answer_image);
-     SDL_FreeSurface(background_image);
+     Destroy_Texture(title_image);
+     Destroy_Texture(text_image);
+     Destroy_Texture(text_typed_image);
+     Destroy_Texture(answer_image);
+     Destroy_Texture(background_image);
     }
  title_image=text_image=text_typed_image=answer_image=NULL;
  background_image=NULL;
 }
 
-void Puzzle::Set_name(char* _name)
+void Puzzle::Set_name(char *_name)
 {
  strcpy(name,_name);
 }
@@ -45,7 +45,7 @@ void Puzzle::Load()
  strcpy(path,"puzzles/");
  strcat(path,name);
  strcat(path,".pwp");
- FILE* where=fopen(path,"r");
+ FILE *where=fopen(path,"r");
  if(where==NULL)
     return;
  fscanf(where,"%d ",&type);
@@ -73,12 +73,12 @@ void Puzzle::Load()
     aux[strlen(aux)-1]=NULL;
  strcpy(path,"puzzles/images/");
  strcat(path,aux);
- strcat(path,".bmp");
- background_image=load_image(path);
+ strcat(path,".png");
+ background_image=Load_Texture(path);
  fclose(where);
 }
 
-bool Puzzle::Start(SDL_Surface* _screen)
+bool Puzzle::Start(Texture *_screen)
 {
  switch(type)
         {
@@ -95,128 +95,106 @@ bool Puzzle::Validate_Riddle()
  return false;
 }
 
-void Puzzle::Print_Verdict(bool verdict,SDL_Surface* _screen)
+void Puzzle::Print_Verdict(bool verdict,Texture *_screen)
 {
- TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",50);
+ TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",50);
  SDL_Color right_color={0,205,0},wrong_color={207,0,0};
- SDL_Surface* right_message=TTF_RenderText_Solid(font,"Right!",right_color);
- SDL_Surface* wrong_message=TTF_RenderText_Solid(font,"Wrong!",wrong_color);
+ Texture *right_message=Create_TTF_Texture(font,"Right!",right_color);
+ Texture *wrong_message=Create_TTF_Texture(font,"Wrong!",wrong_color);
  TTF_CloseFont(font);
- apply_surface(0,0,background_image,_screen);
+ Apply_Texture(0,0,background_image,_screen);
  if(verdict==false)
-    apply_surface((RESOLUTION_X-wrong_message->w)/2,300,wrong_message,_screen);
+    Apply_Texture((RESOLUTION_W-wrong_message->w)/2,300,wrong_message,_screen);
  else
-    apply_surface((RESOLUTION_X-right_message->w)/2,300,right_message,_screen);
- SDL_Flip(_screen);
+    Apply_Texture((RESOLUTION_W-right_message->w)/2,300,right_message,_screen);
+ Flip_Buffers(_screen);
  SDL_Delay(300);
- SDL_FreeSurface(right_message);
- SDL_FreeSurface(wrong_message);
+ Destroy_Texture(right_message);
+ Destroy_Texture(wrong_message);
 }
 
-const int PUZZLE_TEXT_LENGTH_MAX=20,BACKSPACE_POS=2*('z'-'a')+2,COOLDOWN_TIME=100;
+const int PUZZLE_TEXT_LENGTH_MAX=45;
 
-int Get_Key(char ch)
-{
- if(ch>='a' && ch<='z')
-    return ch-'a'+1;
- if(ch>='A' && ch<='Z')
-    return ch-'A'+'z'-'a'+2;
- if(ch==' ')
-    return 2*('z'-'a')+1;
- return 0;
-}
-
-bool Puzzle::Start_Riddle(SDL_Surface* _screen)
+bool Puzzle::Start_Riddle(Texture *_screen)
 {
  bool quit=false,text_typed_modified=false;
  SDL_Event event;
  SDL_PollEvent(&event);
  char ch[2]={NULL,NULL};
- TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",30);
+ TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
  SDL_Color answer_color={102,153,0},title_color={169,57,255},text_color={243,238,120};
- SDL_Surface* text_typed_background_image=make_it_transparent("images/puzzle/riddle_type_background.bmp");
- title_image=TTF_RenderText_Solid(font,title,title_color);
- text_image=make_it_transparent("images/game/empty.bmp");
+ Texture *text_typed_background_image=Load_Transparent_Texture("images/puzzle/riddle_type_background.png");
+ title_image=Create_TTF_Texture(font,title,title_color);
+ text_image=Create_Transparent_Texture(RESOLUTION_W,RESOLUTION_H);
  Script_interpreter script_interpreter;
  script_interpreter.Start(text_image,text,0,0);
- //text_image=TTF_RenderText_Solid(font,text,text_color);
- apply_surface(0,0,background_image,_screen);
- apply_surface(0,0,text_image,_screen);
- apply_surface((RESOLUTION_X-text_typed_background_image->w)/2,title_image->h+10+(RESOLUTION_Y-text_typed_background_image->h)/2,text_typed_background_image,_screen);
- apply_surface((RESOLUTION_X-title_image->w)/2,0,title_image,_screen);
- SDL_Flip(_screen);
- SDL_EnableUNICODE(SDL_ENABLE);
- SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL);
- int length=1;
- int keys_cooldown[2*('z'-'a')+3];
- for(int i=0;i<2*('z'-'a')+3;i++)
-     keys_cooldown[i]=0;
+ Apply_Texture(0,0,background_image,_screen);
+ Apply_Texture(0,0,text_image,_screen);
+ Apply_Texture((RESOLUTION_W-text_typed_background_image->w)/2,title_image->h+10+(RESOLUTION_H-text_typed_background_image->h)/2,text_typed_background_image,_screen);
+ Apply_Texture((RESOLUTION_W-title_image->w)/2,0,title_image,_screen);
+ Flip_Buffers(_screen);
+ SDL_StartTextInput();
+ int length=0;
+ bool full=false;
  while(!quit)
        {
-        if(event.key.type==SDL_KEYDOWN)
+        if(SDL_PollEvent(&event)!=0)
            {
-            text_typed_modified=false;
-            if(event.key.keysym.sym==SDLK_ESCAPE)
-               quit=true;
-            if(event.key.keysym.sym==SDLK_BACKSPACE && length!=0 && keys_cooldown[BACKSPACE_POS]==0)
-               text_typed[length-1]=NULL,text_typed_modified=true,length--,keys_cooldown[BACKSPACE_POS]=COOLDOWN_TIME;
-            if(((event.key.keysym.unicode>=(Uint16)'a' && event.key.keysym.unicode<=(Uint16)'z') ||
-               (event.key.keysym.unicode>=(Uint16)'A' && event.key.keysym.unicode<=(Uint16)'Z') ||
-               (event.key.keysym.unicode==(Uint16)' ')) && length<PUZZLE_TEXT_LENGTH_MAX && keys_cooldown[Get_Key((char)event.key.keysym.unicode)]==0)
+            if(event.key.type==SDL_KEYDOWN)
                {
-                ch[0]=(char)event.key.keysym.unicode;
-                ch[1]=NULL;
-                strcat(text_typed,ch);
-                text_typed_modified=true;
-                length++;
-                keys_cooldown[Get_Key((char)event.key.keysym.unicode)]=COOLDOWN_TIME;
-               }
-            if(event.key.keysym.sym==SDLK_RETURN)
-               {
-                if(Validate_Riddle())
+                text_typed_modified=false;
+                if(event.key.keysym.scancode==SDL_SCANCODE_ESCAPE)
+                   quit=true;
+                if(event.key.keysym.scancode==SDL_SCANCODE_BACKSPACE && length!=0)
+                   text_typed[length-1]=NULL,text_typed_modified=true,length--;
+                if(event.key.keysym.scancode==SDL_SCANCODE_RETURN)
                    {
-                    Print_Verdict(true,_screen);
+                    if(Validate_Riddle())
+                       {
+                        Print_Verdict(true,_screen);
+                        TTF_CloseFont(font);
+                        Destroy_Texture(text_typed_background_image);
+                        SDL_StopTextInput();
+                        return true;
+                       }
+                    Print_Verdict(false,_screen);
                     TTF_CloseFont(font);
-                    SDL_FreeSurface(text_typed_background_image);
-                    SDL_EnableUNICODE(SDL_DISABLE);
-                    SDL_EnableKeyRepeat(0,0);
-                    return true;
+                    Destroy_Texture(text_typed_background_image);
+                    SDL_StopTextInput();
+                    return false;
                    }
-                Print_Verdict(false,_screen);
-                TTF_CloseFont(font);
-                SDL_FreeSurface(text_typed_background_image);
-                SDL_EnableUNICODE(SDL_DISABLE);
-                SDL_EnableKeyRepeat(0,0);
-                return false;
                }
-            if(text_typed_modified)
+            else
                {
-                SDL_FreeSurface(text_typed_image);
-                text_typed_image=NULL;
-                apply_surface((RESOLUTION_X-text_typed_background_image->w)/2,title_image->h+10+(RESOLUTION_Y-text_typed_background_image->h)/2,text_typed_background_image,_screen);
-                if(length!=0)
+                if(event.type==SDL_TEXTINPUT)
                    {
-                    text_typed_image=TTF_RenderText_Solid(font,text_typed,answer_color);
-                    apply_surface((RESOLUTION_X-text_typed_image->w)/2,title_image->h+12+(RESOLUTION_Y-text_typed_image->h)/2,text_typed_image,_screen);
+                    if(length<PUZZLE_TEXT_LENGTH_MAX && !full)
+                        {
+                         strcat(text_typed,event.text.text);
+                         text_typed_modified=true;
+                         int n=strlen(event.text.text);
+                         length+=n;
+                        }
                    }
-                SDL_Flip(_screen);
                }
-            SDL_Delay(50);
            }
-        for(int i=0;i<2*('z'-'a')+3;i++)
-            {
-             keys_cooldown[i]-=10;
-             if(i==BACKSPACE_POS)
-                keys_cooldown[i]-=20;
-             if(keys_cooldown[i]<=0)
-                keys_cooldown[i]=0;
-            }
-        SDL_PollEvent(&event);
+        if(text_typed_modified)
+           {
+            Destroy_Texture(text_typed_image);
+            text_typed_image=NULL;
+            Apply_Texture((RESOLUTION_W-text_typed_background_image->w)/2,title_image->h+10+(RESOLUTION_H-text_typed_background_image->h)/2,text_typed_background_image,_screen);
+            if(length!=0)
+               {
+                text_typed_image=Create_TTF_Texture(font,text_typed,answer_color);
+                full=(text_typed_image->w>=text_typed_background_image->w-40);
+                Apply_Texture((RESOLUTION_W-text_typed_image->w)/2,title_image->h+12+(RESOLUTION_H-text_typed_image->h)/2,text_typed_image,_screen);
+               }
+            Flip_Buffers(_screen);
+           }
        }
  TTF_CloseFont(font);
- SDL_FreeSurface(text_typed_background_image);
- SDL_EnableUNICODE(SDL_DISABLE);
- SDL_EnableKeyRepeat(0,0);
+ Destroy_Texture(text_typed_background_image);
+ SDL_StopTextInput();
  return false;
 }
 

@@ -16,7 +16,7 @@ void Buff::Clear(bool _delete)
 {
  if(_delete && image!=NULL)
     {
-     SDL_FreeSurface(image);
+     Destroy_Texture(image);
      image=NULL;
     }
  id=type=duration=0;
@@ -32,7 +32,7 @@ void Buff::Load()
  strcpy(filename,"buffs/ids/");
  strcat(filename,aux);
  strcat(filename,".pwb");
- FILE* where=fopen(filename,"r");
+ FILE *where=fopen(filename,"r");
  if(where==NULL)
     return;
  fscanf(where,"%d %d %d %d ",&type,&duration,&printable,&self);
@@ -70,8 +70,8 @@ void Buff::Load()
         }
  strcpy(filename,"buffs/images/");
  strcat(filename,name);
- strcat(filename,".bmp");
- image=make_it_transparent(filename);
+ strcat(filename,".png");
+ image=Load_Transparent_Texture(filename);
  fclose(where);
 }
 
@@ -91,7 +91,7 @@ void Buff::Set_type(int _type)
  type=_type;
 }
 
-void Buff::Set_name(char* _name)
+void Buff::Set_name(char *_name)
 {
  strcpy(name,_name);
 }
@@ -127,7 +127,7 @@ int Buff::Get_type()
  return type;
 }
 
-char* Buff::Get_name()
+char *Buff::Get_name()
 {
  return name;
 }
@@ -187,7 +187,7 @@ int Buff::Get_life_steal()
  return life_steal;
 }
 
-char* Buff::Get_skin_name()
+char *Buff::Get_skin_name()
 {
  return skin_name;
 }
@@ -231,9 +231,9 @@ void Buff::Reset()
     remaining_duration--;
 }
 
-void Buff::Print_image(int x,int y,SDL_Surface* _screen)
+void Buff::Print_image(int x,int y,Texture *_screen)
 {
- apply_surface(x,y,image,_screen);
+ Apply_Texture(x,y,image,_screen);
 }
 
 //LOAD_ALL_BUFFS
@@ -243,7 +243,7 @@ Buff All_BUFFS[NUMBER_OF_ALL_BUFFS];
 
 void Load_all_buffs()
 {
- FILE* where=fopen("buffs/all_buffs.pwab","r");
+ FILE *where=fopen("buffs/all_buffs.pwab","r");
  fscanf(where,"%d ",&NUMBER_OF_BUFFS);
  for(int i=0;i<NUMBER_OF_BUFFS;i++)
      {

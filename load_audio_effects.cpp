@@ -1,10 +1,10 @@
 #include "load_audio_effects.h"
 
-Mix_Chunk* DUEL_MODE_hit[3]={NULL,NULL,NULL};
-Mix_Chunk* DUEL_MODE_START=NULL;
+Mix_Chunk *DUEL_MODE_hit[3]={NULL,NULL,NULL};
+Mix_Chunk *DUEL_MODE_START=NULL;
 bool DUEL_MODE_EFFECTS_LOADED;
 
-Mix_Chunk* CLICK=NULL;
+Mix_Chunk *CLICK=NULL;
 bool CLICK_LOADED;
 
 void Load_Duel_Mode_effects()

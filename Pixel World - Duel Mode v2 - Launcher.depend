@@ -1,18 +1,18 @@
 # depslib dependency file v1.0
-1492448103 source:e:\programming\pixel world - duel mode v2 - launcher\library.cpp
+1498917954 source:e:\programming\pixel world - duel mode v2 - launcher\library.cpp
 	"library.h"
-	"SDL/SDL.h"
-	"SDL/SDL_ttf.h"
-	"SDL/SDL_mixer.h"
 
-1497938837 e:\programming\pixel world - duel mode v2 - launcher\library.h
-	"SDL/SDL.h"
-	"SDL/SDL_ttf.h"
-	"SDL/SDL_mixer.h"
+1498894203 e:\programming\pixel world - duel mode v2 - launcher\library.h
+	<SDL.h>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+	<SDL_image.h>
+	<cstdio>
 	<cstring>
 	<string>
+	<cstdlib>
 
-1497784036 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
+1498919844 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
 	"menu.h"
 	"settings.h"
 	"script_interpreter.h"
@@ -24,84 +24,77 @@
 	<ctime>
 	<cstdlib>
 
-1497784036 e:\programming\pixel world - duel mode v2 - launcher\menu.h
-	"SDL/SDL.h"
-	"SDL/SDL_ttf.h"
-	"SDL/SDL_mixer.h"
+1497952685 e:\programming\pixel world - duel mode v2 - launcher\menu.h
 	"library.h"
+	"texture.h"
 	"load_images.h"
 	"load_audio_effects.h"
 	"settings.h"
 	<cstring>
 
-1492448103 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
+1498915217 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
 	"menu.h"
 
-1497784036 e:\programming\pixel world - duel mode v2 - launcher\load_images.h
-	"SDL/SDL.h"
-	"SDL/SDL_ttf.h"
-	"SDL/SDL_mixer.h"
-	"SDL/SDL_thread.h"
+1497955087 e:\programming\pixel world - duel mode v2 - launcher\load_images.h
 	"library.h"
+	"texture.h"
 	"big_background.h"
 	"settings.h"
 	"darkness.h"
 
-1494151348 source:e:\programming\pixel world - duel mode v2 - launcher\load_images.cpp
+1498921066 source:e:\programming\pixel world - duel mode v2 - launcher\load_images.cpp
 	"load_images.h"
 
-1497784034 e:\programming\pixel world - duel mode v2 - launcher\big_background.h
+1497954846 e:\programming\pixel world - duel mode v2 - launcher\big_background.h
 	"library.h"
+	"texture.h"
 
-1497784034 source:e:\programming\pixel world - duel mode v2 - launcher\big_background.cpp
+1498915217 source:e:\programming\pixel world - duel mode v2 - launcher\big_background.cpp
 	"big_background.h"
 	"settings.h"
 
-1497784037 e:\programming\pixel world - duel mode v2 - launcher\settings.h
+1498915216 e:\programming\pixel world - duel mode v2 - launcher\settings.h
 	"library.h"
+	"texture.h"
 	"load_images.h"
 	"errors.h"
 	<cstdio>
 
-1494151781 source:e:\programming\pixel world - duel mode v2 - launcher\settings.cpp
+1498916680 source:e:\programming\pixel world - duel mode v2 - launcher\settings.cpp
 	"settings.h"
 
-1497784037 e:\programming\pixel world - duel mode v2 - launcher\script_interpreter.h
+1497948090 e:\programming\pixel world - duel mode v2 - launcher\script_interpreter.h
 	"library.h"
+	"texture.h"
 	"load_images.h"
 	"settings.h"
 	<algorithm>
 	<stack>
 	<cstring>
 
-1492448103 source:e:\programming\pixel world - duel mode v2 - launcher\script_interpreter.cpp
+1498915217 source:e:\programming\pixel world - duel mode v2 - launcher\script_interpreter.cpp
 	"script_interpreter.h"
 
-1492448103 source:e:\programming\pixel world - duel mode v2 - launcher\item.cpp
+1498854435 source:e:\programming\pixel world - duel mode v2 - launcher\item.cpp
 	"item.h"
 	<cstring>
 
-1497784035 e:\programming\pixel world - duel mode v2 - launcher\item.h
+1497952473 e:\programming\pixel world - duel mode v2 - launcher\item.h
 	"load_images.h"
 	"library.h"
+	"texture.h"
 	"buff.h"
-	"SDL/SDL.h"
-	"SDL/SDL_ttf.h"
-	"SDL/SDL_image.h"
 	<cstring>
 	<cstdio>
 
-1497784037 e:\programming\pixel world - duel mode v2 - launcher\shop.h
+1497948667 e:\programming\pixel world - duel mode v2 - launcher\shop.h
 	"load_images.h"
 	"shop_page.h"
 	"settings.h"
 	<vector>
 	<cstring>
 
-1497784037 e:\programming\pixel world - duel mode v2 - launcher\shop_page.h
-	"SDL/SDL.h"
-	"SDL/SDL_ttf.h"
-	"SDL/SDL_image.h"
+1497952685 e:\programming\pixel world - duel mode v2 - launcher\shop_page.h
 	<cstdio>
 	<vector>
 	<cstring>
@@ -109,9 +102,10 @@
 	"item.h"
 	"player.h"
 
-1497784036 e:\programming\pixel world - duel mode v2 - launcher\player.h
+1497946996 e:\programming\pixel world - duel mode v2 - launcher\player.h
 	"load_images.h"
 	"library.h"
+	"texture.h"
 	"item.h"
 	"spell.h"
 	<vector>
@@ -119,44 +113,46 @@
 	<bitset>
 	<cstring>
 
-1494153979 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
+1498907180 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
 	"player.h"
 
-1494151598 source:e:\programming\pixel world - duel mode v2 - launcher\shop.cpp
+1498915217 source:e:\programming\pixel world - duel mode v2 - launcher\shop.cpp
 	"shop.h"
 
-1492448103 source:e:\programming\pixel world - duel mode v2 - launcher\shop_page.cpp
+1498911446 source:e:\programming\pixel world - duel mode v2 - launcher\shop_page.cpp
 	"shop_page.h"
 
-1497784034 e:\programming\pixel world - duel mode v2 - launcher\buff.h
+1497940094 e:\programming\pixel world - duel mode v2 - launcher\buff.h
 	"library.h"
+	"texture.h"
 
-1497784034 source:e:\programming\pixel world - duel mode v2 - launcher\buff.cpp
+1498854435 source:e:\programming\pixel world - duel mode v2 - launcher\buff.cpp
 	"buff.h"
 	<cstring>
 
-1497784035 source:e:\programming\pixel world - duel mode v2 - launcher\darkness.cpp
+1498854435 source:e:\programming\pixel world - duel mode v2 - launcher\darkness.cpp
 	"darkness.h"
 
-1497784035 e:\programming\pixel world - duel mode v2 - launcher\darkness.h
+1497956406 e:\programming\pixel world - duel mode v2 - launcher\darkness.h
 	"library.h"
+	"texture.h"
 
-1497784035 source:e:\programming\pixel world - duel mode v2 - launcher\interactive_map_texture.cpp
+1497939721 source:e:\programming\pixel world - duel mode v2 - launcher\interactive_map_texture.cpp
 	"interactive_map_texture.h"
 
-1497784035 e:\programming\pixel world - duel mode v2 - launcher\interactive_map_texture.h
+1497939721 e:\programming\pixel world - duel mode v2 - launcher\interactive_map_texture.h
 	"library.h"
 	<vector>
 
-1497784037 e:\programming\pixel world - duel mode v2 - launcher\spell.h
+1497948893 e:\programming\pixel world - duel mode v2 - launcher\spell.h
 	"buff.h"
 	<vector>
 	<cstring>
 
-1497784036 source:e:\programming\pixel world - duel mode v2 - launcher\level.cpp
+1498994485 source:e:\programming\pixel world - duel mode v2 - launcher\level.cpp
 	"level.h"
 
-1497784036 e:\programming\pixel world - duel mode v2 - launcher\level.h
+1498993836 e:\programming\pixel world - duel mode v2 - launcher\level.h
 	"player.h"
 	"map.h"
 	"darkness.h"
@@ -171,9 +167,8 @@
 	"menu.h"
 	<map>
 	<ctime>
-	"SDL/SDL_thread.h"
 
-1497939032 e:\programming\pixel world - duel mode v2 - launcher\map.h
+1497942226 e:\programming\pixel world - duel mode v2 - launcher\map.h
 	"map_texture.h"
 	"interactive_map_texture.h"
 	"clue_map_texture.h"
@@ -182,24 +177,25 @@
 	<bitset>
 	<map>
 
-1497939032 e:\programming\pixel world - duel mode v2 - launcher\map_texture.h
+1497942584 e:\programming\pixel world - duel mode v2 - launcher\map_texture.h
 	"library.h"
+	"texture.h"
 	"load_images.h"
 	"buff.h"
 
-1497784036 e:\programming\pixel world - duel mode v2 - launcher\load_audio_effects.h
+1497939721 e:\programming\pixel world - duel mode v2 - launcher\load_audio_effects.h
 	"library.h"
 
-1492448103 source:e:\programming\pixel world - duel mode v2 - launcher\load_audio_effects.cpp
+1497939721 source:e:\programming\pixel world - duel mode v2 - launcher\load_audio_effects.cpp
 	"load_audio_effects.h"
 
-1497784036 source:e:\programming\pixel world - duel mode v2 - launcher\map.cpp
+1498917210 source:e:\programming\pixel world - duel mode v2 - launcher\map.cpp
 	"map.h"
 
-1494151448 source:e:\programming\pixel world - duel mode v2 - launcher\map_texture.cpp
+1498854435 source:e:\programming\pixel world - duel mode v2 - launcher\map_texture.cpp
 	"map_texture.h"
 
-1494153149 source:e:\programming\pixel world - duel mode v2 - launcher\spell.cpp
+1498854435 source:e:\programming\pixel world - duel mode v2 - launcher\spell.cpp
 	"spell.h"
 
 1479807189 source:c:\users\elev\desktop\pixel world - duel mode v2 - launcher\big_background.cpp
@@ -400,19 +396,21 @@
 	"spell.h"
 	<cstring>
 
-1497784036 e:\programming\pixel world - duel mode v2 - launcher\non_playable_character.h
+1497953866 e:\programming\pixel world - duel mode v2 - launcher\non_playable_character.h
 	"library.h"
+	"texture.h"
 	<bitset>
 	<vector>
 
-1494151503 source:e:\programming\pixel world - duel mode v2 - launcher\non_playable_character.cpp
+1498854435 source:e:\programming\pixel world - duel mode v2 - launcher\non_playable_character.cpp
 	"non_playable_character.h"
 
-1492448103 source:e:\programming\pixel world - duel mode v2 - launcher\puzzle.cpp
+1498915217 source:e:\programming\pixel world - duel mode v2 - launcher\puzzle.cpp
 	"puzzle.h"
 
-1497784036 e:\programming\pixel world - duel mode v2 - launcher\puzzle.h
+1498914453 e:\programming\pixel world - duel mode v2 - launcher\puzzle.h
 	"library.h"
+	"texture.h"
 	"settings.h"
 	"script_interpreter.h"
 	<bitset>
@@ -666,41 +664,733 @@
 	"spell.h"
 	<cstring>
 
-1497784035 source:e:\programming\pixel world - duel mode v2 - launcher\clue_map_texture.cpp
+1497940152 source:e:\programming\pixel world - duel mode v2 - launcher\clue_map_texture.cpp
 	"clue_map_texture.h"
 	"script_interpreter.h"
 
-1497784035 e:\programming\pixel world - duel mode v2 - launcher\clue_map_texture.h
+1497940132 e:\programming\pixel world - duel mode v2 - launcher\clue_map_texture.h
 	"library.h"
+	"texture.h"
 	"interactive_map_texture.h"
 	<bitset>
 
-1492514311 source:e:\programming\pixel world - duel mode v2 - launcher\journal.cpp
+1498915217 source:e:\programming\pixel world - duel mode v2 - launcher\journal.cpp
 	"journal.h"
 
-1497784035 e:\programming\pixel world - duel mode v2 - launcher\journal.h
+1497941325 e:\programming\pixel world - duel mode v2 - launcher\journal.h
 	"library.h"
+	"texture.h"
 	"journal_entry.h"
 	"settings.h"
 	"load_audio_effects.h"
 	"load_images.h"
 	<vector>
 
-1497784036 e:\programming\pixel world - duel mode v2 - launcher\journal_entry.h
+1497941405 e:\programming\pixel world - duel mode v2 - launcher\journal_entry.h
 	"library.h"
+	"texture.h"
 	"script_interpreter.h"
 	<bitset>
 
-1492513529 source:e:\programming\pixel world - duel mode v2 - launcher\journal_entry.cpp
+1498915216 source:e:\programming\pixel world - duel mode v2 - launcher\journal_entry.cpp
 	"journal_entry.h"
 
-1497784035 e:\programming\pixel world - duel mode v2 - launcher\inventory.h
+1497940380 e:\programming\pixel world - duel mode v2 - launcher\inventory.h
 	"player.h"
 	"shop.h"
 	"load_images.h"
 
-1492448103 source:e:\programming\pixel world - duel mode v2 - launcher\inventory.cpp
+1498915217 source:e:\programming\pixel world - duel mode v2 - launcher\inventory.cpp
 	"inventory.h"
 
 1490818292 source:e:\programming\pixel world - duel mode v2 - launcher\icon.rc
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl.h
+	"SDL_main.h"
+	"SDL_stdinc.h"
+	"SDL_assert.h"
+	"SDL_atomic.h"
+	"SDL_audio.h"
+	"SDL_clipboard.h"
+	"SDL_cpuinfo.h"
+	"SDL_endian.h"
+	"SDL_error.h"
+	"SDL_events.h"
+	"SDL_filesystem.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_haptic.h"
+	"SDL_hints.h"
+	"SDL_loadso.h"
+	"SDL_log.h"
+	"SDL_messagebox.h"
+	"SDL_mutex.h"
+	"SDL_power.h"
+	"SDL_render.h"
+	"SDL_rwops.h"
+	"SDL_system.h"
+	"SDL_thread.h"
+	"SDL_timer.h"
+	"SDL_version.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_main.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_stdinc.h
+	"SDL_config.h"
+	<sys/types.h>
+	<stdio.h>
+	<stdlib.h>
+	<stddef.h>
+	<stdarg.h>
+	<stdlib.h>
+	<malloc.h>
+	<stddef.h>
+	<stdarg.h>
+	<memory.h>
+	<string.h>
+	<strings.h>
+	<inttypes.h>
+	<stdint.h>
+	<ctype.h>
+	<math.h>
+	<float.h>
+	<iconv.h>
+	<sal.h>
+	"begin_code.h"
+	<alloca.h>
+	<malloc.h>
+	<malloc.h>
+	<malloc.h>
+	<stdlib.h>
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_config.h
+	"SDL_platform.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_platform.h
+	"AvailabilityMacros.h"
+	"TargetConditionals.h"
+	<winapifamily.h>
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\begin_code.h
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\close_code.h
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_assert.h
+	"SDL_config.h"
+	"begin_code.h"
+	<signal.h>
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_atomic.h
+	"SDL_stdinc.h"
+	"SDL_platform.h"
+	"begin_code.h"
+	<mbarrier.h>
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_audio.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_endian.h"
+	"SDL_mutex.h"
+	"SDL_thread.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_error.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_endian.h
+	"SDL_stdinc.h"
+	<endian.h>
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_mutex.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_thread.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_atomic.h"
+	"SDL_mutex.h"
+	"begin_code.h"
+	<process.h>
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_rwops.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_clipboard.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_cpuinfo.h
+	"SDL_stdinc.h"
+	<intrin.h>
+	<intrin.h>
+	<altivec.h>
+	<mmintrin.h>
+	<mm3dnow.h>
+	<xmmintrin.h>
+	<emmintrin.h>
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_events.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_keyboard.h"
+	"SDL_mouse.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_quit.h"
+	"SDL_gesture.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_video.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_surface.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_pixels.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_rect.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_pixels.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_surface.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_blendmode.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_blendmode.h
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_keyboard.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_keycode.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_keycode.h
+	"SDL_stdinc.h"
+	"SDL_scancode.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_scancode.h
+	"SDL_stdinc.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_mouse.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_joystick.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_gamecontroller.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_rwops.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_quit.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_gesture.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_touch.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_filesystem.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_haptic.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_hints.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_loadso.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_log.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_messagebox.h
+	"SDL_stdinc.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_power.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_render.h
+	"SDL_stdinc.h"
+	"SDL_rect.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_system.h
+	"SDL_stdinc.h"
+	"SDL_keyboard.h"
+	"SDL_render.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_timer.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_version.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1454366533 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_ttf.h
+	"SDL.h"
+	"begin_code.h"
+	"close_code.h"
+
+1498206709 e:\programming\pixel world - duel mode v2 - launcher\texture.h
+	"library.h"
+
+1451805391 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_mixer.h
+	"SDL_stdinc.h"
+	"SDL_rwops.h"
+	"SDL_audio.h"
+	"SDL_endian.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451803973 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_image.h
+	"SDL.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
+1454366533 e:\sdl\sdl2-2.0.4\sdl2_ttf-2.0.14\i686-w64-mingw32\include\sdl2\sdl_ttf.h
+	"SDL.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl.h
+	"SDL_main.h"
+	"SDL_stdinc.h"
+	"SDL_assert.h"
+	"SDL_atomic.h"
+	"SDL_audio.h"
+	"SDL_clipboard.h"
+	"SDL_cpuinfo.h"
+	"SDL_endian.h"
+	"SDL_error.h"
+	"SDL_events.h"
+	"SDL_filesystem.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_haptic.h"
+	"SDL_hints.h"
+	"SDL_loadso.h"
+	"SDL_log.h"
+	"SDL_messagebox.h"
+	"SDL_mutex.h"
+	"SDL_power.h"
+	"SDL_render.h"
+	"SDL_rwops.h"
+	"SDL_system.h"
+	"SDL_thread.h"
+	"SDL_timer.h"
+	"SDL_version.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_main.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_stdinc.h
+	"SDL_config.h"
+	<sys/types.h>
+	<stdio.h>
+	<stdlib.h>
+	<stddef.h>
+	<stdarg.h>
+	<stdlib.h>
+	<malloc.h>
+	<stddef.h>
+	<stdarg.h>
+	<memory.h>
+	<string.h>
+	<strings.h>
+	<inttypes.h>
+	<stdint.h>
+	<ctype.h>
+	<math.h>
+	<float.h>
+	<iconv.h>
+	<sal.h>
+	"begin_code.h"
+	<alloca.h>
+	<malloc.h>
+	<malloc.h>
+	<malloc.h>
+	<stdlib.h>
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_config.h
+	"SDL_platform.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_platform.h
+	"AvailabilityMacros.h"
+	"TargetConditionals.h"
+	<winapifamily.h>
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\begin_code.h
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\close_code.h
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_assert.h
+	"SDL_config.h"
+	"begin_code.h"
+	<signal.h>
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_atomic.h
+	"SDL_stdinc.h"
+	"SDL_platform.h"
+	"begin_code.h"
+	<mbarrier.h>
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_audio.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_endian.h"
+	"SDL_mutex.h"
+	"SDL_thread.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_error.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_endian.h
+	"SDL_stdinc.h"
+	<endian.h>
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_mutex.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_thread.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_atomic.h"
+	"SDL_mutex.h"
+	"begin_code.h"
+	<process.h>
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_rwops.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_clipboard.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_cpuinfo.h
+	"SDL_stdinc.h"
+	<intrin.h>
+	<intrin.h>
+	<altivec.h>
+	<mmintrin.h>
+	<mm3dnow.h>
+	<xmmintrin.h>
+	<emmintrin.h>
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_events.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_keyboard.h"
+	"SDL_mouse.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_quit.h"
+	"SDL_gesture.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_video.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_surface.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_pixels.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_rect.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_pixels.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_surface.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_blendmode.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_blendmode.h
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_keyboard.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_keycode.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_keycode.h
+	"SDL_stdinc.h"
+	"SDL_scancode.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_scancode.h
+	"SDL_stdinc.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_mouse.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_joystick.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_gamecontroller.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_rwops.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_quit.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_gesture.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_touch.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_filesystem.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_haptic.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_hints.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_loadso.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_log.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_messagebox.h
+	"SDL_stdinc.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_power.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_render.h
+	"SDL_stdinc.h"
+	"SDL_rect.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_system.h
+	"SDL_stdinc.h"
+	"SDL_keyboard.h"
+	"SDL_render.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_timer.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451768293 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_version.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1454366533 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_ttf.h
+	"SDL.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451805391 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_mixer.h
+	"SDL_stdinc.h"
+	"SDL_rwops.h"
+	"SDL_audio.h"
+	"SDL_endian.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
+1451803973 e:\sdl\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_image.h
+	"SDL.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
+1498909417 source:e:\programming\pixel world - duel mode v2 - launcher\texture.cpp
+	"texture.h"
 

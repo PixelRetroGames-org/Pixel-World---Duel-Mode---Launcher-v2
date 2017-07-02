@@ -11,12 +11,12 @@ void Darkness::Clear()
 {
  if(image!=NULL)
     {
-     SDL_FreeSurface(image);
+     Destroy_Texture(image);
      image=NULL;
     }
 }
 
-void Darkness::Set_image_name(char* _image_name)
+void Darkness::Set_image_name(char *_image_name)
 {
  strcpy(image_name,_image_name);
 }
@@ -26,13 +26,18 @@ void Darkness::Load_image()
  char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"images/darkness/");
  strcat(path,image_name);
- strcat(path,".bmp");
- image=load_image(path);
+ strcat(path,".png");
+ image=Load_Texture(path);
 }
 
 void Darkness::Set_frameW(int _frameW)
 {
  frameW=_frameW;
+}
+
+void Darkness::Set_frameH(int _frameH)
+{
+ frameH=_frameH;
 }
 
 void Darkness::Set_current_frame(int _current_frame)
@@ -60,12 +65,12 @@ void Darkness::Update_image()
 {
  if(image==NULL)
     return;
- SDL_SetAlpha(image,SDL_SRCALPHA,alpha);
+ Set_Texture_Alpha(image,alpha);
 }
 
-void Darkness::Enshroud(SDL_Rect area,SDL_Surface* _screen)
+void Darkness::Enshroud(SDL_Rect area,Texture *_screen)
 {
- apply_surface(current_frame*frameW,0,area.x,area.y,area.w,area.h,image,_screen);
+ Apply_Texture((current_frame*frameW)%image->w,(current_frame*frameH)/image->h,area.x,area.y,area.w,area.h,image,_screen);
 }
 
 void Darkness::Set_aplha(int _alpha)

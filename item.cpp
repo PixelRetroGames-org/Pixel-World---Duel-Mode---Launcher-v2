@@ -6,7 +6,7 @@ SDL_Color NAME_COLOR={255,255,255};
 SDL_Color MONEY_COLOR={236,242,4};
 SDL_Color DESCRIPTION_COLOR={50,70,90};
 
-const char* type_name[11]={"Helmet","Chestplate","Trousers","Boots","Sword","Shield","Amulet","Ring","Timy Skin","Potion","Spell"};
+const char *type_name[11]={"Helmet","Chestplate","Trousers","Boots","Sword","Shield","Amulet","Ring","Timy Skin","Potion","Spell"};
 
 Item::Item()
 {
@@ -25,19 +25,19 @@ void Item::Clear(bool _delete)
  if(_delete)
     {
      if(inventory_image!=NULL)
-        SDL_FreeSurface(inventory_image);
+        Destroy_Texture(inventory_image);
      if(image!=NULL)
-        SDL_FreeSurface(image);
+        Destroy_Texture(image);
      if(name_image!=NULL)
-        SDL_FreeSurface(name_image);
+        Destroy_Texture(name_image);
      if(price_image!=NULL)
-        SDL_FreeSurface(price_image);
+        Destroy_Texture(price_image);
      inventory_image=image=name_image=price_image=NULL;
     }
  for(int i=0;i<DESCRIPTION_LINES_MAX && _delete;i++)
      if(description_image[i]!=NULL)
         {
-         SDL_FreeSurface(description_image[i]);
+         Destroy_Texture(description_image[i]);
          description_image[i]=NULL;
         }
  description_lines=0;
@@ -109,26 +109,26 @@ int Item::Get_hp()
  return hp;
 }
 
-SDL_Surface* Item::Get_image()
+Texture *Item::Get_image()
 {
  return image;
 }
 
-SDL_Surface* Item::Get_inventory_image()
+Texture *Item::Get_inventory_image()
 {
  return inventory_image;
 }
 
-SDL_Surface* Item::Get_skin()
+Texture *Item::Get_skin()
 {
  if(type!=8)
     return NULL;
- SDL_Surface* _skin;
+ Texture *_skin;
  char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"shop/skins/");
  strcat(path,name);
- strcat(path,".bmp");
- _skin=make_it_transparent(path);
+ strcat(path,".png");
+ _skin=Load_Transparent_Texture(path);
  return _skin;
 }
 
@@ -145,7 +145,7 @@ void Item::Set_id(int _id)
 int Item::Load()
 {
  char path[TEXT_LENGTH_MAX]={NULL},aux[TEXT_LENGTH_MAX]={NULL};
- TTF_Font* font=NULL;
+ TTF_Font *font=NULL;
  for(int i=0;i<DESCRIPTION_LINES_MAX;i++)
      if(description_image[i]!=NULL)
         {
@@ -156,11 +156,11 @@ int Item::Load()
     {
      strcpy(path,"shop/items/images/");
      strcat(path,type_name[type]);
-     strcat(path,".bmp");
-     image=make_it_transparent(path);
+     strcat(path,".png");
+     image=Load_Transparent_Texture(path);
      font=TTF_OpenFont("fonts/pixel.ttf",15);
      strcpy(name,type_name[type]);
-     name_image=TTF_RenderText_Solid(font,name,NAME_COLOR);
+     name_image=Create_TTF_Texture(font,name,NAME_COLOR);
      TTF_CloseFont(font);
      return false;
     }
@@ -168,7 +168,7 @@ int Item::Load()
  strcpy(path,"shop/items/");
  strcat(path,aux);
  strcat(path,".pwi");
- FILE* where=fopen(path,"r");
+ FILE *where=fopen(path,"r");
  if(where==NULL)
     return true;
  fscanf(where,"%d %d ",&cost,&spell_id);
@@ -183,22 +183,22 @@ int Item::Load()
  buff.Load();
  strcpy(path,"shop/items/images/");
  strcat(path,name);
- strcat(path,".bmp");
- image=make_it_transparent(path);
+ strcat(path,".png");
+ image=Load_Transparent_Texture(path);
  font=TTF_OpenFont("fonts/pixel.ttf",15);
- name_image=TTF_RenderText_Solid(font,name,NAME_COLOR);
+ name_image=Create_TTF_Texture(font,name,NAME_COLOR);
  TTF_CloseFont(font);
  itoa(cost,aux);
  font=TTF_OpenFont("fonts/pixel.ttf",15);
- price_image=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
+ price_image=Create_TTF_Texture(font,aux,MONEY_COLOR);
  TTF_CloseFont(font);
  strcpy(path,"shop/items/inventory/images/");
  strcat(path,name);
- strcat(path,".bmp");
- inventory_image=make_it_transparent(path);
+ strcat(path,".png");
+ inventory_image=Load_Transparent_Texture(path);
  fclose(where);
  //Create description image
- SDL_Surface* message=NULL;
+ Texture *message=NULL;
  font=TTF_OpenFont("fonts/pixel3.ttf",25);
  int N=strlen(description);
  memset(aux,0,sizeof aux);
@@ -208,7 +208,7 @@ int Item::Load()
       if(description[i]=='~')
          {
           aux[j+1]=NULL;
-          message=TTF_RenderText_Solid(font,aux,DESCRIPTION_COLOR);
+          message=Create_TTF_Texture(font,aux,DESCRIPTION_COLOR);
           description_image[description_lines++]=message;
           j=0;
           memset(aux,0,sizeof aux);
@@ -217,57 +217,57 @@ int Item::Load()
          aux[j++]=description[i];
      }
  aux[j]=NULL;
- message=TTF_RenderText_Solid(font,aux,DESCRIPTION_COLOR);
+ message=Create_TTF_Texture(font,aux,DESCRIPTION_COLOR);
  description_image[description_lines++]=message;
  TTF_CloseFont(font);
  return false;
 }
 
-void Item::Print(int x,int y,SDL_Surface* _screen,bool selected=false)
+void Item::Print(int x,int y,Texture *_screen,bool selected=false)
 {
- SDL_Surface* message=NULL;
+ Texture *message=NULL;
  if(!selected)
     message=SHOP_shop_background;
  else
     message=SHOP_shop_background_selected;
- apply_surface(x,y,message,_screen);
- apply_surface(x+((180-name_image->w)/2),y+3,name_image,_screen);
+ Apply_Texture(x,y,message,_screen);
+ Apply_Texture(x+((180-name_image->w)/2),y+3,name_image,_screen);
  Print_image(x+10,y+30,_screen);
  if(id!=0)
     {
-     apply_surface(x+100,y+30,price_image,_screen);
-     apply_surface(x+100,y+60,COIN,_screen);
+     Apply_Texture(x+100,y+30,price_image,_screen);
+     Apply_Texture(x+100,y+60,COIN,_screen);
     }
  if(selected && id!=0)
     Print_description(x,y,_screen,true);
 }
 
-void Item::Print_description(int x,int y,SDL_Surface* _screen,bool selected=false)
+void Item::Print_description(int x,int y,Texture *_screen,bool selected=false)
 {
- SDL_Surface* _image=NULL;
+ Texture *_image=NULL;
  _image=SHOP_shop_rope;
  int _x=x,_y=y;
  _y=y+120;
  if(_y>768-160)
     _y=y-160;
- apply_surface(_x,_y,SHOP_description_background,_screen);
+ Apply_Texture(_x,_y,SHOP_description_background,_screen);
  _x+=10,_y+=0;
  for(int i=0;i<description_lines;i++)
      {
       if(description_image[i]!=NULL)
-         apply_surface(_x,_y,description_image[i],_screen);
+         Apply_Texture(_x,_y,description_image[i],_screen);
       _y+=20;
      }
 }
 
-void Item::Print_image(int x,int y,SDL_Surface* _screen)
+void Item::Print_image(int x,int y,Texture *_screen)
 {
- apply_surface(x,y,image,_screen);
+ Apply_Texture(x,y,image,_screen);
 }
 
-void Item::Print_inventory_image(int x,int y,SDL_Surface* _screen)
+void Item::Print_inventory_image(int x,int y,Texture *_screen)
 {
- apply_surface(x,y,inventory_image,_screen);
+ Apply_Texture(x,y,inventory_image,_screen);
 }
 
 //BUFFS

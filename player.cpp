@@ -21,10 +21,10 @@ void Player::Clear(bool _delete)
 {
  if(_delete)
     {
-     SDL_FreeSurface(skin);
-     SDL_FreeSurface(name_image);
-     SDL_FreeSurface(hp_image);
-     SDL_FreeSurface(mana_image);
+     Destroy_Texture(skin);
+     Destroy_Texture(name_image);
+     Destroy_Texture(hp_image);
+     Destroy_Texture(mana_image);
      skin=name_image=hp_image=mana_image=NULL;
     }
 
@@ -60,7 +60,7 @@ void Player::Clear(bool _delete)
  number_of_wins=0;
 }
 
-void Player::Set_name(char* _name)
+void Player::Set_name(char *_name)
 {
  strcpy(name,_name);
 }
@@ -92,14 +92,14 @@ void Player::Set_experience(int _experience)
 
 void Player::Load()
 {
- TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",30);
- name_image=TTF_RenderText_Solid(font,name,NAME_COLOR);
+ TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
+ name_image=Create_TTF_Texture(font,name,NAME_COLOR);
  TTF_CloseFont(font);
  char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"saves/players/");
  strcat(path,name);
  strcat(path,".pwp");
- FILE* where=fopen(path,"r");
+ FILE *where=fopen(path,"r");
  if(where==NULL)
     {
      fclose(where);
@@ -262,7 +262,7 @@ void Player::Update()
  strcpy(path,"saves/players/");
  strcat(path,name);
  strcat(path,".pwp");
- FILE* where=fopen(path,"w");
+ FILE *where=fopen(path,"w");
  money=std::min(money,MAX_MONEY);
  experience=std::min(experience,MAX_EXPERIENCE);
  fprintf(where,"%d\n%d\n%d\n",money,experience,number_of_items);
@@ -422,45 +422,45 @@ int Player::Get_experience()
  return experience;
 }
 
-void Player::Print_Character(int x,int y,SDL_Surface* _screen)
+void Player::Print_Character(int x,int y,Texture *_screen)
 {
- TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",30);
- SDL_Surface* _image;
+ TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
+ Texture *_image;
  int _x,_y;
  char message[TEXT_LENGTH_MAX]={NULL},aux[TEXT_LENGTH_MAX]={NULL};
 
  equipped_items[8].Print(SKIN_POSX,y,_screen,false);
 
- apply_surface(x,y,PLAYER_name_background_shop,_screen);
+ Apply_Texture(x,y,PLAYER_name_background_shop,_screen);
  strcpy(message,name);
- _image=TTF_RenderText_Solid(font,message,NAME_COLOR);
- apply_surface(x+(SKIN_POSX-x+1-_image->w+10)/2,y,_image,_screen);
+ _image=Create_TTF_Texture(font,message,NAME_COLOR);
+ Apply_Texture(x+(SKIN_POSX-x+1-_image->w+10)/2,y,_image,_screen);
  y+=_image->h+20;
- SDL_FreeSurface(_image);
+ Destroy_Texture(_image);
 
- apply_surface(x,y-10,PLAYER_details_background,_screen);
+ Apply_Texture(x,y-10,PLAYER_details_background,_screen);
 
- apply_surface(x,y,PLAYER_experience_background,_screen);
+ Apply_Texture(x,y,PLAYER_experience_background,_screen);
  itoa(experience,aux);
  strcpy(message,"Experience: ");
  strcat(message,aux);
- _image=TTF_RenderText_Solid(font,message,EXPERIENCE_COLOR);
- apply_surface(x+10,y,_image,_screen);
+ _image=Create_TTF_Texture(font,message,EXPERIENCE_COLOR);
+ Apply_Texture(x+10,y,_image,_screen);
  y+=_image->h;
- SDL_FreeSurface(_image);
+ Destroy_Texture(_image);
 
- apply_surface(x,y,PLAYER_money_background,_screen);
+ Apply_Texture(x,y,PLAYER_money_background,_screen);
  strcpy(message,"Money: ");
- _image=TTF_RenderText_Solid(font,message,MONEY_COLOR);
- apply_surface(x+10,y+10,_image,_screen);
+ _image=Create_TTF_Texture(font,message,MONEY_COLOR);
+ Apply_Texture(x+10,y+10,_image,_screen);
  _x=x+_image->w+10,_y=y+10;
- SDL_FreeSurface(_image);
+ Destroy_Texture(_image);
  itoa(money,aux);
- _image=TTF_RenderText_Solid(font,aux,MONEY_COLOR1);
- apply_surface(_x,_y,_image,_screen);
+ _image=Create_TTF_Texture(font,aux,MONEY_COLOR1);
+ Apply_Texture(_x,_y,_image,_screen);
  _x+=_image->w,_y=y;
- SDL_FreeSurface(_image);
- apply_surface(_x,_y+5,COIN,_screen);
+ Destroy_Texture(_image);
+ Apply_Texture(_x,_y+5,COIN,_screen);
  y+=COIN->h+20;
 
  equipped_items[0].Print(x,y,_screen,false);
@@ -486,7 +486,7 @@ void Player::Print_Character(int x,int y,SDL_Surface* _screen)
  TTF_CloseFont(font);
 }
 
-void Player::Print_items(int x,int y,SDL_Surface* _screen)
+void Player::Print_items(int x,int y,Texture *_screen)
 {
   equipped_items[0].Print_image(x,y,_screen);
  //item.Print_description(x+190,y,_screen,false);
@@ -510,12 +510,12 @@ void Player::Print_items(int x,int y,SDL_Surface* _screen)
  pos_last_y=y;
 }
 
-void Player::Print_Inventory(int x,int y,SDL_Surface* _screen,bool options,int type,bool allow_sales)
+void Player::Print_Inventory(int x,int y,Texture *_screen,bool options,int type,bool allow_sales)
 {
- TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",15);
+ TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",15);
  char message[TEXT_LENGTH_MAX]={'x',NULL};
- SDL_Surface* _image=NULL;
- apply_surface(x,y,SHOP_inventory_background,_screen);
+ Texture *_image=NULL;
+ Apply_Texture(x,y,SHOP_inventory_background,_screen);
  int _x=x,_y=y;
  for(int i=0;i<=NUMBER_OF_ITEMS_IDS;i++)
      {
@@ -535,14 +535,14 @@ void Player::Print_Inventory(int x,int y,SDL_Surface* _screen,bool options,int t
                  }
 
           if(inventory_item_selected==i)
-             apply_surface(_x,_y,SHOP_item_background_selected,_screen);
+             Apply_Texture(_x,_y,SHOP_item_background_selected,_screen);
           else
-             apply_surface(_x,_y,SHOP_item_background,_screen);
+             Apply_Texture(_x,_y,SHOP_item_background,_screen);
           items_bought[i].Print_inventory_image(_x,_y,_screen);
           itoa(number_of_items_bought[i],message+1);
-          _image=TTF_RenderText_Solid(font,message,NUMBER_OF_ITEMS_COLOR);
-          apply_surface(_x+42,_y+25,_image,_screen);
-          SDL_FreeSurface(_image);
+          _image=Create_TTF_Texture(font,message,NUMBER_OF_ITEMS_COLOR);
+          Apply_Texture(_x+42,_y+25,_image,_screen);
+          Destroy_Texture(_image);
           if(!options)
              {
               _x+=60;
@@ -555,24 +555,24 @@ void Player::Print_Inventory(int x,int y,SDL_Surface* _screen,bool options,int t
               switch(type)
                      {
                       case 1:if(equipped_items_ids[items_bought[i].Get_type()]!=i)
-                                apply_surface(_x+PIXELS_PER_INGAME_UNIT,_y+2,INVENTORY_EQUIP,_screen);
+                                Apply_Texture(_x+PIXELS_PER_INGAME_UNIT,_y+2,INVENTORY_EQUIP,_screen);
                              else
-                                apply_surface(_x+PIXELS_PER_INGAME_UNIT,_y+2,INVENTORY_EQUIPPED,_screen);
+                                Apply_Texture(_x+PIXELS_PER_INGAME_UNIT,_y+2,INVENTORY_EQUIPPED,_screen);
                              break;
 
                       case 2:for(int spell_pos=0;spell_pos<4;spell_pos++)
                                  {
                                   if(spells[spell_pos].Get_id()==items_bought[i].Get_spell_id())
-                                     apply_surface(_x+PIXELS_PER_INGAME_UNIT+spell_pos*SHOP_inventory_spell_background->w,_y+2,SHOP_inventory_spell_background_equipped,_screen);
+                                     Apply_Texture(_x+PIXELS_PER_INGAME_UNIT+spell_pos*SHOP_inventory_spell_background->w,_y+2,SHOP_inventory_spell_background_equipped,_screen);
                                   else
-                                     apply_surface(_x+PIXELS_PER_INGAME_UNIT+spell_pos*SHOP_inventory_spell_background->w,_y+2,SHOP_inventory_spell_background,_screen);
-                                  apply_surface(_x+PIXELS_PER_INGAME_UNIT+spell_pos*SHOP_inventory_spell_background->w,_y+2,INVENTORY_spell_position[spell_pos],_screen);
+                                     Apply_Texture(_x+PIXELS_PER_INGAME_UNIT+spell_pos*SHOP_inventory_spell_background->w,_y+2,SHOP_inventory_spell_background,_screen);
+                                  Apply_Texture(_x+PIXELS_PER_INGAME_UNIT+spell_pos*SHOP_inventory_spell_background->w,_y+2,INVENTORY_spell_position[spell_pos],_screen);
                                  }
                              break;
                      }
              }
           if(allow_sales)
-             apply_surface(_x+42,_y+15,INVENTORY_SELL,_screen);
+             Apply_Texture(_x+42,_y+15,INVENTORY_SELL,_screen);
           _x+=110;
           if(_x+110>PLAYER_INFO_LAST_POSX)
              _x=x,_y+=60;
@@ -581,12 +581,12 @@ void Player::Print_Inventory(int x,int y,SDL_Surface* _screen,bool options,int t
  TTF_CloseFont(font);
 }
 
-void Player::Print_Inventory_equipped_items(int x,int y,SDL_Surface* _screen,bool options,int type,bool allow_sales)
+void Player::Print_Inventory_equipped_items(int x,int y,Texture *_screen,bool options,int type,bool allow_sales)
 {
- TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",15);
+ TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",15);
  char message[TEXT_LENGTH_MAX]={'x',NULL};
- SDL_Surface* _image=NULL;
- apply_surface(x,y,SHOP_inventory_background,_screen);
+ Texture *_image=NULL;
+ Apply_Texture(x,y,SHOP_inventory_background,_screen);
  int _x=x,_y=y;
  for(int i=0;i<=NUMBER_OF_ITEMS_IDS;i++)
      {
@@ -607,14 +607,14 @@ void Player::Print_Inventory_equipped_items(int x,int y,SDL_Surface* _screen,boo
                  }
 
           if(inventory_item_selected==i)
-             apply_surface(_x,_y,SHOP_item_background_selected,_screen);
+             Apply_Texture(_x,_y,SHOP_item_background_selected,_screen);
           else
-             apply_surface(_x,_y,SHOP_item_background,_screen);
+             Apply_Texture(_x,_y,SHOP_item_background,_screen);
           items_bought[i].Print_inventory_image(_x,_y,_screen);
           itoa(number_of_items_bought[i],message+1);
-          _image=TTF_RenderText_Solid(font,message,NUMBER_OF_ITEMS_COLOR);
-          apply_surface(_x+42,_y+25,_image,_screen);
-          SDL_FreeSurface(_image);
+          _image=Create_TTF_Texture(font,message,NUMBER_OF_ITEMS_COLOR);
+          Apply_Texture(_x+42,_y+25,_image,_screen);
+          Destroy_Texture(_image);
           if(!options)
              {
               _x+=60;
@@ -625,14 +625,14 @@ void Player::Print_Inventory_equipped_items(int x,int y,SDL_Surface* _screen,boo
           if(!Is_potion(i))
              {
               if(equipped_items_ids[items_bought[i].Get_type()]!=i)
-                 apply_surface(_x+PIXELS_PER_INGAME_UNIT,_y+2,INVENTORY_EQUIP,_screen);
+                 Apply_Texture(_x+PIXELS_PER_INGAME_UNIT,_y+2,INVENTORY_EQUIP,_screen);
               else
                  {
-                  apply_surface(_x+PIXELS_PER_INGAME_UNIT,_y+2,INVENTORY_EQUIPPED,_screen);
+                  Apply_Texture(_x+PIXELS_PER_INGAME_UNIT,_y+2,INVENTORY_EQUIPPED,_screen);
                  }
              }
           if(allow_sales)
-             apply_surface(_x+42,_y+15,INVENTORY_SELL,_screen);
+             Apply_Texture(_x+42,_y+15,INVENTORY_SELL,_screen);
           _x+=110;
           if(_x+110>PLAYER_INFO_LAST_POSX)
              _x=x,_y+=60;
@@ -641,7 +641,7 @@ void Player::Print_Inventory_equipped_items(int x,int y,SDL_Surface* _screen,boo
  TTF_CloseFont(font);
 }
 
-int Player::Start_inventory(int x,int y,SDL_Surface* _screen,SDL_Event* event,int type,bool allow_sales)
+int Player::Start_inventory(int x,int y,Texture *_screen,SDL_Event *event,int type,bool allow_sales)
 {
  inventory_item_click=-1;
  int _x=x,_y=y;
@@ -737,11 +737,11 @@ void Player::Set_hp(double _hp)
     hp=basic_hp;
  if(is_immortal && hp==0)
     hp=1;
- TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",30);
+ TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
  char aux[TEXT_LENGTH_MAX]={NULL};
  itoa((int)hp,aux);
- SDL_FreeSurface(hp_image);
- hp_image=TTF_RenderText_Solid(font,aux,HP_COLOR);
+ Destroy_Texture(hp_image);
+ hp_image=Create_TTF_Texture(font,aux,HP_COLOR);
  TTF_CloseFont(font);
 }
 
@@ -752,12 +752,12 @@ void Player::Set_mana(double _mana)
     mana=0;
  if(mana>basic_mana)
     mana=basic_mana;
- TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",30);
- SDL_Surface* _image=NULL;
+ TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
+ Texture *_image=NULL;
  char aux[TEXT_LENGTH_MAX]={NULL};
  itoa((int)mana,aux);
- SDL_FreeSurface(mana_image);
- mana_image=TTF_RenderText_Solid(font,aux,MANA_COLOR);
+ Destroy_Texture(mana_image);
+ mana_image=Create_TTF_Texture(font,aux,MANA_COLOR);
  TTF_CloseFont(font);
 }
 
@@ -904,24 +904,24 @@ int Player::Get_skinH()
  return skin_image_position.h;
 }
 
-char* Player::Get_name()
+char *Player::Get_name()
 {
  return name;
 }
 
-void Player::Set_skin(char* _skin_name)
+void Player::Set_skin(char *_skin_name)
 {
  char where[TEXT_LENGTH_MAX]={NULL};
  strcpy(where,"shop/skins/");
  strcat(where,_skin_name);
- strcat(where,".bmp");
- skin=make_it_transparent(where);
+ strcat(where,".png");
+ skin=Load_Transparent_Texture(where);
 }
 
 void Player::Load_skin()
 {
  if(equipped_items_ids[8]==0)
-    skin=make_it_transparent("shop/skins/timy skin.bmp");
+    skin=Load_Transparent_Texture("shop/skins/timy skin.png");
  else
     skin=equipped_items[8].Get_skin();
 }
@@ -936,62 +936,67 @@ void Player::Update_skin_image_position()
         }
 }
 
-void Player::Print_name(int x,int y,SDL_Surface* _screen)
+void Player::Print_name(int x,int y,Texture *_screen)
 {
- //apply_surface(x,y,PLAYER_name_background,_screen);
- //apply_surface(x,y,PLAYER_CASE_front,_screen);
+ //Apply_Texture(x,y,PLAYER_name_background,_screen);
+ //Apply_Texture(x,y,PLAYER_CASE_front,_screen);
  x-=name_image->w/2;
- apply_surface(x+(x+200-x+1-name_image->w+10)/2,y+name_image->h/4,name_image,_screen);
+ Apply_Texture(x+(x+200-x+1-name_image->w+10)/2,y+name_image->h/4,name_image,_screen);
 }
 
-void Player::Print_name(SDL_Surface* _screen)
+void Player::Print_name(Texture *_screen)
 {
- apply_surface(PLAYER_INFO_POSX,0,PLAYER_name_background,_screen);
- apply_surface(PLAYER_INFO_POSX,0,PLAYER_CASE_front,_screen);
- apply_surface(PLAYER_INFO_POSX+(PLAYER_INFO_LAST_POSX-PLAYER_INFO_POSX+1-name_image->w+10)/2,name_image->h/4,name_image,_screen);
+ Apply_Texture(PLAYER_INFO_POSX,0,PLAYER_name_background,_screen);
+ Apply_Texture(PLAYER_INFO_POSX,0,PLAYER_CASE_front,_screen);
+ Apply_Texture(PLAYER_INFO_POSX+(PLAYER_INFO_LAST_POSX-PLAYER_INFO_POSX+1-name_image->w+10)/2,name_image->h/4,name_image,_screen);
 }
 
-void Player::Print_hp(int x,int y,SDL_Surface* _screen)
+void Player::Print_hp(int x,int y,Texture *_screen)
 {
- apply_surface(x,y,PLAYER_CASE_background,_screen);
- apply_surface(x,y,PLAYER_HP_background->w*hp/basic_hp,PLAYER_HP_background->h,PLAYER_HP_background,_screen);
- apply_surface(x,y,PLAYER_CASE_front,_screen);
- apply_surface(x,(y+hp_image->h)/2,hp_image,_screen);
+ Apply_Texture(x,y,PLAYER_CASE_background,_screen);
+ Apply_Texture(x,y,PLAYER_HP_background->w*hp/basic_hp,PLAYER_HP_background->h,PLAYER_HP_background,_screen);
+ Apply_Texture(x,y,PLAYER_CASE_front,_screen);
+ Apply_Texture(x,(y+hp_image->h)/2,hp_image,_screen);
 }
 
-void Player::Print_hp(SDL_Surface* _screen)
+void Player::Print_hp(Texture *_screen)
 {
- apply_surface(PLAYER_INFO_POSX,PIXELS_PER_INGAME_UNIT,PLAYER_CASE_background,_screen);
- apply_surface(PLAYER_INFO_POSX,PIXELS_PER_INGAME_UNIT,PLAYER_HP_background->w*hp/basic_hp,PLAYER_HP_background->h,PLAYER_HP_background,_screen);
- apply_surface(PLAYER_INFO_POSX,PIXELS_PER_INGAME_UNIT,PLAYER_CASE_front,_screen);
- apply_surface(PLAYER_INFO_POSX+(PLAYER_INFO_LAST_POSX-PLAYER_INFO_POSX+1-hp_image->w+10)/2,PIXELS_PER_INGAME_UNIT+(PIXELS_PER_INGAME_UNIT-hp_image->h)/2,hp_image,_screen);
+ if(hp!=basic_hp)
+    {
+     printf("ceva");
+     int alabala=3+4+7;
+    }
+ Apply_Texture(PLAYER_INFO_POSX,PIXELS_PER_INGAME_UNIT,PLAYER_CASE_background,_screen);
+ Apply_Texture(PLAYER_INFO_POSX,PIXELS_PER_INGAME_UNIT,PLAYER_HP_background->w*hp/basic_hp,PLAYER_HP_background->h,PLAYER_HP_background,_screen);
+ Apply_Texture(PLAYER_INFO_POSX,PIXELS_PER_INGAME_UNIT,PLAYER_CASE_front,_screen);
+ Apply_Texture(PLAYER_INFO_POSX+(PLAYER_INFO_LAST_POSX-PLAYER_INFO_POSX+1-hp_image->w+10)/2,PIXELS_PER_INGAME_UNIT+(PIXELS_PER_INGAME_UNIT-hp_image->h)/2,hp_image,_screen);
 }
 
-void Player::Print_mana(int x,int y,SDL_Surface* _screen)
+void Player::Print_mana(int x,int y,Texture *_screen)
 {
- apply_surface(x,y,PLAYER_CASE_background,_screen);
- apply_surface(x,y,PLAYER_MANA_background->w*mana/basic_mana,PLAYER_MANA_background->h,PLAYER_MANA_background,_screen);
- apply_surface(x,y,PLAYER_CASE_front,_screen);
- apply_surface(x,y,mana_image,_screen);
- apply_surface(x+mana_image->w+10,y,MANA,_screen);
+ Apply_Texture(x,y,PLAYER_CASE_background,_screen);
+ Apply_Texture(x,y,PLAYER_MANA_background->w*mana/basic_mana,PLAYER_MANA_background->h,PLAYER_MANA_background,_screen);
+ Apply_Texture(x,y,PLAYER_CASE_front,_screen);
+ Apply_Texture(x,y,mana_image,_screen);
+ Apply_Texture(x+mana_image->w+10,y,MANA,_screen);
 }
 
-void Player::Print_mana(SDL_Surface* _screen)
+void Player::Print_mana(Texture *_screen)
 {
- apply_surface(PLAYER_INFO_POSX,80,PLAYER_CASE_background,_screen);
- apply_surface(PLAYER_INFO_POSX,80,PLAYER_MANA_background->w*mana/basic_mana,PLAYER_MANA_background->h,PLAYER_MANA_background,_screen);
- apply_surface(PLAYER_INFO_POSX,80,PLAYER_CASE_front,_screen);
- apply_surface(PLAYER_INFO_POSX+(PLAYER_INFO_LAST_POSX-PLAYER_INFO_POSX+1-mana_image->w+10)/2,80+(PIXELS_PER_INGAME_UNIT-mana_image->h)/2,mana_image,_screen);
+ Apply_Texture(PLAYER_INFO_POSX,80,PLAYER_CASE_background,_screen);
+ Apply_Texture(PLAYER_INFO_POSX,80,PLAYER_MANA_background->w*mana/basic_mana,PLAYER_MANA_background->h,PLAYER_MANA_background,_screen);
+ Apply_Texture(PLAYER_INFO_POSX,80,PLAYER_CASE_front,_screen);
+ Apply_Texture(PLAYER_INFO_POSX+(PLAYER_INFO_LAST_POSX-PLAYER_INFO_POSX+1-mana_image->w+10)/2,80+(PIXELS_PER_INGAME_UNIT-mana_image->h)/2,mana_image,_screen);
 }
 
-void Player::Print_skin(int x,int y,int mapX,int mapY,SDL_Surface* _screen)
+void Player::Print_skin(int x,int y,int mapX,int mapY,Texture *_screen)
 {
- apply_surface(skin_image_position.x,skin_image_position.y,x+(map_positionX-mapX)*PIXELS_PER_INGAME_UNIT,y+(map_positionY-mapY)*PIXELS_PER_INGAME_UNIT,skin_image_position.w,skin_image_position.h,skin,_screen);
+ Apply_Texture(skin_image_position.x,skin_image_position.y,x+(map_positionX-mapX)*PIXELS_PER_INGAME_UNIT,y+(map_positionY-mapY)*PIXELS_PER_INGAME_UNIT,skin_image_position.w,skin_image_position.h,skin,_screen);
 }
 
-void Player::Print_skin_free(int x,int y,SDL_Surface* _screen)
+void Player::Print_skin_free(int x,int y,Texture *_screen)
 {
- apply_surface(skin_image_position.x,skin_image_position.y,x,y,skin_image_position.w,skin_image_position.h,skin,_screen);
+ Apply_Texture(skin_image_position.x,skin_image_position.y,x,y,skin_image_position.w,skin_image_position.h,skin,_screen);
 }
 
 void Player::Equip_items()
@@ -1086,7 +1091,7 @@ void Player::Reset(int _map_positionX,int _map_positionY)
 ///Game
 
 ///Buffs
-void Player::Apply_buff(Buff* _buff)
+void Player::Apply_buff(Buff *_buff)
 {
  switch(_buff->Get_type())
         {
@@ -1136,7 +1141,7 @@ void Player::Apply_buff(Buff* _buff)
  _buff->Decrease_remaining_duration();
 }
 
-void Player::Remove_buff(Buff* _buff)
+void Player::Remove_buff(Buff *_buff)
 {
  switch(_buff->Get_type())
         {
@@ -1212,7 +1217,7 @@ void Player::Add_buff(Buff _buff)
  active_buffs.push_back(_buff);
 }
 
-void Player::Get_transmitted_buffs(std::vector<Buff>* _buffs)
+void Player::Get_transmitted_buffs(std::vector<Buff> *_buffs)
 {
  Buff _copy,aux;
  for(int i=0;i<9;i++)
@@ -1243,7 +1248,7 @@ void Player::Get_transmitted_buffs(std::vector<Buff>* _buffs)
      }
 }
 
-void Player::Print_buffs(int x,int y,SDL_Surface* _screen)
+void Player::Print_buffs(int x,int y,Texture *_screen)
 {
  Buff aux;
  for(std::vector<int>::iterator i=printable_item_buffs_id.begin();i!=printable_item_buffs_id.end();i++)
@@ -1309,21 +1314,21 @@ bool Player::Spell_Is_blocked(int spell_pos)
  return spells[spell_pos].Is_blocked();
 }
 
-void Player::Print_spells(int x,int y,SDL_Surface* _screen)
+void Player::Print_spells(int x,int y,Texture *_screen)
 {
  for(int spell_pos=0;spell_pos<4;spell_pos++)
      {
-      apply_surface(x,y,PLAYER_SPELLS_background,_screen);
+      Apply_Texture(x,y,PLAYER_SPELLS_background,_screen);
       if(spells[spell_pos].Get_id()!=0)
          {
           spells[spell_pos].Print_image(x,y,_screen);
           if(Spell_Is_blocked(spell_pos))
-             apply_surface(x,y,PLAYER_SPELLS_not_ready,_screen);
+             Apply_Texture(x,y,PLAYER_SPELLS_not_ready,_screen);
           else
              if(!spells[spell_pos].Can_Pay((int)mana,(int)hp,(int)mental_health))
-                apply_surface(x,y,PLAYER_SPELLS_no_mana,_screen);
+                Apply_Texture(x,y,PLAYER_SPELLS_no_mana,_screen);
          }
-      apply_surface(x,y,PLAYER_SPELLS_front,_screen);
+      Apply_Texture(x,y,PLAYER_SPELLS_front,_screen);
       x+=PLAYER_SPELLS_background->w+10;
      }
 }
@@ -1337,7 +1342,7 @@ void Player::Add_key(int _key_id)
  progress[_key_id]=true;
 }
 
-void Player::Add_keys(std::bitset<NUMBER_OF_MAX_KEYS>* _keys_ids)
+void Player::Add_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids)
 {
  for(int i=0;i<_keys_ids->size();i++)
      {
@@ -1351,7 +1356,7 @@ void Player::Add_keys(std::bitset<NUMBER_OF_MAX_KEYS>* _keys_ids)
  //keys|=(*_keys_ids);
 }
 
-void Player::Remove_keys(std::bitset<NUMBER_OF_MAX_KEYS>* _keys_ids)
+void Player::Remove_keys(std::bitset<NUMBER_OF_MAX_KEYS> *_keys_ids)
 {
 
  for(int i=0;i<_keys_ids->size();i++)
@@ -1367,12 +1372,12 @@ void Player::Remove_key(int _key_id)
  keys[_key_id]=false;
 }
 
-std::bitset<NUMBER_OF_MAX_KEYS>* Player::Get_keys()
+std::bitset<NUMBER_OF_MAX_KEYS> *Player::Get_keys()
 {
  return &keys;
 }
 
-std::bitset<NUMBER_OF_MAX_KEYS>* Player::Get_progress()
+std::bitset<NUMBER_OF_MAX_KEYS> *Player::Get_progress()
 {
  return &progress;
 }

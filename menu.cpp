@@ -4,10 +4,10 @@ const int FRAMES_PER_SECOND_BACKGROUND=30,FRAMES_PER_SECOND_FIRE=25;
 
 void Menu_Option::Clear()
 {
- SDL_FreeSurface(text_image);
+ Destroy_Texture(text_image);
 }
 
-void Menu_Option::Load(FILE* where)
+void Menu_Option::Load(FILE *where)
 {
  int _r,_g,_b;
  fgets(text,sizeof text,where);
@@ -19,19 +19,19 @@ void Menu_Option::Load(FILE* where)
  color.g=(Uint8)_g;
  color.b=(Uint8)_b;
  fscanf(where,"%d %d ",&screen_pos.x,&screen_pos.y);
- screen_pos.x+=(RESOLUTION_X-MENU_background->w)/2;
+ screen_pos.x+=(RESOLUTION_W-MENU_background->w)/2;
  screen_pos.h=MENU_background->h;
  screen_pos.w=MENU_background->w;
  //Create text image
  char font_path[TEXT_LENGTH_MAX]={NULL};
  strcat(font_path,"fonts/");
  strcat(font_path,font_name);
- TTF_Font* font=TTF_OpenFont(font_path,font_size);
- text_image=TTF_RenderText_Solid(font,text,color);
+ TTF_Font *font=TTF_OpenFont(font_path,font_size);
+ text_image=Create_TTF_Texture(font,text,color);
  TTF_CloseFont(font);
 }
 
-void Menu_Option::Set_text(char* _text)
+void Menu_Option::Set_text(char *_text)
 {
  strcpy(text,_text);
 }
@@ -43,7 +43,7 @@ void Menu_Option::Set_color(Uint8 r,Uint8 g,Uint8 b)
  color.b=b;
 }
 
-void Menu_Option::Set_font_name(char* _font_name)
+void Menu_Option::Set_font_name(char *_font_name)
 {
  strcpy(font_name,font_name);
 }
@@ -58,9 +58,9 @@ SDL_Rect Menu_Option::Get_screen_pos()
  return screen_pos;
 }
 
-void Menu_Option::Print_text(SDL_Surface* _screen,bool selected=false,bool click=false)
+void Menu_Option::Print_text(Texture *_screen,bool selected=false,bool click=false)
 {
- SDL_Surface* image=NULL;
+ Texture *image=NULL;
  if(!selected && !click)
     image=MENU_background;
  else
@@ -68,21 +68,21 @@ void Menu_Option::Print_text(SDL_Surface* _screen,bool selected=false,bool click
        image=MENU_background_click;
     else
        image=MENU_background_selected;
- apply_surface(screen_pos.x,screen_pos.y,image,_screen);
- apply_surface(screen_pos.x+(screen_pos.w-text_image->w)/2,screen_pos.y+10,text_image,_screen);
+ Apply_Texture(screen_pos.x,screen_pos.y,image,_screen);
+ Apply_Texture(screen_pos.x+(screen_pos.w-text_image->w)/2,screen_pos.y+10,text_image,_screen);
 }
 
 void Menu::Clear()
 {
- SDL_FreeSurface(background);
- SDL_FreeSurface(title);
+ Destroy_Texture(background);
+ Destroy_Texture(title);
  for(int i=0;i<number_of_options;i++)
      options[i].Clear();
 }
 
-void Menu::Load(const char* filename)
+void Menu::Load(const char *filename)
 {
- FILE* where=fopen(filename,"r");
+ FILE *where=fopen(filename,"r");
  fscanf(where,"%d %d ",&number_of_options,&is_main_menu);
  if(!is_main_menu)
     {
@@ -92,14 +92,13 @@ void Menu::Load(const char* filename)
         background_name[strlen(background_name)-1]=NULL;
      strcpy(path,"images/menu/");
      strcat(path,background_name);
-     strcat(path,".bmp");
-     SDL_FreeSurface(background);
-     background=load_image(path);
+     strcat(path,".png");
+     background=Load_Texture(path);
      fgets(path,sizeof path,where);
      if(path[strlen(path)-1]=='\n')
         path[strlen(path)-1]=NULL;
-     TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",40);
-     title=TTF_RenderText_Solid(font,path,SDL_Color{255,255,255});
+     TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",40);
+     title=Create_TTF_Texture(font,path,SDL_Color{255,255,255});
      TTF_CloseFont(font);
      fscanf(where,"%d %d ",&title_position.x,&title_position.y);
     }
@@ -117,7 +116,7 @@ void Menu::Set_option(int _pos,Menu_Option _x)
  options[_pos]=_x;
 }
 
-void Menu::Print_options(SDL_Surface* _screen)
+void Menu::Print_options(Texture *_screen)
 {
  if(is_main_menu)
     {
@@ -126,15 +125,15 @@ void Menu::Print_options(SDL_Surface* _screen)
     }
  else
     {
-     apply_surface(0,0,background,_screen);
-     apply_surface((RESOLUTION_X-title->w)/2+title_position.x,title_position.y,title,_screen);
+     Apply_Texture(0,0,background,_screen);
+     Apply_Texture((RESOLUTION_W-title->w)/2+title_position.x,title_position.y,title,_screen);
     }
  for(int i=0;i<number_of_options;i++)
      options[i].Print_text(_screen,i==selector_position,i==click_position);
- SDL_Flip(_screen);
+ Flip_Buffers(_screen);
 }
 
-int Menu::Start(SDL_Surface* _screen)
+int Menu::Start(Texture *_screen)
 {
  selector_position=-1;
  click_position=-1;
@@ -194,7 +193,7 @@ int Menu::Start(SDL_Surface* _screen)
                 click_position=-1;
                 event_action=true;
                }
-            if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.sym==SDLK_ESCAPE))
+            if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_ESCAPE))
                quit=true,event_action=true;
             if(!event_action)
                continue;

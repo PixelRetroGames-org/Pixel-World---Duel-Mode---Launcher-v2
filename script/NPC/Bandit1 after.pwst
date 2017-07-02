@@ -4,7 +4,7 @@
 
 
 <color 125 0 7 >Bandit: </color > I'll leave, I'll leave! </line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -14,7 +14,7 @@
 
 <color 125 0 7 >Timy: </color > You think you can steal from me and get away with it?</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -24,7 +24,7 @@
 
 <color 125 0 7 >Timy: </color > What's this? Charity?</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 
@@ -35,6 +35,6 @@
 
 With one powerful blow, Timy killed his enemy. </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

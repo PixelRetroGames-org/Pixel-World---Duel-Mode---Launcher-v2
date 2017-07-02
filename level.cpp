@@ -1,26 +1,27 @@
 #include "level.h"
 
-const SDLKey player_keys[3][20]={{},{SDLK_UP,SDLK_DOWN,SDLK_LEFT,SDLK_RIGHT,SDLK_RCTRL,SDLK_j,SDLK_n,SDLK_u,SDLK_i,SDLK_o,SDLK_p,SDLK_RSHIFT,SDLK_h},{SDLK_w,SDLK_s,SDLK_a,SDLK_d,SDLK_z,SDLK_BACKQUOTE,SDLK_TAB,SDLK_1,SDLK_2,SDLK_3,SDLK_4,SDLK_x,SDLK_h}};
-const int SKEPTIC_VISION_MAX_ALPHA=100;
+const SDL_Keycode player_keys[3][20]={{},{SDL_SCANCODE_UP,SDL_SCANCODE_DOWN,SDL_SCANCODE_LEFT,SDL_SCANCODE_RIGHT,SDL_SCANCODE_RCTRL,SDL_SCANCODE_J,SDL_SCANCODE_N,SDL_SCANCODE_U,SDL_SCANCODE_I,SDL_SCANCODE_O,SDL_SCANCODE_P,SDL_SCANCODE_RSHIFT,SDL_SCANCODE_H},{SDL_SCANCODE_W,SDL_SCANCODE_S,SDL_SCANCODE_A,SDL_SCANCODE_D,SDL_SCANCODE_Z,SDL_SCANCODE_GRAVE,SDL_SCANCODE_TAB,SDL_SCANCODE_1,SDL_SCANCODE_2,SDL_SCANCODE_3,SDL_SCANCODE_4,SDL_SCANCODE_X,SDL_SCANCODE_H}};
+const int SKEPTIC_VISION_MAX_ALPHA=100,SKEPTIC_VISION_TIME_PER_FRAME=40;
+const int LEVEL_NAME_IMAGE_TIME_PER_FRAME=30;
 
-//#define GOD_POWERS
+#define GOD_POWERS
 
 #ifdef GOD_POWERS
 bool OBSTACLES=true;
 #endif // GOD_POWERS
 
 int level_number_of_background_music_tracks;
-Mix_Music* level_background_music[NUMBER_OF_SONGS_MAX];
+Mix_Music *level_background_music[NUMBER_OF_SONGS_MAX];
 Timer level_music_time;
 bool level_paused_music;
 int level_last_track_played;
-SDL_Thread* level_music_overseer=NULL;
-SDL_mutex* music_overseer_mutex;
+SDL_Thread *level_music_overseer=NULL;
+SDL_mutex *music_overseer_mutex;
 
 Level::Level()
 {
  player_name[0][0]=player_name[1][0]=player_name[2][0]=NULL;
- arena_size.x=(RESOLUTION_X-840)/2,arena_size.y=40;
+ arena_size.x=(RESOLUTION_W-840)/2,arena_size.y=40;
  arena_size.w=860;
  arena_size.h=680;
  spell_effects.reserve(15);
@@ -45,7 +46,7 @@ void Level::Clear(bool terminal)
  number_of_non_playable_characters=0;
  skeptic_vision_alpha=0;
  skeptic_vision_on=false;
- SDL_SetAlpha(SKEPTIC_VISION_image,SDL_SRCALPHA,skeptic_vision_alpha);
+ Set_Texture_Alpha(SKEPTIC_VISION_image,skeptic_vision_alpha);
  if(terminal)
     {
      for(int i=0;i<level_number_of_background_music_tracks;i++)
@@ -62,14 +63,14 @@ void Level::Set_arena_size()
 {
  arena_size.w=std::min(PIXELS_PER_INGAME_UNIT*arena.Get_number_of_columns(),840);
  arena_size.h=std::min(PIXELS_PER_INGAME_UNIT*arena.Get_number_of_lines(),680);
- arena_size.x=(RESOLUTION_X-arena_size.w+(arena_size.w%(2*PIXELS_PER_INGAME_UNIT)==0?-PIXELS_PER_INGAME_UNIT:0))/2;
+ arena_size.x=(RESOLUTION_W-arena_size.w+(arena_size.w%(2*PIXELS_PER_INGAME_UNIT)==0?-PIXELS_PER_INGAME_UNIT:0))/2;
  if(arena_size.h==680)
     arena_size.y=PIXELS_PER_INGAME_UNIT;
  else
-    arena_size.y=(RESOLUTION_Y-arena_size.h+(arena_size.h%(2*PIXELS_PER_INGAME_UNIT)==0?-PIXELS_PER_INGAME_UNIT:0))/2-4;
+    arena_size.y=(RESOLUTION_H-arena_size.h+(arena_size.h%(2*PIXELS_PER_INGAME_UNIT)==0?-PIXELS_PER_INGAME_UNIT:0))/2-4;
 }
 
-void Level::Set_name(char* _name)
+void Level::Set_name(char *_name)
 {
  strcpy(name,_name);
 }
@@ -126,7 +127,7 @@ int Level::Get_player_map_position_y(int _player)
  return player[_player].Get_map_positionY();
 }
 
-char* Level::Get_name()
+char *Level::Get_name()
 {
  return name;
 }
@@ -143,7 +144,7 @@ void Level::Load()
  strcpy(path,"levels/");
  strcat(path,name);
  strcat(path,".pwl");
- FILE* where=fopen(path,"r");
+ FILE *where=fopen(path,"r");
  if(where==NULL)
     return;
  int x,y;
@@ -275,18 +276,18 @@ void Level::Fast_Reload()
      }
 }
 
-void Level::Change(char* _level_name)
+void Level::Change(char *_level_name)
 {
  level_changed=true;
- SDL_Thread* _loading_image=NULL;
- _loading_image=SDL_CreateThread(Loading_image,NULL);
+ SDL_Thread *_loading_image=NULL;
+ _loading_image=SDL_CreateThread(Loading_image,"Level Change Loading",NULL);
  Clear();
  int thread_return_value=0;
  SDL_LockMutex(loading_image_mutex);
  Loading_image_quit=true;
  SDL_UnlockMutex(loading_image_mutex);
  SDL_WaitThread(_loading_image,&thread_return_value);
- SDL_Flip(static_screen);
+ Flip_Buffers(_screen);
  Setup(_level_name);
 }
 
@@ -344,9 +345,13 @@ int Level::Change_music(bool play)
          level_last_track_played=x;
          if(Mix_PlayMusic(level_background_music[x],0)==-1)
             {
-             FILE* log_file=fopen("err/logs.txt","w");
+             FILE *log_file=fopen("err/logs.txt","w");
              fprintf(log_file,"Mix_PlayMusic failed : %s ",SDL_GetError());
              fclose(log_file);
+             char message[TEXT_LENGTH_MAX];
+             strcpy(message,"Mix_PlayMusic failed : ");
+             strcat(message,SDL_GetError());
+             SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"Music module failure",message,NULL);
              exit(-3);
             }
         }
@@ -362,7 +367,7 @@ void Level::Stop_music()
 
 bool Oversee_music_quit;
 
-int Level::Oversee_music(void* data)
+int Level::Oversee_music(void *data)
 {
  if(!MUSIC_MODULE_INIT)
     return -1;
@@ -581,7 +586,7 @@ bool Level::Move_player(int _player)
                     Save_gamemode();
                     Change_music(1);
                    }
-                level_music_overseer=SDL_CreateThread(Oversee_music,NULL);
+                level_music_overseer=SDL_CreateThread(Oversee_music,"Music Overseer",NULL);
                 return false;
                 break;
          case 6:if(arena.Get_map_texture_player_pos_x(player[_player].Get_map_positionY(),player[_player].Get_map_positionX())==-1 ||
@@ -812,7 +817,7 @@ bool Level::Non_Playable_Character_is_on_light(int _npc_pos)
 
 const int MAP_IMAGE_WEIGHT=21,MAP_IMAGE_HEIGHT=17;
 
-void Level::Print_Map(int x,int y,SDL_Surface* _screen)
+void Level::Print_Map(int x,int y,Texture *_screen)
 {
  int mapX=0,mapY=0;
  if(type!=2)
@@ -879,39 +884,48 @@ void Level::Print_Map(int x,int y,SDL_Surface* _screen)
     {
      arena.Print_Clues(x,y,mapX,mapY,_screen,false,true);
      if(skeptic_vision_on)
+        arena.Print_Special_Clues(x,y,mapX,mapY,_screen);
+     if(skeptic_vision_timer.get_ticks()>=SKEPTIC_VISION_TIME_PER_FRAME)
         {
-         skeptic_vision_alpha+=10;
-         if(skeptic_vision_alpha>SKEPTIC_VISION_MAX_ALPHA)
-            skeptic_vision_alpha=SKEPTIC_VISION_MAX_ALPHA;
-         SDL_SetAlpha(SKEPTIC_VISION_image,SDL_SRCALPHA,skeptic_vision_alpha);
-         arena.Print_Special_Clues(x,y,mapX,mapY,_screen);
-         apply_surface(0,0,_area.x,_area.y,_area.w,_area.h,SKEPTIC_VISION_image,_screen);
-        }
-     else
-        {
-         if(skeptic_vision_alpha!=0)
+         if(skeptic_vision_on)
             {
-             skeptic_vision_alpha-=10;
-             if(skeptic_vision_alpha<0)
-                skeptic_vision_alpha=0;
-             SDL_SetAlpha(SKEPTIC_VISION_image,SDL_SRCALPHA,skeptic_vision_alpha);
-             apply_surface(0,0,_area.x,_area.y,_area.w,_area.h,SKEPTIC_VISION_image,_screen);
+             skeptic_vision_alpha+=10;
+             if(skeptic_vision_alpha>SKEPTIC_VISION_MAX_ALPHA)
+                skeptic_vision_alpha=SKEPTIC_VISION_MAX_ALPHA;
+             Set_Texture_Alpha(SKEPTIC_VISION_image,skeptic_vision_alpha);
             }
+         else
+            {
+             if(skeptic_vision_alpha!=0)
+                {
+                 skeptic_vision_alpha-=10;
+                 if(skeptic_vision_alpha<0)
+                    skeptic_vision_alpha=0;
+                 Set_Texture_Alpha(SKEPTIC_VISION_image,skeptic_vision_alpha);
+                }
+            }
+         skeptic_vision_timer.start();
         }
+     Apply_Texture(0,0,_area.x,_area.y,_area.w,_area.h,SKEPTIC_VISION_image,_screen);
     }
  if(type==2)
     effects.Print_Animations(x,y,mapX,mapY,_screen,false,true);
  //effects.Print(x,y,_screen,false);
+ if(level_name_image_timer.get_ticks()>=LEVEL_NAME_IMAGE_TIME_PER_FRAME)
+    {
+     arena.Update_name_image();
+     level_name_image_timer.start();
+    }
  arena.Print_name_image(_screen);
 }
 
-void Level::Print_players_informations(SDL_Surface* _screen)
+void Level::Print_players_informations(Texture *_screen)
 {
  Print_player_information(1,_screen);
  Print_player_information(2,_screen);
 }
 
-void Level::Print_player_information(int _player,SDL_Surface* _screen)
+void Level::Print_player_information(int _player,Texture *_screen)
 {
  player[_player].Print_name(_screen);
  player[_player].Print_hp(_screen);
@@ -978,7 +992,7 @@ void Level::Handle_Event(int _player)
      if(keystates[player_keys[keys][12]] || keystates[player_keys[Other_player(keys)][11]] && !player[_player].Is_blocked())
         {
          SDL_Thread *Meditation_Screen_Thread=NULL;
-         Meditation_Screen_Thread=SDL_CreateThread(Meditation_Screen,NULL);
+         Meditation_Screen_Thread=SDL_CreateThread(Meditation_Screen,"Meditation Screen",NULL);
          Fast_Reload();
          int thread_return_value=0;
          SDL_WaitThread(Meditation_Screen_Thread,&thread_return_value);
@@ -999,58 +1013,94 @@ void Level::Handle_Event(int _player)
     player[_player].Block();
 }
 
-void Level::Handle_Events(SDL_Surface* _screen)
+void Level::Handle_Events(Texture *_screen)
 {
  Handle_Event(1);
  if(type==2)
     Handle_Event(2);
 
- if(keystates[SDLK_EQUALS])
+ if(keystates[SDL_SCANCODE_EQUALS])
     Darkness_increase();
- if(keystates[SDLK_MINUS])
+ if(keystates[SDL_SCANCODE_MINUS])
     Darkness_decrease();
- if((keystates[SDLK_RALT] || keystates[SDLK_LALT]) && keystates[SDLK_RETURN])
-    {
-     DISPLAY_MODE=(DISPLAY_MODE==SDL_FULLSCREEN)?(SDL_HWSURFACE):(SDL_FULLSCREEN);
-     _screen=SDL_SetVideoMode(RESOLUTION_X,RESOLUTION_Y,32,DISPLAY_MODE);
-    }
- if(keystates[SDLK_ESCAPE])
+ if(keystates[SDL_SCANCODE_ESCAPE] || (focus && changed_window_status))
     {
      Pause_Menu();
     }
- if(keystates[SDLK_j] && type!=2)
+ if(keystates[SDL_SCANCODE_J] && type!=2)
     {
      Open_Journal(player[1].Get_progress(),_screen);
     }
- if(keystates[SDLK_i] && type!=2)
+ if(keystates[SDL_SCANCODE_I] && type!=2)
     {
      player_inventory::Print_Inventory(_screen,player[1].Get_name());
      player[1].Fast_Reload();
      player[1].Set_movement_speed(2);
     }
+ SDL_Event event;
+ SDL_PollEvent(&event);
+ changed_window_status=false;
+ if((keystates[SDL_SCANCODE_RALT] || keystates[SDL_SCANCODE_LALT]) && keystates[SDL_SCANCODE_RETURN])
+    {
+     if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
+        DISPLAY_MODE=0;
+     else
+        DISPLAY_MODE=SDL_WINDOW_FULLSCREEN;
+     SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
+     SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
+     Fast_Reload();
+     SDL_PumpEvents();
+     while(SDL_PollEvent(&event));
+    }
+ else
+    {
+     if(event.type==SDL_WINDOWEVENT)
+        {
+         if(event.window.event==SDL_WINDOWEVENT_FOCUS_LOST || event.window.event==SDL_WINDOWEVENT_FOCUS_LOST || event.window.event==SDL_WINDOWEVENT_MINIMIZED)
+            focus=false,changed_window_status=true;
+         if(event.window.event==SDL_WINDOWEVENT_FOCUS_GAINED || event.window.event==SDL_WINDOWEVENT_FOCUS_GAINED || event.window.event==SDL_WINDOWEVENT_MAXIMIZED)
+            focus=true,changed_window_status=true;
+         if(!focus && changed_window_status)
+            {
+             if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
+                DISPLAY_MODE=0,fullscreen=true;
+             SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
+             SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
+            }
+         if(focus && changed_window_status)
+            {
+             if(fullscreen)
+                DISPLAY_MODE=SDL_WINDOW_FULLSCREEN,fullscreen=false;
+             SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
+             SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
+             Fast_Reload();
+             SDL_PumpEvents();
+            }
+        }
+    }
  #ifdef GOD_POWERS
  if(type!=2)
     {
-     if(keystates[SDLK_INSERT])
+     if(keystates[SDL_SCANCODE_INSERT])
         OBSTACLES=!OBSTACLES;
      char map_name[TEXT_LENGTH_MAX]={NULL};
-     if(keystates[SDLK_F1])
+     if(keystates[SDL_SCANCODE_F1])
         {
          strcpy(map_name,"The Stables");
         }
-     if(keystates[SDLK_F2])
+     if(keystates[SDL_SCANCODE_F2])
         {
          strcpy(map_name,"The Stables Western Exit");
         }
-     if(keystates[SDLK_F3])
+     if(keystates[SDL_SCANCODE_F3])
         {
          strcpy(map_name,"New1");
         }
-     if(keystates[SDLK_F4])
+     if(keystates[SDL_SCANCODE_F4])
         {
          strcpy(map_name,"New2");
         }
-     if(keystates[SDLK_F5])
+     if(keystates[SDL_SCANCODE_F5])
         {
          strcpy(map_name,"New3");
         }
@@ -1062,7 +1112,7 @@ void Level::Handle_Events(SDL_Surface* _screen)
     }
  if(type==2)
     {
-     if(keystates[SDLK_END])
+     if(keystates[SDL_SCANCODE_END])
         player[2].Set_hp(0);
     }
  #endif // GOD_POWERS
@@ -1335,7 +1385,7 @@ void Level::Interact_with_NPC(int _player,int _npc)
                     if(winner==1)
                        script_interpreter.Start(_screen,afterscript);
                    }
-                level_music_overseer=SDL_CreateThread(Oversee_music,NULL);
+                level_music_overseer=SDL_CreateThread(Oversee_music,"Music Overseer",NULL);
                 break;
          case 4:puzzle.Set_name(non_playable_characters[_npc].Get_puzzle_name());
                 puzzle.Load();
@@ -1736,115 +1786,115 @@ bool Level::Duel_Mode_Finish_Screen(int _player_winner)
  while(!quit)
        {
         SDL_PollEvent(&event);
-        if(event.type==SDL_KEYDOWN && (event.key.keysym.sym==SDLK_RETURN || event.key.keysym.sym==SDLK_ESCAPE))
+        if(event.type==SDL_KEYDOWN && (event.key.keysym.scancode==SDL_SCANCODE_RETURN || event.key.keysym.scancode==SDL_SCANCODE_ESCAPE))
            quit=true;
         SDL_Delay(100);
        }
  quit=false;
- /*if(event.key.keysym.sym==SDLK_ESCAPE && (player_type[2]!=0 && winner!=1))
+ /*if(event.key.keysym.scancode==SDL_SCANCODE_ESCAPE && (player_type[2]!=0 && winner!=1))
     exit(0);*/
- if(event.key.keysym.sym==SDLK_ESCAPE || (player_type[2]!=0 && winner==1))
+ if(event.key.keysym.scancode==SDL_SCANCODE_ESCAPE || (player_type[2]!=0 && winner==1))
     return false;
  return true;
 }
 
 void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
 {
- apply_surface(0,0,LEVEL_background_image,_screen);
+ Apply_Texture(0,0,LEVEL_background_image,_screen);
  if(_player_winner==1)
     {
-     apply_surface((_screen->w/2-LEVEL_WINNER->w)/2,5,LEVEL_WINNER,_screen);
+     Apply_Texture((_screen->w/2-LEVEL_WINNER->w)/2,5,LEVEL_WINNER,_screen);
      player[1].Print_name((_screen->w/2-LEVEL_WINNER->w)/2,5+LEVEL_WINNER->h,_screen);
-     apply_surface(_screen->w/2+(_screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,_screen);
+     Apply_Texture(_screen->w/2+(_screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,_screen);
      player[2].Print_name(_screen->w/2+(_screen->w/2-LEVEL_LOSER->w)/2,5+LEVEL_LOSER->h,_screen);
     }
  if(_player_winner==2)
     {
-     apply_surface((_screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,_screen);
+     Apply_Texture((_screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,_screen);
      player[1].Print_name((_screen->w/2-LEVEL_LOSER->w)/2,5+LEVEL_LOSER->h,_screen);
-     apply_surface(_screen->w/2+(_screen->w/2-LEVEL_WINNER->w)/2,5,LEVEL_WINNER,_screen);
+     Apply_Texture(_screen->w/2+(_screen->w/2-LEVEL_WINNER->w)/2,5,LEVEL_WINNER,_screen);
       player[2].Print_name(_screen->w/2+(_screen->w/2-LEVEL_WINNER->w)/2,5+LEVEL_WINNER->h,_screen);
     }
  if(_player_winner==0)
     {
-     apply_surface((_screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,_screen);
+     Apply_Texture((_screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,_screen);
      player[1].Print_name((_screen->w/2-LEVEL_LOSER->w)/2,5+LEVEL_LOSER->h,_screen);
-     apply_surface(_screen->w/2+(_screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,_screen);
+     Apply_Texture(_screen->w/2+(_screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,_screen);
      player[2].Print_name(_screen->w/2+(_screen->w/2-LEVEL_LOSER->w)/2,5+LEVEL_LOSER->h,_screen);
     }
- SDL_Surface* player_xp,*player_money,*player_xp_gain,*player_money_gain;
- TTF_Font* font=TTF_OpenFont("fonts/pixel.ttf",30);
+ Texture *player_xp,*player_money,*player_xp_gain,*player_money_gain;
+ TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
  SDL_Color xp_color={75,0,130},MONEY_COLOR={236,242,4},wins_color={241,188,48};
  char aux[TEXT_LENGTH_MAX]={NULL};
 
  if(player_type[1]==0)
     {
      itoa(player[1].Get_number_of_wins(),aux);
-     player_xp=TTF_RenderText_Solid(font,aux,wins_color);
-     apply_surface((_screen->w/2-(LEVEL_WINS->w+player_xp->w))/2,_screen->h/2-LEVEL_XP->h-LEVEL_WINS->h-25,LEVEL_WINS,_screen);
-     apply_surface((_screen->w/2-(LEVEL_WINS->w+player_xp->w))/2+LEVEL_WINS->w,_screen->h/2-LEVEL_XP->h-LEVEL_WINS->h-25,player_xp,_screen);
-     SDL_FreeSurface(player_xp);
+     player_xp=Create_TTF_Texture(font,aux,wins_color);
+     Apply_Texture((_screen->w/2-(LEVEL_WINS->w+player_xp->w))/2,_screen->h/2-LEVEL_XP->h-LEVEL_WINS->h-25,LEVEL_WINS,_screen);
+     Apply_Texture((_screen->w/2-(LEVEL_WINS->w+player_xp->w))/2+LEVEL_WINS->w,_screen->h/2-LEVEL_XP->h-LEVEL_WINS->h-25,player_xp,_screen);
+     Destroy_Texture(player_xp);
 
      itoa(player[1].Get_experience(),aux);
      strcat(aux,"  +  ");
-     player_xp=TTF_RenderText_Solid(font,aux,xp_color);
+     player_xp=Create_TTF_Texture(font,aux,xp_color);
 
      itoa(10*player[2].Get_experience()/100+10+((_player_winner==2)?20:0),aux);
-     player_xp_gain=TTF_RenderText_Solid(font,aux,xp_color);
+     player_xp_gain=Create_TTF_Texture(font,aux,xp_color);
 
-     apply_surface((_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2,_screen->h/2-LEVEL_XP->h,LEVEL_XP,_screen);
-     apply_surface((_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w,_screen->h/2-LEVEL_XP->h,player_xp,_screen);
-     apply_surface((_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w+player_xp->w,_screen->h/2-LEVEL_XP->h,player_xp_gain,_screen);
-     SDL_FreeSurface(player_xp);
-     SDL_FreeSurface(player_xp_gain);
+     Apply_Texture((_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2,_screen->h/2-LEVEL_XP->h,LEVEL_XP,_screen);
+     Apply_Texture((_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w,_screen->h/2-LEVEL_XP->h,player_xp,_screen);
+     Apply_Texture((_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w+player_xp->w,_screen->h/2-LEVEL_XP->h,player_xp_gain,_screen);
+     Destroy_Texture(player_xp);
+     Destroy_Texture(player_xp_gain);
 
      itoa(player[1].Get_money(),aux);
      strcat(aux,"  +  ");
-     player_money=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
+     player_money=Create_TTF_Texture(font,aux,MONEY_COLOR);
 
      itoa((10+player[1].Get_extra_money())*player[2].Get_experience()/100+20+((_player_winner==1)?40:0),aux);
-     player_money_gain=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
+     player_money_gain=Create_TTF_Texture(font,aux,MONEY_COLOR);
 
-     apply_surface((_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2,_screen->h/2+LEVEL_MONEY->h,LEVEL_MONEY,_screen);
-     apply_surface((_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w,_screen->h/2+LEVEL_MONEY->h,player_money,_screen);
-     apply_surface((_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w+player_money->w,_screen->h/2+LEVEL_MONEY->h,player_money_gain,_screen);
-     SDL_FreeSurface(player_money);
-     SDL_FreeSurface(player_money_gain);
+     Apply_Texture((_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2,_screen->h/2+LEVEL_MONEY->h,LEVEL_MONEY,_screen);
+     Apply_Texture((_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w,_screen->h/2+LEVEL_MONEY->h,player_money,_screen);
+     Apply_Texture((_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w+player_money->w,_screen->h/2+LEVEL_MONEY->h,player_money_gain,_screen);
+     Destroy_Texture(player_money);
+     Destroy_Texture(player_money_gain);
     }
 
  if(player_type[2]==0)
     {
      itoa(player[2].Get_number_of_wins(),aux);
-     player_xp=TTF_RenderText_Solid(font,aux,wins_color);
-     apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_WINS->w))/2,_screen->h/2-LEVEL_WINS->h-LEVEL_WINS->h-25,LEVEL_WINS,_screen);
-     apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_WINS->w))/2+LEVEL_WINS->w,_screen->h/2-LEVEL_WINS->h-LEVEL_WINS->h-25,player_xp,_screen);
-     SDL_FreeSurface(player_xp);
+     player_xp=Create_TTF_Texture(font,aux,wins_color);
+     Apply_Texture(_screen->w/2+(_screen->w/2-(LEVEL_WINS->w))/2,_screen->h/2-LEVEL_WINS->h-LEVEL_WINS->h-25,LEVEL_WINS,_screen);
+     Apply_Texture(_screen->w/2+(_screen->w/2-(LEVEL_WINS->w))/2+LEVEL_WINS->w,_screen->h/2-LEVEL_WINS->h-LEVEL_WINS->h-25,player_xp,_screen);
+     Destroy_Texture(player_xp);
 
      itoa(player[2].Get_experience(),aux);
      strcat(aux,"  +  ");
-     player_xp=TTF_RenderText_Solid(font,aux,xp_color);
+     player_xp=Create_TTF_Texture(font,aux,xp_color);
 
      itoa(10*player[1].Get_experience()/100+10+((_player_winner==1)?20:0),aux);
-     player_xp_gain=TTF_RenderText_Solid(font,aux,xp_color);
+     player_xp_gain=Create_TTF_Texture(font,aux,xp_color);
 
-     apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2,_screen->h/2-LEVEL_XP->h,LEVEL_XP,_screen);
-     apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w,_screen->h/2-LEVEL_XP->h,player_xp,_screen);
-     apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w+player_xp->w,_screen->h/2-LEVEL_XP->h,player_xp_gain,_screen);
-     SDL_FreeSurface(player_xp);
-     SDL_FreeSurface(player_xp_gain);
+     Apply_Texture(_screen->w/2+(_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2,_screen->h/2-LEVEL_XP->h,LEVEL_XP,_screen);
+     Apply_Texture(_screen->w/2+(_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w,_screen->h/2-LEVEL_XP->h,player_xp,_screen);
+     Apply_Texture(_screen->w/2+(_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w+player_xp->w,_screen->h/2-LEVEL_XP->h,player_xp_gain,_screen);
+     Destroy_Texture(player_xp);
+     Destroy_Texture(player_xp_gain);
 
      itoa(player[2].Get_money(),aux);
      strcat(aux,"  +  ");
-     player_money=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
+     player_money=Create_TTF_Texture(font,aux,MONEY_COLOR);
 
      itoa((10+player[2].Get_extra_money())*player[1].Get_experience()/100+20+((_player_winner==2)?40:0),aux);
-     player_money_gain=TTF_RenderText_Solid(font,aux,MONEY_COLOR);
+     player_money_gain=Create_TTF_Texture(font,aux,MONEY_COLOR);
 
-     apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2,_screen->h/2+LEVEL_MONEY->h,LEVEL_MONEY,_screen);
-     apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w,_screen->h/2+LEVEL_MONEY->h,player_money,_screen);
-     apply_surface(_screen->w/2+(_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w+player_money->w,_screen->h/2+LEVEL_MONEY->h,player_money_gain,_screen);
-     SDL_FreeSurface(player_money);
-     SDL_FreeSurface(player_money_gain);
+     Apply_Texture(_screen->w/2+(_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2,_screen->h/2+LEVEL_MONEY->h,LEVEL_MONEY,_screen);
+     Apply_Texture(_screen->w/2+(_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w,_screen->h/2+LEVEL_MONEY->h,player_money,_screen);
+     Apply_Texture(_screen->w/2+(_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w+player_money->w,_screen->h/2+LEVEL_MONEY->h,player_money_gain,_screen);
+     Destroy_Texture(player_money);
+     Destroy_Texture(player_money_gain);
     }
 
  if(player_type[1]==0)
@@ -1859,32 +1909,32 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
 
  if(player_type[2]!=0 && winner==1)
     {
-     player_money=TTF_RenderText_Solid(font,"Press ENTER to continue!",{255,255,255});
-     apply_surface((_screen->w-player_money->w)/2,_screen->h/2+(_screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,_screen);
-     SDL_FreeSurface(player_money);
+     player_money=Create_TTF_Texture(font,"Press ENTER to continue!",{255,255,255});
+     Apply_Texture((_screen->w-player_money->w)/2,_screen->h/2+(_screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,_screen);
+     Destroy_Texture(player_money);
     }
  else
     {
-     player_money=TTF_RenderText_Solid(font,"Press ESC to exit or ENTER to rematch!",{255,255,255});
-     apply_surface((_screen->w-player_money->w)/2,_screen->h/2+(_screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,_screen);
-     SDL_FreeSurface(player_money);
+     player_money=Create_TTF_Texture(font,"Press ESC to exit or ENTER to rematch!",{255,255,255});
+     Apply_Texture((_screen->w-player_money->w)/2,_screen->h/2+(_screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,_screen);
+     Destroy_Texture(player_money);
     }
 
  TTF_CloseFont(font);
- SDL_Flip(_screen);
+ Flip_Buffers(_screen);
 }
 
-void Level::Set_screen(SDL_Surface* screen)
+void Level::Set_screen(Texture *screen)
 {
  _screen=screen;
  static_screen=screen;
 }
 
-void Level::Setup(char* _level_name)
+void Level::Setup(char *_level_name)
 {
  Set_name(_level_name);
- SDL_Thread* _loading_image=NULL;
- _loading_image=SDL_CreateThread(Loading_image,NULL);
+ SDL_Thread *_loading_image=NULL;
+ _loading_image=SDL_CreateThread(Loading_image,"Level Setup Loading",NULL);
  Load();
  //SDL_Delay(1000);
  int thread_return_value=0;
@@ -1892,7 +1942,7 @@ void Level::Setup(char* _level_name)
  Loading_image_quit=true;
  SDL_UnlockMutex(loading_image_mutex);
  SDL_WaitThread(_loading_image,&thread_return_value);
- SDL_Flip(static_screen);
+ Flip_Buffers(_screen);
  Set_arena_size();
  player_time_blocked[1]=player_time_blocked[2]=0;
  player[1].Unblock();
@@ -1900,13 +1950,13 @@ void Level::Setup(char* _level_name)
  if(type!=2)
     return;
  level_duration.start();
- Set_player_POSX(1,((RESOLUTION_X-840)/2)/2-100);
- Set_player_LAST_POSX(1,((RESOLUTION_X-840)/2)/2+100);
- Set_player_POSX(2,(RESOLUTION_X+(RESOLUTION_X-840)/2+840)/2-100);
- Set_player_LAST_POSX(2,(RESOLUTION_X+(RESOLUTION_X-840)/2+840)/2+100);
+ Set_player_POSX(1,((RESOLUTION_W-840)/2)/2-100);
+ Set_player_LAST_POSX(1,((RESOLUTION_W-840)/2)/2+100);
+ Set_player_POSX(2,(RESOLUTION_W+(RESOLUTION_W-840)/2+840)/2-100);
+ Set_player_LAST_POSX(2,(RESOLUTION_W+(RESOLUTION_W-840)/2+840)/2+100);
 }
 
-void Level::Start(SDL_Surface* screen,bool cleanup)
+void Level::Start(Texture *screen,bool cleanup)
 {
  winner=0;
  bool play=true;
@@ -1928,7 +1978,7 @@ void Level::Start(SDL_Surface* screen,bool cleanup)
             Change_music(1);
             level_music_time.start();
            }
-        level_music_overseer=SDL_CreateThread(Level::Oversee_music,NULL);
+        level_music_overseer=SDL_CreateThread(Level::Oversee_music,"Music Overseer",NULL);
         done=false;
         _screen=screen;
         static_screen=screen;
@@ -1940,6 +1990,8 @@ void Level::Start(SDL_Surface* screen,bool cleanup)
         level_duration.start();
         current_time.start();
         level_music_time.start();
+        skeptic_vision_timer.start();
+        level_name_image_timer.start();
         #ifdef AUDIO
         Change_music(1);
         //Start_music();
@@ -1958,7 +2010,7 @@ void Level::Start(SDL_Surface* screen,bool cleanup)
                previous_time=current_time.get_ticks();
                lag+=elapsed;
                SDL_PumpEvents();
-               quit=keystates[SDL_QUIT] || ((keystates[SDLK_RALT] || keystates[SDLK_LALT]) && keystates[SDLK_F4]);
+               quit=keystates[SDL_QUIT] || ((keystates[SDL_SCANCODE_RALT] || keystates[SDL_SCANCODE_LALT]) && keystates[SDL_SCANCODE_F4]);
                Handle_Events(screen);
                while(!level_changed && lag>MS_PER_UPDATE && !done)
                      {
@@ -1977,12 +2029,12 @@ void Level::Start(SDL_Surface* screen,bool cleanup)
                          }
                       lag-=MS_PER_UPDATE;
                      }
-               apply_surface(0,0,LEVEL_background_image,screen);
+               Apply_Texture(0,0,LEVEL_background_image,screen);
                if(type==2)
                   Print_players_informations(screen);
-               Print_Map((RESOLUTION_X-840)/2,PIXELS_PER_INGAME_UNIT,screen);
+               Print_Map((RESOLUTION_W-840)/2,PIXELS_PER_INGAME_UNIT,screen);
                if(!done)
-                  SDL_Flip(screen);
+                  Flip_Buffers(screen);
                if(type==2 && level_duration.get_ticks()>duration)
                   quit=true;
                if(type==2 && ((player[1].Get_hp()<=0 && !player[1].Is_immortal()) || (player[2].Get_hp()<=0 && !player[2].Is_immortal())))
@@ -2024,21 +2076,21 @@ void Level::Start(SDL_Surface* screen,bool cleanup)
 
 void Level::Cleanup()
 {
- SDL_Thread* _loading_image=NULL;
- _loading_image=SDL_CreateThread(Loading_image,NULL);
+ SDL_Thread *_loading_image=NULL;
+ _loading_image=SDL_CreateThread(Loading_image,"Level Cleanup Loading",NULL);
  Clear();
  SDL_LockMutex(loading_image_mutex);
  Loading_image_quit=true;
  SDL_UnlockMutex(loading_image_mutex);
  int thread_return_value=0;
  SDL_WaitThread(_loading_image,&thread_return_value);
- SDL_Flip(static_screen);
+ Flip_Buffers(static_screen);
 }
 
 void Level::Save_gamemode()
 {
  int player_map_position_x,player_map_position_y;
- FILE* where=fopen("saves/gamemodes/Story Mode.pwsav","w");
+ FILE *where=fopen("saves/gamemodes/Story Mode.pwsav","w");
  player_map_position_x=Get_player_map_position_x(1);
  player_map_position_y=Get_player_map_position_y(1);
  fprintf(where,"%d %d\n",player_map_position_x,player_map_position_y);
@@ -2047,11 +2099,11 @@ void Level::Save_gamemode()
 }
 
 ///Launch
-void Launch_Story_Mode(Level* level,SDL_Surface* _screen)
+void Launch_Story_Mode(Level *level,Texture *_screen)
 {
  int player_map_position_x,player_map_position_y;
  char level_name[TEXT_LENGTH_MAX],player_name[TEXT_LENGTH_MAX];
- FILE* where=fopen("saves/gamemodes/Story Mode.pwsav","r");
+ FILE *where=fopen("saves/gamemodes/Story Mode.pwsav","r");
  if(where==NULL)
     {
      fclose(where);
@@ -2061,9 +2113,10 @@ void Launch_Story_Mode(Level* level,SDL_Surface* _screen)
      where=fopen("saves/gamemodes/Story Mode.pwsav","r");
      if(where==NULL)
         {
-         FILE* log_file=fopen("err/logs.txt","w");
+         FILE *log_file=fopen("err/logs.txt","w");
          fprintf(log_file,"\"saves/gamemodes/Story Mode.pwsav\" is missing");
          fclose(log_file);
+         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"Save file missing","\"saves/gamemodes/Story Mode.pwsav\" is missing\nReset saves to fix this.",NULL);
          exit(5);
         }
     }
@@ -2087,14 +2140,14 @@ void Launch_Story_Mode(Level* level,SDL_Surface* _screen)
  level->Cleanup();
 }
 
-void Launch_Duel_Mode(Level* level,SDL_Surface* _screen)
+void Launch_Duel_Mode(Level *level,Texture *_screen)
 {
  level->Set_screen(_screen);
  level->Setup("Duel Mode");
  level->Start(_screen);
 }
 
-void Open_Journal(std::bitset<NUMBER_OF_MAX_KEYS>* progress,SDL_Surface* _screen)
+void Open_Journal(std::bitset<NUMBER_OF_MAX_KEYS> *progress,Texture *_screen)
 {
  journal.Start(progress,_screen);
 }

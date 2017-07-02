@@ -10,7 +10,7 @@ void Map_Texture::Clear(bool _delete)
 {
  if(image!=NULL && _delete)
     {
-     SDL_FreeSurface(image);
+     Destroy_Texture(image);
      image=NULL;
     }
  id=0;
@@ -25,7 +25,7 @@ void Map_Texture::Set_id(int _id)
  id=_id;
 }
 
-void Map_Texture::Set_name(char* _name)
+void Map_Texture::Set_name(char *_name)
 {
  strcpy(name,_name);
 }
@@ -105,7 +105,7 @@ void Map_Texture::Load()
  strcpy(path,"maps/textures/");
  strcat(path,aux);
  strcat(path,".pwt");
- FILE* where=fopen(path,"r");
+ FILE *where=fopen(path,"r");
  int buff_id,_print_before_player;
  fscanf(where,"%d ",&number_of_frames);
  fscanf(where,"%d ",&type);
@@ -128,12 +128,12 @@ void Map_Texture::Load()
  buff.Load();
  strcpy(path,"maps/textures/images/");
  strcat(path,name);
- strcat(path,".bmp");
- image=make_it_transparent(path);
+ strcat(path,".png");
+ image=Load_Transparent_Texture(path);
  fclose(where);
 }
 
-void Map_Texture::Print_image(int x,int y,SDL_Surface* _screen,int frame)
+void Map_Texture::Print_image(int x,int y,Texture *_screen,int frame)
 {
  if(image==NULL)
     return;
@@ -141,5 +141,5 @@ void Map_Texture::Print_image(int x,int y,SDL_Surface* _screen,int frame)
  image_position.y=0;
  image_position.h=PIXELS_PER_INGAME_UNIT;
  image_position.w=PIXELS_PER_INGAME_UNIT;
- apply_surface(image_position.x,image_position.y,x,y,image_position.h,image_position.w,image,_screen);
+ Apply_Texture(image_position.x,image_position.y,x,y,image_position.h,image_position.w,image,_screen);
 }

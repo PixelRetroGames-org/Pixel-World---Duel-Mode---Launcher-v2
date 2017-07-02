@@ -1,67 +1,90 @@
 #include "library.h"
-//SDL
-#include "SDL/SDL.h"
-#include "SDL/SDL_ttf.h"
-#include "SDL/SDL_mixer.h"
 
-Uint8* keystates=SDL_GetKeyState(NULL);
+const Uint8 *keystates=SDL_GetKeyboardState(NULL);
 
 const int PLAYER_INFO_POSX=760,PLAYER_INFO_LAST_POSX=1130;
-
 const int MAP_POSX=0,MAP_POSY=0,MAP_LAST_POSX=760,MAP_LAST_POSY=1130;
-
 const int PIXELS_PER_INGAME_UNIT=40;
 
-void Set_icon(char* filename)
+///RENDERER
+SDL_Window *WINDOW;
+SDL_Renderer *RENDERER;
+SDL_mutex *RENDERER_MUTEX;
+SDL_Surface *SCREEN_SURFACE;
+
+void Open_Window_and_Renderer(int RESOLUTION_W,int RESOLUTION_H,int DISPLAY_MODE)
 {
- Uint32 colorkey;
- SDL_Surface* _icon=NULL;
- _icon=SDL_LoadBMP(filename);
- colorkey=SDL_MapRGB(_icon->format,255,0,255);
- SDL_SetColorKey(_icon, SDL_SRCCOLORKEY, colorkey);
- SDL_WM_SetIcon(_icon,NULL);
+ WINDOW=SDL_CreateWindow("Pixel World",0,0,RESOLUTION_W,RESOLUTION_H,DISPLAY_MODE);
+ Set_icon("images/icon.png",WINDOW);
+ RENDERER=SDL_CreateRenderer(WINDOW,-1,SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
+ RENDERER_MUTEX=SDL_CreateMutex();
+ SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
 }
 
-void Make_Fullscreen(SDL_Surface* _screen,bool* fullscreen)
+void Close_Window_and_Renderer()
+{
+ SDL_DestroyWindow(WINDOW);
+ WINDOW=NULL;
+ SDL_DestroyRenderer(RENDERER);
+ RENDERER=NULL;
+ SDL_DestroyMutex(RENDERER_MUTEX);
+ RENDERER_MUTEX=NULL;
+}
+///
+
+void Set_icon(char *filename,SDL_Window *_window)
+{
+ Uint32 colorkey;
+ SDL_Surface *_icon=NULL;
+ _icon=IMG_Load(filename);
+ if(_icon==NULL)
+    return;
+ colorkey=SDL_MapRGB(_icon->format,255,0,255);
+ SDL_SetColorKey(_icon, SDL_TRUE, colorkey);
+ SDL_SetWindowIcon(_window,_icon);
+}
+
+void Make_Fullscreen(SDL_Window *_window,bool *fullscreen)
 {
  if(fullscreen)
-    _screen=SDL_SetVideoMode(0,0,32,SDL_SWSURFACE);
+    {
+     int a=0;
+     SDL_SetWindowFullscreen(_window,SDL_WINDOW_FULLSCREEN);
+    }
  else
-    _screen=SDL_SetVideoMode(0,0,32,SDL_FULLSCREEN);
+    {
+     int b=0;
+     SDL_SetWindowFullscreen(_window,0);
+    }
  bool x=*fullscreen;
  x=!(x);
  (*fullscreen)=x;
 }
 
-SDL_Surface* load_image(std::string filename)
+SDL_Surface *load_image(std::string filename)
 {
- SDL_Surface* loadedImage=NULL;
- SDL_Surface* optimizedImage=NULL;
- loadedImage=SDL_LoadBMP(filename.c_str());
- if(loadedImage!=NULL)
-    {
-     optimizedImage=SDL_DisplayFormat(loadedImage);
-     SDL_FreeSurface(loadedImage);
-    }
+ SDL_Surface *loadedImage=NULL;
+ loadedImage=IMG_Load(filename.c_str());
+ if(loadedImage==NULL)
+    return NULL;
+ SDL_Surface *optimizedImage=SDL_ConvertSurface(loadedImage,SCREEN_SURFACE->format,NULL);
+ SDL_FreeSurface(loadedImage);
  return optimizedImage;
 }
 
-void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination )
+void apply_surface( int x, int y, SDL_Surface *source, SDL_Surface *destination )
 {
- SDL_Rect* offset;
+ SDL_Rect *offset;
  offset=new SDL_Rect;
  offset->x=x;
  offset->y=y;
  SDL_BlitSurface(source,NULL,destination,offset);
  delete offset;
- #ifdef DEBUG
- SDL_Flip(destination);
- #endif // DEBUG
 }
 
-void apply_surface( int x, int y,int w,int h, SDL_Surface* source, SDL_Surface* destination )
+void apply_surface( int x, int y,int w,int h, SDL_Surface *source, SDL_Surface *destination )
 {
- SDL_Rect* offset,*enlarge;
+ SDL_Rect *offset,*enlarge;
  offset=new SDL_Rect;
  enlarge=new SDL_Rect;
  offset->x=x;
@@ -72,14 +95,11 @@ void apply_surface( int x, int y,int w,int h, SDL_Surface* source, SDL_Surface* 
  SDL_BlitSurface(source,enlarge,destination,offset);
  delete offset;
  delete enlarge;
- #ifdef DEBUG
- SDL_Flip(destination);
- #endif // DEBUG
 }
 
-void apply_surface(int xImage,int yImage,int xScreen,int yScreen,int w,int h,SDL_Surface* source,SDL_Surface* destination)
+void apply_surface(int xImage,int yImage,int xScreen,int yScreen,int w,int h,SDL_Surface *source,SDL_Surface *destination)
 {
- SDL_Rect* offset,*enlarge;
+ SDL_Rect *offset,*enlarge;
  offset=new SDL_Rect;
  enlarge=new SDL_Rect;
  offset->x=xScreen;
@@ -91,36 +111,21 @@ void apply_surface(int xImage,int yImage,int xScreen,int yScreen,int w,int h,SDL
  int rtn=SDL_BlitSurface(source,enlarge,destination,offset);
  delete offset;
  delete enlarge;
- #ifdef DEBUG
- SDL_Flip(destination);
- #endif // DEBUG
 }
 
-SDL_Surface* make_it_transparent( char* filename )
+SDL_Surface *make_it_transparent( char *filename )
 {
- SDL_Surface* loadedImage=NULL;
- SDL_Surface* optimizedImage=NULL;
- loadedImage=SDL_LoadBMP(filename);
+ SDL_Surface *loadedImage=NULL;
+ loadedImage=IMG_Load(filename);
  if(loadedImage!=NULL)
     {
-	 optimizedImage=SDL_DisplayFormat(loadedImage);
-	 SDL_FreeSurface(loadedImage);
-	 if(optimizedImage!=NULL)
-         {
-	      Uint32 colorkey=SDL_MapRGB(optimizedImage->format,0xFF,0x0,0xE1);
-	      SDL_SetColorKey(optimizedImage,SDL_SRCCOLORKEY,colorkey);
-         }
+     Uint32 colorkey=SDL_MapRGB(loadedImage->format,0xFF,0x0,0xE1);
+     Uint8 r,g,b;
+     SDL_GetRGB(colorkey,loadedImage->format,&r,&g,&b);
+     if(r==0xFF && g==0x0 && b==0xE1)
+        SDL_SetColorKey(loadedImage, SDL_TRUE, colorkey);
     }
- return optimizedImage;
-}
-
-void make_it_transparent( SDL_Surface* image )
-{
- if(image!=NULL)
-    {
-     Uint32 colorkey=SDL_MapRGB(image->format,0xFF,0x0,0xE1);
-     SDL_SetColorKey(image,SDL_SRCCOLORKEY,colorkey);
-    }
+ return loadedImage;
 }
 
 Timer::Timer()
