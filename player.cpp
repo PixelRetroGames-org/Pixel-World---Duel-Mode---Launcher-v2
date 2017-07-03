@@ -1,7 +1,6 @@
 #include "player.h"
 
 const SDL_Color NAME_COLOR={255,255,255},EXPERIENCE_COLOR={235,20,20},MONEY_COLOR={125,125,125},MONEY_COLOR1={236,242,4},NUMBER_OF_ITEMS_COLOR={255,128,0};
-const SDL_Color EQUIP_COLOR={15,30,90},BUY_COLOR={40,80,160},EQUIPPED_COLOR={255,128,0},SKIN_COLOR={193,20,20};
 const SDL_Color HP_COLOR={255,255,255},MANA_COLOR={255,255,255};
 
 const int INVENTORY_MAX_NUMBER_OF_ITEMS=10,INVENTORY_MAX_NUMBER_OF_POTIONS=5;
@@ -88,6 +87,16 @@ void Player::Set_money(int _money)
 void Player::Set_experience(int _experience)
 {
  experience=_experience;
+}
+
+void Player::Set_id(int _id)
+{
+ id=_id;
+}
+
+void Player::Set_Controller_Timer(Timer *_controller_timer)
+{
+ controller_timer=_controller_timer;
 }
 
 void Player::Load()
@@ -241,6 +250,7 @@ void Player::Load()
  Set_hp(basic_hp);
  Set_mana(basic_mana);
  Set_mental_health(basic_mental_health);
+ inventory_item_selected=-1;
 }
 
 void Player::Fast_Reload()
@@ -641,6 +651,8 @@ void Player::Print_Inventory_equipped_items(int x,int y,Texture *_screen,bool op
  TTF_CloseFont(font);
 }
 
+const int CONTROLLER_DELAY=100;
+
 int Player::Start_inventory(int x,int y,Texture *_screen,SDL_Event *event,int type,bool allow_sales)
 {
  inventory_item_click=-1;
@@ -706,7 +718,27 @@ int Player::Start_inventory(int x,int y,Texture *_screen,SDL_Event *event,int ty
              }
          }
     }
- if(event->type==SDL_MOUSEBUTTONDOWN)
+ if(inventory_item_selected-5>=0 && controller_timer->get_ticks()>CONTROLLER_DELAY && controller[id].Pressed_Up())
+    {
+     inventory_item_selected-=5;
+     controller_timer->start();
+    }
+ if(inventory_item_selected+5<10 && controller_timer->get_ticks()>CONTROLLER_DELAY && controller[id].Pressed_Down())
+    {
+     inventory_item_selected+=5;
+     controller_timer->start();
+    }
+ if(inventory_item_selected-1>=0 && controller_timer->get_ticks()>CONTROLLER_DELAY && controller[id].Pressed_Left())
+    {
+     inventory_item_selected--;
+     controller_timer->start();
+    }
+ if(inventory_item_selected+1<10 && controller_timer->get_ticks()>CONTROLLER_DELAY && controller[id].Pressed_Right())
+    {
+     inventory_item_selected++;
+     controller_timer->start();
+    }
+ if(event->type==SDL_MOUSEBUTTONDOWN || (controller_timer->get_ticks()>CONTROLLER_DELAY && controller[id].Pressed_A_button()))
     inventory_item_click=inventory_item_selected;
  if(inventory_item_click!=-1)
     {

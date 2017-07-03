@@ -6,6 +6,7 @@
 #include "load_images.h"
 #include "load_audio_effects.h"
 #include "settings.h"
+#include "controller.h"
 
 #include <cstring>
 

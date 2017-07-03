@@ -13,6 +13,7 @@
 #include "load_audio_effects.h"
 #include "settings.h"
 #include "menu.h"
+#include "controller.h"
 
 #include <map>
 #include <ctime>

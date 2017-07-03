@@ -151,7 +151,10 @@ void Script_interpreter::Start(int X,int Y)
  Apply_Texture(0,0,big_buffer,screen);
  Flip_Buffers(screen);
  SDL_Delay(100);
- while(SDL_PollEvent(&event));
+ while(SDL_PollEvent(&event))
+       {
+        Update_Controllers_Events();
+       }
  while(!quit)
        {
         ch=fgetc(in);
@@ -220,12 +223,17 @@ void Script_interpreter::Start(int X,int Y)
                                       SDL_Delay(10);
                                 break;
                         case 7: SDL_Delay(200);
-                                while(SDL_PollEvent(&event));
+                                while(SDL_PollEvent(&event))
+                                      {
+                                       Update_Controllers_Events();
+                                      }
                                 aux2=1;
                                 SDL_PollEvent(&event);
-                                while(event.type!=SDL_KEYDOWN && event.type!=SDL_MOUSEBUTTONDOWN)
+                                Update_Controllers_Events();
+                                while((event.type!=SDL_KEYDOWN && event.type!=SDL_MOUSEBUTTONDOWN) && !controller[1].Pressed_Any_Button() && !controller[2].Pressed_Any_Button())
                                       {
                                        SDL_PollEvent(&event);
+                                       Update_Controllers_Events();
                                        SDL_Delay(25);
                                       }
                                 break;

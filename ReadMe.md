@@ -7,5 +7,5 @@ The game is powered by Pixel World Engine, a custom made for this project. It is
 
 - [ ] Testing 
 - [ ] Populate the Stables
-- [ ] Controller support for Duel Mode
-- [ ] Controller support for Story Mode
+- [x] Controller support for Duel Mode
+- [ ] Controller support for Story Mode (in progress...)

@@ -88,6 +88,15 @@ void Shop::Reset()
  page_click=page_selected=0;
 }
 
+void Shop::Set_Controller_Timer(Timer *_controller_timer)
+{
+ controller_timer=_controller_timer;
+ for(int i=0;i<number_of_pages;i++)
+     pages[i].Set_Controller_Timer(_controller_timer);
+}
+
+const int CONTROLLER_DELAY=100;
+
 inline int Shop::Start(Texture *_screen,SDL_Event *event)
 {
  if(event->type==SDL_MOUSEMOTION || event->type==SDL_MOUSEBUTTONDOWN)
@@ -105,6 +114,16 @@ inline int Shop::Start(Texture *_screen,SDL_Event *event)
  if(event->type==SDL_MOUSEBUTTONDOWN && page_selected!=-1)
     {
      page_click=page_selected;
+    }
+ if(page_selected>0 && controller_timer->get_ticks()>CONTROLLER_DELAY && (controller[1].Pressed_LeftShoulder() || controller[2].Pressed_LeftShoulder()))
+    {
+     page_click=--page_selected;
+     controller_timer->start();
+    }
+ if(page_selected<number_of_pages-1 && controller_timer->get_ticks()>CONTROLLER_DELAY && (controller[1].Pressed_RightShoulder() || controller[2].Pressed_RightShoulder()))
+    {
+     page_click=++page_selected;
+     controller_timer->start();
     }
  Print(_screen);
  return pages[page_click].Start(_screen,event);
@@ -133,6 +152,7 @@ int Shop_Screen::Start(Texture *screen)
      shop.Set_LAST_POSX(5+4*180+20);
     }
  shop.Load();
+ shop.Set_Controller_Timer(&controller_timer);
  player.Load();
  int thread_return_value=0;
  SDL_LockMutex(loading_image_mutex);
@@ -157,11 +177,14 @@ int Shop_Screen::Start(Texture *screen)
  not_enough_background=Load_Transparent_Texture("images/shop/not_enough_background.png");
  int message=0,nr=0;
  Timer fps;
+ controller_timer.start();
+ player.Set_Controller_Timer(&controller_timer);
  while(!quit)
        {
         fps.start();
         if(SDL_PollEvent(&event) && !quit)
               {
+               Update_Controllers_Events();
                int _item_id=shop.Start(screen,&event);
                if(_item_id!=-1)
                   {
@@ -178,7 +201,8 @@ int Shop_Screen::Start(Texture *screen)
                _item_id=player.Start_inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,&event,shop.Get_shop_page_type());
                player.Print_Character(player.Get_PLAYER_INFO_POSX(),0,screen);
                player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,true,shop.Get_shop_page_type());
-               if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_ESCAPE))
+               if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_ESCAPE) ||
+                  (controller[1].Pressed_Guide_button() || controller[2].Pressed_Guide_button()))
                   quit=true;
                switch(message)
                       {

@@ -133,6 +133,8 @@ void Menu::Print_options(Texture *_screen)
  Flip_Buffers(_screen);
 }
 
+const int CONTROLLER_DELAY=100;
+
 int Menu::Start(Texture *_screen)
 {
  selector_position=-1;
@@ -140,12 +142,14 @@ int Menu::Start(Texture *_screen)
  SDL_Event event;
  bool quit=false,done=false;
  int x,y;
- Timer fps,fps1;
+ Timer fps,fps1,controller_timer;
  fps1.start();
+ controller_timer.start();
  while(SDL_PollEvent(&event));
  while(!quit && !done)
        {
         fps.start();
+        Update_Controllers_Events();
         if(SDL_PollEvent(&event))
            {
             bool event_action=false;
@@ -193,7 +197,29 @@ int Menu::Start(Texture *_screen)
                 click_position=-1;
                 event_action=true;
                }
-            if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_ESCAPE))
+
+            //Controller
+            if((controller[1].Pressed_Up() || controller[2].Pressed_Up()) && selector_position>0 && controller_timer.get_ticks()>CONTROLLER_DELAY)
+               {
+                selector_position--;
+                event_action=true;
+                controller_timer.start();
+               }
+            if((controller[1].Pressed_Down() || controller[2].Pressed_Down()) && selector_position<number_of_options-1 && controller_timer.get_ticks()>CONTROLLER_DELAY)
+               {
+                selector_position++;
+                event_action=true;
+                controller_timer.start();
+               }
+            if(controller[1].Pressed_A_button() || controller[2].Pressed_A_button() ||
+               controller[1].Pressed_Start_button() || controller[2].Pressed_Start_button() && controller_timer.get_ticks()>CONTROLLER_DELAY)
+               {
+                click_position=selector_position;
+                done=true;
+                event_action=true;
+                controller_timer.start();
+               }
+            if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_ESCAPE) || (controller[1].Pressed_Guide_button() || controller[2].Pressed_Guide_button()))
                quit=true,event_action=true;
             if(!event_action)
                continue;

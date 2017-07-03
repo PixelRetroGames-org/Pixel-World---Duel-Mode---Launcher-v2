@@ -21,6 +21,7 @@ class Shop_Page
  int item_selected,item_click;
  int number_of_items,number_of_lines,number_of_columns;
  int title_size;
+ Timer *controller_timer;
 
  public:
  Shop_Page();
@@ -34,6 +35,7 @@ class Shop_Page
  void Print(int x,int y,Texture *_screen);
  void Print_Title(int x,int y,Texture *_screen,bool selected,bool click);
  void Reset();
+ void Set_Controller_Timer(Timer *_controller_timer);
  int Start(Texture *_screen,SDL_Event *event);
 };
 

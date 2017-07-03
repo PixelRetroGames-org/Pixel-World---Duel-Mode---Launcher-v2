@@ -16,6 +16,7 @@ class Shop
  int number_of_pages,page_selected,page_click=0;
  int POSX=0,LAST_POSX=0;
  std::vector<Shop_Page> pages;
+ Timer *controller_timer;
 
  public:
  Shop();
@@ -27,6 +28,7 @@ class Shop
  void Load();
  void Print(Texture *_screen);
  void Reset();
+ void Set_Controller_Timer(Timer *_controller_timer);
  inline int Start(Texture *_screen,SDL_Event *event);
 };
 
@@ -36,6 +38,7 @@ class Shop_Screen
  Shop shop;
  Player player;
  char filename[TEXT_LENGTH_MAX]={NULL};
+ Timer controller_timer;
 
  public:
  int Start(Texture *screen);

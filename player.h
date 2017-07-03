@@ -22,6 +22,7 @@ class Player
 {
  private:
  char name[TEXT_LENGTH_MAX];
+ int id;
  int money,experience;
  int number_of_items,inventory_number_of_items,inventory_number_of_spells;
  int number_of_items_bought[NUMBER_OF_ITEMS_IDS];
@@ -50,6 +51,7 @@ class Player
  std::bitset<NUMBER_OF_MAX_KEYS> keys,progress;
  bool is_immortal=false;
  int number_of_wins=0;
+ Timer *controller_timer;
  ///AI
  Timer spell_timer[4],attack_timer;
  int counter=-1;
@@ -63,6 +65,8 @@ class Player
  void Set_SKIN_POSX(int _x);
  void Set_money(int _money);
  void Set_experience(int _experience);
+ void Set_id(int _id);
+ void Set_Controller_Timer(Timer *_controller_timer);
  void Load();
  void Fast_Reload();
  void Update();

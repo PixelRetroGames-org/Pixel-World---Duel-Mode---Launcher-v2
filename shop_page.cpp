@@ -152,6 +152,13 @@ void Shop_Page::Reset()
  item_click=item_selected=-1;
 }
 
+void Shop_Page::Set_Controller_Timer(Timer *_controller_timer)
+{
+ controller_timer=_controller_timer;
+}
+
+const int CONTROLLER_DELAY=100;
+
 int Shop_Page::Start(Texture *_screen,SDL_Event *event)
 {
  int _x=POSX,_y=60,x,y;
@@ -170,9 +177,30 @@ int Shop_Page::Start(Texture *_screen,SDL_Event *event)
           _x+=180;
          }
     }
- if(event->type==SDL_MOUSEBUTTONDOWN)
+ if(event->type==SDL_MOUSEBUTTONDOWN || (controller_timer->get_ticks()>CONTROLLER_DELAY && (controller[1].Pressed_A_button() || controller[2].Pressed_A_button())))
     {
      item_click=item_selected;
+     controller_timer->start();
+    }
+ if(item_selected-number_of_columns>=0 && controller_timer->get_ticks()>CONTROLLER_DELAY && (controller[1].Pressed_Up() || controller[2].Pressed_Up()))
+    {
+     item_selected-=number_of_columns;
+     controller_timer->start();
+    }
+ if(item_selected+number_of_columns<number_of_items && controller_timer->get_ticks()>CONTROLLER_DELAY && (controller[1].Pressed_Down() || controller[2].Pressed_Down()))
+    {
+     item_selected+=number_of_columns;
+     controller_timer->start();
+    }
+ if(item_selected>0 && controller_timer->get_ticks()>CONTROLLER_DELAY && (controller[1].Pressed_Left() || controller[2].Pressed_Left()))
+    {
+     item_selected--;
+     controller_timer->start();
+    }
+ if(item_selected<number_of_items-1 && controller_timer->get_ticks()>CONTROLLER_DELAY && (controller[1].Pressed_Right() || controller[2].Pressed_Right()))
+    {
+     item_selected++;
+     controller_timer->start();
     }
  Print(POSX,60,_screen);
  if(item_click==-1)

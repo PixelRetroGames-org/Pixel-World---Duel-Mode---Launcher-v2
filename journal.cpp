@@ -49,13 +49,17 @@ void Journal::Set_name(char *_name)
  strcpy(name,_name);
 }
 
+Timer controller_timer;
+const int CONTROLLER_DELAY=100;
+
 void Journal::Handle_Events(SDL_Event *event)
 {
  redraw=false;
- if(event->type==SDL_KEYDOWN)
+ if(event->type==SDL_KEYDOWN || controller[1].Pressed_Any_Button() || controller[2].Pressed_Any_Button())
     {
-     if(event->key.keysym.scancode==SDL_SCANCODE_UP || event->key.keysym.scancode==SDL_SCANCODE_W)
+     if((event->key.keysym.scancode==SDL_SCANCODE_UP || event->key.keysym.scancode==SDL_SCANCODE_W) || (controller_timer.get_ticks()>CONTROLLER_DELAY && (controller[1].Pressed_Up() || controller[2].Pressed_Up())))
         {
+         controller_timer.start();
          if(current_entry-1>=0)
             {
              current_entry--;
@@ -66,10 +70,11 @@ void Journal::Handle_Events(SDL_Event *event)
              redraw=true;
             }
         }
-     if(event->key.keysym.scancode==SDL_SCANCODE_DOWN || event->key.keysym.scancode==SDL_SCANCODE_S)
+     if((event->key.keysym.scancode==SDL_SCANCODE_DOWN || event->key.keysym.scancode==SDL_SCANCODE_S) || (controller_timer.get_ticks()>CONTROLLER_DELAY && (controller[1].Pressed_Down() || controller[2].Pressed_Down())))
         {
          if(current_entry+1<=number_of_entries)
             {
+             controller_timer.start();
              int cpy=current_entry;
              current_entry++;
              if(current_entry>=number_of_entries)
@@ -134,12 +139,15 @@ void Journal::Start(Texture *_screen)
  Print(_screen);
  Flip_Buffers(_screen);
  Timer fps;
+ controller_timer.start();
  while(!quit)
        {
         fps.start();
         if(SDL_PollEvent(&event) && !quit)
            {
-            if((event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_ESCAPE) || (event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_J))
+            Update_Controllers_Events();
+            if((event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_ESCAPE) || (event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_J) ||
+               (controller[1].Pressed_Guide_button() || controller[1].Pressed_Start_button() || controller[2].Pressed_Guide_button() || controller[2].Pressed_Start_button()))
                quit=true;
             Handle_Events(&event);
             if(redraw)

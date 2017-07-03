@@ -59,11 +59,20 @@ void Print_Settings_Background(Texture *_screen)
  Apply_Texture((RESOLUTION_W-SETTINGS_name->w)/2,PIXELS_PER_INGAME_UNIT,SETTINGS_name,_screen);
 }
 
+int selector_position,click_position;
+const int number_of_options=6;
+const int CONTROLLER_DELAY=100;
+
 void Graphic_Settings(Texture *_screen)
 {
+ selector_position=click_position=-1;
  bool quit=false;
  SDL_Event event;
+ SDL_Delay(100);
+ while(SDL_PollEvent(&event));
  SDL_PumpEvents();
+ Timer controller_timer;
+ controller_timer.start();
  while(!quit)
        {
         Print_Settings_Background(_screen);
@@ -76,16 +85,40 @@ void Graphic_Settings(Texture *_screen)
         quit=Graphic_Back((RESOLUTION_W-SETTINGS_option_background->w)/2,400,_screen,&event);
         Flip_Buffers(_screen);
         SDL_PollEvent(&event);
-        SDL_Delay(40);
-        if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_ESCAPE))
+        Update_Controllers_Events();
+        SDL_Delay(20);
+        if(event.type==SDL_MOUSEMOTION)
+           selector_position=-1;
+        if((controller[1].Pressed_Up() || controller[2].Pressed_Up()) && selector_position>0 && controller_timer.get_ticks()>CONTROLLER_DELAY)
+           {
+            selector_position--;
+            controller_timer.start();
+           }
+        if((controller[1].Pressed_Down() || controller[2].Pressed_Down()) && selector_position<number_of_options-1 && controller_timer.get_ticks()>CONTROLLER_DELAY)
+           {
+            selector_position++;
+            controller_timer.start();
+           }
+        if(controller_timer.get_ticks()>CONTROLLER_DELAY*2 && (controller[1].Pressed_A_button() || controller[2].Pressed_A_button() ||
+                                                             controller[1].Pressed_Start_button() || controller[2].Pressed_Start_button()))
+           {
+            click_position=selector_position;
+            controller_timer.start();
+           }
+        if(event.type==SDL_QUIT || ((event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_ESCAPE) || (controller[1].Pressed_Guide_button() || controller[2].Pressed_Guide_button())))
            quit=true;
        }
 }
 
 void Graphic_Settings(Texture *_screen,SDL_Event *event)
 {
+ selector_position=click_position=-1;
  bool quit=false;
+ SDL_Delay(100);
+ while(SDL_PollEvent(event));
  SDL_PumpEvents();
+ Timer controller_timer;
+ controller_timer.start();
  while(!quit)
        {
         Print_Settings_Background(_screen);
@@ -98,17 +131,43 @@ void Graphic_Settings(Texture *_screen,SDL_Event *event)
         quit=Graphic_Back((RESOLUTION_W-SETTINGS_option_background->w)/2,400,_screen,event);
         Flip_Buffers(_screen);
         SDL_PollEvent(event);
-        SDL_Delay(40);
-        if(event->type==SDL_QUIT || (event->type==SDL_KEYDOWN && event->key.keysym.scancode==SDL_SCANCODE_ESCAPE))
+        Update_Controllers_Events();
+        SDL_Delay(20);
+        if(event->type==SDL_MOUSEMOTION)
+           selector_position=-1;
+        if((controller[1].Pressed_Up() || controller[2].Pressed_Up()) && selector_position>0 && controller_timer.get_ticks()>CONTROLLER_DELAY)
+           {
+            selector_position--;
+            controller_timer.start();
+           }
+        if((controller[1].Pressed_Down() || controller[2].Pressed_Down()) && selector_position<number_of_options-1 && controller_timer.get_ticks()>CONTROLLER_DELAY)
+           {
+            selector_position++;
+            controller_timer.start();
+           }
+        if(controller_timer.get_ticks()>CONTROLLER_DELAY && (controller[1].Pressed_A_button() || controller[2].Pressed_A_button() ||
+                                                             controller[1].Pressed_Start_button() || controller[2].Pressed_Start_button()))
+           {
+            click_position=selector_position;
+            controller_timer.start();
+           }
+        if(event->type==SDL_QUIT || ((event->type==SDL_KEYDOWN && event->key.keysym.scancode==SDL_SCANCODE_ESCAPE) || (controller[1].Pressed_Guide_button() || controller[2].Pressed_Guide_button())))
            quit=true;
        }
 }
 
 void Graphic_Change_Resolution(int x,int y,Texture *_screen,SDL_Event *event)
 {
- Apply_Texture(x,y,SETTINGS_option_background,_screen);
- if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
+ if(event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
+    selector_position=0;
+ if(selector_position!=0)
+    Apply_Texture(x,y,SETTINGS_option_background,_screen);
+ else
+    Apply_Texture(x,y,SETTINGS_option_background_selected,_screen);
+ if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h ||
+    (click_position==0))
     {
+     click_position=-1;
      RESOLUTION++;
      RESOLUTION%=NUMBER_OF_AVAILABLE_RESOLUTIONS;
      RESOLUTION_W=available_RESOLUTION_W[RESOLUTION];
@@ -136,9 +195,16 @@ void Graphic_Change_Resolution(int x,int y,Texture *_screen,SDL_Event *event)
 
 void Graphic_Change_Display_Mode(int x,int y,Texture *_screen,SDL_Event *event)
 {
- Apply_Texture(x,y,SETTINGS_option_background,_screen);
- if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
+ if(event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
+    selector_position=1;
+ if(selector_position!=1)
+    Apply_Texture(x,y,SETTINGS_option_background,_screen);
+ else
+    Apply_Texture(x,y,SETTINGS_option_background_selected,_screen);
+ if((event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h) ||
+    (click_position==1))
     {
+     click_position=-1;
      if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
         DISPLAY_MODE=0;
      else
@@ -164,9 +230,16 @@ void Graphic_Change_Display_Mode(int x,int y,Texture *_screen,SDL_Event *event)
 
 void Graphic_Change_Volume(int x,int y,Texture *_screen,SDL_Event *event)
 {
- Apply_Texture(x,y,SETTINGS_option_background,_screen);
- if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
+ if(event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
+    selector_position=2;
+ if(selector_position!=2)
+    Apply_Texture(x,y,SETTINGS_option_background,_screen);
+ else
+    Apply_Texture(x,y,SETTINGS_option_background_selected,_screen);
+ if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h ||
+    (click_position==2))
     {
+     click_position=-1;
      VOL++;
      VOL%=NUMBER_OF_AVAILABLE_VOLUMES;
      VOLUME=available_volumes[VOL];
@@ -189,7 +262,8 @@ void Graphic_Change_Volume(int x,int y,Texture *_screen,SDL_Event *event)
 void Graphic_Power_Saver(int x,int y,Texture *_screen,SDL_Event *event)
 {
  Apply_Texture(x,y,SETTINGS_option_background,_screen);
- if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
+ if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h ||
+    (click_position==3))
     {
      POWER_SAVER=!POWER_SAVER;
      SDL_Delay(75);
@@ -211,9 +285,16 @@ void Graphic_Power_Saver(int x,int y,Texture *_screen,SDL_Event *event)
 
 void Graphic_Auto_Attack(int x,int y,Texture *_screen,SDL_Event *event)
 {
- Apply_Texture(x,y,SETTINGS_option_background,_screen);
- if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
+ if(event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
+    selector_position=3;
+ if(selector_position!=3)
+    Apply_Texture(x,y,SETTINGS_option_background,_screen);
+ else
+    Apply_Texture(x,y,SETTINGS_option_background_selected,_screen);
+ if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h ||
+    (click_position==3))
     {
+     click_position=-1;
      AUTO_ATTACK=!AUTO_ATTACK;
      SDL_Delay(75);
     }
@@ -234,9 +315,16 @@ void Graphic_Auto_Attack(int x,int y,Texture *_screen,SDL_Event *event)
 
 void Graphic_Reset_Saves(int x,int y,Texture *_screen,SDL_Event *event)
 {
- Apply_Texture(x,y,SETTINGS_option_background,_screen);
- if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
+ if(event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
+    selector_position=4;
+ if(selector_position!=4)
+    Apply_Texture(x,y,SETTINGS_option_background,_screen);
+ else
+    Apply_Texture(x,y,SETTINGS_option_background_selected,_screen);
+ if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h ||
+    (click_position==4))
     {
+     click_position=-1;
      system("reset-saves.bat");
      SDL_Delay(75);
     }
@@ -251,9 +339,16 @@ void Graphic_Reset_Saves(int x,int y,Texture *_screen,SDL_Event *event)
 
 bool Graphic_Back(int x,int y,Texture *_screen,SDL_Event *event)
 {
- Apply_Texture(x,y,SETTINGS_option_background,_screen);
- if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
+ if(event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
+    selector_position=5;
+ if(selector_position!=5)
+    Apply_Texture(x,y,SETTINGS_option_background,_screen);
+ else
+    Apply_Texture(x,y,SETTINGS_option_background_selected,_screen);
+ if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h ||
+    (click_position==5))
     {
+     click_position=-1;
      return true;
     }
  TTF_Font *font;

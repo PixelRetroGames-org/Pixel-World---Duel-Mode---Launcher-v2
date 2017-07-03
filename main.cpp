@@ -5,6 +5,7 @@
 #include "level.h"
 #include "load_audio_effects.h"
 #include "puzzle.h"
+#include "controller.h"
 
 #include <cstdio>
 #include <ctime>
@@ -59,6 +60,7 @@ int main( int argc, char *args[] )
      strcat(message,SDL_GetError());
      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"SDL_mixer module failure",message,NULL);
     }
+ Init_Controllers();
  Load_Settings();
  Open_Window_and_Renderer(RESOLUTION_W,RESOLUTION_H,DISPLAY_MODE);
  screen=new Texture;
@@ -248,5 +250,6 @@ int main( int argc, char *args[] )
  Clear_all_images();
  Clear_Duel_Mode_effects();
  Clear_Journal();
+ Destroy_Controllers();
  return 0;
 }

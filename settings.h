@@ -5,6 +5,7 @@
 #include "texture.h"
 #include "load_images.h"
 #include "errors.h"
+#include "controller.h"
 
 #include <cstdio>
 

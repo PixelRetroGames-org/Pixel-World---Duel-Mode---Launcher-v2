@@ -5,6 +5,7 @@
 #include "texture.h"
 #include "load_images.h"
 #include "settings.h"
+#include "controller.h"
 
 #include <algorithm>
 #include <stack>

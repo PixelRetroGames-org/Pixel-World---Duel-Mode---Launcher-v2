@@ -31,8 +31,12 @@ Level::Level()
 void Level::Clear(bool terminal)
 {
  player[1].Clear(true);
+ player[1].Set_id(0);
  if(type==2)
-    player[2].Clear(true);
+    {
+     player[2].Clear(true);
+     player[1].Set_id(1);
+    }
  arena.Clear(true,true);
  effects.Clear(true,false);
  darkness.Clear();
@@ -156,6 +160,7 @@ void Level::Load()
     player_name[1][strlen(player_name[1])-1]=NULL;
  player[1].Set_name(player_name[1]);
  player[1].Load();
+ player[1].Set_id(1);
  if(type!=2)
     player[1].Set_movement_speed(2);
 
@@ -189,6 +194,7 @@ void Level::Load()
      player[2].Set_name(player_name[2]);
      player[2].Set_map_position(player_map_position[2].first,player_map_position[2].second);
      player[2].Load();
+     player[2].Set_id(2);
 
      for(int i=0;i<player[2].Get_number_of_spells();i++)
          {
@@ -953,7 +959,7 @@ void Level::Handle_Event(int _player)
  //Spells
  for(int i=1;i<=4 && type==2;i++)
      {
-      if(((keystates[player_keys[keys][i+6]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][i+6]])) && !player[_player].Spell_Is_blocked(i-1)/*&& !player[_player].Is_blocked()*/)
+      if(((keystates[player_keys[keys][i+6]] || controller[_player].Get_Button_State(i)) || ((player_type[Other_player(_player)]>=1 || type!=2) && (keystates[player_keys[Other_player(keys)][i+6]] || controller[Other_player(_player)].Get_Button_State(i)))) && !player[_player].Spell_Is_blocked(i-1)/*&& !player[_player].Is_blocked()*/)
          {
           if(Cast_Spell(_player,i-1))
              player[_player].Block(),player_time_blocked[_player]=10;
@@ -963,17 +969,17 @@ void Level::Handle_Event(int _player)
  player[_player].Set_velocityX(0);
  player[_player].Set_velocityY(0);
 
- if(((keystates[player_keys[keys][0]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][0]])))
+ if((keystates[player_keys[keys][0]] || controller[_player].Pressed_Up()) || ((player_type[Other_player(_player)]>=1 || type!=2) && (keystates[player_keys[Other_player(keys)][0]] || controller[Other_player(_player)].Pressed_Up())))
     Set_player_velocityY(_player,-1);
- if(((keystates[player_keys[keys][1]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][1]])))
+ if((keystates[player_keys[keys][1]] || controller[_player].Pressed_Down()) || ((player_type[Other_player(_player)]>=1 || type!=2) && (keystates[player_keys[Other_player(keys)][1]] ||controller[Other_player(_player)].Pressed_Down())))
     Set_player_velocityY(_player,1);
- if(((keystates[player_keys[keys][2]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][2]])))
+ if((keystates[player_keys[keys][2]] || controller[_player].Pressed_Left()) || ((player_type[Other_player(_player)]>=1 || type!=2) && (keystates[player_keys[Other_player(keys)][2]] || controller[Other_player(_player)].Pressed_Left())))
     Set_player_velocityX(_player,-1);
- if(((keystates[player_keys[keys][3]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][3]])))
+ if((keystates[player_keys[keys][3]] || controller[_player].Pressed_Right()) || ((player_type[Other_player(_player)]>=1 || type!=2) && (keystates[player_keys[Other_player(keys)][3]] || controller[Other_player(_player)].Pressed_Right())))
     Set_player_velocityX(_player,1);
  if(type!=2)
     {
-     if(((keystates[player_keys[keys][4]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][4]])) && !player[_player].Is_blocked())
+     if(((keystates[player_keys[keys][4]] || controller[_player].Pressed_A_button()) || ((player_type[Other_player(_player)]>=1 || type!=2) && (keystates[player_keys[Other_player(keys)][4]] || controller[Other_player(_player)].Pressed_A_button()))) && !player[_player].Is_blocked())
         {
          Trigger_around_player_map(_player);
          Interact_with_map_textures_around_player(_player);
@@ -981,7 +987,7 @@ void Level::Handle_Event(int _player)
          Interact_with_clues_around_player(_player);
          player_time_blocked[_player]=10;
         }
-     if((keystates[player_keys[keys][11]] || keystates[player_keys[Other_player(keys)][11]]) && !player[_player].Is_blocked())
+     if((keystates[player_keys[keys][11]] || controller[_player].Pressed_B_button() || keystates[player_keys[Other_player(keys)][11]] || controller[Other_player(_player)].Pressed_B_button()) && !player[_player].Is_blocked())
         {
          skeptic_vision_on=!skeptic_vision_on,player_time_blocked[_player]=10,player[_player].Block();
          if(skeptic_vision_on)
@@ -989,7 +995,7 @@ void Level::Handle_Event(int _player)
          else
             player[_player].Set_movement_speed(2);
         }
-     if(keystates[player_keys[keys][12]] || keystates[player_keys[Other_player(keys)][11]] && !player[_player].Is_blocked())
+     if((keystates[player_keys[keys][12]] || controller[_player].Pressed_X_button() || keystates[player_keys[Other_player(keys)][11]] || controller[Other_player(_player)].Pressed_X_button()) && !player[_player].Is_blocked())
         {
          SDL_Thread *Meditation_Screen_Thread=NULL;
          Meditation_Screen_Thread=SDL_CreateThread(Meditation_Screen,"Meditation Screen",NULL);
@@ -1003,9 +1009,9 @@ void Level::Handle_Event(int _player)
     {
      if((AUTO_ATTACK || ((keystates[player_keys[keys][4]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][4]]))) && player[_player].Can_attack())
         Player_basic_attack(_player);
-     if(((keystates[player_keys[keys][5]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][5]])) && !player[_player].Is_blocked())
+     if(((keystates[player_keys[keys][5]] || controller[_player].Pressed_LeftShoulder()) || ((player_type[Other_player(_player)]>=1 || type!=2) && (keystates[player_keys[Other_player(keys)][5]] || controller[Other_player(_player)].Pressed_LeftShoulder()))) && !player[_player].Is_blocked())
         player[_player].Use_hp_potion(),player_time_blocked[_player]=10;
-     if(((keystates[player_keys[keys][6]]) || ((player_type[Other_player(_player)]>=1 || type!=2) && keystates[player_keys[Other_player(keys)][6]])) && !player[_player].Is_blocked())
+     if(((keystates[player_keys[keys][6]] || controller[_player].Pressed_RightShoulder()) || ((player_type[Other_player(_player)]>=1 || type!=2) && (keystates[player_keys[Other_player(keys)][6]] || controller[Other_player(_player)].Pressed_RightShoulder()))) && !player[_player].Is_blocked())
         player[_player].Use_mana_potion(),player_time_blocked[_player]=10;
     }
 
@@ -1023,15 +1029,15 @@ void Level::Handle_Events(Texture *_screen)
     Darkness_increase();
  if(keystates[SDL_SCANCODE_MINUS])
     Darkness_decrease();
- if(keystates[SDL_SCANCODE_ESCAPE] || (focus && changed_window_status))
+ if(keystates[SDL_SCANCODE_ESCAPE] || (controller[1].Pressed_Guide_button() || controller[2].Pressed_Guide_button()) || (focus && changed_window_status))
     {
      Pause_Menu();
     }
- if(keystates[SDL_SCANCODE_J] && type!=2)
+ if((keystates[SDL_SCANCODE_J] || controller[1].Pressed_Start_button() || controller[2].Pressed_Guide_button()) && type!=2)
     {
      Open_Journal(player[1].Get_progress(),_screen);
     }
- if(keystates[SDL_SCANCODE_I] && type!=2)
+ if((keystates[SDL_SCANCODE_I] || controller[1].Pressed_Back_button() || controller[2].Pressed_Back_button()) && type!=2)
     {
      player_inventory::Print_Inventory(_screen,player[1].Get_name());
      player[1].Fast_Reload();
@@ -1040,7 +1046,8 @@ void Level::Handle_Events(Texture *_screen)
  SDL_Event event;
  SDL_PollEvent(&event);
  changed_window_status=false;
- if((keystates[SDL_SCANCODE_RALT] || keystates[SDL_SCANCODE_LALT]) && keystates[SDL_SCANCODE_RETURN])
+ if(((keystates[SDL_SCANCODE_RALT] || keystates[SDL_SCANCODE_LALT]) && keystates[SDL_SCANCODE_RETURN]) || ((controller[1].Pressed_LeftShoulder() && controller[1].Pressed_RightShoulder()) ||
+                                                                                                           (controller[1].Pressed_LeftShoulder() && controller[1].Pressed_RightShoulder())))
     {
      if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
         DISPLAY_MODE=0;
@@ -1786,14 +1793,16 @@ bool Level::Duel_Mode_Finish_Screen(int _player_winner)
  while(!quit)
        {
         SDL_PollEvent(&event);
-        if(event.type==SDL_KEYDOWN && (event.key.keysym.scancode==SDL_SCANCODE_RETURN || event.key.keysym.scancode==SDL_SCANCODE_ESCAPE))
+        Update_Controllers_Events();
+        if((event.type==SDL_KEYDOWN && (event.key.keysym.scancode==SDL_SCANCODE_RETURN || event.key.keysym.scancode==SDL_SCANCODE_ESCAPE)) ||
+            (controller[1].Pressed_Start_button() || controller[1].Pressed_Guide_button() || controller[2].Pressed_Start_button() || controller[2].Pressed_Guide_button()))
            quit=true;
         SDL_Delay(100);
        }
  quit=false;
  /*if(event.key.keysym.scancode==SDL_SCANCODE_ESCAPE && (player_type[2]!=0 && winner!=1))
     exit(0);*/
- if(event.key.keysym.scancode==SDL_SCANCODE_ESCAPE || (player_type[2]!=0 && winner==1))
+ if(event.key.keysym.scancode==SDL_SCANCODE_ESCAPE || controller[1].Pressed_Guide_button() || controller[2].Pressed_Guide_button() || (player_type[2]!=0 && winner==1))
     return false;
  return true;
 }
@@ -2010,6 +2019,7 @@ void Level::Start(Texture *screen,bool cleanup)
                previous_time=current_time.get_ticks();
                lag+=elapsed;
                SDL_PumpEvents();
+               Update_Controllers_Events();
                quit=keystates[SDL_QUIT] || ((keystates[SDL_SCANCODE_RALT] || keystates[SDL_SCANCODE_LALT]) && keystates[SDL_SCANCODE_F4]);
                Handle_Events(screen);
                while(!level_changed && lag>MS_PER_UPDATE && !done)
