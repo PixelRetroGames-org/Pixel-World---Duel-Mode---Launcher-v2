@@ -10,6 +10,7 @@
 #include <vector>
 #include <algorithm>
 #include <bitset>
+#include <map>
 #include <cstring>
 
 const int NUMBER_OF_ITEMS_IDS=100;
@@ -25,11 +26,12 @@ class Player
  int id;
  int money,experience;
  int number_of_items,inventory_number_of_items,inventory_number_of_spells;
- int number_of_items_bought[NUMBER_OF_ITEMS_IDS];
- Item items_bought[NUMBER_OF_ITEMS_IDS];
+ std::map<int,int> number_of_items_bought;
+ std::map<int,Item> items_bought;
  int equipped_items_ids[10]={0,0,0,0,0,0,NULL,NULL,0,NULL};
  Item equipped_items[10];
  int inventory_item_selected,inventory_item_click;
+ int inventory_item_selected_position;
  int pos_last_y;
  int PLAYER_INFO_POSX=760,PLAYER_INFO_LAST_POSX=1130,SKIN_POSX=1130;
  ///Game
@@ -67,6 +69,7 @@ class Player
  void Set_experience(int _experience);
  void Set_id(int _id);
  void Set_Controller_Timer(Timer *_controller_timer);
+ void Set_inventory_item_selected_position(int _inventory_item_selected_position,int type);
  void Load();
  void Fast_Reload();
  void Update();
@@ -85,6 +88,7 @@ class Player
  void Print_items(int x,int y,Texture *_screen);
  void Print_Inventory(int x,int y,Texture *_screen,bool options=true,int type=0,bool allow_sales=true);
  void Print_Inventory_equipped_items(int x,int y,Texture *_screen,bool options=true,int type=1,bool allow_sales=true);
+ inline int Get_next_inventory_item_id(int n,int type);
  int Start_inventory(int x,int y,Texture *_screen,SDL_Event *event,int type=0,bool allow_sales=true);
 
  ///Game

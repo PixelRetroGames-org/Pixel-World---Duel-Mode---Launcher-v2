@@ -1356,7 +1356,7 @@ void Level::Interact_with_NPC(int _player,int _npc)
          case 2:player[_player].Add_keys(non_playable_characters[_npc].Get_keys());
                 player[_player].Remove_keys(non_playable_characters[_npc].Get_keys_to_take());
                 player[_player].Update();
-                shop_screen.Start(_screen,non_playable_characters[_npc].Get_shop_name(),player[_player].Get_name());
+                shop_screen.Start(_screen,non_playable_characters[_npc].Get_shop_name(),player[_player].Get_name(),1);
                 strcpy(_aux,player[_player].Get_name());
                 player[_player].Clear(true);
                 player[_player].Set_name(_aux);
@@ -1755,7 +1755,7 @@ void Level::Pause_Menu()
                     case 2:exit(0);
                    }
            }
-     SDL_Delay(100);
+     SDL_Delay(150);
     }
  else
     {
@@ -1774,7 +1774,7 @@ void Level::Pause_Menu()
                     case 2:exit(0);
                    }
            }
-     SDL_Delay(100);
+     SDL_Delay(150);
     }
  menu.Clear();
 }
@@ -1965,6 +1965,8 @@ void Level::Setup(char *_level_name)
  Set_player_LAST_POSX(2,(RESOLUTION_W+(RESOLUTION_W-840)/2+840)/2+100);
 }
 
+const int GAME_FPS=60;
+
 void Level::Start(Texture *screen,bool cleanup)
 {
  winner=0;
@@ -2049,6 +2051,10 @@ void Level::Start(Texture *screen,bool cleanup)
                   quit=true;
                if(type==2 && ((player[1].Get_hp()<=0 && !player[1].Is_immortal()) || (player[2].Get_hp()<=0 && !player[2].Is_immortal())))
                   quit=true;
+               if(fps.get_ticks()<1000/GAME_FPS)
+                  {
+                   SDL_Delay((1000/GAME_FPS)-fps.get_ticks());
+                  }
               }
         play=false;
         SDL_LockMutex(music_overseer_mutex);
@@ -2126,7 +2132,7 @@ void Launch_Story_Mode(Level *level,Texture *_screen)
          FILE *log_file=fopen("err/logs.txt","w");
          fprintf(log_file,"\"saves/gamemodes/Story Mode.pwsav\" is missing");
          fclose(log_file);
-         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"Save file missing","\"saves/gamemodes/Story Mode.pwsav\" is missing\nReset saves to fix this.",NULL);
+         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"Game mode folder missing","\"saves/gamemodes\" is missing\nCreate the folder manually.",NULL);
          exit(5);
         }
     }

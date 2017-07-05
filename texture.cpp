@@ -11,6 +11,7 @@ Texture *Load_Texture(char *filename)
     {
      FILE *where=fopen("err/logs.txt","a");
      fprintf(where,"%s\n",SDL_GetError());
+     fclose(where);
      char message[TEXT_LENGTH_MAX];
      strcpy(message,"SDL_CreateTextureFromSurface failed : ");
      strcat(message,SDL_GetError());
@@ -40,6 +41,7 @@ Texture *Load_Transparent_Texture(char *filename)
     {
      FILE *where=fopen("err/logs.txt","a");
      fprintf(where,"%s\n",SDL_GetError());
+     fclose(where);
      char message[TEXT_LENGTH_MAX];
      strcpy(message,"SDL_CreateTextureFromSurface failed : ");
      strcat(message,SDL_GetError());
@@ -69,6 +71,7 @@ Texture *Create_TTF_Texture(TTF_Font *font,std::string text,SDL_Color color)
     {
      FILE *where=fopen("err/logs.txt","a");
      fprintf(where,"%s\n",SDL_GetError());
+     fclose(where);
      char message[TEXT_LENGTH_MAX];
      strcpy(message,"SDL_CreateTextureFromSurface failed : ");
      strcat(message,SDL_GetError());
@@ -104,6 +107,7 @@ Texture *Create_Transparent_Texture(int w,int h)
     {
      FILE *where=fopen("err/logs.txt","a");
      fprintf(where,"%s\n",SDL_GetError());
+     fclose(where);
      char message[TEXT_LENGTH_MAX];
      strcpy(message,"SDL_CreateTexture failed : ");
      strcat(message,SDL_GetError());

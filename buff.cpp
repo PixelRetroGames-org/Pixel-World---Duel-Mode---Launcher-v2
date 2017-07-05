@@ -252,4 +252,5 @@ void Load_all_buffs()
       All_BUFFS[i].Set_id(_id);
       All_BUFFS[i].Load();
      }
+ fclose(where);
 }

@@ -104,6 +104,7 @@ void Menu::Load(const char *filename)
     }
  for(int i=0;i<number_of_options;i++)
      options[i].Load(where);
+ fclose(where);
 }
 
 void Menu::Set_number_of_options(int _noptions)

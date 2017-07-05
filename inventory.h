@@ -7,7 +7,7 @@
 
 namespace player_inventory
 {
- const int FRAMES_PER_SECOND=27;
+ const int FRAMES_PER_SECOND=60;
  void Print_Inventory(Texture *screen,char *_player_name);
 }
 #endif // INVENTORY_H

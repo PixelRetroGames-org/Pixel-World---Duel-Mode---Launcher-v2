@@ -146,12 +146,6 @@ int Item::Load()
 {
  char path[TEXT_LENGTH_MAX]={NULL},aux[TEXT_LENGTH_MAX]={NULL};
  TTF_Font *font=NULL;
- for(int i=0;i<DESCRIPTION_LINES_MAX;i++)
-     if(description_image[i]!=NULL)
-        {
-         description_image[i]=NULL;
-        }
- inventory_image=image=name_image=price_image=NULL;
  if(id==0)
     {
      strcpy(path,"shop/items/images/");
@@ -187,9 +181,7 @@ int Item::Load()
  image=Load_Transparent_Texture(path);
  font=TTF_OpenFont("fonts/pixel.ttf",15);
  name_image=Create_TTF_Texture(font,name,NAME_COLOR);
- TTF_CloseFont(font);
  itoa(cost,aux);
- font=TTF_OpenFont("fonts/pixel.ttf",15);
  price_image=Create_TTF_Texture(font,aux,MONEY_COLOR);
  TTF_CloseFont(font);
  strcpy(path,"shop/items/inventory/images/");

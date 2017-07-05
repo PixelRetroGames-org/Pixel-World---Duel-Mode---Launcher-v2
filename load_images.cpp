@@ -69,9 +69,9 @@ void Load_shop_images()
  SHOP_shop_background_selected=Load_Texture("images/shop/shop_background_selected.png");
  SHOP_description_background=Load_Transparent_Texture("images/shop/description_background.png");
  SHOP_inventory_background=Load_Transparent_Texture("images/shop/inventory_background.png");
- SHOP_item_background_selected=Load_Texture("images/shop/item_background_selected.png");
+ SHOP_item_background_selected=Load_Transparent_Texture("images/shop/item_background_selected.png");
  Set_Texture_Blend_Mode(SHOP_item_background_selected,SDL_BLENDMODE_BLEND);
- Set_Texture_Alpha(SHOP_item_background_selected,80);
+ Set_Texture_Alpha(SHOP_item_background_selected,40);
  SHOP_item_background=Load_Texture("images/shop/item_background.png");
  SHOP_inventory_spell_background=Load_Texture("images/shop/spell_background.png");
  SHOP_inventory_spell_background_equipped=Load_Texture("images/shop/spell_background_equipped.png");
@@ -79,11 +79,11 @@ void Load_shop_images()
  SDL_Color color{65,105,225};
  INVENTORY_EQUIP=Create_TTF_Texture(font,"Equip",EQUIP_COLOR);
  Set_Texture_Blend_Mode(INVENTORY_EQUIP,SDL_BLENDMODE_BLEND);
- Set_Texture_Alpha(INVENTORY_EQUIP,150);
+ Set_Texture_Alpha(INVENTORY_EQUIP,200);
  INVENTORY_EQUIPPED=Create_TTF_Texture(font,"Equipped",EQUIPPED_COLOR);
  INVENTORY_SELL=Create_TTF_Texture(font,"Sell",BUY_COLOR);
  Set_Texture_Blend_Mode(INVENTORY_SELL,SDL_BLENDMODE_BLEND);
- Set_Texture_Alpha(INVENTORY_SELL,150);
+ Set_Texture_Alpha(INVENTORY_SELL,200);
  INVENTORY_spell_position[0]=Create_TTF_Texture(font,"1",color);
  INVENTORY_spell_position[1]=Create_TTF_Texture(font,"2",color);
  INVENTORY_spell_position[2]=Create_TTF_Texture(font,"3",color);

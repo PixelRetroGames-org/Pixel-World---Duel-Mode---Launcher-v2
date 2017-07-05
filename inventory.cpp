@@ -34,7 +34,6 @@ void player_inventory::Print_Inventory(Texture *screen,char *_player_name)
  Timer fps;
  bool quit=false;
  SDL_Event event;
- bool redraw=false;
  SDL_Delay(100);
  while(SDL_PollEvent(&event));
  Timer controller_timer;
@@ -54,7 +53,7 @@ void player_inventory::Print_Inventory(Texture *screen,char *_player_name)
                    {
                     controller_timer.start();
                     if(type-1>0)
-                       type--,redraw=true;
+                       type--,player.Set_inventory_item_selected_position(-1,type);
                    }
                 if(player.Get_PLAYER_INFO_LAST_POSX()<event.button.x && event.button.x<player.Get_PLAYER_INFO_LAST_POSX()+INVENTORY_RARROW->w &&
                    player.Get_pos_last_y()<event.button.y && event.button.y<player.Get_pos_last_y()+INVENTORY_RARROW->h ||
@@ -62,21 +61,17 @@ void player_inventory::Print_Inventory(Texture *screen,char *_player_name)
                    {
                     controller_timer.start();
                     if(type+1<=NUMBER_OF_ITEM_TYPES)
-                       type++,redraw=true;
+                       type++,player.Set_inventory_item_selected_position(-1,type);
                    }
                }
             int _item_id=player.Start_inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,&event,type,false);
-            if(_item_id<0 || redraw || _item_id==666013)
-               {
-                redraw=false;
-                Apply_Texture(0,0,SHOP_shop_big_background,screen);
-                player.Print_Character(player.Get_PLAYER_INFO_POSX(),0,screen);
-                player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,true,type,false);
-                if(type!=1)
-                   Apply_Texture(player.Get_PLAYER_INFO_POSX()-INVENTORY_LARROW->w,player.Get_pos_last_y(),INVENTORY_LARROW,screen);
-                if(type!=NUMBER_OF_ITEM_TYPES)
-                   Apply_Texture(player.Get_PLAYER_INFO_LAST_POSX(),player.Get_pos_last_y(),INVENTORY_RARROW,screen);
-               }
+            Apply_Texture(0,0,SHOP_shop_big_background,screen);
+            player.Print_Character(player.Get_PLAYER_INFO_POSX(),0,screen);
+            player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,true,type,false);
+            if(type!=1)
+               Apply_Texture(player.Get_PLAYER_INFO_POSX()-INVENTORY_LARROW->w,player.Get_pos_last_y(),INVENTORY_LARROW,screen);
+            if(type!=NUMBER_OF_ITEM_TYPES)
+               Apply_Texture(player.Get_PLAYER_INFO_LAST_POSX(),player.Get_pos_last_y(),INVENTORY_RARROW,screen);
             if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_ESCAPE) || (event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_I) ||
                (controller[1].Pressed_Back_button() || controller[1].Pressed_Guide_button() || controller[2].Pressed_Back_button() || controller[2].Pressed_Guide_button()))
                quit=true;
@@ -91,6 +86,6 @@ void player_inventory::Print_Inventory(Texture *screen,char *_player_name)
  player.Clear(true);
  if(event.type==SDL_QUIT)
     exit(0);
- SDL_Delay(100);
+ SDL_Delay(150);
  while(SDL_PollEvent(&event));
 }

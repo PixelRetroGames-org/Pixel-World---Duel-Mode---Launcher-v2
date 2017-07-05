@@ -95,7 +95,7 @@ int main( int argc, char *args[] )
  LAUNCHER_BBACKGROUND.Load();
  LAUNCHER_BBACKGROUND.Load_Logo();
  static_screen=screen;
- #define SPLASH_SCREEN
+ //#define SPLASH_SCREEN
  #ifdef SPLASH_SCREEN
  splash_screen_mutex=SDL_CreateMutex();
  SDL_Thread *splash_screen=NULL;
@@ -195,9 +195,9 @@ int main( int argc, char *args[] )
                                                                       break;
                                                                      };
                                                               case 1:{
-                                                                      if(shop_screen.Start(screen,"Shop","Player1")==-1)
+                                                                      if(shop_screen.Start(screen,"Shop","Player1",1)==-1)
                                                                          return 0;
-                                                                      if(shop_screen.Start(screen,"Shop","Player2")==-1)
+                                                                      if(shop_screen.Start(screen,"Shop","Player2",2)==-1)
                                                                          return 0;
                                                                       break;
                                                                      };

@@ -97,8 +97,9 @@ void Shop::Set_Controller_Timer(Timer *_controller_timer)
 
 const int CONTROLLER_DELAY=100;
 
-inline int Shop::Start(Texture *_screen,SDL_Event *event)
+inline int Shop::Start(Texture *_screen,SDL_Event *event,int _player_id)
 {
+ player_id=_player_id;
  if(event->type==SDL_MOUSEMOTION || event->type==SDL_MOUSEBUTTONDOWN)
     {
      int _x=0,_y=0,mouse_x=0,mouse_y=0;
@@ -115,12 +116,12 @@ inline int Shop::Start(Texture *_screen,SDL_Event *event)
     {
      page_click=page_selected;
     }
- if(page_selected>0 && controller_timer->get_ticks()>CONTROLLER_DELAY && (controller[1].Pressed_LeftShoulder() || controller[2].Pressed_LeftShoulder()))
+ if(page_selected>0 && controller_timer->get_ticks()>CONTROLLER_DELAY && (controller[player_id].Pressed_LeftShoulder()))
     {
      page_click=--page_selected;
      controller_timer->start();
     }
- if(page_selected<number_of_pages-1 && controller_timer->get_ticks()>CONTROLLER_DELAY && (controller[1].Pressed_RightShoulder() || controller[2].Pressed_RightShoulder()))
+ if(page_selected<number_of_pages-1 && controller_timer->get_ticks()>CONTROLLER_DELAY && (controller[player_id].Pressed_RightShoulder()))
     {
      page_click=++page_selected;
      controller_timer->start();
@@ -179,13 +180,19 @@ int Shop_Screen::Start(Texture *screen)
  Timer fps;
  controller_timer.start();
  player.Set_Controller_Timer(&controller_timer);
+ int shop_page_type=shop.Get_shop_page_type();
+ bool inventory_focus=false;
  while(!quit)
        {
         fps.start();
         if(SDL_PollEvent(&event) && !quit)
               {
                Update_Controllers_Events();
-               int _item_id=shop.Start(screen,&event);
+               int _item_id=-1;
+               if(!inventory_focus || event.type==SDL_MOUSEMOTION || event.type==SDL_MOUSEBUTTONDOWN)
+                  _item_id=shop.Start(screen,&event,player_id);
+               else
+                  shop.Print(screen);
                if(_item_id!=-1)
                   {
                    if(player.Is_bought(_item_id) && !Is_potion(_item_id))
@@ -198,12 +205,29 @@ int Shop_Screen::Start(Texture *screen)
                        message=player.Buy(_item_id);
                       }
                   }
-               _item_id=player.Start_inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,&event,shop.Get_shop_page_type());
+               if(shop_page_type!=shop.Get_shop_page_type())
+                  {
+                   shop_page_type=shop.Get_shop_page_type();
+                   player.Set_inventory_item_selected_position(-1,shop.Get_shop_page_type());
+                  }
+               if(inventory_focus || event.type==SDL_MOUSEMOTION || event.type==SDL_MOUSEBUTTONDOWN)
+                  _item_id=player.Start_inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,&event,shop.Get_shop_page_type());
                player.Print_Character(player.Get_PLAYER_INFO_POSX(),0,screen);
                player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,true,shop.Get_shop_page_type());
                if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_ESCAPE) ||
-                  (controller[1].Pressed_Guide_button() || controller[2].Pressed_Guide_button()))
+                  (controller[player_id].Pressed_Guide_button()))
                   quit=true;
+               if(controller[player_id].Pressed_Start_button())
+                  {
+                   inventory_focus=!inventory_focus;
+                   if(inventory_focus)
+                      player.Set_inventory_item_selected_position(0,shop.Get_shop_page_type());
+                   else
+                      player.Set_inventory_item_selected_position(-1,shop.Get_shop_page_type());
+                   SDL_Delay(100);
+                   Update_Controllers_Events();
+                   while(SDL_PollEvent(&event));
+                  }
                switch(message)
                       {
                        case 0:{break;};
@@ -247,9 +271,11 @@ int Shop_Screen::Start(Texture *screen)
  return 0;
 }
 
-int Shop_Screen::Start(Texture *screen,char *shop_name,char *player_name)
+int Shop_Screen::Start(Texture *screen,char *shop_name,char *player_name,int _player_id)
 {
  player.Set_name(player_name);
+ player.Set_id(_player_id);
  shop.Set_name(shop_name);
+ player_id=_player_id;
  return Start(screen);
 }

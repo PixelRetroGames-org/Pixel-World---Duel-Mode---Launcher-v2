@@ -134,12 +134,21 @@ void Script_interpreter::Start(int X,int Y)
  screen_posY=Y;
  char path[TEXT_LENGTH_MAX]={NULL};
  //system("cd \\script");
- strcpy(path,"script\\");
+ strcpy(path,"script/");
  strcat(path,script_name);
  strcat(path,".pwst");
  //FILE *out=fopen(script_name,"w");
  //fclose(out);
  FILE *in=fopen(path,"r");
+ if(in==NULL)
+    {
+     char s[TEXT_LENGTH_MAX];
+     strcpy(s,"Cannot read from \"");
+     strcat(s,path);
+     strcat(s,"\": ");
+     strcat(s,strerror(errno));
+     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"Script interpreter error",s,WINDOW);
+    }
  //system("cd ..");
  bool quit=false,line=false;
  char ch=NULL,command[TEXT_LENGTH_MAX]={NULL},script_line[TEXT_LENGTH_MAX]={NULL};
