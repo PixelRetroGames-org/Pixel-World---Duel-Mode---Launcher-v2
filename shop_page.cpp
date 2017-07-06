@@ -157,7 +157,7 @@ void Shop_Page::Set_Controller_Timer(Timer *_controller_timer)
  controller_timer=_controller_timer;
 }
 
-const int CONTROLLER_DELAY=100;
+const int CONTROLLER_DELAY=200;
 
 int Shop_Page::Start(Texture *_screen,SDL_Event *event)
 {
@@ -189,7 +189,10 @@ int Shop_Page::Start(Texture *_screen,SDL_Event *event)
     }
  if(item_selected+number_of_columns<number_of_items && controller_timer->get_ticks()>CONTROLLER_DELAY && (controller[1].Pressed_Down() || controller[2].Pressed_Down()))
     {
-     item_selected+=number_of_columns;
+     if(item_selected==-1)
+        item_selected=0;
+     else
+        item_selected+=number_of_columns;
      controller_timer->start();
     }
  if(item_selected>0 && controller_timer->get_ticks()>CONTROLLER_DELAY && (controller[1].Pressed_Left() || controller[2].Pressed_Left()))

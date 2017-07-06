@@ -95,7 +95,7 @@ void Shop::Set_Controller_Timer(Timer *_controller_timer)
      pages[i].Set_Controller_Timer(_controller_timer);
 }
 
-const int CONTROLLER_DELAY=100;
+const int CONTROLLER_DELAY=200;
 
 inline int Shop::Start(Texture *_screen,SDL_Event *event,int _player_id)
 {
@@ -185,14 +185,18 @@ int Shop_Screen::Start(Texture *screen)
  while(!quit)
        {
         fps.start();
-        if(SDL_PollEvent(&event) && !quit)
+        if((SDL_PollEvent(&event) || controller[player_id].Pressed_Any_Button()) && !quit)
               {
                Update_Controllers_Events();
                int _item_id=-1;
                if(!inventory_focus || event.type==SDL_MOUSEMOTION || event.type==SDL_MOUSEBUTTONDOWN)
-                  _item_id=shop.Start(screen,&event,player_id);
+                  {
+                   _item_id=shop.Start(screen,&event,player_id);
+                  }
                else
-                  shop.Print(screen);
+                  {
+                   shop.Print(screen);
+                  }
                if(_item_id!=-1)
                   {
                    if(player.Is_bought(_item_id) && !Is_potion(_item_id))
@@ -211,15 +215,38 @@ int Shop_Screen::Start(Texture *screen)
                    player.Set_inventory_item_selected_position(-1,shop.Get_shop_page_type());
                   }
                if(inventory_focus || event.type==SDL_MOUSEMOTION || event.type==SDL_MOUSEBUTTONDOWN)
-                  _item_id=player.Start_inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,&event,shop.Get_shop_page_type());
+                  {
+                   _item_id=player.Start_inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,&event,shop.Get_shop_page_type());
+                  }
                player.Print_Character(player.Get_PLAYER_INFO_POSX(),0,screen);
                player.Print_Inventory(player.Get_PLAYER_INFO_POSX(),player.Get_pos_last_y(),screen,true,shop.Get_shop_page_type());
                if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_ESCAPE) ||
                   (controller[player_id].Pressed_Guide_button()))
                   quit=true;
-               if(controller[player_id].Pressed_Start_button())
+
+               int number_of_inventory_items=0;
+               switch(shop.Get_shop_page_type())
+                      {
+                       case 1: number_of_inventory_items=player.Get_inventory_number_of_items(); break;
+                       case 2: number_of_inventory_items=player.Get_inventory_number_of_spells(); break;
+                      }
+               if(inventory_focus && number_of_inventory_items==0)
                   {
                    inventory_focus=!inventory_focus;
+                  }
+
+               if(controller[player_id].Pressed_Start_button() && controller_timer.get_ticks()>CONTROLLER_DELAY)
+                  {
+                   int number_of_inventory_items=0;
+                   switch(shop.Get_shop_page_type())
+                          {
+                           case 1: number_of_inventory_items=player.Get_inventory_number_of_items(); break;
+                           case 2: number_of_inventory_items=player.Get_inventory_number_of_spells(); break;
+                          }
+
+                   inventory_focus=!inventory_focus;
+                   if(inventory_focus && number_of_inventory_items==0)
+                      inventory_focus=!inventory_focus;
                    if(inventory_focus)
                       player.Set_inventory_item_selected_position(0,shop.Get_shop_page_type());
                    else
@@ -227,6 +254,7 @@ int Shop_Screen::Start(Texture *screen)
                    SDL_Delay(100);
                    Update_Controllers_Events();
                    while(SDL_PollEvent(&event));
+                   controller_timer.start();
                   }
                switch(message)
                       {

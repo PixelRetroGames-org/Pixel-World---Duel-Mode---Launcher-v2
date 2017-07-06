@@ -54,6 +54,8 @@ class Player
  bool is_immortal=false;
  int number_of_wins=0;
  Timer *controller_timer;
+ Timer item_sell_timer;
+ bool item_sell_timer_started=false;
  ///AI
  Timer spell_timer[4],attack_timer;
  int counter=-1;
@@ -84,6 +86,8 @@ class Player
  int Get_PLAYER_INFO_LAST_POSX();
  int Get_money();
  int Get_experience();
+ int Get_inventory_number_of_items();
+ int Get_inventory_number_of_spells();
  void Print_Character(int x,int y,Texture *_screen);
  void Print_items(int x,int y,Texture *_screen);
  void Print_Inventory(int x,int y,Texture *_screen,bool options=true,int type=0,bool allow_sales=true);

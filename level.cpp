@@ -995,7 +995,7 @@ void Level::Handle_Event(int _player)
          else
             player[_player].Set_movement_speed(2);
         }
-     if((keystates[player_keys[keys][12]] || controller[_player].Pressed_X_button() || keystates[player_keys[Other_player(keys)][11]] || controller[Other_player(_player)].Pressed_X_button()) && !player[_player].Is_blocked())
+     if((keystates[player_keys[keys][12]] || controller[_player].Pressed_Y_button() || keystates[player_keys[Other_player(keys)][11]] || controller[Other_player(_player)].Pressed_Y_button()) && !player[_player].Is_blocked())
         {
          SDL_Thread *Meditation_Screen_Thread=NULL;
          Meditation_Screen_Thread=SDL_CreateThread(Meditation_Screen,"Meditation Screen",NULL);

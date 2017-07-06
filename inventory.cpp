@@ -2,7 +2,7 @@
 
 const int NUMBER_OF_ITEM_TYPES=2;
 
-const int CONTROLLER_DELAY=100;
+const int CONTROLLER_DELAY=200;
 
 void player_inventory::Print_Inventory(Texture *screen,char *_player_name)
 {
@@ -42,7 +42,7 @@ void player_inventory::Print_Inventory(Texture *screen,char *_player_name)
  while(!quit)
        {
         fps.start();
-        if(SDL_PollEvent(&event) && !quit)
+        if((SDL_PollEvent(&event) || controller[1].Pressed_Any_Button() || controller[2].Pressed_Any_Button()) && !quit)
            {
             Update_Controllers_Events();
             if(event.type==SDL_MOUSEBUTTONDOWN || controller[1].Pressed_Any_Button() || controller[2].Pressed_Any_Button())

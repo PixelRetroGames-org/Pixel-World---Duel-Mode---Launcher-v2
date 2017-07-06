@@ -11,7 +11,6 @@ Player::Player()
  skin_image_position.h=skin_image_position.w=PIXELS_PER_INGAME_UNIT;
  money=experience=number_of_items=0;
  name[0]=NULL;
- number_of_items_bought.clear();
  keys.reset();
  progress.reset();
 }
@@ -29,7 +28,7 @@ void Player::Clear(bool _delete)
 
  memset(name,0,sizeof name);
  money=experience=number_of_items=inventory_number_of_items=inventory_number_of_spells=0;
- items_bought.clear();
+ number_of_items_bought.clear();
  memset(equipped_items_ids,0,sizeof equipped_items_ids);
  memset(equipped_items,0,sizeof equipped_items);
  inventory_item_selected=inventory_item_click=pos_last_y=0;
@@ -44,8 +43,9 @@ void Player::Clear(bool _delete)
  std::vector<Buff>().swap(active_buffs);
  for(int i=0;i<10;i++)
      equipped_items[i].Clear(_delete);
- for(int i=0;i<NUMBER_OF_ITEMS_IDS;i++)
-     items_bought[i].Clear(_delete);
+ for(std::map<int,Item>::iterator i=items_bought.begin();i!=items_bought.end();i++)
+     i->second.Clear(_delete);
+ items_bought.clear();
  //printable_item_buffs_id.clear();
  std::vector<int>().swap(printable_item_buffs_id);
  for(int i=0;i<4;i++)
@@ -385,17 +385,6 @@ void Player::Sell(int _item_id)
  _item.Set_id(_item_id);
  _item.Load();
  number_of_items_bought[_item_id]--;
- if(number_of_items_bought[_item_id]==0)
-    {
-     number_of_items--;
-     if(_item.Get_type()!=10)
-        inventory_number_of_items--;
-     items_bought[_item_id].Clear(true);
-     items_bought.erase(_item_id);
-     number_of_items_bought.erase(_item_id);
-     if(inventory_number_of_items>0 && controller[id].Pressed_B_button())
-        Set_inventory_item_selected_position(0,_item.Get_type());
-    }
  money+=_item.Get_cost();
  if(equipped_items_ids[_item.Get_type()]==_item_id)
     {
@@ -410,6 +399,25 @@ void Player::Sell(int _item_id)
             spells[spell_pos].Set_id(0);
             spells[spell_pos].Load();
            }
+ if(number_of_items_bought[_item_id]==0)
+    {
+     number_of_items--;
+     if(_item.Get_type()!=10)
+        inventory_number_of_items--;
+     items_bought[_item_id].Clear(true);
+     items_bought.erase(_item_id);
+     number_of_items_bought.erase(_item_id);
+     if(controller[id].Pressed_B_button())
+        {
+         int shop_page_type=1;
+         if(_item.Get_type()==10)
+            shop_page_type=2;
+         if(inventory_number_of_items>0)
+            Set_inventory_item_selected_position(0,shop_page_type);
+         else
+            Set_inventory_item_selected_position(-1,shop_page_type);
+        }
+    }
  _item.Clear(true);
 }
 
@@ -436,6 +444,16 @@ int Player::Get_money()
 int Player::Get_experience()
 {
  return experience;
+}
+
+int Player::Get_inventory_number_of_items()
+{
+ return inventory_number_of_items;
+}
+
+int Player::Get_inventory_number_of_spells()
+{
+ return inventory_number_of_spells;
 }
 
 void Player::Print_Character(int x,int y,Texture *_screen)
@@ -671,7 +689,9 @@ void Player::Print_Inventory_equipped_items(int x,int y,Texture *_screen,bool op
 inline int Player::Get_next_inventory_item_id(int n,int type)
 {
  int inventory_item_position=-1;
- int i=0;
+ if(inventory_item_selected==-1)
+    inventory_item_position=0;
+ int i=0,j;
  if(n>=0)
     {
      std::map<int,int>::iterator it=number_of_items_bought.find(inventory_item_selected);
@@ -679,11 +699,18 @@ inline int Player::Get_next_inventory_item_id(int n,int type)
         {
          it=number_of_items_bought.begin();
          i=it->first;
-         n--;
+         j=it->second;
+         while(((items_bought[i].Get_type()==10 && type==1) || (items_bought[i].Get_type()!=10 && type==2)) && it!=number_of_items_bought.end())
+               {
+                it++;
+                i=it->first;
+                j=it->second;
+               }
         }
      for(;inventory_item_position<n && it!=number_of_items_bought.end();it++)
          {
           i=it->first;
+          j=it->second;
           if(number_of_items_bought[i]!=0)
              {
               switch(type)
@@ -708,10 +735,18 @@ inline int Player::Get_next_inventory_item_id(int n,int type)
         {
          it=number_of_items_bought.rbegin();
          i=it->first;
+         j=it->second;
+         while(((items_bought[i].Get_type()==10 && type==1) || (items_bought[i].Get_type()!=10 && type==2)) && it!=number_of_items_bought.rend())
+               {
+                it++;
+                i=it->first;
+                j=it->second;
+               }
         }
      for(;inventory_item_position<n-1 && it!=number_of_items_bought.rend();it++)
          {
           i=it->first;
+          j=it->second;
           if(number_of_items_bought[i]!=0)
              {
               switch(type)
@@ -731,7 +766,7 @@ inline int Player::Get_next_inventory_item_id(int n,int type)
  return i;
 }
 
-const int CONTROLLER_DELAY=100;
+const int CONTROLLER_DELAY=200,ITEM_SELL_HOLD_TIME=400;
 
 int Player::Start_inventory(int x,int y,Texture *_screen,SDL_Event *event,int type,bool allow_sales)
 {
@@ -805,8 +840,8 @@ int Player::Start_inventory(int x,int y,Texture *_screen,SDL_Event *event,int ty
  int number_of_inventory_items;
  switch(type)
         {
-         case 1: number_of_inventory_items=number_of_items; break;
-         case 2: number_of_inventory_items=number_of_spells; break;
+         case 1: number_of_inventory_items=inventory_number_of_items; break;
+         case 2: number_of_inventory_items=inventory_number_of_spells; break;
         }
  if(inventory_item_selected_position-5>=0 && controller_timer->get_ticks()>CONTROLLER_DELAY && controller[id].Pressed_Up())
     {
@@ -814,7 +849,7 @@ int Player::Start_inventory(int x,int y,Texture *_screen,SDL_Event *event,int ty
      inventory_item_selected=Get_next_inventory_item_id(-5,type);
      controller_timer->start();
     }
- if(inventory_item_selected_position+5<number_of_inventory_items-1 && controller_timer->get_ticks()>CONTROLLER_DELAY && controller[id].Pressed_Down())
+ if(inventory_item_selected_position+5<number_of_inventory_items && controller_timer->get_ticks()>CONTROLLER_DELAY && controller[id].Pressed_Down())
     {
      inventory_item_selected_position+=5;
      inventory_item_selected=Get_next_inventory_item_id(5,type);
@@ -826,29 +861,80 @@ int Player::Start_inventory(int x,int y,Texture *_screen,SDL_Event *event,int ty
      inventory_item_selected=Get_next_inventory_item_id(-1,type);
      controller_timer->start();
     }
- if(inventory_item_selected_position+1<number_of_inventory_items-1 && controller_timer->get_ticks()>CONTROLLER_DELAY && controller[id].Pressed_Right())
+ if(inventory_item_selected_position+1<number_of_inventory_items && controller_timer->get_ticks()>CONTROLLER_DELAY && controller[id].Pressed_Right())
     {
      inventory_item_selected_position++;
      inventory_item_selected=Get_next_inventory_item_id(1,type);
      controller_timer->start();
     }
- if(controller_timer->get_ticks()>CONTROLLER_DELAY && controller[id].Pressed_A_button())
+ if(controller_timer->get_ticks()>CONTROLLER_DELAY && controller[id].Pressed_A_button() && type==1)
     {
      inventory_item_click=inventory_item_selected;
      controller_timer->start();
      _equip=true;
     }
+ bool lazy_start_controller_timer=false;
  if(controller_timer->get_ticks()>CONTROLLER_DELAY && controller[id].Pressed_B_button())
     {
-     inventory_item_click=inventory_item_selected;
-     controller_timer->start();
-     _sell=true;
+     if(item_sell_timer_started && item_sell_timer.get_ticks()>ITEM_SELL_HOLD_TIME)
+        {
+         inventory_item_click=inventory_item_selected;
+         controller_timer->start();
+         _sell=true;
+         item_sell_timer_started=false;
+        }
+     else
+        {
+         if(!item_sell_timer_started)
+            {
+             item_sell_timer.start();
+             item_sell_timer_started=true;
+             lazy_start_controller_timer=true;
+            }
+        }
     }
- /*if(controller_timer->get_ticks()>CONTROLLER_DELAY && controller[id].Pressed_A_button() && type==2)
+ else
     {
-     inventory_item_click=inventory_item_selected;
+     if(!controller[id].Pressed_B_button() && item_sell_timer_started)
+        {
+         item_sell_timer_started=false;
+        }
+    }
+ if(type==2 && controller_timer->get_ticks()>CONTROLLER_DELAY)
+    {
+     bool button_states[4]={controller[id].Pressed_A_button(),controller[id].Pressed_B_button(),controller[id].Pressed_X_button(),controller[id].Pressed_Y_button()},any_button=false;
+     for(int i=0;i<4;i++)
+         any_button=any_button || button_states[i];
+     if(any_button)
+        {
+         for(int spell_pos=0;spell_pos<4;spell_pos++)
+             {
+              if(spells[spell_pos].Get_id()==items_bought[inventory_item_selected].Get_spell_id())
+                 {
+                  spells[spell_pos].Clear(true);
+                  spells[spell_pos].Set_id(0);
+                  spells[spell_pos].Load();
+                 }
+             }
+         int equipped_spell_pos=-1;
+         _equip_spell=false;
+         for(int spell_pos=0;spell_pos<4 && _equip_spell==false;spell_pos++)
+             {
+              if(button_states[spell_pos])
+                 {
+                  spells[spell_pos].Clear(true);
+                  spells[spell_pos].Set_id(items_bought[inventory_item_selected].Get_spell_id());
+                  spells[spell_pos].Load();
+                  _equip_spell=true;
+                 }
+             }
+        }
+    }
+ if(lazy_start_controller_timer && item_sell_timer_started)
+    {
+     lazy_start_controller_timer=false;
      controller_timer->start();
-    }*/
+    }
  if(event->type==SDL_MOUSEBUTTONDOWN)
     inventory_item_click=inventory_item_selected;
  if(inventory_item_click!=-1)
@@ -1104,11 +1190,6 @@ void Player::Print_hp(int x,int y,Texture *_screen)
 
 void Player::Print_hp(Texture *_screen)
 {
- if(hp!=basic_hp)
-    {
-     printf("ceva");
-     int alabala=3+4+7;
-    }
  Apply_Texture(PLAYER_INFO_POSX,PIXELS_PER_INGAME_UNIT,PLAYER_CASE_background,_screen);
  Apply_Texture(PLAYER_INFO_POSX,PIXELS_PER_INGAME_UNIT,PLAYER_HP_background->w*hp/basic_hp,PLAYER_HP_background->h,PLAYER_HP_background,_screen);
  Apply_Texture(PLAYER_INFO_POSX,PIXELS_PER_INGAME_UNIT,PLAYER_CASE_front,_screen);
@@ -1179,6 +1260,8 @@ void Player::Move_Y()
 
 void Player::Use_hp_potion()
 {
+ if(number_of_items_bought.count(15)==0)
+    return;
  if(number_of_items_bought[15]>0)
     {
      Set_hp(hp+items_bought[15].Get_hp());
@@ -1194,6 +1277,8 @@ void Player::Use_hp_potion()
 
 void Player::Use_mana_potion()
 {
+ if(number_of_items_bought.count(16)==0)
+    return;
  if(number_of_items_bought[16]>0)
     {
      Set_mana(mana+items_bought[16].Get_mana());
