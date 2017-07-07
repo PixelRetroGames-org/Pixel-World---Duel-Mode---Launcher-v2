@@ -359,6 +359,11 @@ int Loading_image(void *data)
  for(int i=0;i<25 && !Loading_image_quit;i++)
      {
       SDL_UnlockMutex(loading_image_mutex);
+      if(i%4==0)
+         {
+          Apply_Texture(0,0,last_frame,static_screen);
+          Flip_Buffers(static_screen);
+         }
       SDL_Delay(10);
       SDL_LockMutex(loading_image_mutex);
      }

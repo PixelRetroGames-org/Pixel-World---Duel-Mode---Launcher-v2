@@ -1,5 +1,7 @@
 #include "texture.h"
 
+Texture *last_frame;
+
 Texture *Load_Texture(char *filename)
 {
  SDL_Surface *image_surface=load_image(filename);
@@ -143,6 +145,8 @@ void Apply_Texture(int x,int y,Texture *source,Texture *destination)
  SDL_UnlockMutex(RENDERER_MUTEX);
 
  delete offset;
+ if(destination==SCREEN)
+    Apply_Texture(x,y,source,last_frame);
 }
 
 void Apply_Texture(int x,int y,int w,int h,Texture *source,Texture *destination)
@@ -174,6 +178,8 @@ void Apply_Texture(int x,int y,int w,int h,Texture *source,Texture *destination)
 
  delete offset;
  delete enlarge;
+ if(destination==SCREEN)
+    Apply_Texture(x,y,w,h,source,last_frame);
 }
 
 void Apply_Texture(int xImage,int yImage,int xScreen,int yScreen,int w,int h,Texture *source,Texture *destination)
@@ -219,6 +225,8 @@ void Apply_Texture(int xImage,int yImage,int xScreen,int yScreen,int w,int h,Tex
 
  delete offset;
  delete enlarge;
+ if(destination==SCREEN)
+    Apply_Texture(xImage,yImage,xScreen,yScreen,w,h,source,last_frame);
 }
 
 void Set_Texture_Blend_Mode(Texture *_texture,SDL_BlendMode blend_mode)

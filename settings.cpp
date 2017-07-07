@@ -177,6 +177,8 @@ void Graphic_Change_Resolution(int x,int y,Texture *_screen,SDL_Event *event)
      SCREEN->w=RESOLUTION_W;
      SCREEN->h=RESOLUTION_H;
      static_screen=SCREEN;
+     Destroy_Texture(last_frame);
+     last_frame=Create_Transparent_Texture(RESOLUTION_W,RESOLUTION_H);
      return;
     }
  TTF_Font *font;

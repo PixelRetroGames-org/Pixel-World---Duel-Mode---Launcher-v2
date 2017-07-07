@@ -63,6 +63,7 @@ int main( int argc, char *args[] )
  Init_Controllers();
  Load_Settings();
  Open_Window_and_Renderer(RESOLUTION_W,RESOLUTION_H,DISPLAY_MODE);
+ last_frame=Create_Transparent_Texture(RESOLUTION_W,RESOLUTION_H);
  screen=new Texture;
  screen->w=RESOLUTION_W;
  screen->h=RESOLUTION_H;

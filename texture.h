@@ -21,7 +21,7 @@ void Set_Texture_Blend_Mode(Texture *_texture,SDL_BlendMode blend_mode);
 void Set_Texture_Alpha(Texture *_texture,Uint8 alpha);
 void Destroy_Texture(Texture *_texture);
 
-extern Texture *SCREEN;
+extern Texture *SCREEN,*last_frame;
 void Flip_Buffers(Texture *screen);
 
 #endif // TEXTURE_H

@@ -238,3 +238,4 @@ Window 1 moved to 3,26
 Window 1 restored
 Window 1 gained keyboard focus
 CreateTexture(D3DPOOL_DEFAULT): INVALIDCALL
+Invalid renderer

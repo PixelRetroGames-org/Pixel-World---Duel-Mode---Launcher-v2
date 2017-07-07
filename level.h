@@ -164,7 +164,7 @@ class Level
  void Set_screen(Texture *screen);
  void Pause_Menu();
  bool Duel_Mode_Finish_Screen(int _player_winner);
- void Print_Duel_Mode_Finish_Screen(int _player_winner);
+ void Print_Duel_Mode_Finish_Screen(int _player_winner,Texture *screen);
  void Setup(char *_level_name);
  void Start(Texture *_screen,bool cleanup=true);
  void Cleanup();

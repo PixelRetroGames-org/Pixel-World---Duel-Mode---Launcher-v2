@@ -138,7 +138,7 @@ bool Puzzle::Start_Riddle(Texture *_screen)
  bool full=false;
  while(!quit)
        {
-        if(SDL_PollEvent(&event)!=0)
+        if(SDL_PollEvent(&event))
            {
             if(event.key.type==SDL_KEYDOWN)
                {
@@ -182,7 +182,10 @@ bool Puzzle::Start_Riddle(Texture *_screen)
            {
             Destroy_Texture(text_typed_image);
             text_typed_image=NULL;
+            Apply_Texture(0,0,background_image,_screen);
+            Apply_Texture(0,0,text_image,_screen);
             Apply_Texture((RESOLUTION_W-text_typed_background_image->w)/2,title_image->h+10+(RESOLUTION_H-text_typed_background_image->h)/2,text_typed_background_image,_screen);
+            Apply_Texture((RESOLUTION_W-title_image->w)/2,0,title_image,_screen);
             if(length!=0)
                {
                 text_typed_image=Create_TTF_Texture(font,text_typed,answer_color);

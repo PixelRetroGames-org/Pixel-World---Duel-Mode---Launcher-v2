@@ -1056,6 +1056,8 @@ void Level::Handle_Events(Texture *_screen)
      SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
      SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
      Fast_Reload();
+     Clear_Journal();
+     Load_Journal();
      SDL_PumpEvents();
      while(SDL_PollEvent(&event));
     }
@@ -1081,6 +1083,8 @@ void Level::Handle_Events(Texture *_screen)
              SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
              SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
              Fast_Reload();
+             Clear_Journal();
+             Load_Journal();
              SDL_PumpEvents();
             }
         }
@@ -1783,8 +1787,11 @@ bool Level::Duel_Mode_Finish_Screen(int _player_winner)
 {
  winner=_player_winner;
  player[_player_winner].Increase_number_of_wins();
+ Texture *finish_screen=Create_Transparent_Texture(RESOLUTION_W,RESOLUTION_H);
+ Print_Duel_Mode_Finish_Screen(_player_winner,finish_screen);
+ Apply_Texture(0,0,finish_screen,_screen);
+ Flip_Buffers(_screen);
  bool quit=false;
- Print_Duel_Mode_Finish_Screen(_player_winner);
  SDL_Event event;
  SDL_Delay(500);
  while(SDL_PollEvent(&event));
@@ -1797,6 +1804,8 @@ bool Level::Duel_Mode_Finish_Screen(int _player_winner)
         if((event.type==SDL_KEYDOWN && (event.key.keysym.scancode==SDL_SCANCODE_RETURN || event.key.keysym.scancode==SDL_SCANCODE_ESCAPE)) ||
             (controller[1].Pressed_Start_button() || controller[1].Pressed_Guide_button() || controller[2].Pressed_Start_button() || controller[2].Pressed_Guide_button()))
            quit=true;
+        Apply_Texture(0,0,finish_screen,_screen);
+        Flip_Buffers(_screen);
         SDL_Delay(100);
        }
  quit=false;
@@ -1807,29 +1816,29 @@ bool Level::Duel_Mode_Finish_Screen(int _player_winner)
  return true;
 }
 
-void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
+void Level::Print_Duel_Mode_Finish_Screen(int _player_winner,Texture *screen)
 {
- Apply_Texture(0,0,LEVEL_background_image,_screen);
+ Apply_Texture(0,0,LEVEL_background_image,screen);
  if(_player_winner==1)
     {
-     Apply_Texture((_screen->w/2-LEVEL_WINNER->w)/2,5,LEVEL_WINNER,_screen);
-     player[1].Print_name((_screen->w/2-LEVEL_WINNER->w)/2,5+LEVEL_WINNER->h,_screen);
-     Apply_Texture(_screen->w/2+(_screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,_screen);
-     player[2].Print_name(_screen->w/2+(_screen->w/2-LEVEL_LOSER->w)/2,5+LEVEL_LOSER->h,_screen);
+     Apply_Texture((screen->w/2-LEVEL_WINNER->w)/2,5,LEVEL_WINNER,screen);
+     player[1].Print_name((screen->w/2-LEVEL_WINNER->w)/2,5+LEVEL_WINNER->h,screen);
+     Apply_Texture(screen->w/2+(screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,screen);
+     player[2].Print_name(screen->w/2+(screen->w/2-LEVEL_LOSER->w)/2,5+LEVEL_LOSER->h,screen);
     }
  if(_player_winner==2)
     {
-     Apply_Texture((_screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,_screen);
-     player[1].Print_name((_screen->w/2-LEVEL_LOSER->w)/2,5+LEVEL_LOSER->h,_screen);
-     Apply_Texture(_screen->w/2+(_screen->w/2-LEVEL_WINNER->w)/2,5,LEVEL_WINNER,_screen);
-      player[2].Print_name(_screen->w/2+(_screen->w/2-LEVEL_WINNER->w)/2,5+LEVEL_WINNER->h,_screen);
+     Apply_Texture((screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,screen);
+     player[1].Print_name((screen->w/2-LEVEL_LOSER->w)/2,5+LEVEL_LOSER->h,screen);
+     Apply_Texture(screen->w/2+(screen->w/2-LEVEL_WINNER->w)/2,5,LEVEL_WINNER,screen);
+      player[2].Print_name(screen->w/2+(screen->w/2-LEVEL_WINNER->w)/2,5+LEVEL_WINNER->h,screen);
     }
  if(_player_winner==0)
     {
-     Apply_Texture((_screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,_screen);
-     player[1].Print_name((_screen->w/2-LEVEL_LOSER->w)/2,5+LEVEL_LOSER->h,_screen);
-     Apply_Texture(_screen->w/2+(_screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,_screen);
-     player[2].Print_name(_screen->w/2+(_screen->w/2-LEVEL_LOSER->w)/2,5+LEVEL_LOSER->h,_screen);
+     Apply_Texture((screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,screen);
+     player[1].Print_name((screen->w/2-LEVEL_LOSER->w)/2,5+LEVEL_LOSER->h,screen);
+     Apply_Texture(screen->w/2+(screen->w/2-LEVEL_LOSER->w)/2,5,LEVEL_LOSER,screen);
+     player[2].Print_name(screen->w/2+(screen->w/2-LEVEL_LOSER->w)/2,5+LEVEL_LOSER->h,screen);
     }
  Texture *player_xp,*player_money,*player_xp_gain,*player_money_gain;
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
@@ -1840,8 +1849,8 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
     {
      itoa(player[1].Get_number_of_wins(),aux);
      player_xp=Create_TTF_Texture(font,aux,wins_color);
-     Apply_Texture((_screen->w/2-(LEVEL_WINS->w+player_xp->w))/2,_screen->h/2-LEVEL_XP->h-LEVEL_WINS->h-25,LEVEL_WINS,_screen);
-     Apply_Texture((_screen->w/2-(LEVEL_WINS->w+player_xp->w))/2+LEVEL_WINS->w,_screen->h/2-LEVEL_XP->h-LEVEL_WINS->h-25,player_xp,_screen);
+     Apply_Texture((screen->w/2-(LEVEL_WINS->w+player_xp->w))/2,screen->h/2-LEVEL_XP->h-LEVEL_WINS->h-25,LEVEL_WINS,screen);
+     Apply_Texture((screen->w/2-(LEVEL_WINS->w+player_xp->w))/2+LEVEL_WINS->w,screen->h/2-LEVEL_XP->h-LEVEL_WINS->h-25,player_xp,screen);
      Destroy_Texture(player_xp);
 
      itoa(player[1].Get_experience(),aux);
@@ -1851,9 +1860,9 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
      itoa(10*player[2].Get_experience()/100+10+((_player_winner==2)?20:0),aux);
      player_xp_gain=Create_TTF_Texture(font,aux,xp_color);
 
-     Apply_Texture((_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2,_screen->h/2-LEVEL_XP->h,LEVEL_XP,_screen);
-     Apply_Texture((_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w,_screen->h/2-LEVEL_XP->h,player_xp,_screen);
-     Apply_Texture((_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w+player_xp->w,_screen->h/2-LEVEL_XP->h,player_xp_gain,_screen);
+     Apply_Texture((screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2,screen->h/2-LEVEL_XP->h,LEVEL_XP,screen);
+     Apply_Texture((screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w,screen->h/2-LEVEL_XP->h,player_xp,screen);
+     Apply_Texture((screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w+player_xp->w,screen->h/2-LEVEL_XP->h,player_xp_gain,screen);
      Destroy_Texture(player_xp);
      Destroy_Texture(player_xp_gain);
 
@@ -1864,9 +1873,9 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
      itoa((10+player[1].Get_extra_money())*player[2].Get_experience()/100+20+((_player_winner==1)?40:0),aux);
      player_money_gain=Create_TTF_Texture(font,aux,MONEY_COLOR);
 
-     Apply_Texture((_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2,_screen->h/2+LEVEL_MONEY->h,LEVEL_MONEY,_screen);
-     Apply_Texture((_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w,_screen->h/2+LEVEL_MONEY->h,player_money,_screen);
-     Apply_Texture((_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w+player_money->w,_screen->h/2+LEVEL_MONEY->h,player_money_gain,_screen);
+     Apply_Texture((screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2,screen->h/2+LEVEL_MONEY->h,LEVEL_MONEY,screen);
+     Apply_Texture((screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w,screen->h/2+LEVEL_MONEY->h,player_money,screen);
+     Apply_Texture((screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w+player_money->w,screen->h/2+LEVEL_MONEY->h,player_money_gain,screen);
      Destroy_Texture(player_money);
      Destroy_Texture(player_money_gain);
     }
@@ -1875,8 +1884,8 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
     {
      itoa(player[2].Get_number_of_wins(),aux);
      player_xp=Create_TTF_Texture(font,aux,wins_color);
-     Apply_Texture(_screen->w/2+(_screen->w/2-(LEVEL_WINS->w))/2,_screen->h/2-LEVEL_WINS->h-LEVEL_WINS->h-25,LEVEL_WINS,_screen);
-     Apply_Texture(_screen->w/2+(_screen->w/2-(LEVEL_WINS->w))/2+LEVEL_WINS->w,_screen->h/2-LEVEL_WINS->h-LEVEL_WINS->h-25,player_xp,_screen);
+     Apply_Texture(screen->w/2+(screen->w/2-(LEVEL_WINS->w))/2,screen->h/2-LEVEL_WINS->h-LEVEL_WINS->h-25,LEVEL_WINS,screen);
+     Apply_Texture(screen->w/2+(screen->w/2-(LEVEL_WINS->w))/2+LEVEL_WINS->w,screen->h/2-LEVEL_WINS->h-LEVEL_WINS->h-25,player_xp,screen);
      Destroy_Texture(player_xp);
 
      itoa(player[2].Get_experience(),aux);
@@ -1886,9 +1895,9 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
      itoa(10*player[1].Get_experience()/100+10+((_player_winner==1)?20:0),aux);
      player_xp_gain=Create_TTF_Texture(font,aux,xp_color);
 
-     Apply_Texture(_screen->w/2+(_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2,_screen->h/2-LEVEL_XP->h,LEVEL_XP,_screen);
-     Apply_Texture(_screen->w/2+(_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w,_screen->h/2-LEVEL_XP->h,player_xp,_screen);
-     Apply_Texture(_screen->w/2+(_screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w+player_xp->w,_screen->h/2-LEVEL_XP->h,player_xp_gain,_screen);
+     Apply_Texture(screen->w/2+(screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2,screen->h/2-LEVEL_XP->h,LEVEL_XP,screen);
+     Apply_Texture(screen->w/2+(screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w,screen->h/2-LEVEL_XP->h,player_xp,screen);
+     Apply_Texture(screen->w/2+(screen->w/2-(LEVEL_XP->w+player_xp->w+player_xp_gain->w))/2+LEVEL_XP->w+player_xp->w,screen->h/2-LEVEL_XP->h,player_xp_gain,screen);
      Destroy_Texture(player_xp);
      Destroy_Texture(player_xp_gain);
 
@@ -1899,9 +1908,9 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
      itoa((10+player[2].Get_extra_money())*player[1].Get_experience()/100+20+((_player_winner==2)?40:0),aux);
      player_money_gain=Create_TTF_Texture(font,aux,MONEY_COLOR);
 
-     Apply_Texture(_screen->w/2+(_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2,_screen->h/2+LEVEL_MONEY->h,LEVEL_MONEY,_screen);
-     Apply_Texture(_screen->w/2+(_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w,_screen->h/2+LEVEL_MONEY->h,player_money,_screen);
-     Apply_Texture(_screen->w/2+(_screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w+player_money->w,_screen->h/2+LEVEL_MONEY->h,player_money_gain,_screen);
+     Apply_Texture(screen->w/2+(screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2,screen->h/2+LEVEL_MONEY->h,LEVEL_MONEY,screen);
+     Apply_Texture(screen->w/2+(screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w,screen->h/2+LEVEL_MONEY->h,player_money,screen);
+     Apply_Texture(screen->w/2+(screen->w/2-(LEVEL_MONEY->w+player_money->w+player_money_gain->w))/2+LEVEL_MONEY->w+player_money->w,screen->h/2+LEVEL_MONEY->h,player_money_gain,screen);
      Destroy_Texture(player_money);
      Destroy_Texture(player_money_gain);
     }
@@ -1919,18 +1928,18 @@ void Level::Print_Duel_Mode_Finish_Screen(int _player_winner)
  if(player_type[2]!=0 && winner==1)
     {
      player_money=Create_TTF_Texture(font,"Press ENTER to continue!",{255,255,255});
-     Apply_Texture((_screen->w-player_money->w)/2,_screen->h/2+(_screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,_screen);
+     Apply_Texture((screen->w-player_money->w)/2,screen->h/2+(screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,screen);
      Destroy_Texture(player_money);
     }
  else
     {
      player_money=Create_TTF_Texture(font,"Press ESC to exit or ENTER to rematch!",{255,255,255});
-     Apply_Texture((_screen->w-player_money->w)/2,_screen->h/2+(_screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,_screen);
+     Apply_Texture((screen->w-player_money->w)/2,screen->h/2+(screen->h/2+LEVEL_MONEY->h+LEVEL_XP->h)/2,player_money,screen);
      Destroy_Texture(player_money);
     }
 
  TTF_CloseFont(font);
- Flip_Buffers(_screen);
+ Flip_Buffers(screen);
 }
 
 void Level::Set_screen(Texture *screen)

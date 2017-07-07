@@ -289,7 +289,6 @@ void Script_interpreter::Start(Texture *_screen,char *_script_name,int X,int Y)
  Set_screen(_screen);
  Set_script_name(_script_name);
  Start(X,Y);
- Clear();
 }
 
 int Get_command_id(char *_command)
