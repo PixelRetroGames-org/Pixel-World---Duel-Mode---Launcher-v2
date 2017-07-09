@@ -327,8 +327,27 @@ void Graphic_Reset_Saves(int x,int y,Texture *_screen,SDL_Event *event)
     (click_position==4))
     {
      click_position=-1;
-     system("reset-saves.bat");
-     SDL_Delay(75);
+     if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
+        {
+         bool focus=false;
+         DISPLAY_MODE=0;
+         SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
+         SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
+         SDL_PumpEvents();
+         while(SDL_PollEvent(event));
+         system("reset-saves.bat");
+         SDL_Delay(75);
+         DISPLAY_MODE=SDL_WINDOW_FULLSCREEN;
+         SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
+         SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
+         SDL_PumpEvents();
+         while(SDL_PollEvent(event));
+        }
+     else
+        {
+         system("reset-saves.bat");
+         SDL_Delay(75);
+        }
     }
  TTF_Font *font;
  font=TTF_OpenFont("fonts/pixel.ttf",20);

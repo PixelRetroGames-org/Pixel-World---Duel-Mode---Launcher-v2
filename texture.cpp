@@ -12,11 +12,13 @@ Texture *Load_Texture(char *filename)
  if(image_texture==NULL)
     {
      FILE *where=fopen("err/logs.txt","a");
-     fprintf(where,"%s\n",SDL_GetError());
+     fprintf(where,"%s while loading %s \n",SDL_GetError(),filename);
      fclose(where);
      char message[TEXT_LENGTH_MAX];
      strcpy(message,"SDL_CreateTextureFromSurface failed : ");
      strcat(message,SDL_GetError());
+     strcat(message," while loading ");
+     strcat(message,filename);
      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"SDL video module failure",message,NULL);
      exit(-1);
     }
@@ -42,11 +44,13 @@ Texture *Load_Transparent_Texture(char *filename)
  if(image_texture==NULL)
     {
      FILE *where=fopen("err/logs.txt","a");
-     fprintf(where,"%s\n",SDL_GetError());
+     fprintf(where,"%s while loading %s \n",SDL_GetError(),filename);
      fclose(where);
      char message[TEXT_LENGTH_MAX];
      strcpy(message,"SDL_CreateTextureFromSurface failed : ");
      strcat(message,SDL_GetError());
+     strcat(message," while loading ");
+     strcat(message,filename);
      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"SDL video module failure",message,NULL);
      exit(-1);
     }
