@@ -147,7 +147,9 @@ int Menu::Start(Texture *_screen,bool *reload)
  fps1.start();
  controller_timer.start();
  while(SDL_PollEvent(&event));
- bool focus=true,fullscreen,changed_window_status=false;
+ bool focus=true,fullscreen,changed_window_status=false,_fullscreen;
+ if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
+    _fullscreen=true;
  while(!quit && !done)
        {
         fps.start();
@@ -223,7 +225,7 @@ int Menu::Start(Texture *_screen,bool *reload)
                }
 
             //Lost Focus
-            if(event.type==SDL_WINDOWEVENT)
+            if(event.type==SDL_WINDOWEVENT && _fullscreen && reload!=nullptr)
                {
                 if(event.window.event==SDL_WINDOWEVENT_FOCUS_LOST || event.window.event==SDL_WINDOWEVENT_FOCUS_LOST || event.window.event==SDL_WINDOWEVENT_MINIMIZED)
                    focus=false,changed_window_status=true;

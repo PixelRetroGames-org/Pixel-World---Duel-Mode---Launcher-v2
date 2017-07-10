@@ -49,6 +49,8 @@
 		<Unit filename="clue_map_texture.h" />
 		<Unit filename="controller.cpp" />
 		<Unit filename="controller.h" />
+		<Unit filename="controls_screen.cpp" />
+		<Unit filename="controls_screen.h" />
 		<Unit filename="darkness.cpp" />
 		<Unit filename="darkness.h" />
 		<Unit filename="errors.cpp" />
