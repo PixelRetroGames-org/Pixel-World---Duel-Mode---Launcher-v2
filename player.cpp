@@ -547,6 +547,7 @@ void Player::Print_items(int x,int y,Texture *_screen)
 void Player::Print_Inventory(int x,int y,Texture *_screen,bool options,int type,bool allow_sales)
 {
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",15);
+ #ifdef DEBUG
  char s[4];
  itoa(inventory_item_selected,s);
  Texture *pos=Create_TTF_Texture(font,s,{255,255,255});
@@ -556,6 +557,7 @@ void Player::Print_Inventory(int x,int y,Texture *_screen,bool options,int type,
  pos=Create_TTF_Texture(font,s,{255,255,255});
  Apply_Texture(0,50,pos,_screen);
  Destroy_Texture(pos);
+ #endif // DEBUG
  char message[TEXT_LENGTH_MAX]={'x',NULL};
  Texture *_image=NULL;
  Apply_Texture(x,y,SHOP_inventory_background,_screen);
