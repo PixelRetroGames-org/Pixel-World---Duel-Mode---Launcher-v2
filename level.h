@@ -14,6 +14,7 @@
 #include "settings.h"
 #include "menu.h"
 #include "controller.h"
+#include "controls_screen.h"
 
 #include <map>
 #include <ctime>
@@ -72,7 +73,7 @@ class Level
  int skeptic_vision_alpha=0;
  Timer skeptic_vision_timer;
  Timer level_name_image_timer;
- bool focus=true,fullscreen,changed_window_status=false;
+ bool focus=true,fullscreen,changed_window_status=false,reload=false;
  SDL_Thread *pause_menu_thread;
  std::pair<int,int> player_map_position[3];
 

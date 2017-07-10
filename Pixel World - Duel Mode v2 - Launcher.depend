@@ -12,7 +12,7 @@
 	<string>
 	<cstdlib>
 
-1499442678 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
+1499700741 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
 	"menu.h"
 	"settings.h"
 	"script_interpreter.h"
@@ -25,7 +25,7 @@
 	<ctime>
 	<cstdlib>
 
-1499090170 e:\programming\pixel world - duel mode v2 - launcher\menu.h
+1499702456 e:\programming\pixel world - duel mode v2 - launcher\menu.h
 	"library.h"
 	"texture.h"
 	"load_images.h"
@@ -34,17 +34,17 @@
 	"controller.h"
 	<cstring>
 
-1499349224 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
+1499702485 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
 	"menu.h"
 
-1499442345 e:\programming\pixel world - duel mode v2 - launcher\load_images.h
+1499699496 e:\programming\pixel world - duel mode v2 - launcher\load_images.h
 	"library.h"
 	"texture.h"
 	"big_background.h"
 	"settings.h"
 	"darkness.h"
 
-1499442560 source:e:\programming\pixel world - duel mode v2 - launcher\load_images.cpp
+1499699740 source:e:\programming\pixel world - duel mode v2 - launcher\load_images.cpp
 	"load_images.h"
 
 1497954846 e:\programming\pixel world - duel mode v2 - launcher\big_background.h
@@ -63,7 +63,7 @@
 	"controller.h"
 	<cstdio>
 
-1499616751 source:e:\programming\pixel world - duel mode v2 - launcher\settings.cpp
+1499617191 source:e:\programming\pixel world - duel mode v2 - launcher\settings.cpp
 	"settings.h"
 
 1499081181 e:\programming\pixel world - duel mode v2 - launcher\script_interpreter.h
@@ -154,10 +154,10 @@
 	<vector>
 	<cstring>
 
-1499443095 source:e:\programming\pixel world - duel mode v2 - launcher\level.cpp
+1499702624 source:e:\programming\pixel world - duel mode v2 - launcher\level.cpp
 	"level.h"
 
-1499438543 e:\programming\pixel world - duel mode v2 - launcher\level.h
+1499701229 e:\programming\pixel world - duel mode v2 - launcher\level.h
 	"player.h"
 	"map.h"
 	"darkness.h"
@@ -171,6 +171,7 @@
 	"settings.h"
 	"menu.h"
 	"controller.h"
+	"controls_screen.h"
 	<map>
 	<ctime>
 
@@ -1035,7 +1036,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1499442515 e:\programming\pixel world - duel mode v2 - launcher\texture.h
+1499697234 e:\programming\pixel world - duel mode v2 - launcher\texture.h
 	"library.h"
 
 1451805391 e:\programming\pixel world - duel mode v2 - launcher\include\sdl2\sdl_mixer.h
@@ -1397,7 +1398,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1499615245 source:e:\programming\pixel world - duel mode v2 - launcher\texture.cpp
+1499698916 source:e:\programming\pixel world - duel mode v2 - launcher\texture.cpp
 	"texture.h"
 
 1499088599 source:e:\programming\pixel world - duel mode v2 - launcher\controller.cpp
@@ -1405,4 +1406,12 @@
 
 1499082396 e:\programming\pixel world - duel mode v2 - launcher\controller.h
 	"library.h"
+
+1499699939 source:e:\programming\pixel world - duel mode v2 - launcher\controls_screen.cpp
+	"controls_screen.h"
+
+1499699761 e:\programming\pixel world - duel mode v2 - launcher\controls_screen.h
+	"texture.h"
+	"controller.h"
+	"load_images.h"
 

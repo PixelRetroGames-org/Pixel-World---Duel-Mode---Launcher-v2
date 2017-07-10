@@ -203,6 +203,10 @@ int main( int argc, char *args[] )
                                                                       break;
                                                                      };
                                                               case 2:{
+                                                                      Controls_screen(screen);
+                                                                      break;
+                                                                     };
+                                                              case 3:{
                                                                       _option=-1;
                                                                       __option=-2;
                                                                       break;

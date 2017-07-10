@@ -45,7 +45,7 @@ class Menu
  void Set_number_of_options(int _noptions);
  void Set_option(int _pos,Menu_Option _x);
  void Print_options(Texture *_screen);
- int Start(Texture *_screen);
+ int Start(Texture *_screen,bool *reload=NULL);
 };
 
 #endif //MENU_H

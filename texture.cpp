@@ -233,6 +233,39 @@ void Apply_Texture(int xImage,int yImage,int xScreen,int yScreen,int w,int h,Tex
     Apply_Texture(xImage,yImage,xScreen,yScreen,w,h,source,last_frame);
 }
 
+void Apply_Stretched_Texture(int x,int y,int w,int h,Texture *source,Texture *destination)
+{
+ if(source==NULL || source->image==NULL)
+    return;
+ SDL_Rect *offset,*enlarge;
+ offset=new SDL_Rect;
+ enlarge=new SDL_Rect;
+ offset->x=x;
+ offset->y=y;
+ offset->w=w;
+ offset->h=h;
+ enlarge->x=enlarge->y=0;
+ enlarge->w=w;
+ enlarge->h=h;
+
+ SDL_LockMutex(RENDERER_MUTEX);
+ if(destination->image!=NULL)
+    {
+     SDL_SetRenderTarget(RENDERER,destination->image);
+    }
+ SDL_RenderCopy(RENDERER,source->image,enlarge,offset);
+ if(destination->image!=NULL)
+    {
+     SDL_SetRenderTarget(RENDERER,NULL);
+    }
+ SDL_UnlockMutex(RENDERER_MUTEX);
+
+ delete offset;
+ delete enlarge;
+ if(destination==SCREEN)
+    Apply_Texture(x,y,w,h,source,last_frame);
+}
+
 void Set_Texture_Blend_Mode(Texture *_texture,SDL_BlendMode blend_mode)
 {
  if(_texture==NULL || _texture->image==NULL)

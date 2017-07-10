@@ -295,6 +295,8 @@ void Level::Change(char *_level_name)
  SDL_WaitThread(_loading_image,&thread_return_value);
  Flip_Buffers(_screen);
  Setup(_level_name);
+ if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN)
+    Fast_Reload();
 }
 
 void Level::Update_players()
@@ -1744,7 +1746,7 @@ void Level::Pause_Menu()
      int option=0;
      while(option!=-2)
            {
-            option=menu.Start(_screen);
+            option=menu.Start(_screen,&reload);
             switch(option)
                    {
                     case -2:Unpause_music();
@@ -1756,7 +1758,9 @@ void Level::Pause_Menu()
                            option=-2;
                            done=true;
                            break;
-                    case 2:exit(0);
+                    case 2:Controls_screen(_screen);
+                           break;
+                    case 3:exit(0);
                    }
            }
      SDL_Delay(150);
@@ -1767,7 +1771,7 @@ void Level::Pause_Menu()
      int option=0;
      while(option!=-2)
            {
-            option=menu.Start(_screen);
+            option=menu.Start(_screen,&reload);
             switch(option)
                    {
                     case 0:option=-2;
@@ -1775,12 +1779,22 @@ void Level::Pause_Menu()
                     case 1:option=-2;
                            done=true;
                            break;
-                    case 2:exit(0);
+                    case 2:Controls_screen(_screen);
+                           break;
+                    case 3:exit(0);
                    }
            }
      SDL_Delay(150);
     }
  menu.Clear();
+ if(reload)
+    {
+     reload=false;
+     Fast_Reload();
+     Clear_Journal();
+     Load_Journal();
+     SDL_PumpEvents();
+    }
 }
 
 bool Level::Duel_Mode_Finish_Screen(int _player_winner)
@@ -2019,6 +2033,10 @@ void Level::Start(Texture *screen,bool cleanup)
         int previous_time=current_time.get_ticks(),lag=0;
         while(!quit && !done)
               {
+               if(reload)
+                  {
+
+                  }
                fps.start();
                if(level_changed || reset_lag)
                   {
@@ -2159,6 +2177,8 @@ void Launch_Story_Mode(Level *level,Texture *_screen)
  Mix_HaltMusic();
  level->Setup(level_name);
  level->Set_player_map_position(player_map_position_x,player_map_position_y,1);
+ if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN)
+    level->Fast_Reload();
  level->Start(_screen,false);
  if(level->Get_terrain_type()!=LEVEL_PUZZLE_TYPE)
     level->Save_gamemode();
@@ -2169,6 +2189,8 @@ void Launch_Duel_Mode(Level *level,Texture *_screen)
 {
  level->Set_screen(_screen);
  level->Setup("Duel Mode");
+ if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN)
+    level->Fast_Reload();
  level->Start(_screen);
 }
 

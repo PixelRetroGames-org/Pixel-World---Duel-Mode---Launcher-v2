@@ -34,6 +34,14 @@ Texture *LEVEL_WINNER,*LEVEL_LOSER,*LEVEL_MONEY,*LEVEL_XP,*LEVEL_LINE,*LEVEL_WIN
 Texture *MAP_NAME_background,*SKEPTIC_VISION_image;
 bool LEVEL_IMAGES_LOADED;
 
+///SETTINGS
+Texture *SETTINGS_option_background,*SETTINGS_option_background_selected,*SETTINGS_background,*SETTINGS_name;
+bool SETTINGS_IMAGES_LOADED;
+
+///SCRIPT
+Texture *SCRIPT_default_background_image;
+bool SCRIPT_IMAGES_LOADED;
+
 ///JOURNAL
 Texture *JOURNAL_ENTRY_BACKGROUND,*JOURNAL_ENTRY_HOVER_BACKGROUND,*JOURNAL_ENTRY_CLICK_BACKGROUND;
 bool JOURNAL_IMAGES_LOADED;
@@ -42,13 +50,9 @@ bool JOURNAL_IMAGES_LOADED;
 Texture *INVENTORY_LARROW,*INVENTORY_RARROW;
 bool INVENTORY_IMAGES_LOADED;
 
-///SETTINGS
-Texture *SETTINGS_option_background,*SETTINGS_option_background_selected,*SETTINGS_background,*SETTINGS_name;
-bool SETTINGS_IMAGES_LOADED;
-
-///SCRIPT
-Texture *SCRIPT_default_background_image;
-bool SCRIPT_IMAGES_LOADED;
+///CONTROLS SCREEN
+Texture *CONTROLS_keyboard_image,*CONTROLS_controller_image,*CONTROLS_background_image;
+bool CONTROLS_SCREEN_IMAGES_LOADED;
 
 void Load_shop_images()
 {
@@ -321,6 +325,26 @@ void Clear_script_images()
  SCRIPT_IMAGES_LOADED=false;
 }
 
+void Load_controls_screen_images()
+{
+ if(CONTROLS_SCREEN_IMAGES_LOADED)
+    return;
+ CONTROLS_SCREEN_IMAGES_LOADED=true;
+ CONTROLS_keyboard_image=Load_Transparent_Texture("images/menu/controls.png");
+ CONTROLS_controller_image=Load_Transparent_Texture("images/menu/controller.png");
+ CONTROLS_background_image=Load_Texture("images/launcher/launcher background.png");
+}
+
+void Clear_controls_screen_images()
+{
+ if(!CONTROLS_SCREEN_IMAGES_LOADED)
+    return;
+ CONTROLS_SCREEN_IMAGES_LOADED=false;
+ Destroy_Texture(CONTROLS_keyboard_image);
+ Destroy_Texture(CONTROLS_controller_image);
+ Destroy_Texture(CONTROLS_background_image);
+}
+
 void Load_all_images()
 {
  Load_global_images();
@@ -332,6 +356,7 @@ void Load_all_images()
  Load_inventory_images();
  Load_settings_images();
  Load_script_images();
+ Load_controls_screen_images();
 }
 
 void Clear_all_images()
@@ -345,6 +370,7 @@ void Clear_all_images()
  Clear_inventory_images();
  Clear_settings_images();
  Clear_script_images();
+ Clear_controls_screen_images();
 }
 
 Texture *static_screen;

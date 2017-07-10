@@ -136,7 +136,7 @@ void Menu::Print_options(Texture *_screen)
 
 const int CONTROLLER_DELAY=100;
 
-int Menu::Start(Texture *_screen)
+int Menu::Start(Texture *_screen,bool *reload)
 {
  selector_position=-1;
  click_position=-1;
@@ -147,6 +147,7 @@ int Menu::Start(Texture *_screen)
  fps1.start();
  controller_timer.start();
  while(SDL_PollEvent(&event));
+ bool focus=true,fullscreen,changed_window_status=false;
  while(!quit && !done)
        {
         fps.start();
@@ -220,6 +221,32 @@ int Menu::Start(Texture *_screen)
                 event_action=true;
                 controller_timer.start();
                }
+
+            //Lost Focus
+            if(event.type==SDL_WINDOWEVENT)
+               {
+                if(event.window.event==SDL_WINDOWEVENT_FOCUS_LOST || event.window.event==SDL_WINDOWEVENT_FOCUS_LOST || event.window.event==SDL_WINDOWEVENT_MINIMIZED)
+                   focus=false,changed_window_status=true;
+                if(event.window.event==SDL_WINDOWEVENT_FOCUS_GAINED || event.window.event==SDL_WINDOWEVENT_FOCUS_GAINED || event.window.event==SDL_WINDOWEVENT_MAXIMIZED)
+                   focus=true,changed_window_status=true;
+                if(!focus && changed_window_status)
+                   {
+                    if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
+                       DISPLAY_MODE=0,fullscreen=true;
+                    SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
+                    SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
+                   }
+                if(focus && changed_window_status)
+                   {
+                    if(fullscreen)
+                       DISPLAY_MODE=SDL_WINDOW_FULLSCREEN,fullscreen=false;
+                    SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
+                    SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
+                    *reload=true;
+                    SDL_PumpEvents();
+                   }
+               }
+
             if(event.type==SDL_QUIT || (event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_ESCAPE) || (controller[1].Pressed_Guide_button() || controller[2].Pressed_Guide_button()))
                quit=true,event_action=true;
             if(!event_action)

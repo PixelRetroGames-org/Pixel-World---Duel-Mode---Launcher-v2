@@ -1,15 +1,20 @@
-3 0 brickwall
+4 0 brickwall
 Paused
-0 200
+0 100
 Continue
 pixel.ttf
 40
 255 255 255
-0 400
+0 335
 Run
 pixel.ttf
 40
 175 0 0
+0 400
+Controls
+pixel.ttf
+40
+255 255 255
 0 465
 Exit Program
 pixel.ttf

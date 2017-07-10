@@ -74,6 +74,12 @@ extern bool INVENTORY_IMAGES_LOADED;
 void Load_inventory_images();
 void Clear_inventory_images();
 
+///CONTROLS SCREEN
+extern Texture *CONTROLS_keyboard_image,*CONTROLS_controller_image,*CONTROLS_background_image;
+extern bool CONTROLS_SCREEN_IMAGES_LOADED;
+void Load_controls_screen_images();
+void Clear_controls_screen_images();
+
 ///ALL
 void Load_all_images();
 void Clear_all_images();
