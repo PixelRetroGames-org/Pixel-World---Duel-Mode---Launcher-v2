@@ -4,7 +4,7 @@
 #include "library.h"
 
 extern Mix_Chunk *DUEL_MODE_hit[3];
-extern Mix_Chunk *DUEL_MODE_START;
+extern Mix_Music *DUEL_MODE_START;
 extern bool DUEL_MODE_EFFECTS_LOADED;
 
 extern Mix_Chunk *CLICK;

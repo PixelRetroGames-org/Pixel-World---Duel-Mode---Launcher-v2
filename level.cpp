@@ -1339,7 +1339,8 @@ void Level::Interact_with_NPC(int _player,int _npc)
                  SDL_WaitThread(level_music_overseer,&thread_return_value);
                  SDL_Delay(50);
                  Stop_music();
-                 Mix_PlayChannel(5,DUEL_MODE_START,-1);
+                 Mix_VolumeMusic(MIX_MAX_VOLUME*std::max(0,VOLUME/2)/100);
+                 Mix_PlayMusic(DUEL_MODE_START,-1);
                  break;
         }
  Script_interpreter script_interpreter;
@@ -1378,7 +1379,8 @@ void Level::Interact_with_NPC(int _player,int _npc)
          case 3:strcpy(_map_name,name);
                 strcpy(_aux,non_playable_characters[_npc].Get_duel_mode_level_name());
                 Change(_aux);
-                Mix_HaltChannel(5);
+                Stop_music();
+                Mix_VolumeMusic(MIX_MAX_VOLUME*VOLUME/100);
                 if(type==2)
                    {
                     Start(_screen,false);

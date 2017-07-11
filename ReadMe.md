@@ -10,8 +10,8 @@ Configure controller using: [SDL2 Gamepad Tool by General Arcade](http://www.gen
 - [ ] Expand the story
 - [x] ~~Test Nvidia GPU support~~ Fix the bug (Nvidia windowed, weird rendering)
 
-# Testing
+## Testing
 
-- [ ] Keyboard/mouse controls
+- [x] Keyboard/mouse controls
 - [ ] Controller
-- [ ] Memory leaks
+- [x] Memory leaks -> It seems alright, but is very hard to monitor the RAM usage when using the GPU...
