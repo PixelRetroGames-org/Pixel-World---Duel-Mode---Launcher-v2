@@ -63,6 +63,8 @@ int selector_position,click_position;
 const int number_of_options=6;
 const int CONTROLLER_DELAY=100;
 
+Timer timer;
+
 void Graphic_Settings(Texture *_screen)
 {
  selector_position=click_position=-1;
@@ -71,8 +73,7 @@ void Graphic_Settings(Texture *_screen)
  SDL_Delay(100);
  while(SDL_PollEvent(&event));
  SDL_PumpEvents();
- Timer controller_timer;
- controller_timer.start();
+ timer.start();
  while(!quit)
        {
         Print_Settings_Background(_screen);
@@ -89,21 +90,21 @@ void Graphic_Settings(Texture *_screen)
         SDL_Delay(20);
         if(event.type==SDL_MOUSEMOTION)
            selector_position=-1;
-        if((controller[1].Pressed_Up() || controller[2].Pressed_Up()) && selector_position>0 && controller_timer.get_ticks()>CONTROLLER_DELAY)
+        if((controller[1].Pressed_Up() || controller[2].Pressed_Up()) && selector_position>0 && timer.get_ticks()>CONTROLLER_DELAY)
            {
             selector_position--;
-            controller_timer.start();
+            timer.start();
            }
-        if((controller[1].Pressed_Down() || controller[2].Pressed_Down()) && selector_position<number_of_options-1 && controller_timer.get_ticks()>CONTROLLER_DELAY)
+        if((controller[1].Pressed_Down() || controller[2].Pressed_Down()) && selector_position<number_of_options-1 && timer.get_ticks()>CONTROLLER_DELAY)
            {
             selector_position++;
-            controller_timer.start();
+            timer.start();
            }
-        if(controller_timer.get_ticks()>CONTROLLER_DELAY*2 && (controller[1].Pressed_A_button() || controller[2].Pressed_A_button() ||
+        if(timer.get_ticks()>CONTROLLER_DELAY*2 && (controller[1].Pressed_A_button() || controller[2].Pressed_A_button() ||
                                                              controller[1].Pressed_Start_button() || controller[2].Pressed_Start_button()))
            {
             click_position=selector_position;
-            controller_timer.start();
+            timer.start();
            }
         if(event.type==SDL_QUIT || ((event.type==SDL_KEYDOWN && event.key.keysym.scancode==SDL_SCANCODE_ESCAPE) || (controller[1].Pressed_Guide_button() || controller[2].Pressed_Guide_button())))
            quit=true;
@@ -117,8 +118,7 @@ void Graphic_Settings(Texture *_screen,SDL_Event *event)
  SDL_Delay(100);
  while(SDL_PollEvent(event));
  SDL_PumpEvents();
- Timer controller_timer;
- controller_timer.start();
+ timer.start();
  while(!quit)
        {
         Print_Settings_Background(_screen);
@@ -135,21 +135,21 @@ void Graphic_Settings(Texture *_screen,SDL_Event *event)
         SDL_Delay(20);
         if(event->type==SDL_MOUSEMOTION)
            selector_position=-1;
-        if((controller[1].Pressed_Up() || controller[2].Pressed_Up()) && selector_position>0 && controller_timer.get_ticks()>CONTROLLER_DELAY)
+        if((controller[1].Pressed_Up() || controller[2].Pressed_Up()) && selector_position>0 && timer.get_ticks()>CONTROLLER_DELAY)
            {
             selector_position--;
-            controller_timer.start();
+            timer.start();
            }
-        if((controller[1].Pressed_Down() || controller[2].Pressed_Down()) && selector_position<number_of_options-1 && controller_timer.get_ticks()>CONTROLLER_DELAY)
+        if((controller[1].Pressed_Down() || controller[2].Pressed_Down()) && selector_position<number_of_options-1 && timer.get_ticks()>CONTROLLER_DELAY)
            {
             selector_position++;
-            controller_timer.start();
+            timer.start();
            }
-        if(controller_timer.get_ticks()>CONTROLLER_DELAY && (controller[1].Pressed_A_button() || controller[2].Pressed_A_button() ||
+        if(timer.get_ticks()>CONTROLLER_DELAY && (controller[1].Pressed_A_button() || controller[2].Pressed_A_button() ||
                                                              controller[1].Pressed_Start_button() || controller[2].Pressed_Start_button()))
            {
             click_position=selector_position;
-            controller_timer.start();
+            timer.start();
            }
         if(event->type==SDL_QUIT || ((event->type==SDL_KEYDOWN && event->key.keysym.scancode==SDL_SCANCODE_ESCAPE) || (controller[1].Pressed_Guide_button() || controller[2].Pressed_Guide_button())))
            quit=true;
@@ -238,9 +238,10 @@ void Graphic_Change_Volume(int x,int y,Texture *_screen,SDL_Event *event)
     Apply_Texture(x,y,SETTINGS_option_background,_screen);
  else
     Apply_Texture(x,y,SETTINGS_option_background_selected,_screen);
- if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h ||
+ if((event->type==SDL_MOUSEBUTTONDOWN && selector_position==2 && timer.get_ticks()>2*CONTROLLER_DELAY) ||
     (click_position==2))
     {
+     timer.start();
      click_position=-1;
      VOL++;
      VOL%=NUMBER_OF_AVAILABLE_VOLUMES;
@@ -264,9 +265,10 @@ void Graphic_Change_Volume(int x,int y,Texture *_screen,SDL_Event *event)
 void Graphic_Power_Saver(int x,int y,Texture *_screen,SDL_Event *event)
 {
  Apply_Texture(x,y,SETTINGS_option_background,_screen);
- if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h ||
+ if((event->type==SDL_MOUSEBUTTONDOWN && selector_position==3 && timer.get_ticks()>2*CONTROLLER_DELAY) ||
     (click_position==3))
     {
+     timer.start();
      POWER_SAVER=!POWER_SAVER;
      SDL_Delay(75);
     }
@@ -293,9 +295,10 @@ void Graphic_Auto_Attack(int x,int y,Texture *_screen,SDL_Event *event)
     Apply_Texture(x,y,SETTINGS_option_background,_screen);
  else
     Apply_Texture(x,y,SETTINGS_option_background_selected,_screen);
- if(event->type==SDL_MOUSEBUTTONDOWN && event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h ||
+ if((event->type==SDL_MOUSEBUTTONDOWN && selector_position==3 && timer.get_ticks()>2*CONTROLLER_DELAY) ||
     (click_position==3))
     {
+     timer.start();
      click_position=-1;
      AUTO_ATTACK=!AUTO_ATTACK;
      SDL_Delay(75);

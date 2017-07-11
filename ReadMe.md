@@ -6,9 +6,12 @@ Configure controller using: [SDL2 Gamepad Tool by General Arcade](http://www.gen
 
 ## ToDo list
 
-- [ ] Testing 
 - [ ] Populate the Stables
-- [x] Controller support for Duel Mode
-- [x] Controller support for Story Mode
+- [ ] Expand the story
 - [x] ~~Test Nvidia GPU support~~ Fix the bug (Nvidia windowed, weird rendering)
-- [ ] Test mouse/keyboard controls
+
+# Testing
+
+- [ ] Keyboard/mouse controls
+- [ ] Controller
+- [ ] Memory leaks
