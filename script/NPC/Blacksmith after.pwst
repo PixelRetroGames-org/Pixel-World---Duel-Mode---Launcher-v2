@@ -4,6 +4,6 @@
 
 
 <color 125 0 7 >Blacksmith: </color >It's a pleasure doing bussiness with you. Come back anytime!</line >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

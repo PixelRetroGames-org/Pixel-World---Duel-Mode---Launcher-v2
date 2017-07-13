@@ -5,6 +5,6 @@
 
 
 <color 125 0 7 >Yukig: </color > I go first! This one's my favorite.</line >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

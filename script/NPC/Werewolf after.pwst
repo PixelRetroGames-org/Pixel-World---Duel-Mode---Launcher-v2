@@ -4,7 +4,7 @@
 
 
 <color 125 0 7 >Werewolf: </color > Rrrraaaargggghhh!!</line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -14,7 +14,7 @@
 
 <color 125 0 7 >Timy: </color > Shut up!</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -25,6 +25,6 @@
 With one last slash Timy killed the beast. The werewolf's dead body burst in flames.</line >
 <line > The fire faded and the corpse was gone. </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

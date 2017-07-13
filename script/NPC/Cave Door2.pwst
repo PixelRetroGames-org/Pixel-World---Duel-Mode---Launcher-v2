@@ -4,7 +4,7 @@
 
 
 Timy put the coin in place.</line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -13,7 +13,7 @@ Timy put the coin in place.</line >
 
 Click!</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -23,6 +23,6 @@ Click!</line >
 
 <color 125 0 7 >Timy: </color >The door unlocked!</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

@@ -1,0 +1,85 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > I won, hahahahaha!!</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+
+Timy grabbed the wizard by the collar.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Where is the stone? Answer!</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Wizard >
+
+
+<color 125 0 7 >Wizard: </color > I I I can't...</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+
+The wizard teleported once again.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Goddamnit! AAAAHHHHHHH!</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > So close...</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >  I have to stay determined!</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >  And to get the hell outta here...</line >
+<we >
+< flip > < sleep 100 >
+<we >
+</page >

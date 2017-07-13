@@ -4,7 +4,7 @@
 
 
 <color 125 0 7 >Shady Merchant: </color >Psst! Want some stuff?</line >
-< flip >
+< flip > < sleep 100 >
 
 </page >
 
@@ -15,6 +15,6 @@
 
 <color 125 0 7 >Timy: </color >Sure!</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

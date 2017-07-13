@@ -1,0 +1,30 @@
+< bckimg background > 
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >Hmm, teleporting potion. Made of flowers and gold.</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >It should do the trick!</line >
+< we >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+Timy drank the yellow potion. </line >
+< we >
+< flip >
+< we >
+</page >

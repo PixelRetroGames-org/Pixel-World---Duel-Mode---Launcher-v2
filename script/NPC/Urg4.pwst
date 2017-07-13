@@ -5,7 +5,7 @@
 
 
 <color 125 0 7 >Urg: </color >I'm no warior, I'm a miner...</line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -15,6 +15,6 @@
 
 <color 125 0 7 >Urg: </color >Work, work...</line >
 < we >
-< flip >
+< flip > < sleep 100 >
 < we >
 </page >

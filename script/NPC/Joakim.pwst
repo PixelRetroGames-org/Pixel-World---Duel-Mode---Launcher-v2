@@ -4,7 +4,7 @@
 
 
 <color 125 0 7 >Joakim: </color > If you enter the Dark Forest, beware of the monsters.</line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -14,7 +14,7 @@
 
 <color 125 0 7 >Timy: </color > Where and when did the monsters come?</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -24,7 +24,7 @@
 
 <color 125 0 7 >Joakim: </color > Some time ago, a mighty wizard came and opened the old dungeon.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 page >
@@ -34,7 +34,7 @@ page >
 
 <color 125 0 7 >Joakim: </color > The monsters are his servants. Some of them are very dangerous.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -44,7 +44,7 @@ page >
 
 <color 125 0 7 >Timy: </color > Hmm, so where are monsters, there is an entrance to this dungeon!</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -54,7 +54,7 @@ page >
 
 <color 125 0 7 >Joakim: </color > Hmm, maybe.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 <page >
 <line >
@@ -63,7 +63,7 @@ page >
 
 <color 125 0 7 >Timy: </color > Thanks!</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -73,6 +73,6 @@ page >
 
 <color 125 0 7 >Joakim: </color > Be careful!</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

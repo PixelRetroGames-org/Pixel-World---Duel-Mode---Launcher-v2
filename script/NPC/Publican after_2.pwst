@@ -9,6 +9,6 @@
 <line >          And many miles be still to go </line >
 <line >	         But under a tall tree will I lie </line >
 <line >	         And let the clouds go sailing by</line > </line >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

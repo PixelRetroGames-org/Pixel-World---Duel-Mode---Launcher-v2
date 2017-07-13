@@ -4,6 +4,6 @@
 
 
 <color 125 0 7 >Blacksmith: </color >Greetings! I've a lot of stuff you can get for a fair price.</line >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

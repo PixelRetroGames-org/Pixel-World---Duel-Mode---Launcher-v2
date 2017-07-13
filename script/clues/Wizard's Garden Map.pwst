@@ -1,0 +1,39 @@
+< bckimg background > 
+<page >
+<line >
+
+
+Timy searched for an exit on the garden's map.</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Looks like I'm trapped here...</line >
+< we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Maybe that yellow potion...</line >
+< we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > There's a switch on the northern wall!</line >
+< we >
+< flip >
+< we >
+</page >

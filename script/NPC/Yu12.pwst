@@ -4,7 +4,7 @@
 
 
 he was wrong...</line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -15,7 +15,7 @@ he was wrong...</line >
 
 <color 125 0 7 >Yuzug: </color > Hey, human, what do you want?</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -26,7 +26,7 @@ he was wrong...</line >
 
 <color 125 0 7 >Yukig: </color > Maybe he wanna fight! It will be a pleasure defeating this skinny man.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -38,7 +38,7 @@ he was wrong...</line >
 <color 125 0 7 >Timy: </color > I heard your story and I wanted to see if you are</line >
 <line >as great as your brother says.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -49,7 +49,7 @@ he was wrong...</line >
 
 <color 125 0 7 >Yuzug: </color ><color 41 181 176 >(flexing muscles)</color > And what do you think now?</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -60,7 +60,7 @@ he was wrong...</line >
 
 <color 125 0 7 >Timy: </color > He is right, you really are a tough guy.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -72,7 +72,7 @@ he was wrong...</line >
 <color 125 0 7 >Yukig: </color > Hey, I challange you to fight!</line >
 <line >If you win, we let you go further.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -83,7 +83,7 @@ he was wrong...</line >
 
 <color 125 0 7 >Yuzug: </color > Come on brother, you can do it!</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -94,6 +94,6 @@ he was wrong...</line >
 
 <color 125 0 7 >Timy: </color > Fine!</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

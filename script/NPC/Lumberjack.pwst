@@ -4,7 +4,7 @@
 
 
 <color 125 0 7 >Timy: </color >Hey, what happened to the bridge?</line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -14,7 +14,7 @@
 
 <color 125 0 7 >Lumberjack: </color >Good day! The devil destroyed it... I'm tired of his pranks.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -24,7 +24,7 @@
 
 <color 125 0 7 >Lumberjack: </color >I can repair the bridge, but he'll break something else.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -34,7 +34,7 @@
 
 <color 125 0 7 >Timy: </color >You repair the bridge, I'll take care of this devil. </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -45,7 +45,7 @@
 <color 125 0 7 >Lumberjack: </color >Very well then, I should get to work!</line >
 <line > Farewell! </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 <page >
 <line >
@@ -54,7 +54,7 @@
 
 <color 125 0 7 >Timy: </color >So long! </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 <page >
 <line >
@@ -63,6 +63,6 @@
 
 The lumberjack repairs the bridge and then, exhausted, he enters his house to rest.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

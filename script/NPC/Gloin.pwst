@@ -4,6 +4,6 @@
 
 
 <color 125 0 7 >Gloin: </color > You think you're strong? Braaaawl!</line >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

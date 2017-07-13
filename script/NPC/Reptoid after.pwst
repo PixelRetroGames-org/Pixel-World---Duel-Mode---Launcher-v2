@@ -1,9 +1,21 @@
-< bckimg background > <page >
+< bckimg background > 
+<page >
+<line >
+<img 0 0 Reptoid >
+
+
+
+<color 125 0 7 >Reptoid: </color >I'tsss not overrr... We will meet againss...</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
 <line >
 
 
-The reptilian died. From the body lots of small reptiles ran away.</line >
-<line >There's nothing left.</line >
-< flip >
+From the reptilian's body, lots of small reptiles ran away </line >
+<line >until there was nothing left.</line >
+< we >
+< flip > < sleep 100 >
 <we >
 </page >

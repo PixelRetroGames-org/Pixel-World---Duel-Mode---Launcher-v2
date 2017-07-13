@@ -4,7 +4,7 @@
 
 
 <color 125 0 7 >Timy: </color > Hey! Give me back the stone and I'll spare you.</line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -14,7 +14,7 @@
 
 <color 125 0 7 >Wizard: </color > Ha ha ha! I prefer to keep it and there's nothing you can do about it!</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -24,7 +24,7 @@
 
 <color 125 0 7 >Wizard: </color > You're a mere mortal!</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -34,6 +34,6 @@
 
 <color 125 0 7 >Timy: </color > Not for long...</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

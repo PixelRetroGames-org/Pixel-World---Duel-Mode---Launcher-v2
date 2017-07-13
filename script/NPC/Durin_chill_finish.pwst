@@ -4,7 +4,7 @@
 
 
 <color 125 0 7 >Timy: </color >Ori took a bath and after he got out and got dressed, the beast attacked him. </line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -14,7 +14,7 @@
 
 <color 125 0 7 >Timy: </color >I managed to kill the beast, but your friend was already dead.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -24,7 +24,7 @@
 
 <color 125 0 7 >Durin: </color >Damn, I told him to be careful... We should take care of his body.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -34,7 +34,7 @@
 
 <color 125 0 7 >Durin: </color >Thank you friend!</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -44,6 +44,6 @@
 
 <color 125 0 7 >Timy: </color >Sorry for your loss.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

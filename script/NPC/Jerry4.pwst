@@ -6,6 +6,6 @@
 
 
 <color 125 0 7 >Jerry: </color >I love my flowers!</line >
-< flip >
+< flip > < sleep 100 >
 < we >
 </page >

@@ -1,0 +1,118 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Expecting visitors?</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Wizard >
+
+
+<color 125 0 7 >Wizard: </color > Not really... But be my guest! Take a seat!</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Wizard >
+
+
+<color 125 0 7 >Wizard: </color > So, what do you think about my garden?</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > I like Jerry's flowers. It's very nice, but you know,</line >
+<line >I didn't come here to admire your garden. I want my stone back.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Wizard >
+
+
+<color 125 0 7 >Wizard: </color > You are so stubborn... I can't give it to you, I need it for myself.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Then we'll fight for it.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Wizard >
+
+
+<color 125 0 7 >Wizard: </color > No,no,no. Let's play a game. I think of a number and you have to guess it.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Wizard >
+
+
+<color 125 0 7 >Wizard: </color > If you win you take the stone. If you don't, I keep it. It's fair!</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > I won't play this with you!</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Wizard >
+
+
+<color 125 0 7 >Wizard: </color > Fine. We'll fight!..</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+
+The wizard drank a strange potion. His eyes turned yellow for a second.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Wizard >
+
+
+<color 125 0 7 >Wizard: </color > If you catch me!</line >
+<we >
+< flip > < sleep 100 >
+<we >
+</page >

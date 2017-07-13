@@ -3,7 +3,7 @@
 
 
 Timy ran enraged with his sword ready to finish the weakened wizard.</line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -12,7 +12,7 @@ Timy ran enraged with his sword ready to finish the weakened wizard.</line >
 
 Suddenly, the wizard dissapeared.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
  
 <page >
@@ -21,7 +21,7 @@ Suddenly, the wizard dissapeared.</line >
 
 <color 125 0 7 >Wizard: </color > You won this time...</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -30,7 +30,7 @@ Suddenly, the wizard dissapeared.</line >
 
 <color 125 0 7 >Wizard: </color > But it won't happen again!</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -40,7 +40,7 @@ Suddenly, the wizard dissapeared.</line >
 
 <color 125 0 7 >Timy: </color > He fled.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -50,6 +50,6 @@ Suddenly, the wizard dissapeared.</line >
 
 <color 125 0 7 >Timy: </color > I should find another entrance in this dungeon.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

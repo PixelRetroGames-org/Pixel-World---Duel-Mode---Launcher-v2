@@ -5,6 +5,6 @@
 
 
 <color 125 0 7 >Watchmaker: </color > I like working in a small village in the mountains.</line >
-< flip >
+< flip > < sleep 100 >
 < we >
 </page >

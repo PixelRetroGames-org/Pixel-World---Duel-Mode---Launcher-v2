@@ -4,7 +4,7 @@
 
 
 <color 125 0 7 >Timy: </color > Come on you rectoid!</line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -15,6 +15,6 @@
 
 <color 125 0 7 >Reptoid: </color ><color 41 181 176 >(whispering) </color > You sssshal dieeee! </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

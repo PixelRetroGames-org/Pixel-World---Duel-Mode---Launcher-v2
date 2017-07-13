@@ -5,7 +5,7 @@
 
 
 <color 125 0 7 >Timy: </color > Move out of the way, I won!</line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -16,7 +16,7 @@
 
 <color 125 0 7 >Yuzug: </color > After what you did to my brother?</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -27,7 +27,7 @@
 
 <color 125 0 7 >Yuzug: </color > Fight me if you are brave enough, not my little brother!</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -38,6 +38,6 @@
 
 <color 125 0 7 >Timy: </color > So be it!</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

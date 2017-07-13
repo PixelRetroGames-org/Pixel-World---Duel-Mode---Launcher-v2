@@ -5,7 +5,7 @@
 
 
 <color 125 0 7 >Yukig: </color > Meh, it was an easy one.</line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -16,6 +16,6 @@
 
 <color 125 0 7 >Yukig: </color > Just wait to hear my brother's.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

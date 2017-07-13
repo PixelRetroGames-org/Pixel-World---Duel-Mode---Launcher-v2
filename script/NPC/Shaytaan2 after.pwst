@@ -5,7 +5,7 @@
 
 
 <color 125 0 7 >Shaytaan: </color > What have you accomplished, huh? </line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -16,7 +16,7 @@
 
 <color 125 0 7 >Shaytaan: </color > Do you realy think you can kill the sorcerer, fool?! </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -27,7 +27,7 @@
 
 <color 125 0 7 >Timy: </color > Where is he hiding? Answer, devil! </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -38,7 +38,7 @@
 
 <color 125 0 7 >Shaytaan: </color > Hiding? He's waiting for you... if you can get at him alive... </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 <page >
 <line >
@@ -48,7 +48,7 @@
 
 <color 125 0 7 >Timy: </color > You will never return to this world! </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -59,7 +59,7 @@
 Timy killed the Shaytaan with one mighty blow. </line >
 <line > He poured some salt on the dead body and cast the spell. </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 <page >
 <line >
@@ -68,6 +68,6 @@ Timy killed the Shaytaan with one mighty blow. </line >
 
 Timy drained all of his vitality and regenerated hp. </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

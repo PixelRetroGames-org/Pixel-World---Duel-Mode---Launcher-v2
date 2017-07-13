@@ -5,7 +5,7 @@
 
 
 <color 125 0 7 >Urg: </color >Ey, do you want trouble? Don't you even look at my gold!</line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -15,7 +15,7 @@
 
 <color 125 0 7 >Timy: </color >I have the flower. I need just one coin. What can I do for you to get it?</line >
 < we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -24,7 +24,7 @@
 
 Timy gave Urg the red flower from Jerry's garden.</line >
 < we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -34,7 +34,7 @@ Timy gave Urg the red flower from Jerry's garden.</line >
 
 <color 125 0 7 >Urg: </color >Well, it's been a long time since I a brawl.</line >
 < we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -44,7 +44,7 @@ Timy gave Urg the red flower from Jerry's garden.</line >
 
 <color 125 0 7 >Urg: </color >Defeat me in battle and the coin is yours.</line >
 < we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -54,6 +54,6 @@ Timy gave Urg the red flower from Jerry's garden.</line >
 
 <color 125 0 7 >Timy: </color >Great!</line >
 < we >
-< flip >
+< flip > < sleep 100 >
 < we >
 </page >

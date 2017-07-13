@@ -4,7 +4,7 @@
 
 
 <color 125 0 7 >Watchmaker: </color >How can I help you?</line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -14,7 +14,7 @@
 
 <color 125 0 7 >Timy: </color >What's the time?</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -24,7 +24,7 @@
 
 <color 125 0 7 >Watchmaker: </color >It's three o'clock, sir.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -34,7 +34,7 @@
 
 <color 125 0 7 >Timy: </color >And the year?</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -44,7 +44,7 @@
 
 <color 125 0 7 >Watchmaker: </color >It's 1253.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -54,7 +54,7 @@
 
 <color 125 0 7 >Timy: </color >So I've been missing for ten years!...</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -64,7 +64,7 @@
 
 <color 125 0 7 >Timy: </color >Your clock broke and I woke up 10 years later!!</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -74,7 +74,7 @@
 
 <color 125 0 7 >Timy: </color >Don't you remember me?! I'm the wizard from the castle!! </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -84,7 +84,7 @@
 
 <color 125 0 7 >Watchmaker: </color >I'm so sorry master! We thought you left. </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -95,7 +95,7 @@
 <color 125 0 7 >Timy: </color >What happened to the castle? </line >
 <line > I saw a lot of cracks and couldn't get past the blocked doors. </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -106,7 +106,7 @@
 <color 125 0 7 >Watchmaker: </color >Much of it collapsed, and once the wall </line >
 <line >fell the thieves broke in... </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -117,7 +117,7 @@
 <color 125 0 7 >Timy: </color >And one of them took my <color 24 100 200>Immortality Stone</color >. </line >
 <line > That happened soon 'cause I didn't age. </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -127,7 +127,7 @@
 
 <color 125 0 7 >Watchmaker: </color >If there is anything that I can do for you, I'll be glad to help! </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -137,7 +137,7 @@
 
 <color 125 0 7 >Timy: </color >You can't turn back time, can you? </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -147,7 +147,7 @@
 
 <color 125 0 7 >Watchmaker: </color >I'm afraid I don't have such powers. </line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -157,7 +157,7 @@
 
 <color 125 0 7 >Timy: </color >I thought so. Farewell...</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -167,6 +167,6 @@
 
 <color 125 0 7 >Timy: </color >I should check out the town... and get that artifact back as quick as possible.</line >
 <we >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

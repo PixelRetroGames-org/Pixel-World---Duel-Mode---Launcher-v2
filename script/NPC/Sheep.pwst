@@ -4,6 +4,6 @@
 
 
 <color 125 0 7 >Timy: </color >These sheep are weird.</line >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

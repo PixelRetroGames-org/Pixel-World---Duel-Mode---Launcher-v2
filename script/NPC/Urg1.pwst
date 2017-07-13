@@ -5,7 +5,7 @@
 
 
 <color 125 0 7 >Urg: </color >This is my gold, go away!</line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -15,6 +15,6 @@
 
 <color 125 0 7 >Urg: </color >Um, wait, if you bring me one of Jerry's flowers, we can figure something out.</line >
 < we >
-< flip >
+< flip > < sleep 100 >
 < we >
 </page >

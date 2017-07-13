@@ -4,6 +4,6 @@
 
 
 <color 125 0 7 >Fror: </color >Fror at your service! You seem pretty smart, but can you solve my riddle?</line >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

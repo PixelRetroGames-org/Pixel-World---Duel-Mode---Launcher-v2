@@ -6,7 +6,7 @@
 
 
 <color 125 0 7 >Jerry: </color >You won, take this!</line >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -16,7 +16,7 @@
 
 Jerry handed Timy a beautiful red flower.</line >
 < we >
-< flip >
+< flip > < sleep 100 >
 </page >
 
 <page >
@@ -27,6 +27,6 @@ Jerry handed Timy a beautiful red flower.</line >
 
 <color 125 0 7 >Timy: </color >Thanks!</line >
 < we >
-< flip >
+< flip > < sleep 100 >
 < we >
 </page >

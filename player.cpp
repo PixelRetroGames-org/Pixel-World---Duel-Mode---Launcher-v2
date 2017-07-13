@@ -170,6 +170,7 @@ void Player::Load()
      keys[49]=progress[49]=true;
      keys[53]=progress[53]=true;
      keys[55]=progress[55]=true;
+     keys[60]=progress[60]=true;
      spells[0].Set_id(6);
      spells[0].Load();
      spells[0].Unblock();

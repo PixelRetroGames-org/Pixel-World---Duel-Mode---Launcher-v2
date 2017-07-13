@@ -5,6 +5,6 @@
 
 
 <color 125 0 7 >Yuzug: </color > I know this one from a very old and wise man.</line >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >

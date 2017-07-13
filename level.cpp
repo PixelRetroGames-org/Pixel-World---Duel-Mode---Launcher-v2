@@ -1169,6 +1169,8 @@ bool Level::Cast_Spell(int _player,int spell_pos)
      spell_effect.Clear();*/
      effects.Copy(player[_player].Get_map_positionY()-_spell.Get_range(),player[_player].Get_map_positionX()-_spell.Get_range(),&spell_effects[spell_effects_ids[_spell.Get_id()]]);
     }
+ bool blocked_up,blocked_down,blocked_left,blocked_right;
+ blocked_up=blocked_down=blocked_left=blocked_right=false;
  switch(_spell.Get_type())
         {
          ///Self-buff
@@ -1202,6 +1204,33 @@ bool Level::Cast_Spell(int _player,int spell_pos)
                    player[_player].Set_map_position(player[_player].Get_map_positionX(),0);
                 if(player[_player].Get_map_positionY()>=arena.Get_number_of_lines())
                    player[_player].Set_map_position(player[_player].Get_map_positionX(),arena.Get_number_of_lines()-1);
+                while(arena.Is_obstacle(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()) || effects.Is_obstacle(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()) || (player[Other_player(_player)].Get_map_positionX()==player[_player].Get_map_positionX() && player[Other_player(_player)].Get_map_positionY()==player[_player].Get_map_positionY()))
+                      player[_player].Set_map_position(player[_player].Get_map_positionX()-player[_player].Get_velocityX(),player[_player].Get_map_positionY()-player[_player].Get_velocityY());
+                break;
+         ///Teleport
+         case 5:player[_player].Set_map_position(player[_player].Get_map_positionX()+player[_player].Get_velocityX()*_spell.Get_range(),player[_player].Get_map_positionY()+player[_player].Get_velocityY()*_spell.Get_range());
+                if(player[_player].Get_map_positionX()<0)
+                   player[_player].Set_map_position(0,player[_player].Get_map_positionY()),blocked_up=true;
+                if(player[_player].Get_map_positionX()>=arena.Get_number_of_columns())
+                   player[_player].Set_map_position(arena.Get_number_of_columns()-1,player[_player].Get_map_positionY()),blocked_down=true;
+                if(player[_player].Get_map_positionY()<0)
+                   player[_player].Set_map_position(player[_player].Get_map_positionX(),0),blocked_left=true;
+                if(player[_player].Get_map_positionY()>=arena.Get_number_of_lines())
+                   player[_player].Set_map_position(player[_player].Get_map_positionX(),arena.Get_number_of_lines()-1),blocked_right=true;
+                if((blocked_down || blocked_up) && (blocked_left || blocked_right))
+                   {
+                    player[_player].Set_velocityX(-player[_player].Get_velocityX());
+                    player[_player].Set_velocityY(-player[_player].Get_velocityY());
+                    player[_player].Set_map_position(player[_player].Get_map_positionX()+player[_player].Get_velocityX()*_spell.Get_range(),player[_player].Get_map_positionY()+player[_player].Get_velocityY()*_spell.Get_range());
+                    if(player[_player].Get_map_positionX()<0)
+                       player[_player].Set_map_position(0,player[_player].Get_map_positionY()),blocked_up=true;
+                    if(player[_player].Get_map_positionX()>=arena.Get_number_of_columns())
+                       player[_player].Set_map_position(arena.Get_number_of_columns()-1,player[_player].Get_map_positionY()),blocked_down=true;
+                    if(player[_player].Get_map_positionY()<0)
+                       player[_player].Set_map_position(player[_player].Get_map_positionX(),0),blocked_left=true;
+                    if(player[_player].Get_map_positionY()>=arena.Get_number_of_lines())
+                       player[_player].Set_map_position(player[_player].Get_map_positionX(),arena.Get_number_of_lines()-1),blocked_right=true;
+                   }
                 while(arena.Is_obstacle(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()) || effects.Is_obstacle(player[_player].Get_map_positionY(),player[_player].Get_map_positionX()) || (player[Other_player(_player)].Get_map_positionX()==player[_player].Get_map_positionX() && player[Other_player(_player)].Get_map_positionY()==player[_player].Get_map_positionY()))
                       player[_player].Set_map_position(player[_player].Get_map_positionX()-player[_player].Get_velocityX(),player[_player].Get_map_positionY()-player[_player].Get_velocityY());
                 break;
@@ -1718,6 +1747,34 @@ void Level::AI_Make_Move_player(int _player)
                      player[_player].Start_spell_timer(player[_player].Get_counter());
                      player[_player].Set_counter(player[_player].Get_counter()+1);
                      player[_player].Set_counter(player[_player].Get_counter()%3);
+                    }
+                 break;
+                }
+         ///Wizard22
+         case 6:
+                {
+                 range=5;
+                 time[0]=5000;
+                 if(player[_player].Get_counter()==-1)
+                    {
+                     for(int i=0;i<4;i++)
+                         player[_player].Start_spell_timer(i);
+                     player[_player].Set_counter(0);
+                    }
+                 ///Moves away from player
+                 player[_player].Set_velocityX((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())>0?-1:1);
+                 player[_player].Set_velocityY((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())>0?-1:1);
+                 ///If on the same row or column
+                 if(player[_player].Get_map_positionX()==player[Other_player(_player)].Get_map_positionX())
+                    player[_player].Set_velocityX((player[_player].Get_map_positionX()>arena.Get_number_of_lines()-player[_player].Get_map_positionX()+1)?-1:1);
+                 if(player[_player].Get_map_positionY()==player[Other_player(_player)].Get_map_positionY())
+                    player[_player].Set_velocityY((player[_player].Get_map_positionY()>arena.Get_number_of_columns()-player[_player].Get_map_positionY()+1)?-1:1);
+                 if(player[_player].Get_spell_timer_ticks(player[_player].Get_counter())>=time[player[_player].Get_counter()] &&
+                    std::max(std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX()),
+                    std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY()))<=range)
+                    {
+                     Cast_Spell(_player,player[_player].Get_counter());
+                     player[_player].Start_spell_timer(player[_player].Get_counter());
                     }
                  break;
                 }

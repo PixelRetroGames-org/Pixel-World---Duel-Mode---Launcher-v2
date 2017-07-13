@@ -4,6 +4,6 @@
 
 
 <color 125 0 7 >Gloin: </color >You are the best! Drink with me!</line >
-< flip >
+< flip > < sleep 100 >
 <we >
 </page >
