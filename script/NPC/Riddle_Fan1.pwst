@@ -1,0 +1,61 @@
+< bckimg background >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >Hey! What are you doing here?</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Riddle_Fan1 >
+
+
+<color 125 0 7 >Riddle Fan: </color >Today it's the annual riddle competition, organized by the riddle fans club.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Riddle_Fan1 >
+
+
+<color 125 0 7 >Riddle Fan: </color >You wanna try?</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Riddle_Fan1 >
+
+
+<color 125 0 7 >Riddle Fan: </color >If you get past our members, you will meet the <color 125 0 7 >Riddle Master</color >!</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Riddle_Fan1 >
+
+
+<color 125 0 7 >Riddle Fan: </color >She's the best...</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >Let's see...</line >
+<we >
+< flip > < sleep 100 >
+<we >
+</page >

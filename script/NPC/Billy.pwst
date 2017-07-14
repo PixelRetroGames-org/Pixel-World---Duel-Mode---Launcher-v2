@@ -1,0 +1,38 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Billy >
+
+
+<color 125 0 7 >Billy: </color >I've lost my mustache in fight.</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Billy >
+
+
+<color 125 0 7 >Billy: </color >I almost won the confrontation with the rainbow sheep, but...</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Billy >
+
+
+<color 125 0 7 >Billy: </color >She has bitten my mustache... My pour mustache...</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+
+
+Billy started crying...</line >
+<we >
+< flip > < sleep 100 >
+<we >
+</page >

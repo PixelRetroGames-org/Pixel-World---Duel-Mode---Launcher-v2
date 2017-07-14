@@ -1,0 +1,9 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Shepherd >
+
+
+<color 125 0 7 >Shepherd: </color >I'll show you a good spot for hunting rainbow sheep!</line >
+< flip > < sleep 100 >
+<we >
+</page >

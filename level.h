@@ -30,7 +30,7 @@ const int MS_PER_UPDATE=25;
 
 const int MUSIC_PAUSE=500;
 
-const int NUMBER_OF_NPC_MAX=20;
+const int NUMBER_OF_NPC_MAX=50;
 
 const int LEVEL_PUZZLE_TYPE=4;
 

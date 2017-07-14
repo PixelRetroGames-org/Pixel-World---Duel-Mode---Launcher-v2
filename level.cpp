@@ -221,7 +221,7 @@ void Level::Load()
           fgets(non_playable_characters_names[i],sizeof non_playable_characters_names[i],where);
           if(non_playable_characters_names[i][strlen(non_playable_characters_names[i])-1]=='\n')
              non_playable_characters_names[i][strlen(non_playable_characters_names[i])-1]=NULL;
-          non_playable_characters[i].Load(non_playable_characters_names[i],player[1].Get_keys(),std::make_pair(player[1].Get_map_positionX(),player[1].Get_map_positionY()));
+          non_playable_characters[i].Load(non_playable_characters_names[i],player[1].Get_keys(),{player[1].Get_map_positionX(),player[1].Get_map_positionY(),player[1].Get_skinW()/PIXELS_PER_INGAME_UNIT,player[1].Get_skinH()/PIXELS_PER_INGAME_UNIT});
          }
     }
 
@@ -278,7 +278,7 @@ void Level::Fast_Reload()
      }
  for(int i=0;i<number_of_non_playable_characters;i++)
      {
-      non_playable_characters[i].Load(non_playable_characters_names[i],player[1].Get_keys(),std::make_pair(player[1].Get_map_positionX(),player[1].Get_map_positionY()));
+      non_playable_characters[i].Load(non_playable_characters_names[i],player[1].Get_keys(),{player[1].Get_map_positionX(),player[1].Get_map_positionY(),player[1].Get_skinW()/PIXELS_PER_INGAME_UNIT,player[1].Get_skinH()/PIXELS_PER_INGAME_UNIT});
      }
 }
 

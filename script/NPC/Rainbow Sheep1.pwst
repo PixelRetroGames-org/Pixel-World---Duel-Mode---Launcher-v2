@@ -1,0 +1,44 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Rainbow_Sheep >
+
+
+
+<color 125 0 7 >Rainbow Sheep: </color > Another adventurer to challenge me?</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color > What's this whole thing with rainbow sheep?</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Rainbow_Sheep >
+
+
+
+<color 125 0 7 >Rainbow Sheep: </color > Fight me and you'll see...</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color > Let's do it!</line >
+<we >
+< flip > < sleep 100 >
+<we >
+</page >
+

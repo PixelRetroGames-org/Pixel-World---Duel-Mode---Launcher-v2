@@ -1,0 +1,28 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Krutos >
+
+
+<color 125 0 7 >Krutos: </color >I've got this scar from a rainbow sheep.</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Krutos >
+
+
+<color 125 0 7 >Krutos: </color >I've fought like a brave warrior, but she was too strong...</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+
+
+Krutos started crying...</line >
+<we >
+< flip > < sleep 100 >
+<we >
+</page >

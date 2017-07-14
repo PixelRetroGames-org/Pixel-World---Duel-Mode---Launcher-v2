@@ -1,0 +1,60 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Jake >
+
+
+<color 125 0 7 >Jake: </color >Hey!</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >What did the rainbow sheep do to you?</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Jake >
+
+
+<color 125 0 7 >Jake: </color >Nothing. I just like sad stories.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Jake >
+
+Jake started staring at Timy.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Jake1 ></line >
+<we >
+< flip > < sleep 2000 >
+</page >
+
+<page >
+<line >
+<img 0 0 Jake2 ></line >
+< flip > < sleep 2000 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >You're weird...</line >
+< flip > < sleep 100 >
+<we >
+</page >

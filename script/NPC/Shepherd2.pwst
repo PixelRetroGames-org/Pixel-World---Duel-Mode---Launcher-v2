@@ -1,0 +1,42 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Shepherd >
+
+
+<color 125 0 7 >Shepherd: </color >Hey! Here you can find a lot of sheep,</line >
+<line > especially rainbow sheep. </line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Shepherd >
+
+
+<color 125 0 7 >Shepherd: </color >They say that you're only allowed three rainbow sheep in your lifetime.</line >
+<line > They come along like the great warriors, once every ten years.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Shepherd >
+
+
+<color 125 0 7 >Shepherd: </color >After you find one in this area and you win, the odds are that </line >
+<line > you'll never find another one here. </line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Shepherd >
+
+
+<color 125 0 7 >Shepherd: </color >You should go north and continue hunting.</line >
+<we >
+< flip > < sleep 100 >
+<we >
+</page >

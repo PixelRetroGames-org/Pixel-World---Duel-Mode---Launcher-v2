@@ -66,3 +66,5 @@
 65 - Northern Switch
 66 - The false tree
 67 - Yellow potion
+68 - Rainbow Sheep 1
+69 - Rainbow Sheep 2

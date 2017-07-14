@@ -163,7 +163,7 @@ void Non_Playable_Character::Unblock()
  is_blocked=false;
 }
 
-void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair<int,int> player_pos)
+void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key,SDL_Rect player_pos)
 {
  char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"NPC/");
@@ -220,9 +220,24 @@ void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair
  std::vector<int> available_positions;
  for(int i=0;i<number_of_map_accessible_positions;i++)
      {
-      if(map_accessible_positions[i].first<=player_pos.first || map_accessible_positions[i].first+skin_image_position.w/PIXELS_PER_INGAME_UNIT>=player_pos.first || map_accessible_positions[i].second<=player_pos.second || map_accessible_positions[i].second+skin_image_position.h/PIXELS_PER_INGAME_UNIT>=player_pos.second)
+      SDL_Rect NPC_position={map_accessible_positions[i].first,map_accessible_positions[i].second,Get_skinW()/PIXELS_PER_INGAME_UNIT,Get_skinH()/PIXELS_PER_INGAME_UNIT};
+      if((NPC_position.x>player_pos.x+player_pos.w-1 || NPC_position.x+NPC_position.w-1<player_pos.x) || (NPC_position.y>player_pos.y+player_pos.h-1 || NPC_position.y+NPC_position.h-1<player_pos.y))
          available_positions.push_back(i);
      }
+ #ifdef DEBUG
+ if(available_positions.size()==0)
+    {
+     FILE *out=fopen("err/debug.txt","a");
+     fprintf(out,"0 available positions %s x=%d,y=%d,w=%d,h=%d,player:x=%d,y=%d,w=%d,h=%d",name,0,0,Get_skinW()/PIXELS_PER_INGAME_UNIT,Get_skinH()/PIXELS_PER_INGAME_UNIT,
+                                                                                           player_pos.x,player_pos.y,player_pos.w,player_pos.h);
+     fclose(out);
+    }
+ #endif // DEBUG
+ if(available_positions.size()==0)
+    {
+     fclose(where);
+     return;
+    }
  int random_position=rand()%available_positions.size();
  map_positionX=map_accessible_positions[available_positions[random_position]].first,map_positionY=map_accessible_positions[available_positions[random_position]].second;
  fscanf(where,"%d ",&type);
@@ -268,7 +283,7 @@ void Non_Playable_Character::Load(std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair
  fclose(where);
 }
 
-void Non_Playable_Character::Load(char *_name,std::bitset<NUMBER_OF_MAX_KEYS> *key,std::pair<int,int> player_pos)
+void Non_Playable_Character::Load(char *_name,std::bitset<NUMBER_OF_MAX_KEYS> *key,SDL_Rect player_pos)
 {
  Set_name(_name);
  Load(key,player_pos);

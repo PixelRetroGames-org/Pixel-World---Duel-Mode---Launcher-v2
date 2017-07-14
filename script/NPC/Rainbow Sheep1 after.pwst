@@ -1,0 +1,115 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Rainbow_Sheep >
+
+
+
+<color 125 0 7 >Rainbow Sheep: </color > You bested me!</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color > Now what?</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Rainbow_Sheep >
+
+
+
+<color 125 0 7 >Rainbow Sheep: </color > We have our first date.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color > WHAT?! I DIDN'T EXPECT THAT...</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Rainbow_Sheep >
+
+
+
+<color 125 0 7 >Rainbow Sheep: </color > Why do you think people hunt us, <color 41 181 176 >(jokingly)</color > for skin and meat?</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color > . </line >
+<we >
+< flip > < sleep 1000 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color > .. </line >
+< flip > < sleep 1000 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color > ... </line >
+< flip > < sleep 1000 >
+</page >
+
+<page >
+<line >
+<img 0 0 Rainbow_Sheep >
+
+
+
+<color 125 0 7 >Rainbow Sheep: </color > Are you serious?!</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Rainbow_Sheep >
+
+
+
+<color 125 0 7 >Rainbow Sheep: </color > I don't think this will work. Bye.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+
+She ran away...</line >
+<we >
+< flip > < sleep 100 >
+<we >
+</page >
+
