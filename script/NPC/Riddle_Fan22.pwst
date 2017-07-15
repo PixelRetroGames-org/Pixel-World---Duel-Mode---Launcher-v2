@@ -1,0 +1,9 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Riddle_Fan2 >
+
+
+<color 125 0 7 >Riddle Fan: </color >Go to the next riddle!</line >
+< flip > < sleep 100 >
+< we >
+</page >

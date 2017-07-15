@@ -1,0 +1,19 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Riddle_Fan2 >
+
+
+<color 125 0 7 >Riddle Fan: </color >If you solve my riddle you can advance.</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Riddle_Fan2 >
+
+
+<color 125 0 7 >Riddle Fan: </color >If not, you can stay at the table until you find the solution.</line >
+<we >
+< flip > < sleep 100 >
+<we >
+</page >

@@ -1,0 +1,39 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Riddle_Fan2 >
+
+
+<color 125 0 7 >Riddle Fan: </color >You solved it!</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Riddle_Fan2 >
+
+
+<color 125 0 7 >Riddle Fan: </color >You are the first one who got past me.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >What about the others? There are many fans of riddles.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Riddle_Fan2 >
+
+
+<color 125 0 7 >Riddle Fan : </color > <color 41 181 176 >(whispering) </color >They are in the fan club for the robes.</line >
+<we >
+< flip > < sleep 100 >
+<we >
+</page >

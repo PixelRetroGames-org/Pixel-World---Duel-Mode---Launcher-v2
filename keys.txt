@@ -58,13 +58,15 @@
 57 - The Coin
 58 - Shaytaan2
 59 - Dungeon2
-60 - Reptoid Dungeon2
+60 - Reptoid Dungeon2 *!
 61 - Dungeon2 finish
-62 - Wizard21
+62 - Wizard21 *!
 63 - Wizard22
 64 - Act2 finish
-65 - Northern Switch
+65 - Northern Switch *!
 66 - The false tree
-67 - Yellow potion
-68 - Rainbow Sheep 1
+67 - Yellow potion *!
+68 - Rainbow Sheep 1 *!
 69 - Rainbow Sheep 2
+70 - Riddle_Fan21 *!
+71 - Riddle_Fan22
