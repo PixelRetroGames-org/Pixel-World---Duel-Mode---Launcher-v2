@@ -1,0 +1,21 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Riddle_Master >
+
+
+
+<color 125 0 7 >Riddle Master: </color >Hi, congratulations for solving all the riddles!</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Riddle_Master >
+
+
+
+<color 125 0 7 >Riddle Master: </color >I have one last challenge for you.</line >
+<we >
+< flip > < sleep 100 >
+<we >
+</page >

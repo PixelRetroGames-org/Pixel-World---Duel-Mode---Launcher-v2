@@ -1,0 +1,201 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Riddle_Master >
+
+
+
+<color 125 0 7 >Riddle Master: </color >That's right!</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Riddle_Master >
+
+
+
+<color 125 0 7 >Riddle Master: </color >You are the first to solve my riddle.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color >It wasn't that hard for me.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color >I'm used to solving difficult problems.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Riddle_Master >
+
+
+
+<color 125 0 7 >Riddle Master: </color >You're so smart!</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Riddle_Master >
+
+
+
+<color 125 0 7 >Riddle Master: </color >I promised to show myself to the one who defeats me...</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+
+The Riddle Master stripped her robe...</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+
+<img 0 0 Rainbow_Sheep > </line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color >Well, I didn't expect that!</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Rainbow_sheep >
+
+
+
+<color 125 0 7 >Riddle Master: </color >Is anything wrong?</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color >I was afraid that beyond the mask would be something dangerous...</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color >It is something dangerous...</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Rainbow_sheep >
+
+
+
+<color 125 0 7 >Riddle Master: </color >...</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color >Something dangerously beautiful ... and smart.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Rainbow_sheep >
+
+
+
+<color 125 0 7 >Riddle Master: </color >Oh, t-thank you!</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color >I have to go now, but I would love to see you again later!</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Rainbow_sheep >
+
+
+
+<color 125 0 7 >Riddle Master: </color >S-sure! Bye!</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+
+
+
+<color 125 0 7 >Timy: </color >The sweetest 'bye' I ever heard!... But I have to go find the stone now!</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+
+<color 125 0 7 >Timy: </color >Bye!</line >
+<we >
+< flip > < sleep 100 >
+<we >
+</page >

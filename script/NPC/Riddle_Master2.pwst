@@ -1,0 +1,10 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Rainbow_sheep >
+
+
+
+<color 125 0 7 >Riddle Master: </color >I would like to play riddles again with you...</line >
+< flip > < sleep 100 >
+<we >
+</page >

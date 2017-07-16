@@ -1,0 +1,39 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Riddle_Fan4 >
+
+
+<color 125 0 7 >Riddle Fan: </color >Very well!</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Riddle_Fan4 >
+
+
+<color 125 0 7 >Riddle Fan: </color >You may challenge the Riddle Master!</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Riddle_Fan4 >
+
+
+<color 125 0 7 >Riddle Fan: </color >You are the first to challenge her!</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Riddle_Fan4 >
+
+
+<color 125 0 7 >Riddle Fan: </color >This 'uniform' thing ruined our club...</line >
+<we >
+< flip > < sleep 100 >
+<we >
+</page >

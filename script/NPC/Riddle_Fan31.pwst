@@ -1,0 +1,19 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Riddle_Fan3 >
+
+
+<color 125 0 7 >Riddle Fan: </color >I started to get bored...</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Riddle_Fan3 >
+
+
+<color 125 0 7 >Riddle Fan: </color >Here's your riddle:</line >
+<we >
+< flip > < sleep 100 >
+<we >
+</page >

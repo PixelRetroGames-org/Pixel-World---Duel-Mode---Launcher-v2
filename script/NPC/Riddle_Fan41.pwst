@@ -1,0 +1,29 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Riddle_Fan4 >
+
+
+<color 125 0 7 >Riddle Fan: </color >Greetings!</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Riddle_Fan4 >
+
+
+<color 125 0 7 >Riddle Fan: </color >After I went blind, riddles became my only pleasure.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Riddle_Fan4 >
+
+
+<color 125 0 7 >Riddle Fan: </color >I'm talking too much. Let's get to business!</line >
+<we >
+< flip > < sleep 100 >
+<we >
+</page >
