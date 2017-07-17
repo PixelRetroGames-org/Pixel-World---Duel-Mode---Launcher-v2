@@ -105,6 +105,18 @@ void Player::Set_inventory_item_selected_position(int _inventory_item_selected_p
     inventory_item_selected=Get_next_inventory_item_id(_inventory_item_selected_position,type);
 }
 
+const int NUMBER_OF_DEFAULT_PLAYER_KEYS=23;
+const int default_player_keys[]={1,12,15,17,20,23,34,35,36,37,38,41,45,49,53,55,60,62,68,70,72,74,76};
+
+void Player::Add_Default_keys()
+{
+ for(int i=0;i<NUMBER_OF_DEFAULT_PLAYER_KEYS;i++)
+     {
+      if(!progress[default_player_keys[i]])
+         keys[default_player_keys[i]]=progress[default_player_keys[i]]=true;
+     }
+}
+
 void Player::Load()
 {
  TTF_Font *font=TTF_OpenFont("fonts/pixel.ttf",30);
@@ -154,31 +166,8 @@ void Player::Load()
      movement_speed=basic_movement_speed;
      life_steal=basic_life_steal;
      money=600;
-     keys[1]=progress[1]=true;
-     keys[15]=progress[15]=true;
-     keys[12]=progress[12]=true;
-     keys[17]=progress[17]=true;
-     keys[20]=progress[20]=true;
-     keys[23]=progress[23]=true;
-     keys[34]=progress[34]=true;
-     keys[35]=progress[35]=true;
-     keys[36]=progress[36]=true;
-     keys[37]=progress[37]=true;
-     keys[38]=progress[38]=true;
-     keys[41]=progress[41]=true;
-     keys[45]=progress[45]=true;
-     keys[49]=progress[49]=true;
-     keys[53]=progress[53]=true;
-     keys[55]=progress[55]=true;
-     keys[60]=progress[60]=true;
-     keys[62]=progress[62]=true;
-     keys[65]=progress[65]=true;
-     keys[67]=progress[67]=true;
-     keys[68]=progress[68]=true;
-     keys[70]=progress[70]=true;
-     keys[72]=progress[72]=true;
-     keys[74]=progress[74]=true;
-     keys[76]=progress[76]=true;
+     progress.reset();
+     Add_Default_keys();
      spells[0].Set_id(6);
      spells[0].Load();
      spells[0].Unblock();
@@ -267,6 +256,7 @@ void Player::Load()
  Set_mental_health(basic_mental_health);
  inventory_item_selected=-1;
  inventory_item_selected_position=-1;
+ Add_Default_keys();
 }
 
 void Player::Fast_Reload()

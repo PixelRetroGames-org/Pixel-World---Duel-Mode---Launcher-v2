@@ -18,6 +18,9 @@ int level_last_track_played;
 SDL_Thread *level_music_overseer=NULL;
 SDL_mutex *music_overseer_mutex;
 
+Timer _controller_timer;
+const int CONTROLLER_DELAY=200;
+
 Level::Level()
 {
  player_name[0][0]=player_name[1][0]=player_name[2][0]=NULL;
@@ -143,6 +146,7 @@ int Level::Get_terrain_type()
 
 void Level::Load()
 {
+ _controller_timer.start();
  done=false;
  char path[TEXT_LENGTH_MAX]={NULL};
  strcpy(path,"levels/");
@@ -1031,16 +1035,19 @@ void Level::Handle_Events(Texture *_screen)
     Darkness_increase();
  if(keystates[SDL_SCANCODE_MINUS])
     Darkness_decrease();
- if(keystates[SDL_SCANCODE_ESCAPE] || (controller[1].Pressed_Guide_button() || controller[2].Pressed_Guide_button()) || (focus && changed_window_status))
+ if(keystates[SDL_SCANCODE_ESCAPE] || ((controller[1].Pressed_Guide_button() || controller[2].Pressed_Guide_button()) && _controller_timer.get_ticks()>CONTROLLER_DELAY) || (focus && changed_window_status))
     {
+     _controller_timer.start();
      Pause_Menu();
     }
- if((keystates[SDL_SCANCODE_J] || controller[1].Pressed_Start_button() || controller[2].Pressed_Guide_button()) && type!=2)
+ if((keystates[SDL_SCANCODE_J] || ((controller[1].Pressed_Start_button() || controller[2].Pressed_Guide_button()) && _controller_timer.get_ticks()>CONTROLLER_DELAY)) && type!=2)
     {
+     _controller_timer.start();
      Open_Journal(player[1].Get_progress(),_screen);
     }
- if((keystates[SDL_SCANCODE_I] || controller[1].Pressed_Back_button() || controller[2].Pressed_Back_button()) && type!=2)
+ if((keystates[SDL_SCANCODE_I] || ((controller[1].Pressed_Back_button() || controller[2].Pressed_Back_button()) && _controller_timer.get_ticks()>CONTROLLER_DELAY)) && type!=2)
     {
+     _controller_timer.start();
      player_inventory::Print_Inventory(_screen,player[1].Get_name());
      player[1].Fast_Reload();
      player[1].Set_movement_speed(2);
@@ -1776,6 +1783,26 @@ void Level::AI_Make_Move_player(int _player)
                      Cast_Spell(_player,player[_player].Get_counter());
                      player[_player].Start_spell_timer(player[_player].Get_counter());
                     }
+                 break;
+                }
+         ///Rainbow Sheep1
+         case 7:
+                {
+                 player[_player].Set_velocityX((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())>0?1:-1);
+                 player[_player].Set_velocityY((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())>0?1:-1);
+                 if((player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==0)
+                    player[_player].Set_velocityX(0);
+                 if((player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==0)
+                    player[_player].Set_velocityY(0);
+                 if((std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==1 &&
+                    std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==0) ||
+                    (std::abs(player[Other_player(_player)].Get_map_positionX()-player[_player].Get_map_positionX())==0 &&
+                    std::abs(player[Other_player(_player)].Get_map_positionY()-player[_player].Get_map_positionY())==1))
+                    player[_player].Set_velocityX(0),player[_player].Set_velocityY(0);
+                 //player[_player].Block();
+                 //player_time_blocked[_player]=10;
+                 if(player[_player].Can_attack())
+                    Player_basic_attack(_player);
                  break;
                 }
         }

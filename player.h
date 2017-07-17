@@ -72,6 +72,7 @@ class Player
  void Set_id(int _id);
  void Set_Controller_Timer(Timer *_controller_timer);
  void Set_inventory_item_selected_position(int _inventory_item_selected_position,int type);
+ void Add_Default_keys();
  void Load();
  void Fast_Reload();
  void Update();

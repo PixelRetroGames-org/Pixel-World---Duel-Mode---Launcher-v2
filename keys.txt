@@ -63,9 +63,9 @@
 62 - Wizard21 *!
 63 - Wizard22
 64 - Act2 finish
-65 - Northern Switch *!
+65 - Northern Switch
 66 - The false tree
-67 - Yellow potion *!
+67 - Yellow potion 
 68 - Rainbow Sheep 1 *!
 69 - Rainbow Sheep 2
 70 - Riddle_Fan21 *!

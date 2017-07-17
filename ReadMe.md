@@ -6,12 +6,13 @@ Configure controller using: [SDL2 Gamepad Tool by General Arcade](http://www.gen
 
 ## ToDo list
 
-- [ ] Populate the Stables
-- [ ] Expand the story
+- [x] Populate the Stables
+- [x] Expand the story
+- [ ] Finish the story
 - [x] ~~Test Nvidia GPU support~~ Fix the bug (Nvidia windowed, weird rendering)
 
 ## Testing
 
 - [x] Keyboard/mouse controls
-- [ ] Controller
+- [x] Controller
 - [x] Memory leaks -> It seems alright, but is very hard to monitor the RAM usage when using the GPU...
