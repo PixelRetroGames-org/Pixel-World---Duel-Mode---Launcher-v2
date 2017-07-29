@@ -1,5 +1,7 @@
 #include "settings.h"
 
+int DISPLAY_RESOLUTION_W,DISPLAY_RESOLUTION_H;
+
 const int NUMBER_OF_AVAILABLE_RESOLUTIONS=4;
 const int available_RESOLUTION_W[NUMBER_OF_AVAILABLE_RESOLUTIONS]={1366,1440,1600,1920};
 const int available_RESOLUTION_H[NUMBER_OF_AVAILABLE_RESOLUTIONS]={ 768, 900, 900, 1080};
@@ -26,6 +28,8 @@ void Load_Settings()
  RESOLUTION_W=available_RESOLUTION_W[RESOLUTION];
  RESOLUTION_H=available_RESOLUTION_H[RESOLUTION];
  DISPLAY_MODE=dm==0?SDL_WINDOW_FULLSCREEN:0;
+ Get_Display_Resolution();
+ Validate_RESOLUTION();
  VOLUME=available_volumes[VOL];
  fclose(where);
 }
@@ -51,6 +55,18 @@ void Set_RESOLUTION_H(int Y)
 void Set_DISPLAY_MODE(int MODE)
 {
  DISPLAY_MODE=(Uint32)MODE;
+ Validate_RESOLUTION();
+}
+
+void Validate_RESOLUTION()
+{
+ while(RESOLUTION_W>DISPLAY_RESOLUTION_W || RESOLUTION_H>DISPLAY_RESOLUTION_H)
+       {
+        RESOLUTION++;
+        RESOLUTION%=NUMBER_OF_AVAILABLE_RESOLUTIONS;
+        RESOLUTION_W=available_RESOLUTION_W[RESOLUTION];
+        RESOLUTION_H=available_RESOLUTION_H[RESOLUTION];
+       }
 }
 
 void Print_Settings_Background(Texture *_screen)
@@ -172,6 +188,7 @@ void Graphic_Change_Resolution(int x,int y,Texture *_screen,SDL_Event *event)
      RESOLUTION%=NUMBER_OF_AVAILABLE_RESOLUTIONS;
      RESOLUTION_W=available_RESOLUTION_W[RESOLUTION];
      RESOLUTION_H=available_RESOLUTION_H[RESOLUTION];
+     Validate_RESOLUTION();
      SDL_SetWindowSize(WINDOW,RESOLUTION_W,RESOLUTION_H);
      SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
      SCREEN->w=RESOLUTION_W;
@@ -383,4 +400,21 @@ bool Graphic_Back(int x,int y,Texture *_screen,SDL_Event *event)
  TTF_CloseFont(font);
  Destroy_Texture(image);
  return false;
+}
+
+void Get_Display_Resolution()
+{
+ SDL_Rect display_rect;
+ if(SDL_GetDisplayBounds(0,&display_rect)!=0)
+    {
+     FILE *log_file=fopen("err/logs.txt","w");
+     fprintf(log_file,"SDL_GetDisplayBounds failed : %s ",SDL_GetError());
+     fclose(log_file);
+     char message[TEXT_LENGTH_MAX];
+     strcpy(message,"SDL_GetDisplayBounds failed : ");
+     strcat(message,SDL_GetError());
+     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"SDL_GetDisplayBounds failure",message,NULL);
+    }
+ DISPLAY_RESOLUTION_W=display_rect.w;
+ DISPLAY_RESOLUTION_H=display_rect.h;
 }

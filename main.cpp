@@ -89,7 +89,7 @@ int main( int argc, char *args[] )
      fclose(log_file);
      char message[TEXT_LENGTH_MAX];
      strcpy(message,"Mix_OpenAudio() failed : ");
-     strcat(message,SDL_GetError());
+     strcat(message,Mix_GetError());
      SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"SDL_mixer module failure",message,NULL);
     }
  Flip_Buffers(screen);
