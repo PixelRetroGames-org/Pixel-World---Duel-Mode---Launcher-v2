@@ -299,7 +299,7 @@ void Level::Change(char *_level_name)
  SDL_WaitThread(_loading_image,&thread_return_value);
  Flip_Buffers(_screen);
  Setup(_level_name);
- if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN_DESKTOP)
+ if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN)
     Fast_Reload();
 }
 
@@ -1058,10 +1058,10 @@ void Level::Handle_Events(Texture *_screen)
  if(((keystates[SDL_SCANCODE_RALT] || keystates[SDL_SCANCODE_LALT]) && keystates[SDL_SCANCODE_RETURN]) || ((controller[1].Pressed_LeftShoulder() && controller[1].Pressed_RightShoulder()) ||
                                                                                                            (controller[1].Pressed_LeftShoulder() && controller[1].Pressed_RightShoulder())))
     {
-     if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN_DESKTOP)
+     if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
         DISPLAY_MODE=0;
      else
-        DISPLAY_MODE=SDL_WINDOW_FULLSCREEN_DESKTOP;
+        DISPLAY_MODE=SDL_WINDOW_FULLSCREEN;
      SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
      SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
      Fast_Reload();
@@ -1080,7 +1080,7 @@ void Level::Handle_Events(Texture *_screen)
             focus=true,changed_window_status=true;
          if(!focus && changed_window_status)
             {
-             if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN_DESKTOP)
+             if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
                 DISPLAY_MODE=0,fullscreen=true;
              SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
              SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
@@ -1088,7 +1088,7 @@ void Level::Handle_Events(Texture *_screen)
          if(focus && changed_window_status)
             {
              if(fullscreen)
-                DISPLAY_MODE=SDL_WINDOW_FULLSCREEN_DESKTOP,fullscreen=false;
+                DISPLAY_MODE=SDL_WINDOW_FULLSCREEN,fullscreen=false;
              SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
              SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
              Fast_Reload();
@@ -1460,11 +1460,13 @@ void Level::Interact_with_NPC(int _player,int _npc)
                        player[_player].Set_map_position(x,y);
                     else
                        player[_player].Set_map_position(npc_lose_posX,npc_lose_posY);
+                    level_music_overseer=SDL_CreateThread(Oversee_music,"Music Overseer",NULL);
                     Change_music(1);
                     if(winner==1)
                        script_interpreter.Start(_screen,afterscript);
                    }
-                level_music_overseer=SDL_CreateThread(Oversee_music,"Music Overseer",NULL);
+                else
+                   level_music_overseer=SDL_CreateThread(Oversee_music,"Music Overseer",NULL);
                 break;
          case 4:puzzle.Set_name(non_playable_characters[_npc].Get_puzzle_name());
                 puzzle.Load();
@@ -2205,6 +2207,7 @@ void Level::Start(Texture *screen,bool cleanup)
         if(quit && type==2)
            {
             Stop_music();
+            SDL_Delay(50);
             Mix_PlayChannel(4,DUEL_MODE_hit[1],0);
             if(player[1].Get_hp()<=0 && player[2].Get_hp()<=0)
                play=Duel_Mode_Finish_Screen(winner=0);
@@ -2291,7 +2294,7 @@ void Launch_Story_Mode(Level *level,Texture *_screen)
  Mix_HaltMusic();
  level->Setup(level_name);
  level->Set_player_map_position(player_map_position_x,player_map_position_y,1);
- if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN_DESKTOP)
+ if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN)
     level->Fast_Reload();
  level->Start(_screen,false);
  if(level->Get_terrain_type()!=LEVEL_PUZZLE_TYPE)
@@ -2303,7 +2306,7 @@ void Launch_Duel_Mode(Level *level,Texture *_screen)
 {
  level->Set_screen(_screen);
  level->Setup("Duel Mode");
- if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN_DESKTOP)
+ if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN)
     level->Fast_Reload();
  level->Start(_screen);
 }

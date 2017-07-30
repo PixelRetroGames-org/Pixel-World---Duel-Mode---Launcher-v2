@@ -27,7 +27,7 @@ void Load_Settings()
  fscanf(where,"%d %d %d %d %d ",&RESOLUTION,&dm,&VOL,&POWER_SAVER,&AUTO_ATTACK);
  RESOLUTION_W=available_RESOLUTION_W[RESOLUTION];
  RESOLUTION_H=available_RESOLUTION_H[RESOLUTION];
- DISPLAY_MODE=dm==0?SDL_WINDOW_FULLSCREEN_DESKTOP:0;
+ DISPLAY_MODE=dm==0?SDL_WINDOW_FULLSCREEN:0;
  Get_Display_Resolution();
  Validate_RESOLUTION();
  VOLUME=available_volumes[VOL];
@@ -38,7 +38,7 @@ void Save_Settings()
 {
  FILE *where=fopen("settings/settings.set","w");
  int dm=0;
- fprintf(where,"%d %d %d %d %d",RESOLUTION,DISPLAY_MODE==SDL_WINDOW_FULLSCREEN_DESKTOP?0:1,VOL,POWER_SAVER,AUTO_ATTACK);
+ fprintf(where,"%d %d %d %d %d",RESOLUTION,DISPLAY_MODE==SDL_WINDOW_FULLSCREEN?0:1,VOL,POWER_SAVER,AUTO_ATTACK);
  fclose(where);
 }
 
@@ -224,10 +224,10 @@ void Graphic_Change_Display_Mode(int x,int y,Texture *_screen,SDL_Event *event)
     (click_position==1))
     {
      click_position=-1;
-     if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN_DESKTOP)
+     if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
         DISPLAY_MODE=0;
      else
-        DISPLAY_MODE=SDL_WINDOW_FULLSCREEN_DESKTOP;
+        DISPLAY_MODE=SDL_WINDOW_FULLSCREEN;
      SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
      SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
      return;
@@ -237,7 +237,7 @@ void Graphic_Change_Display_Mode(int x,int y,Texture *_screen,SDL_Event *event)
  Texture *image=NULL,*image1=NULL;
  image=Create_TTF_Texture(font,"Fullscreen:",settings_color);
  Apply_Texture(x+20,y+10,image,_screen);
- if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN_DESKTOP)
+ if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
     image1=Create_TTF_Texture(font,"ON",settings_color);
  else
     image1=Create_TTF_Texture(font,"OFF",settings_color);
