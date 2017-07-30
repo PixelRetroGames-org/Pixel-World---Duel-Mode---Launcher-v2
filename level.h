@@ -172,6 +172,9 @@ class Level
  void Save_gamemode();
 };
 
+bool Segment_check_intersection(std::pair<int,int> first,std::pair<int,int> second);
+bool Rect_check_intersection(SDL_Rect first,SDL_Rect second);
+
 int Other_player(int _player);
 
 ///Launch

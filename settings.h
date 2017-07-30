@@ -24,6 +24,8 @@ void Set_DISPLAY_MODE(int MODE);
 
 void Validate_RESOLUTION();
 
+void Reset_Saves();
+
 void Graphic_Settings(Texture *_screen);
 void Graphic_Settings(Texture *_screen,SDL_Event *event);
 void Graphic_Change_Resolution(int x,int y,Texture *_screen,SDL_Event *event);

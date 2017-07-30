@@ -148,7 +148,7 @@ int Menu::Start(Texture *_screen,bool *reload)
  controller_timer.start();
  while(SDL_PollEvent(&event));
  bool focus=true,fullscreen,changed_window_status=false,_fullscreen;
- if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
+ if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN_DESKTOP)
     _fullscreen=true;
  while(!quit && !done)
        {
@@ -233,7 +233,7 @@ int Menu::Start(Texture *_screen,bool *reload)
                    focus=true,changed_window_status=true;
                 if(!focus && changed_window_status)
                    {
-                    if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
+                    if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN_DESKTOP)
                        DISPLAY_MODE=0,fullscreen=true;
                     SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
                     SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
@@ -241,7 +241,7 @@ int Menu::Start(Texture *_screen,bool *reload)
                 if(focus && changed_window_status)
                    {
                     if(fullscreen)
-                       DISPLAY_MODE=SDL_WINDOW_FULLSCREEN,fullscreen=false;
+                       DISPLAY_MODE=SDL_WINDOW_FULLSCREEN_DESKTOP,fullscreen=false;
                     SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
                     SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
                     *reload=true;

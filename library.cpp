@@ -50,7 +50,7 @@ void Make_Fullscreen(SDL_Window *_window,bool *fullscreen)
  if(fullscreen)
     {
      int a=0;
-     SDL_SetWindowFullscreen(_window,SDL_WINDOW_FULLSCREEN);
+     SDL_SetWindowFullscreen(_window,SDL_WINDOW_FULLSCREEN_DESKTOP);
     }
  else
     {

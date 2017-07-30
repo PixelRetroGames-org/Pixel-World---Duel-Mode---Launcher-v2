@@ -299,7 +299,7 @@ void Level::Change(char *_level_name)
  SDL_WaitThread(_loading_image,&thread_return_value);
  Flip_Buffers(_screen);
  Setup(_level_name);
- if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN)
+ if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN_DESKTOP)
     Fast_Reload();
 }
 
@@ -1058,10 +1058,10 @@ void Level::Handle_Events(Texture *_screen)
  if(((keystates[SDL_SCANCODE_RALT] || keystates[SDL_SCANCODE_LALT]) && keystates[SDL_SCANCODE_RETURN]) || ((controller[1].Pressed_LeftShoulder() && controller[1].Pressed_RightShoulder()) ||
                                                                                                            (controller[1].Pressed_LeftShoulder() && controller[1].Pressed_RightShoulder())))
     {
-     if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
+     if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN_DESKTOP)
         DISPLAY_MODE=0;
      else
-        DISPLAY_MODE=SDL_WINDOW_FULLSCREEN;
+        DISPLAY_MODE=SDL_WINDOW_FULLSCREEN_DESKTOP;
      SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
      SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
      Fast_Reload();
@@ -1080,7 +1080,7 @@ void Level::Handle_Events(Texture *_screen)
             focus=true,changed_window_status=true;
          if(!focus && changed_window_status)
             {
-             if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
+             if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN_DESKTOP)
                 DISPLAY_MODE=0,fullscreen=true;
              SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
              SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
@@ -1088,7 +1088,7 @@ void Level::Handle_Events(Texture *_screen)
          if(focus && changed_window_status)
             {
              if(fullscreen)
-                DISPLAY_MODE=SDL_WINDOW_FULLSCREEN,fullscreen=false;
+                DISPLAY_MODE=SDL_WINDOW_FULLSCREEN_DESKTOP,fullscreen=false;
              SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
              SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
              Fast_Reload();
@@ -1159,6 +1159,19 @@ void Level::Apply_all_players_buffs()
  Apply_player_buffs(2);
 }
 
+bool Segment_check_intersection(std::pair<int,int> first,std::pair<int,int> second)
+{
+ if(first.first>second.first)
+    std::swap(first,second);
+ return (second.first<=first.second);
+}
+
+bool Rect_check_intersection(SDL_Rect first,SDL_Rect second)
+{
+ return (Segment_check_intersection(std::make_pair(first.x,first.x+first.w),std::make_pair(second.x,second.x+second.w)) &&
+         Segment_check_intersection(std::make_pair(first.y,first.y+first.h),std::make_pair(second.y,second.y+second.h)));
+}
+
 bool Level::Cast_Spell(int _player,int spell_pos)
 {
  if(!player[_player].Pay_Spell(spell_pos))
@@ -1189,8 +1202,23 @@ bool Level::Cast_Spell(int _player,int spell_pos)
                     }
                 break;
          ///Curse
-         case 2:if(std::max(std::abs(player[_player].Get_map_positionX()-player[Other_player(_player)].Get_map_positionX()),std::abs(player[_player].Get_map_positionY()-player[Other_player(_player)].Get_map_positionY()))>_spell.Get_range())
+         case 2:/*if(std::max(std::abs(player[_player].Get_map_positionX()-player[Other_player(_player)].Get_map_positionX()),std::abs(player[_player].Get_map_positionY()-player[Other_player(_player)].Get_map_positionY()))>_spell.Get_range())
+                   break;*/
+                SDL_Rect other_player_rect,spell_range_rect;
+
+                other_player_rect.x=player[Other_player(_player)].Get_map_positionX();
+                other_player_rect.y=player[Other_player(_player)].Get_map_positionY();
+                other_player_rect.w=player[Other_player(_player)].Get_skinW()/PIXELS_PER_INGAME_UNIT-1;
+                other_player_rect.h=player[Other_player(_player)].Get_skinH()/PIXELS_PER_INGAME_UNIT-1;
+
+                spell_range_rect.x=player[_player].Get_map_positionX()-_spell.Get_range();
+                spell_range_rect.y=player[_player].Get_map_positionY()-_spell.Get_range();
+                spell_range_rect.w=2*_spell.Get_range();
+                spell_range_rect.h=2*_spell.Get_range();
+
+                if(!Rect_check_intersection(other_player_rect,spell_range_rect))
                    break;
+
                 for(std::vector<Buff>::iterator i=_buffs.begin();i!=_buffs.end();i++)
                     {
                      i->Set_damage(i->Get_damage()+(i->Get_damage()*player[_player].Get_spell_damage()/100));
@@ -2263,7 +2291,7 @@ void Launch_Story_Mode(Level *level,Texture *_screen)
  Mix_HaltMusic();
  level->Setup(level_name);
  level->Set_player_map_position(player_map_position_x,player_map_position_y,1);
- if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN)
+ if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN_DESKTOP)
     level->Fast_Reload();
  level->Start(_screen,false);
  if(level->Get_terrain_type()!=LEVEL_PUZZLE_TYPE)
@@ -2275,7 +2303,7 @@ void Launch_Duel_Mode(Level *level,Texture *_screen)
 {
  level->Set_screen(_screen);
  level->Setup("Duel Mode");
- if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN)
+ if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN_DESKTOP)
     level->Fast_Reload();
  level->Start(_screen);
 }

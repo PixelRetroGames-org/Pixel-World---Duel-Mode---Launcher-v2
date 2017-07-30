@@ -1,18 +1,18 @@
-< bckimg background > <page >
-<line >
+< bckimg background > <page > <line >
 
 
 
  <color 255 255 255>Credits:</color > 
 
+
+
+
 </line >
-<line ><color 255 0 0>Laura Talaat <color 199 0 255>
-</line >
+<line ><color 255 0 0>Alex Cioltan <color 199 0 255>@</c > <color 89 255 0>AlexTheCoder</c ></c ></line >
 <line ><color 199 0 255>and</c ></line >
-<line >
-<color 255 0 0>Alex Cioltan <color 199 0 255>@</c > <color 89 255 0>AlexTheCoder</c ></c ></line >
+<line ><color 255 0 0>Laura Talaat <color 199 0 255></line >
+<line > <img 0 270 AlexTheCoder > </line >
 < img 0 50 logo >
 < flip >
-< sleep 1000>
 <we >
 </page >

@@ -27,7 +27,7 @@ void Load_Settings()
  fscanf(where,"%d %d %d %d %d ",&RESOLUTION,&dm,&VOL,&POWER_SAVER,&AUTO_ATTACK);
  RESOLUTION_W=available_RESOLUTION_W[RESOLUTION];
  RESOLUTION_H=available_RESOLUTION_H[RESOLUTION];
- DISPLAY_MODE=dm==0?SDL_WINDOW_FULLSCREEN:0;
+ DISPLAY_MODE=dm==0?SDL_WINDOW_FULLSCREEN_DESKTOP:0;
  Get_Display_Resolution();
  Validate_RESOLUTION();
  VOLUME=available_volumes[VOL];
@@ -38,7 +38,7 @@ void Save_Settings()
 {
  FILE *where=fopen("settings/settings.set","w");
  int dm=0;
- fprintf(where,"%d %d %d %d %d",RESOLUTION,DISPLAY_MODE==SDL_WINDOW_FULLSCREEN?0:1,VOL,POWER_SAVER,AUTO_ATTACK);
+ fprintf(where,"%d %d %d %d %d",RESOLUTION,DISPLAY_MODE==SDL_WINDOW_FULLSCREEN_DESKTOP?0:1,VOL,POWER_SAVER,AUTO_ATTACK);
  fclose(where);
 }
 
@@ -224,10 +224,10 @@ void Graphic_Change_Display_Mode(int x,int y,Texture *_screen,SDL_Event *event)
     (click_position==1))
     {
      click_position=-1;
-     if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
+     if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN_DESKTOP)
         DISPLAY_MODE=0;
      else
-        DISPLAY_MODE=SDL_WINDOW_FULLSCREEN;
+        DISPLAY_MODE=SDL_WINDOW_FULLSCREEN_DESKTOP;
      SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
      SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
      return;
@@ -237,7 +237,7 @@ void Graphic_Change_Display_Mode(int x,int y,Texture *_screen,SDL_Event *event)
  Texture *image=NULL,*image1=NULL;
  image=Create_TTF_Texture(font,"Fullscreen:",settings_color);
  Apply_Texture(x+20,y+10,image,_screen);
- if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
+ if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN_DESKTOP)
     image1=Create_TTF_Texture(font,"ON",settings_color);
  else
     image1=Create_TTF_Texture(font,"OFF",settings_color);
@@ -335,6 +335,14 @@ void Graphic_Auto_Attack(int x,int y,Texture *_screen,SDL_Event *event)
  Destroy_Texture(image);
 }
 
+void Reset_Saves()
+{
+ remove("saves/players/Timy.pwp");
+ remove("saves/players/Player1.pwp");
+ remove("saves/players/Player2.pwp");
+ remove("saves/gamemodes/Story Mode.pwsav");
+}
+
 void Graphic_Reset_Saves(int x,int y,Texture *_screen,SDL_Event *event)
 {
  if(event->button.x>=x && event->button.x<=x+SETTINGS_option_background->w && event->button.y>=y && event->button.y<=y+SETTINGS_option_background->h)
@@ -347,27 +355,18 @@ void Graphic_Reset_Saves(int x,int y,Texture *_screen,SDL_Event *event)
     (click_position==4))
     {
      click_position=-1;
-     if(DISPLAY_MODE==SDL_WINDOW_FULLSCREEN)
-        {
-         bool focus=false;
-         DISPLAY_MODE=0;
-         SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
-         SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
-         SDL_PumpEvents();
-         while(SDL_PollEvent(event));
-         system("reset-saves.bat");
-         SDL_Delay(75);
-         DISPLAY_MODE=SDL_WINDOW_FULLSCREEN;
-         SDL_SetWindowFullscreen(WINDOW,DISPLAY_MODE);
-         SCREEN_SURFACE=SDL_GetWindowSurface(WINDOW);
-         SDL_PumpEvents();
-         while(SDL_PollEvent(event));
-        }
-     else
-        {
-         system("reset-saves.bat");
-         SDL_Delay(75);
-        }
+     Reset_Saves();
+     SDL_Delay(75);
+     TTF_Font *font;
+     font=TTF_OpenFont("fonts/pixel.ttf",40);
+     Texture *image=NULL;
+     image=Create_TTF_Texture(font,"Saves Reseted!",{0,205,0});
+     Print_Settings_Background(_screen);
+     Apply_Texture((_screen->w-image->w)/2,(_screen->h/2-image->h)/2,image,_screen);
+     Flip_Buffers(_screen);
+     TTF_CloseFont(font);
+     Destroy_Texture(image);
+     SDL_Delay(700);
     }
  TTF_Font *font;
  font=TTF_OpenFont("fonts/pixel.ttf",20);
