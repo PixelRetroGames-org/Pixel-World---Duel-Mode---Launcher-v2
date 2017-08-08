@@ -11,3 +11,4 @@ Invalid texture
 CreateTexture(D3DPOOL_DEFAULT): INVALIDCALL
 Invalid texture
 Invalid texture
+Invalid texture
