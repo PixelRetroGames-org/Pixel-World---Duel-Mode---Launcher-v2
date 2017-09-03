@@ -227,3 +227,18 @@ void reverse(char s[])
       s[j]=c;
      }
 }
+
+void Copy_files(char *source,char *destination)
+{
+ FILE *source_file,*destination_file;
+ source_file=fopen(source,"r");
+ destination_file=fopen(destination,"w");
+ char buffer[TEXT_LENGTH_MAX];
+ while(!feof(source_file))
+       {
+        fgets(buffer,sizeof buffer,source_file);
+        fputs(buffer,destination_file);
+       }
+ fclose(source_file);
+ fclose(destination_file);
+}

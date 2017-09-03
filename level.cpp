@@ -4,7 +4,12 @@ const SDL_Keycode player_keys[3][20]={{},{SDL_SCANCODE_UP,SDL_SCANCODE_DOWN,SDL_
 const int SKEPTIC_VISION_MAX_ALPHA=100,SKEPTIC_VISION_TIME_PER_FRAME=40;
 const int LEVEL_NAME_IMAGE_TIME_PER_FRAME=30;
 
+#define PRESENTATION_MODE
 #define GOD_POWERS
+
+#ifdef PRESENTATION_MODE
+bool save_slot_used=false;
+#endif // PRESENTATION_MODE
 
 #ifdef GOD_POWERS
 bool OBSTACLES=true;
@@ -1098,6 +1103,53 @@ void Level::Handle_Events(Texture *_screen)
             }
         }
     }
+ #ifdef PRESENTATION_MODE
+ if(type!=2)
+    {
+     char save_slot_name[TEXT_LENGTH_MAX];
+     strcpy(save_slot_name,"presentation mode/save slots/");
+     if(keystates[SDL_SCANCODE_F1])
+        {
+         strcat(save_slot_name,"F1.pwqss");
+         //SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION,"Save Slot Used","F1",WINDOW);
+        }
+     if(keystates[SDL_SCANCODE_F2])
+        {
+         strcat(save_slot_name,"F2.pwqss");
+        }
+     if(keystates[SDL_SCANCODE_F3])
+        {
+         strcat(save_slot_name,"F3.pwqss");
+        }
+     if(keystates[SDL_SCANCODE_F4])
+        {
+         strcat(save_slot_name,"F4.pwqss");
+        }
+     if(keystates[SDL_SCANCODE_F5])
+        {
+         strcat(save_slot_name,"F5.pwqss");
+        }
+     FILE *save_slot_file=fopen(save_slot_name,"r");
+     if(save_slot_file!=NULL)
+        {
+         char save_name[TEXT_LENGTH_MAX],path[TEXT_LENGTH_MAX];
+         fgets(save_name,sizeof save_name,save_slot_file);
+         int n=strlen(save_name);
+         if(save_name[n-1]=='\n')
+            save_name[n-1]=NULL;
+         strcpy(path,save_name);
+         strcat(path,"gamemodes/Story Mode.pwsav");
+         Copy_files(path,"saves/gamemodes/Story Mode.pwsav");
+
+         strcpy(path,save_name);
+         strcat(path,"players/Timy.pwp");
+         Copy_files(path,"saves/players/Timy.pwp");
+         done=true;
+         save_slot_used=true;
+        }
+     fclose(save_slot_file);
+    }
+ #else
  #ifdef GOD_POWERS
  if(type!=2)
     {
@@ -1136,6 +1188,7 @@ void Level::Handle_Events(Texture *_screen)
         player[2].Set_hp(0);
     }
  #endif // GOD_POWERS
+ #endif // PRESENTATION_MODE
 }
 
 void Level::Darkness_increase()
@@ -2214,7 +2267,8 @@ void Level::Start(Texture *screen,bool cleanup)
             else
                play=Duel_Mode_Finish_Screen(winner=(player[1].Get_hp()<=0?2:1));
            }
-        player[1].Update();
+        if(!save_slot_used || type!=1)
+           player[1].Update();
         if(type==2 && player_type[2]==0)
            player[2].Update();
         player_time_blocked[1]=player_time_blocked[2]=0;
@@ -2261,6 +2315,10 @@ void Level::Save_gamemode()
 ///Launch
 void Launch_Story_Mode(Level *level,Texture *_screen)
 {
+ bool done=false;
+ while(!done)
+       {
+
  int player_map_position_x,player_map_position_y;
  char level_name[TEXT_LENGTH_MAX],player_name[TEXT_LENGTH_MAX];
  FILE *where=fopen("saves/gamemodes/Story Mode.pwsav","r");
@@ -2297,9 +2355,19 @@ void Launch_Story_Mode(Level *level,Texture *_screen)
  if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN)
     level->Fast_Reload();
  level->Start(_screen,false);
+ done=true;
+ #ifndef PRESENTATION_MODE
  if(level->Get_terrain_type()!=LEVEL_PUZZLE_TYPE)
     level->Save_gamemode();
  level->Cleanup();
+ #else
+ if(level->Get_terrain_type()!=LEVEL_PUZZLE_TYPE && !save_slot_used)
+    level->Save_gamemode();
+ if(save_slot_used)
+    save_slot_used=false,done=false;
+ level->Cleanup();
+ #endif // PRESENTATION_MODE
+       }
 }
 
 void Launch_Duel_Mode(Level *level,Texture *_screen)

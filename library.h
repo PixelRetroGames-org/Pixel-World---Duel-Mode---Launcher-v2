@@ -38,6 +38,8 @@ void Close_Window_and_Renderer();
 #define NUMBER_OF_MAX_KEYS 100
 #define TEXT_LENGTH_MAX 101
 
+void Copy_files(char *source,char *destination);
+
 void atoi(int &n, char s[]);
 void itoa(int n, char s[]);
 void reverse(char s[]);
@@ -48,6 +50,7 @@ void apply_surface( int x, int y, SDL_Surface *source, SDL_Surface *destination 
 void apply_surface( int x, int y,int w,int h, SDL_Surface *source, SDL_Surface *destination );
 void apply_surface(int xImage,int yImage,int xScreen,int yScreen,int w,int h,SDL_Surface *source,SDL_Surface *destination);
 SDL_Surface *make_it_transparent( char *filename );
+
 class Timer
 {
  private:

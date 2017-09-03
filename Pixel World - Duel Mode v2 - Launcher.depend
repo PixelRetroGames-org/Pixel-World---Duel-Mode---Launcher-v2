@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1501424788 source:e:\programming\pixel world - duel mode v2 - launcher\library.cpp
+1504358111 source:e:\programming\pixel world - duel mode v2 - launcher\library.cpp
 	"library.h"
 
-1499708390 e:\programming\pixel world - duel mode v2 - launcher\library.h
+1504355934 e:\programming\pixel world - duel mode v2 - launcher\library.h
 	<SDL.h>
 	<SDL_ttf.h>
 	<SDL_mixer.h>
@@ -154,7 +154,7 @@
 	<vector>
 	<cstring>
 
-1501424312 source:e:\programming\pixel world - duel mode v2 - launcher\level.cpp
+1504358767 source:e:\programming\pixel world - duel mode v2 - launcher\level.cpp
 	"level.h"
 
 1501412549 e:\programming\pixel world - duel mode v2 - launcher\level.h
