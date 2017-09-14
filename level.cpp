@@ -1129,6 +1129,34 @@ void Level::Handle_Events(Texture *_screen)
         {
          strcat(save_slot_name,"F5.pwqss");
         }
+     if(keystates[SDL_SCANCODE_F6])
+        {
+         strcat(save_slot_name,"F6.pwqss");
+        }
+     if(keystates[SDL_SCANCODE_F7])
+        {
+         strcat(save_slot_name,"F7.pwqss");
+        }
+     if(keystates[SDL_SCANCODE_F8])
+        {
+         strcat(save_slot_name,"F8.pwqss");
+        }
+     if(keystates[SDL_SCANCODE_F9])
+        {
+         strcat(save_slot_name,"F9.pwqss");
+        }
+     if(keystates[SDL_SCANCODE_F10])
+        {
+         strcat(save_slot_name,"F10.pwqss");
+        }
+     if(keystates[SDL_SCANCODE_F11])
+        {
+         strcat(save_slot_name,"F11.pwqss");
+        }
+     if(keystates[SDL_SCANCODE_F12])
+        {
+         strcat(save_slot_name,"F12.pwqss");
+        }
      FILE *save_slot_file=fopen(save_slot_name,"r");
      if(save_slot_file!=NULL)
         {

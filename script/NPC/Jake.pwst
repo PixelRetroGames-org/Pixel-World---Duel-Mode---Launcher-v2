@@ -40,13 +40,13 @@ Jake started staring at Timy.</line >
 <line >
 <img 0 0 Jake1 ></line >
 <we >
-< flip > < sleep 2000 >
+< flip > < sleep 1000 >
 </page >
 
 <page >
 <line >
 <img 0 0 Jake2 ></line >
-< flip > < sleep 2000 >
+< flip > < sleep 1000 >
 </page >
 
 <page >
