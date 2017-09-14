@@ -10,6 +10,7 @@ Configure controller using: [SDL2 Gamepad Tool by General Arcade](http://www.gen
 - [x] Expand the story
 - [ ] Finish the story
 - [x] ~~Test Nvidia GPU support~~ Fix the bug (Nvidia windowed, weird rendering)
+- [ ] Fix the shapeshift issue when out of map
 
 ## Testing
 
