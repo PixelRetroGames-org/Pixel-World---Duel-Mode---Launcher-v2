@@ -1367,6 +1367,10 @@ void Player::Apply_buff(Buff *_buff)
                 life_steal+=_buff->Get_life_steal();
                 Set_skin_image_position(_buff->Get_skin_image_position());
                 Set_skin(_buff->Get_skin_name());
+                if(original_skin_image_position.w<skin_image_position.w && map_positionX>0)
+                   map_positionX--;
+                if(original_skin_image_position.h<skin_image_position.h && map_positionY>0)
+                   map_positionY--;
                 break;
          ///LAST BREATH
          case 6:if(_buff->Get_remaining_duration()<_buff->Get_duration())
