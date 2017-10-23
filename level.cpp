@@ -1608,6 +1608,8 @@ void Level::Interaction_NPC_player(int _player)
 
 void Level::Interact_with_clues_around_player(int _player)
 {
+ if(reset_lag)
+    return;
  int dirx[]={1,0,-1,0};
  int diry[]={0,1,0,-1};
  int x,y;
@@ -1629,6 +1631,8 @@ void Level::Interact_with_clues_around_player(int _player)
 
 bool Level::Interact_with_clue(int _player,int x,int y)
 {
+ if(reset_lag)
+    return false;
  if(skeptic_vision_on && arena.Get_Special_Clue_map_texture(x,y)->Get_id()!=0 && arena.Get_Special_Clue_map_texture(x,y)->Get_type()!=0)
     {
      player[_player].Add_keys(arena.Get_Special_Clue_map_texture(x,y)->Get_keys());
@@ -2230,10 +2234,6 @@ void Level::Start(Texture *screen,bool cleanup)
         int previous_time=current_time.get_ticks(),lag=0;
         while(!quit && !done)
               {
-               if(reload)
-                  {
-
-                  }
                fps.start();
                if(level_changed || reset_lag)
                   {
@@ -2295,8 +2295,12 @@ void Level::Start(Texture *screen,bool cleanup)
             else
                play=Duel_Mode_Finish_Screen(winner=(player[1].Get_hp()<=0?2:1));
            }
+        #ifdef PRESENTATION_MODE
         if(!save_slot_used || type!=1)
            player[1].Update();
+        #else
+        player[1].Update();
+        #endif // PRESENTATION_MODE
         if(type==2 && player_type[2]==0)
            player[2].Update();
         player_time_blocked[1]=player_time_blocked[2]=0;

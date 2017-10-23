@@ -4,7 +4,18 @@
 
 
 
-<color 125 0 7 >Yukig: </color > I go first! This one's my favorite.</line >
+<color 125 0 7 >Yukig: </color > I go first! </line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Yukig >
+
+
+
+<color 125 0 7 >Yukig: </color > This one's my favorite. </line >
+< we >
 < flip > < sleep 100 >
 <we >
 </page >

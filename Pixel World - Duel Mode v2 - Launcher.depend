@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1504358111 source:e:\programming\pixel world - duel mode v2 - launcher\library.cpp
+1504478395 source:e:\programming\pixel world - duel mode v2 - launcher\library.cpp
 	"library.h"
 
 1504355934 e:\programming\pixel world - duel mode v2 - launcher\library.h
@@ -12,7 +12,7 @@
 	<string>
 	<cstdlib>
 
-1501340955 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
+1506780572 source:e:\programming\pixel world - duel mode v2 - launcher\main.cpp
 	"menu.h"
 	"settings.h"
 	"script_interpreter.h"
@@ -34,7 +34,7 @@
 	"controller.h"
 	<cstring>
 
-1501424312 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
+1507155916 source:e:\programming\pixel world - duel mode v2 - launcher\menu.cpp
 	"menu.h"
 
 1499708390 e:\programming\pixel world - duel mode v2 - launcher\load_images.h
@@ -44,7 +44,7 @@
 	"settings.h"
 	"darkness.h"
 
-1499708390 source:e:\programming\pixel world - duel mode v2 - launcher\load_images.cpp
+1506690283 source:e:\programming\pixel world - duel mode v2 - launcher\load_images.cpp
 	"load_images.h"
 
 1499708389 e:\programming\pixel world - duel mode v2 - launcher\big_background.h
@@ -118,10 +118,10 @@
 	<map>
 	<cstring>
 
-1500295097 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
+1508248047 source:e:\programming\pixel world - duel mode v2 - launcher\player.cpp
 	"player.h"
 
-1499708390 source:e:\programming\pixel world - duel mode v2 - launcher\shop.cpp
+1507156132 source:e:\programming\pixel world - duel mode v2 - launcher\shop.cpp
 	"shop.h"
 
 1499708390 source:e:\programming\pixel world - duel mode v2 - launcher\shop_page.cpp
@@ -154,10 +154,10 @@
 	<vector>
 	<cstring>
 
-1504358767 source:e:\programming\pixel world - duel mode v2 - launcher\level.cpp
+1508310347 source:e:\programming\pixel world - duel mode v2 - launcher\level.cpp
 	"level.h"
 
-1501412549 e:\programming\pixel world - duel mode v2 - launcher\level.h
+1508309988 e:\programming\pixel world - duel mode v2 - launcher\level.h
 	"player.h"
 	"map.h"
 	"darkness.h"
@@ -196,7 +196,7 @@
 1499779186 source:e:\programming\pixel world - duel mode v2 - launcher\load_audio_effects.cpp
 	"load_audio_effects.h"
 
-1499708390 source:e:\programming\pixel world - duel mode v2 - launcher\map.cpp
+1505889549 source:e:\programming\pixel world - duel mode v2 - launcher\map.cpp
 	"map.h"
 
 1499708390 source:e:\programming\pixel world - duel mode v2 - launcher\map_texture.cpp
@@ -412,7 +412,7 @@
 1500045060 source:e:\programming\pixel world - duel mode v2 - launcher\non_playable_character.cpp
 	"non_playable_character.h"
 
-1499708390 source:e:\programming\pixel world - duel mode v2 - launcher\puzzle.cpp
+1508309070 source:e:\programming\pixel world - duel mode v2 - launcher\puzzle.cpp
 	"puzzle.h"
 
 1499708390 e:\programming\pixel world - duel mode v2 - launcher\puzzle.h
@@ -1407,7 +1407,7 @@
 1499708389 e:\programming\pixel world - duel mode v2 - launcher\controller.h
 	"library.h"
 
-1499708389 source:e:\programming\pixel world - duel mode v2 - launcher\controls_screen.cpp
+1507156113 source:e:\programming\pixel world - duel mode v2 - launcher\controls_screen.cpp
 	"controls_screen.h"
 
 1499708389 e:\programming\pixel world - duel mode v2 - launcher\controls_screen.h

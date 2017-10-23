@@ -1,0 +1,45 @@
+< bckimg background > 
+
+<page >
+<line >
+<img 0 0 Paper2 >
+
+
+<color 125 0 7 >Timy: </color > 'You have to take care of yourself now, son, you were always </line >
+<line > a sickly child. I'm worried about your health. That house of yours </line > 
+<line > is so cold... I've used the last coin I saved to buy and send you  </line > 
+<line > these carpets. Hope they'll keep warm.' </line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Paper2 >
+
+
+<color 125 0 7 >Timy: </color > 'Love, mom.' </line >
+< we >
+< flip >
+</page >
+
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > On the back of the letter is something written. </line >
+< we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > '<color 220 48 225 >answers lie beneath</color >'</line >
+< we >
+< flip >
+< we >
+</page >

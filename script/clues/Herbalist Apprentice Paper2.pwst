@@ -1,0 +1,42 @@
+< bckimg background > 
+
+<page >
+<line >
+<img 0 0 Paper3 >
+
+
+<color 125 0 7 >Timy: </color > A pile of sheets.</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Paper3 >
+
+
+<color 125 0 7 >Timy: </color > He's trying to find a chemical formula...</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Paper3 >
+
+
+<color 125 0 7 >Timy: </color > On one of the sheets is written something that</line >
+<line > I think is irrelevant to the formula...</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Paper3 >
+
+
+<color 125 0 7 >Timy: </color > '<color 220 48 225 >-r</color >' </line >
+<we >
+< flip >
+<we >
+</page >

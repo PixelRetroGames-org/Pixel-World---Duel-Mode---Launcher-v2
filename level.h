@@ -76,6 +76,7 @@ class Level
  bool focus=true,fullscreen,changed_window_status=false,reload=false;
  SDL_Thread *pause_menu_thread;
  std::pair<int,int> player_map_position[3];
+ bool interacted=false;
 
  public:
  Level();

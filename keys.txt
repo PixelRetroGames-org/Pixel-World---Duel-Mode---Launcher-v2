@@ -76,3 +76,11 @@
 75 - Riddle_Fan42
 76 - Riddle_Master1 *!
 77 - Riddle_Master2
+78 - Apprentice Herbalist House Door
+79 - Alex The Coder1
+80 - Herbalist Apprentice Journal *
+81 - Herbalist Apprentice Journal unlocked
+82 - Herbalist Apprentice mom letter
+83 - Herbalist Apprentice instrument clue
+84 - Herbalist Apprentice instrument summoning
+85 - Herbalist Apprentice Room Door

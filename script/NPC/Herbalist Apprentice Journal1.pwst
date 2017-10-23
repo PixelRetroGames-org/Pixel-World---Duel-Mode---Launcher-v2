@@ -1,0 +1,21 @@
+< bckimg background > 
+
+<page >
+<line >
+<img 0 0 Journal >
+
+
+<color 125 0 7 >Timy: </color > This must be his journal.</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Journal >
+
+
+<color 125 0 7 >Timy: </color > It's magically locked...</line >
+<we >
+< flip >
+<we >
+</page >

@@ -105,8 +105,8 @@ void Player::Set_inventory_item_selected_position(int _inventory_item_selected_p
     inventory_item_selected=Get_next_inventory_item_id(_inventory_item_selected_position,type);
 }
 
-const int NUMBER_OF_DEFAULT_PLAYER_KEYS=23;
-const int default_player_keys[]={1,12,15,17,20,23,34,35,36,37,38,41,45,49,53,55,60,62,68,70,72,74,76};
+const int NUMBER_OF_DEFAULT_PLAYER_KEYS=24;
+const int default_player_keys[]={1,12,15,17,20,23,34,35,36,37,38,41,45,49,53,55,60,62,68,70,72,74,76,80};
 
 void Player::Add_Default_keys()
 {

@@ -4,8 +4,19 @@
 
 
 
-<color 125 0 7 >Yuzug: </color > Okay, I'll move. You really upset my brother, but if you'll</line >
+<color 125 0 7 >Yuzug: </color > Okay, I'll move. </line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Yuzug >
+
+
+
+<color 125 0 7 >Yuzug: </color > You really upset my brother, but if you'll</line >
 <line > apologize he'll forgive you. </line >
+< we >
 < flip > < sleep 100 >
 <we >
 </page >

@@ -1,0 +1,39 @@
+< bckimg background > <page >
+<line >
+
+
+
+You reached the end of the Demo! Thank you for playing!</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Alex_The_Coder >
+
+
+<color 125 0 7 >Alex The Coder: </color > That's it, bro! I can't let you go further...</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Alex_The_Coder >
+
+
+<color 125 0 7 >Alex The Coder: </color > Unless you know the <color 53 205 205 >secret password</color >...</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Alex_The_Coder >
+
+
+<color 125 0 7 >Alex The Coder: </color > I think I wrote it on a <color 53 205 205 >piece of paper</color >, but it's outside <color 195 198 17 >Pixel World</color >...</line >
+<we >
+< flip > < sleep 100 >
+<we >
+</page >

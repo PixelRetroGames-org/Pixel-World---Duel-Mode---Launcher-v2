@@ -1,0 +1,135 @@
+< bckimg background > 
+
+<page >
+<line >
+<img 0 0 Mierka_Hologram >
+
+
+<color 125 0 7 >Hologram: </color >Is this recording?</line >
+< flip >
+< we >
+</page >
+
+<page >
+<line >
+
+
+
+.</line >
+< flip > < sleep 400 >
+</page >
+
+<page >
+<line >
+
+
+
+..</line >
+< flip > < sleep 400 >
+</page >
+
+<page >
+<line >
+
+
+
+...</line >
+< flip > < sleep 400 >
+</page >
+
+<page >
+<line >
+<img 0 0 Mierka_Hologram >
+
+
+<color 125 0 7 >Hologram: </color >Ok.</line >
+< flip > 
+</page >
+
+<page >
+<line >
+<img 0 0 Mierka_Hologram >
+
+
+<color 125 0 7 >Hologram: </color >The password is...</line >
+< we >
+< flip > 
+</page >
+
+<page >
+<line >
+<img 0 0 Mierka_Hologram >
+
+
+<color 125 0 7 >Hologram: </color ><color 220 48 225 >Tetrahydrocannabinol</color ></line >
+< we >
+< flip > 
+</page >
+
+<page >
+<line >
+<img 0 0 Mierka_Hologram >
+
+
+<color 125 0 7 >Hologram: </color >My favorite!</line >
+< we >
+< flip > 
+</page >
+
+<page >
+<line >
+
+
+
+The door unlocked and the hologram faded away.</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >Wait!</line >
+< we >
+< flip > 
+< we >
+</page >
+
+<page >
+<line >
+
+
+
+.</line >
+< flip > < sleep 400 >
+</page >
+
+<page >
+<line >
+
+
+
+..</line >
+< flip > < sleep 400 >
+</page >
+
+<page >
+<line >
+
+
+
+...</line >
+< flip > < sleep 400 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >Was he wearing pajamas?</line >
+< flip > 
+< we >
+</page >

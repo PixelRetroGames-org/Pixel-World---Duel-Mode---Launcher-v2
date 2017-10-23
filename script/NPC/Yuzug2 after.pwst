@@ -4,7 +4,18 @@
 
 
 
-<color 125 0 7 >Yuzug: </color > You are too good! Brother, let's go!</line >
+<color 125 0 7 >Yuzug: </color > You are too good! </line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Yuzug >
+
+
+
+<color 125 0 7 >Yuzug: </color > Brother, let's go! </line >
+<we >
 < flip > < sleep 100 >
 <we >
 </page >

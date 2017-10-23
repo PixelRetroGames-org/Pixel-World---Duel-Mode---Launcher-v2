@@ -1,0 +1,19 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Alex_The_Coder >
+
+
+<color 125 0 7 >Alex The Coder: </color > That's right!</line >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Alex_The_Coder >
+
+
+<color 125 0 7 >Alex The Coder: </color > Enjoy your <color 53 205 205 >adventure</color >!</line >
+<we >
+< flip > < sleep 100 >
+<we >
+</page >
