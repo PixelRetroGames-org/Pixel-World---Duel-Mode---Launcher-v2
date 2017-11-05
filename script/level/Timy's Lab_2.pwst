@@ -1,0 +1,148 @@
+< bckimg background >
+<ba audio/Eluveitie - Alesia (8-bit version).mp3 
+> 
+
+<page >
+<line >
+
+
+</line >
+< line > Timy is a legendary adventurer and a great wizard. He lived many years </line >
+< line > and the only thing that keeps him from aging and dying is the <color 24 100 200>Immortality Stone</color >. </line >
+< line > Without it he wouldn't survive more than a few days. He keeps it in his castle's </line >
+< line > most secure room, under a strong spell that protects the bond between </line >
+< line > him and the artifact. </line > 
+< flip >
+</page >
+
+<page >
+<line >
+
+
+</line >
+< line > The lab is full of dusty books and all kinds of expensive instruments. </line >
+< line > Our hero is sleeping with his head on the desk. He was experimenting </line >
+< line > a spell that would let him explore his own mind. The spell would lift only </line >
+< line > when the clock rings, and it should rang a long time ago. </line >
+< line > The clock broke and Timy is still trapped in his own head. </line > 
+< we >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+</line >
+<line > . </line >
+< we >
+<flip >
+<sleep 400>
+</page >
+<page >
+<line >
+
+
+</line >
+<line > .. </line >
+<flip >
+<sleep 400>
+</page >
+<page >
+<line >
+
+
+</line >
+<line > ... </line >
+<flip >
+<sleep 400>
+</page >
+
+<page >
+<line >
+
+
+</line >
+< line > The earth shook from an eartquake and the clock hit the ground with a </line >
+< line > loud metallic noise. </line >
+< flip >
+</page >
+<page >
+<line >
+
+
+</line >
+< line > Timy woke up and jumped from his chair. </line >
+< we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > It worked better than the last time! </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > What happened here? Why is everything so dusty? </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+</line >
+<line > . </line >
+< we >
+<flip >
+<sleep 400>
+</page >
+<page >
+<line >
+
+
+</line >
+<line > .. </line >
+<flip >
+<sleep 400>
+</page >
+<page >
+<line >
+
+
+</line >
+<line > ... </line >
+<flip >
+<sleep 400>
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > I should inspect the room! </line >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+</line >
+< line > Use the <color 123 234 50 >arrow keys/WASD</color > to move, <color 123 234 50 >z/RCTRL</color > to interact and <color 123 234 50 >x/RSHIFT</color > to </line >
+< line > use the <color 24 100 200>Skeptic Vision</color >, an ability that will help you find clues.</line >
+<we >
+< flip >
+<we >
+</page >

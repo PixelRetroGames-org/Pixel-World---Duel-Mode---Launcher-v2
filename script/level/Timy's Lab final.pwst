@@ -1,0 +1,79 @@
+< bckimg background > <page >
+<line >
+
+
+<color 125 0 7 >Timy </color >wakes up from a deep sleep.</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Yaaaaawn!</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > I think I drank a little too much last night.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > 'Cause I don't remember anything! </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > I mean I only remember that my name's Timy and that... </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > My parents spelled it wrong. </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > There should be something that will help me remember! </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+</line >
+< line > Use the <color 123 234 50 >arrow keys/WASD</color > to move and <color 123 234 50 >z/RCTRL</color > to interact.</line >
+<we >
+< flip >
+<we >
+</page >
+
