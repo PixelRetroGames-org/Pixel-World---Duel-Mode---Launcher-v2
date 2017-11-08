@@ -10,20 +10,20 @@
 #include <bitset>
 #include <map>
 
-const int NUMBER_OF_LINES_MAX=100,NUMBER_OF_COLUMNS_MAX=100,NUMBER_OF_TEXTURES_IDS=200;
+const int NUMBER_OF_LINES_MAX=100,NUMBER_OF_COLUMNS_MAX=100,NUMBER_OF_LAYERS_MAX=2,NUMBER_OF_TEXTURES_IDS=200;
 const int NAME_IMAGE_OPAQUE_TIME=50;
 
 class Map
 {
  private:
  char name[TEXT_LENGTH_MAX]={NULL};
- int number_of_lines=0,number_of_columns=0;
+ int number_of_lines=0,number_of_columns=0,number_of_layers=2;
  std::map<int,Map_Texture> map_textures;
- Interactive_map_texture map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX],background_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX];
- std::vector<std::pair<int,int> > fast_access_map_textures_animations[2][2],fast_access_background_map_textures_animations[2][2];
+ Interactive_map_texture map_textures_ids[NUMBER_OF_LAYERS_MAX][NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX];
+ std::vector<std::pair<int,int> > fast_access_map_textures_animations[NUMBER_OF_LAYERS_MAX][2][2];
  Clue_map_texture clues_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX],special_clues_map_textures_ids[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX];
  std::vector<std::pair<int,int> > fast_access_clues_map_textures[2][2],fast_access_special_clues_map_textures;
- Texture *map_image[2][2],*background_map_image[2][2];
+ Texture *map_image[NUMBER_OF_LAYERS_MAX][2][2];
  int number_of_updates,current_number_of_updates;
  bool map_obstacles[NUMBER_OF_LINES_MAX][NUMBER_OF_COLUMNS_MAX];
  bool is_static=true,is_interest_point=false;
@@ -53,8 +53,7 @@ class Map
  int Get_map_texture_key_id(int x,int y);
  void Update_frame(int _texture_id);
  void Decrease_map_textures_ids_remaining_time();
- void Decrease_map_texture_id_remaining_time(bool before_player,bool lights);
- void Decrease_background_map_texture_id_remaining_time(bool before_player,bool lights);
+ void Decrease_map_texture_id_remaining_time(int _layer,bool before_player,bool lights);
  void Decrease_clues_map_texture_id_remaining_time(bool before_player,bool lights);
  void Decrease_clues_map_textures_ids_remaining_time();
  void Decrease_special_clues_map_texture_id_remaining_time();
@@ -64,9 +63,8 @@ class Map
  void Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys);
  void Copy(int x,int y,Map *source);
  void Print(int screen_x,int screen_y,int map_x,int map_y,Texture *_screen,bool before_player,bool lights=false);
- void Print_Animations(int screen_x,int screen_y,int map_x,int map_y,Texture *_screen,bool before_player,bool lights=false);
- void Print_background(int screen_x,int screen_y,int map_x,int map_y,Texture *_screen,bool before_player,bool lights=false);
- void Print_background_Animations(int screen_x,int screen_y,int map_x,int map_y,Texture *_screen,bool before_player,bool lights=false);
+ void Print_Layer(int screen_x,int screen_y,int map_x,int map_y,Texture *_screen,int _layer,bool before_player,bool lights=false);
+ void Print_Layer_Animations(int screen_x,int screen_y,int map_x,int map_y,Texture *_screen,int _layer,bool before_player,bool lights=false);
  void Print_image(int screen_x,int screen_y,Texture *_screen,Interactive_map_texture *source);
  void Print_name_image(Texture *_screen);
  void Update_name_image();

@@ -846,10 +846,7 @@ void Level::Print_Map(int x,int y,Texture *_screen)
      if(arena.Get_number_of_lines()<MAP_IMAGE_HEIGHT)
         mapY=-(MAP_IMAGE_HEIGHT-arena.Get_number_of_lines())/2;
     }
- arena.Print_background(x,y,mapX,mapY,_screen,true,false);
- arena.Print_background_Animations(x,y,mapX,mapY,_screen,true,false);
  arena.Print(x,y,mapX,mapY,_screen,true,false);
- arena.Print_Animations(x,y,mapX,mapY,_screen,true,false);
  if(type!=2)
     arena.Print_Clues(x,y,mapX,mapY,_screen,true,false);
  player[1].Print_skin(x,y,mapX,mapY,_screen);
@@ -860,10 +857,7 @@ void Level::Print_Map(int x,int y,Texture *_screen)
       non_playable_characters[i].Print_skin(x,y,mapX,mapY,arena_size.w,arena_size.h,_screen);
      }
 
- arena.Print_background(x,y,mapX,mapY,_screen,false);
- arena.Print_background_Animations(x,y,mapX,mapY,_screen,false);
  arena.Print(x,y,mapX,mapY,_screen,false);
- arena.Print_Animations(x,y,mapX,mapY,_screen,false);
  if(type!=2)
     arena.Print_Clues(x,y,mapX,mapY,_screen,false);
 
@@ -878,10 +872,7 @@ void Level::Print_Map(int x,int y,Texture *_screen)
  _area.y=y+mapY*PIXELS_PER_INGAME_UNIT;*/
  darkness.Enshroud(_area,_screen);
 
- arena.Print_background(x,y,mapX,mapY,_screen,true,true);
- arena.Print_background_Animations(x,y,mapX,mapY,_screen,true,true);
  arena.Print(x,y,mapX,mapY,_screen,true,true);
- arena.Print_Animations(x,y,mapX,mapY,_screen,true,true);
  if(type!=2)
     arena.Print_Clues(x,y,mapX,mapY,_screen,true,true);
  if(Player_is_on_light(1))
@@ -893,10 +884,8 @@ void Level::Print_Map(int x,int y,Texture *_screen)
       if(Non_Playable_Character_is_on_light(i))
          non_playable_characters[i].Print_skin(x,y,mapX,mapY,arena_size.w,arena_size.h,_screen);
      }
- arena.Print_background(x,y,mapX,mapY,_screen,false,true);
- arena.Print_background_Animations(x,y,mapX,mapY,_screen,false,true);
+
  arena.Print(x,y,mapX,mapY,_screen,false,true);
- arena.Print_Animations(x,y,mapX,mapY,_screen,false,true);
  if(type!=2)
     {
      arena.Print_Clues(x,y,mapX,mapY,_screen,false,true);
@@ -926,7 +915,7 @@ void Level::Print_Map(int x,int y,Texture *_screen)
      Apply_Texture(0,0,_area.x,_area.y,_area.w,_area.h,SKEPTIC_VISION_image,_screen);
     }
  if(type==2)
-    effects.Print_Animations(x,y,mapX,mapY,_screen,false,true);
+    effects.Print_Layer_Animations(x,y,mapX,mapY,_screen,0,false,true);
  //effects.Print(x,y,_screen,false);
  if(level_name_image_timer.get_ticks()>=LEVEL_NAME_IMAGE_TIME_PER_FRAME)
     {
