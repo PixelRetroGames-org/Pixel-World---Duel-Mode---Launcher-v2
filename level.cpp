@@ -2358,7 +2358,7 @@ void Launch_Story_Mode(Level *level,Texture *_screen)
     {
      fclose(where);
      where=fopen("saves/gamemodes/Story Mode.pwsav","w");
-     fprintf(where,"%d %d\nTimy's Lab\nTimy",14,6);
+     fprintf(where,"%d %d\nTimy's Lab\nTimy",10,6);
      fclose(where);
      where=fopen("saves/gamemodes/Story Mode.pwsav","r");
      if(where==NULL)

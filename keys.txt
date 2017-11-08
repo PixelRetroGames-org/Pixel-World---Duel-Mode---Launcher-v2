@@ -84,3 +84,4 @@
 83 - Herbalist Apprentice instrument clue
 84 - Herbalist Apprentice instrument summoning
 85 - Herbalist Apprentice Room Door
+86 - Tutorial interaction
