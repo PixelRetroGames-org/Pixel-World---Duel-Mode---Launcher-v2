@@ -283,7 +283,7 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
  strcat(path,".pwm");
  FILE *where=fopen(path,"r");
  int _is_interest_point,_is_static;
- fscanf(where,"%d %d %d %d %d ",&_is_interest_point,&_is_static,&number_of_updates,&number_of_lines,&number_of_columns);
+ fscanf(where,"%d %d %d %d %d %d ",&_is_interest_point,&_is_static,&number_of_updates,&number_of_lines,&number_of_columns,&number_of_layers);
  is_interest_point=_is_interest_point;
  is_static=_is_static;
 
@@ -545,7 +545,8 @@ void Map::Print_image(int screen_x,int screen_y,Texture *_screen,Interactive_map
 void Map::Trigger(int x,int y)
 {
  std::vector<std::pair<int,int> > target_map_position;
- map_textures_ids[0][x][y].Trigger();
+ for(int k=0;k<number_of_layers;k++)
+     map_textures_ids[k][x][y].Trigger();
  map_textures_ids[0][x][y].Get_all_targets_map_positions(target_map_position);
  for(std::vector<std::pair<int,int> >::iterator it=target_map_position.begin();it!=target_map_position.end();it++)
      Trigger(it->first,it->second);

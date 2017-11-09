@@ -2373,8 +2373,8 @@ void Launch_Story_Mode(Level *level,Texture *_screen)
  Mix_HaltMusic();
  level->Setup(level_name);
  level->Set_player_map_position(player_map_position_x,player_map_position_y,1);
- if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN)
-    level->Fast_Reload();
+ /*if(DISPLAY_MODE!=SDL_WINDOW_FULLSCREEN)
+    level->Fast_Reload();*/
  level->Start(_screen,false);
  done=true;
  #ifndef PRESENTATION_MODE
