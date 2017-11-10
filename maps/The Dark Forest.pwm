@@ -104,97 +104,75 @@
   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1 
   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1 
 
-0
-
-10
-0 22  0 22 48 The Stables
-0 23  0 23 48 The Stables
-0 24  0 24 48 The Stables
-0 25  0 25 48 The Stables
-0 14 49 2 1 The Eastern Entrance
-0 15 49 3 1 The Eastern Entrance
-0 16 49 4 1 The Eastern Entrance
-0 17 49 5 1 The Eastern Entrance
-0 18 49 6 1 The Eastern Entrance
-0 19 49 7 1 The Eastern Entrance
-
-0
-6
-193  7  7 1 8
-194  9 17 1 8
-195  9 18 1 8
-196 10 17 1 8
-197 10 18 1 8
-198  5 35 1 8
-
-56
-278  9 17 1 8
-278  9 18 1 8
-278 10 17 1 8
-278 10 18 1 8
-192  9 19 1 8
-192  9 20 1 8
-192 10 19 1 8
-192 10 20 1 8
-192  9 21 1 8
-192  9 22 1 8
-192 10 21 1 8
-192 10 22 1 8
-
-192  9 23 1 8
-192  9 24 1 8
-192 10 23 1 8
-192 10 24 1 8
-
-192 11 24 1 8
-192 11 25 1 8
-
-
-192  9 25 1 8
-192 10 26 1 8
-192 10 25 1 8
-192 11 26 1 8
-
-192 10 27 1 8
-192 10 28 1 8
-192 11 27 1 8
-192 11 28 1 8
-
-192 10 29 1 8
-192 10 30 1 8
-192 11 29 1 8
-192 11 30 1 8
-
-192 10 31 1 8
-192 10 32 1 8
-192 11 31 1 8
-192 11 32 1 8
-
-192 10 33 1 8
-192 10 34 1 8
-192 11 33 1 8
-192 11 34 1 8
-
-192 10 35 1 8
-192 10 36 1 8
-192 11 35 1 8
-192 11 36 1 8
-
-192  8 35 1 8
-192  8 36 1 8
-192  9 35 1 8
-192  9 36 1 8
-
-192  6 35 1 8
-192  6 36 1 8
-192  7 35 1 8
-192  7 36 1 8
-
-278  4 35 1 8
-278  4 36 1 8
-278  5 35 1 8
-278  5 36 1 8
-
-278  7  7 1 8
-
-192 41 43 1 8
+level_changer 0 22 0 22 48 The Stables
+level_changer 0 23 0 23 48 The Stables
+level_changer 0 24 0 24 48 The Stables
+level_changer 0 25 0 25 48 The Stables
+level_changer 0 14 49 2 1 The Eastern Entrance
+level_changer 0 15 49 3 1 The Eastern Entrance
+level_changer 0 16 49 4 1 The Eastern Entrance
+level_changer 0 17 49 5 1 The Eastern Entrance
+level_changer 0 18 49 6 1 The Eastern Entrance
+level_changer 0 19 49 7 1 The Eastern Entrance
+clue 193 7 7 1 8 
+clue 194 9 17 1 8 
+clue 195 9 18 1 8 
+clue 196 10 17 1 8 
+clue 197 10 18 1 8 
+clue 198 5 35 1 8 
+special_clue 278 9 17 1 8 
+special_clue 278 9 18 1 8 
+special_clue 278 10 17 1 8 
+special_clue 278 10 18 1 8 
+special_clue 192 9 19 1 8 
+special_clue 192 9 20 1 8 
+special_clue 192 10 19 1 8 
+special_clue 192 10 20 1 8 
+special_clue 192 9 21 1 8 
+special_clue 192 9 22 1 8 
+special_clue 192 10 21 1 8 
+special_clue 192 10 22 1 8 
+special_clue 192 9 23 1 8 
+special_clue 192 9 24 1 8 
+special_clue 192 10 23 1 8 
+special_clue 192 10 24 1 8 
+special_clue 192 11 24 1 8 
+special_clue 192 11 25 1 8 
+special_clue 192 9 25 1 8 
+special_clue 192 10 26 1 8 
+special_clue 192 10 25 1 8 
+special_clue 192 11 26 1 8 
+special_clue 192 10 27 1 8 
+special_clue 192 10 28 1 8 
+special_clue 192 11 27 1 8 
+special_clue 192 11 28 1 8 
+special_clue 192 10 29 1 8 
+special_clue 192 10 30 1 8 
+special_clue 192 11 29 1 8 
+special_clue 192 11 30 1 8 
+special_clue 192 10 31 1 8 
+special_clue 192 10 32 1 8 
+special_clue 192 11 31 1 8 
+special_clue 192 11 32 1 8 
+special_clue 192 10 33 1 8 
+special_clue 192 10 34 1 8 
+special_clue 192 11 33 1 8 
+special_clue 192 11 34 1 8 
+special_clue 192 10 35 1 8 
+special_clue 192 10 36 1 8 
+special_clue 192 11 35 1 8 
+special_clue 192 11 36 1 8 
+special_clue 192 8 35 1 8 
+special_clue 192 8 36 1 8 
+special_clue 192 9 35 1 8 
+special_clue 192 9 36 1 8 
+special_clue 192 6 35 1 8 
+special_clue 192 6 36 1 8 
+special_clue 192 7 35 1 8 
+special_clue 192 7 36 1 8 
+special_clue 278 4 35 1 8 
+special_clue 278 4 36 1 8 
+special_clue 278 5 35 1 8 
+special_clue 278 5 36 1 8 
+special_clue 278 7 7 1 8 
+special_clue 192 41 43 1 8 

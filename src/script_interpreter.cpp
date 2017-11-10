@@ -1,6 +1,7 @@
 #include "script_interpreter.h"
 
-const char *command_names[number_of_commands+1]={"set","line","color","la","ba","sleep","wla","we","bckimg","img","page","flip"};
+const int number_of_commands=12,LINE_HEIGHT=23;
+const char *command_names[number_of_commands]={"set","line","color","la","ba","sleep","wla","we","bckimg","img","page","flip"};
 const SDL_Color default_text_color={255,255,255};
 
 //Script_interpreter::Script_interpreter();

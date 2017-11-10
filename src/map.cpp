@@ -77,7 +77,6 @@ bool Map::Is_obstacle(int x,int y)
  if((clues_map_textures_ids[x][y].Get_id()!=0 && map_textures[clues_map_textures_ids[x][y].Get_interactive_map_texture()->Get_texture_id()].Is_obstacle()) ||
     (special_clues_map_textures_ids[x][y].Get_id()!=0 && map_textures[special_clues_map_textures_ids[x][y].Get_interactive_map_texture()->Get_texture_id()].Is_obstacle()))
     return true;
- /// TODO: Make a multiple layer check
  return (map_textures[map_textures_ids[0][x][y].Get_texture_id()].Is_obstacle());
 }
 
@@ -97,7 +96,6 @@ bool Map::Is_Trigger(int x,int y)
 {
  if(x>=number_of_lines || x<0 || y<0 || y>=number_of_columns)
     return false;
- /// TODO: Make a multiple layer check
  return map_textures[map_textures_ids[0][x][y].Get_texture_id()].Is_trigger();
 }
 
@@ -403,113 +401,146 @@ void Map::Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
      }
  viz.clear();
 
- int number_of_triggers=0;
- fscanf(where,"%d ",&number_of_triggers);
- for(int i=0;i<number_of_triggers;i++)
-     {
-      int x,y,number_of_targets;
-      fscanf(where,"%d %d %d",&x,&y,&number_of_targets);
-      for(int j=0;j<number_of_targets;j++)
-          {
-           int x1,y1;
-           fscanf(where,"%d %d ",&x1,&y1);
-           map_textures_ids[0][x][y].Add_target(x1,y1);
-          }
-     }
- int number_of_map_changers=0;
- fscanf(where,"%d ",&number_of_map_changers);
- for(int i=0;i<number_of_map_changers;i++)
-     {
-      int x,y,x1,y1,_texture;
-      char map_name[TEXT_LENGTH_MAX];
-      fscanf(where,"%d %d %d %d %d ",&_texture,&x,&y,&x1,&y1);
-      if(Get_map_texture_type(_texture,x,y)!=6)
-         {
-          fgets(map_name,sizeof map_name,where);
-          if(map_name[strlen(map_name)-1]=='\n')
-             map_name[strlen(map_name)-1]=NULL;
-         }
-      map_textures_ids[0][x][y].Set_texture_player_map_pos(_texture,x1,y1);
-      if(Get_map_texture_type(_texture,x,y)!=6)
-         map_textures_ids[0][x][y].Set_texture_map_name(_texture,map_name);
-     }
- int number_of_keys=0;
- fscanf(where,"%d ",&number_of_keys);
- for(int i=0;i<number_of_keys;i++)
-     {
-      int x,y,key_id,_texture;
-      fscanf(where,"%d %d %d %d ",&_texture,&x,&y,&key_id);
-      map_textures_ids[0][x][y].Set_key_id(_texture,key_id);
-     }
- int number_of_clues=0;
- fscanf(where,"%d ",&number_of_clues);
- for(int i=0;i<number_of_clues;i++)
-     {
-      int id,x,y,n_keys;
-      fscanf(where,"%d %d %d %d ",&id,&x,&y,&n_keys);
-      bool locked=false;
-      for(int j=0;j<n_keys && !locked;j++)
-          {
-           int __key;
-           fscanf(where,"%d ",&__key);
-           locked=!(*_keys)[__key];
-          }
-      if(!locked && clues_map_textures_ids[x][y].Get_id()==0)
-         {
-          clues_map_textures_ids[x][y].Load(id);
-          clues_map_textures_ids[x][y].Get_interactive_map_texture()->Get_all_textures_ids(textures_ids);
-          for(std::vector<Map_texture_id>::iterator it=textures_ids.begin();it!=textures_ids.end();it++)
-              {
-               if(map_textures.count(it->Get_id())==0 && it->Get_id()!=0)
-                  {
-                   map_textures[it->Get_id()].Set_id(it->Get_id());
-                   map_textures[it->Get_id()].Load();
-                  }
-              }
-          fast_access_clues_map_textures[map_textures[clues_map_textures_ids[x][y].Get_interactive_map_texture()->Get_texture_id()].Get_print_before_player()][map_textures[clues_map_textures_ids[x][y].Get_interactive_map_texture()->Get_texture_id()].Is_light()].push_back(std::make_pair(x,y));
-         }
-     }
- int number_of_special_clues=0;
- fscanf(where,"%d ",&number_of_special_clues);
- for(int i=0;i<number_of_special_clues;i++)
-     {
-      int id,x,y,n_keys;
-      fscanf(where,"%d %d %d %d ",&id,&x,&y,&n_keys);
-      bool locked=false;
-      for(int j=0;j<n_keys && !locked;j++)
-          {
-           int __key;
-           fscanf(where,"%d ",&__key);
-           locked=!(*_keys)[__key];
-          }
-      if(!locked && special_clues_map_textures_ids[x][y].Get_id()==0)
-         {
-          special_clues_map_textures_ids[x][y].Load(id);
-          special_clues_map_textures_ids[x][y].Get_interactive_map_texture()->Get_all_textures_ids(textures_ids);
-          for(std::vector<Map_texture_id>::iterator it=textures_ids.begin();it!=textures_ids.end();it++)
-              {
-               if(map_textures.count(it->Get_id())==0 && it->Get_id()!=0)
-                  {
-                   map_textures[it->Get_id()].Set_id(it->Get_id());
-                   map_textures[it->Get_id()].Load();
-                  }
-              }
-          fast_access_special_clues_map_textures.push_back(std::make_pair(x,y));
-         }
-     }
- int number_of_puzzles=0;
- fscanf(where,"%d ",&number_of_puzzles);
- for(int i=0;i<number_of_puzzles;i++)
-     {
-      int x,y,_texture;
-      char puzzle_name[TEXT_LENGTH_MAX];
-      fscanf(where,"%d %d %d ",&_texture,&x,&y);
-      fgets(puzzle_name,sizeof puzzle_name,where);
-      if(puzzle_name[strlen(puzzle_name)-1]=='\n')
-         puzzle_name[strlen(puzzle_name)-1]=NULL;
-      map_textures_ids[0][x][y].Set_texture_puzzle_name(_texture,puzzle_name);
-     }
+ Read_Commands(where,_keys);
  fclose(where);
+}
+
+const int number_of_commands=6;
+const char *map_command_names[number_of_commands]={"trigger","level_changer","key","clue","special_clue","puzzle"};
+
+int Map::Get_command_id(char *_command_name)
+{
+ for(int i=0;i<number_of_commands;i++)
+     if(strcmp(map_command_names[i],_command_name)==0)
+        return i;
+ return -1;
+}
+
+void Map::Read_Commands(FILE *where,std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
+{
+ while(true)
+       {
+        char command_name[TEXT_LENGTH_MAX];
+        fscanf(where,"%s",command_name);
+        if(feof(where))
+           break;
+        switch(Get_command_id(command_name))
+               {
+                case 0: Read_trigger_command(where);
+                        break;
+                case 1: Read_level_changer_command(where);
+                        break;
+                case 2: Read_key_command(where);
+                        break;
+                case 3: Read_clue_command(where,_keys);
+                        break;
+                case 4: Read_special_clue_command(where,_keys);
+                        break;
+                case 5: Read_puzzle_command(where);
+                        break;
+               }
+       }
+}
+
+void Map::Read_trigger_command(FILE *where)
+{
+ int x,y,number_of_targets;
+ fscanf(where,"%d %d %d ",&x,&y,&number_of_targets);
+ for(int i=0;i<number_of_targets;i++)
+   {
+    int x1,y1;
+    fscanf(where,"%d %d ",&x1,&y1);
+    map_textures_ids[0][x][y].Add_target(x1,y1);
+   }
+}
+
+void Map::Read_level_changer_command(FILE *where)
+{
+ int x,y,x1,y1,_texture;
+ char map_name[TEXT_LENGTH_MAX];
+ fscanf(where,"%d %d %d %d %d ",&_texture,&x,&y,&x1,&y1);
+ fgets(map_name,sizeof map_name,where);
+ if(map_name[strlen(map_name)-1]=='\n')
+    map_name[strlen(map_name)-1]=NULL;
+ map_textures_ids[0][x][y].Set_texture_player_map_pos(_texture,x1,y1);
+ if(Get_map_texture_type(_texture,x,y)!=6 && strcmp(map_name,"~")!=0)
+    map_textures_ids[0][x][y].Set_texture_map_name(_texture,map_name);
+}
+
+void Map::Read_key_command(FILE *where)
+{
+ int x,y,key_id,_texture;
+ fscanf(where,"%d %d %d %d ",&_texture,&x,&y,&key_id);
+ map_textures_ids[0][x][y].Set_key_id(_texture,key_id);
+}
+
+void Map::Read_clue_command(FILE *where,std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
+{
+ int id,x,y,n_keys;
+ fscanf(where,"%d %d %d %d ",&id,&x,&y,&n_keys);
+ bool locked=false;
+ for(int j=0;j<n_keys;j++)
+     {
+      int __key;
+      fscanf(where,"%d ",&__key);
+      if(!(*_keys)[__key])
+         locked=true;
+     }
+ std::vector<Map_texture_id> textures_ids;
+ if(!locked && clues_map_textures_ids[x][y].Get_id()==0)
+    {
+     clues_map_textures_ids[x][y].Load(id);
+     clues_map_textures_ids[x][y].Get_interactive_map_texture()->Get_all_textures_ids(textures_ids);
+     for(std::vector<Map_texture_id>::iterator it=textures_ids.begin();it!=textures_ids.end();it++)
+         {
+          if(map_textures.count(it->Get_id())==0 && it->Get_id()!=0)
+             {
+              map_textures[it->Get_id()].Set_id(it->Get_id());
+              map_textures[it->Get_id()].Load();
+             }
+         }
+     fast_access_clues_map_textures[map_textures[clues_map_textures_ids[x][y].Get_interactive_map_texture()->Get_texture_id()].Get_print_before_player()][map_textures[clues_map_textures_ids[x][y].Get_interactive_map_texture()->Get_texture_id()].Is_light()].push_back(std::make_pair(x,y));
+    }
+}
+
+void Map::Read_special_clue_command(FILE *where,std::bitset<NUMBER_OF_MAX_KEYS> *_keys)
+{
+ int id,x,y,n_keys;
+ fscanf(where,"%d %d %d %d ",&id,&x,&y,&n_keys);
+ bool locked=false;
+ for(int i=0;i<n_keys;i++)
+     {
+      int __key;
+      fscanf(where,"%d ",&__key);
+      if(!(*_keys)[__key])
+         locked=true;
+     }
+ std::vector<Map_texture_id> textures_ids;
+ if(!locked && special_clues_map_textures_ids[x][y].Get_id()==0)
+    {
+     special_clues_map_textures_ids[x][y].Load(id);
+     special_clues_map_textures_ids[x][y].Get_interactive_map_texture()->Get_all_textures_ids(textures_ids);
+     for(std::vector<Map_texture_id>::iterator it=textures_ids.begin();it!=textures_ids.end();it++)
+         {
+          if(map_textures.count(it->Get_id())==0 && it->Get_id()!=0)
+             {
+              map_textures[it->Get_id()].Set_id(it->Get_id());
+              map_textures[it->Get_id()].Load();
+             }
+         }
+     fast_access_special_clues_map_textures.push_back(std::make_pair(x,y));
+    }
+}
+
+void Map::Read_puzzle_command(FILE *where)
+{
+ int x,y,_texture;
+ char puzzle_name[TEXT_LENGTH_MAX];
+ fscanf(where,"%d %d %d ",&_texture,&x,&y);
+ fgets(puzzle_name,sizeof puzzle_name,where);
+ if(puzzle_name[strlen(puzzle_name)-1]=='\n')
+    puzzle_name[strlen(puzzle_name)-1]=NULL;
+ map_textures_ids[0][x][y].Set_texture_puzzle_name(_texture,puzzle_name);
 }
 
 const int MAP_IMAGE_WEIGHT=840,MAP_IMAGE_HEIGHT=680;

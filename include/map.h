@@ -61,6 +61,14 @@ class Map
  bool Is_done();
  bool Is_Trigger(int x,int y);
  void Load(std::bitset<NUMBER_OF_MAX_KEYS> *_keys);
+ int Get_command_id(char *_command_name);
+ void Read_Commands(FILE *where,std::bitset<NUMBER_OF_MAX_KEYS> *_keys);
+ void Read_trigger_command(FILE *where);
+ void Read_level_changer_command(FILE *where);
+ void Read_key_command(FILE *where);
+ void Read_clue_command(FILE *where,std::bitset<NUMBER_OF_MAX_KEYS> *_keys);
+ void Read_special_clue_command(FILE *where,std::bitset<NUMBER_OF_MAX_KEYS> *_keys);
+ void Read_puzzle_command(FILE *where);
  void Copy(int x,int y,Map *source);
  void Print(int screen_x,int screen_y,int map_x,int map_y,Texture *_screen,bool before_player,bool lights=false);
  void Print_Layer(int screen_x,int screen_y,int map_x,int map_y,Texture *_screen,int _layer,bool before_player,bool lights=false);
