@@ -156,4 +156,4 @@ level_changer 1 5 12 11 19 ~
 level_changer 0 3 13 11 19 ~
 level_changer 0 4 13 11 19 ~
 level_changer 0 5 13 11 19 ~
-key 2 2 8 9
+level_changer 1 2 2 8 9 Dungeon24

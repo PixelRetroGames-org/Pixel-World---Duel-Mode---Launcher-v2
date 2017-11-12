@@ -147,7 +147,7 @@ bool Puzzle::Start_Riddle(Texture *_screen)
                    quit=true;
                 if(event.key.keysym.scancode==SDL_SCANCODE_BACKSPACE && length!=0)
                    text_typed[length-1]=NULL,text_typed_modified=true,length--;
-                if(event.key.keysym.scancode==SDL_SCANCODE_RETURN)
+                if(event.key.keysym.scancode==SDL_SCANCODE_RETURN || event.key.keysym.scancode==SDL_SCANCODE_KP_ENTER)
                    {
                     if(Validate_Riddle())
                        {
