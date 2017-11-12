@@ -1,0 +1,28 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color >There's a hidden switch...</line >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+Click!</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+</line >
+< line > Press <color 123 234 50 >J</color > to view the objectives written in the <color 204 40 125 >journal</color >. </line >
+<we >
+< flip >
+<we >
+</page >

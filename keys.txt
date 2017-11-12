@@ -17,7 +17,7 @@
 16 - Gloin-chill
 17 - Watchmaker *
 18 - Watchmaker1
-19 - Broken Clock
+19 - Timy's lab door
 20 - Yu11 *
 21 - Yukig1
 22 - Yukig12
@@ -79,9 +79,11 @@
 78 - Apprentice Herbalist House Door
 79 - Alex The Coder1
 80 - Herbalist Apprentice Journal *
-81 - Herbalist Apprentice Journal unlocked
+81 - Herbalist Apprentice Journal unlockeds
 82 - Herbalist Apprentice mom letter
 83 - Herbalist Apprentice instrument clue
 84 - Herbalist Apprentice instrument summoning
 85 - Herbalist Apprentice Room Door
-86 - Tutorial interaction
+86 - Interaction Tutorial
+87 - Investigation Tutorial
+89 - Broken Clock -> take *

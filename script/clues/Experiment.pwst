@@ -15,8 +15,8 @@
 <img 0 0 Paper3 >
 
 
-<color 125 0 7 >Timy: </color > 'I lived for almost two hundred years and the only thing that</line >
-<line > keeps me alive is the <color 24 100 200>Immortality Stone</color >.'</line >
+<color 125 0 7 >Timy: </color > 'I lived for almost two hundred years and the only thing</line >
+<line > keeping me alive is the <color 24 100 200>Immortality Stone</color >.'</line >
 <we >
 < flip >
 </page >
@@ -26,8 +26,8 @@
 <img 0 0 Paper3 >
 
 
-<color 125 0 7 >Timy: </color > 'Recently I've experienced temporary memory loss but it's </line >
-<line > something usual at my age.'</line >
+<color 125 0 7 >Timy: </color > 'Because of my age, I experienced episodes of temporary</line >
+<line > memory loss and to fix that, I am undergoing a special treatment.'</line >
 <we >
 < flip >
 </page >
@@ -37,31 +37,9 @@
 <img 0 0 Paper3 >
 
 
-<color 125 0 7 >Timy: </color > 'I can fix it using a spell that allows me sort the useful </line >
-<line > information and delete the junk.'</line >
-<we >
-< flip >
-</page >
-
-<page >
-<line >
-<img 0 0 Paper3 >
-
-
-<color 125 0 7 >Timy: </color > 'As the procedure is exhausting, each session should not be  </line >
-<line > longer than 15 minutes.' </line >
-<we >
-< flip >
-</page >
-
-
-<page >
-<line >
-<img 0 0 Paper3 >
-
-
-<color 125 0 7 >Timy: </color > 'To measure this, I use an alarm clock and the spell lifts </line >
-<line >  only when the alarm rings.' </line >
+<color 125 0 7 >Timy: </color > 'I cast a spell that allows me to sort memories, the spell</line >
+<line > is made to dispel only when the alarm clock rings, so I can</line >
+<line > experiment different durations.'</line >
 <we >
 < flip >
 </page >
@@ -71,7 +49,17 @@
 <img 0 0 Timy >
 
 
-<color 125 0 7 >Timy: </color > I remembered who I am and...</line >
+<color 125 0 7 >Timy: </color > Now I remember who I am...</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > And...</line >
 <we >
 < flip >
 </page >

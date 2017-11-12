@@ -11,16 +11,7 @@
 <img 0 0 Broken_Clock >
 
 
-<color 125 0 7 >Timy: </color > I was lucky with the earthquake. </line >
-<we >
-< flip >
-</page >
-<page >
-<line >
-<img 0 0 Broken_Clock >
-
-
-<color 125 0 7 >Timy: </color > I should go to the village and find out how much I have slept. </line >
+<color 125 0 7 >Timy: </color > And it broke... </line >
 <we >
 < flip >
 </page >
@@ -28,6 +19,26 @@
 <page >
 <line >
 <img 0 0 Broken_Clock >
+
+
+<color 125 0 7 >Timy: </color > I hope the warranty didn't expire! </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Broken_Clock >
+
+
+<color 125 0 7 >Timy: </color > I'll better go in the town and see if I can fix it. </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
 
 
 <color 125 0 7 >Timy: </color > To the <color 53 205 205 >Teleport Room</color >! </line >
@@ -37,9 +48,31 @@
 
 <page >
 <line >
+<img 0 0 Timy >
 
 
-Press <color 123 234 50 >j</color > to open the journal and <color 123 234 50 > i </color > to open the inventory.</line >
+<color 125 0 7 >Timy: </color > But first I'll have to find the exit of the lab. </line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Behind a book in the library should be a button, but I don't </line >
+<line > remember exactly behind which one.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+Press <color 123 234 50 >X</color > or <color 123 234 50 >RSHIFT</color > to use the <color 24 100 200>Skeptic Vision</color >,</line >
+<line > an ability that will help you examine hidden clues.</line >
 <we >
 < flip >
 <we >
