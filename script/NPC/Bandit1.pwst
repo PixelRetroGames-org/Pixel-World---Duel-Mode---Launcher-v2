@@ -12,7 +12,7 @@
 <img 0 0 Bandit >
 
 
-<color 125 0 7 >Bandit: </color > How did you get here? We were here first, it's our loot! </line >
+<color 125 0 7 >Bandit: </color > We were here first, it's our loot! </line >
 <we >
 < flip > < sleep 100 >
 </page >
@@ -22,7 +22,17 @@
 <img 0 0 Timy >
 
 
-<color 125 0 7 >Timy: </color > You have 5 seconds to leave...</line >
+<color 125 0 7 >Timy: </color > Leave!</line >
+<we >
+< flip > < sleep 100 >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Now!</line >
 <we >
 < flip > < sleep 100 >
 </page >
@@ -42,7 +52,7 @@
 <img 0 0 Timy >
 
 
-<color 125 0 7 >Timy: </color > You die, punk!</line >
+<color 125 0 7 >Timy: </color > You've chosen the hard way!</line >
 <we >
 < flip > < sleep 100 >
 </page >
@@ -51,7 +61,8 @@
 <line >
 
 
-Use <color 123 234 50 >1,2,3,4/u,i,o,p</color > to cast <color 24 100 200>spells</color >, <color 123 234 50 >TILDE/j</color > for <color 24 100 200>health potions</color > and <color 123 234 50 >TAB/n</color > for <color 24 100 200>mana potions</color >.</line >
+Use the <color 123 234 50 >arrow keys</color > or <color >W,A,S,D</color > to move. </line >
+< line > Timy attacks automaticaly when near an enemy. </line >
 <we >
 < flip > < sleep 100 >
 <we >
