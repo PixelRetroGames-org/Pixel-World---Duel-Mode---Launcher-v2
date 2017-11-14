@@ -1,0 +1,140 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Hey, what are you doing?</line >
+< flip > 
+</page >
+
+<page >
+<line >
+<img 0 0 Burglar1 >
+
+
+<color 125 0 7 >Burglar: </color > I'm trying to unlock this door, can't you see?</line >
+<we >
+< flip > 
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > I see...</line >
+<we >
+< flip > 
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > How did you get here?</line >
+<we >
+< flip > 
+</page >
+
+<page >
+<line >
+<img 0 0 Burglar1 >
+
+
+<color 125 0 7 >Burglar: </color > I came through the forest and then I found a big hole</line >
+<line > in the wall. How did YOU get in?</line >
+<we >
+< flip > 
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Good point! Through the front door.</line >
+<we >
+< flip > 
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Look at me! Do I look like a burglar?</line >
+<we >
+< flip > 
+</page >
+
+<page >
+<line >
+<img 0 0 Burglar1 >
+
+
+<color 125 0 7 >Burglar: </color > No...</line >
+<we >
+< flip > 
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Then get out before I lose my calm, burglar!</line >
+<we >
+< flip > 
+</page >
+
+<page >
+<line >
+<img 0 0 Burglar1 >
+
+
+<color 125 0 7 >Burglar: </color > I'm not stealing from you, it's an abandoned castle.</line >
+<we >
+< flip > 
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > It's MY castle, disrespectful punk!! Get lost!</line >
+<we >
+< flip > 
+</page >
+
+<page >
+<line >
+<img 0 0 Burglar1 >
+
+
+<color 125 0 7 >Burglar: </color > No one talks to me like this!..</line >
+<we >
+< flip > 
+</page >
+
+<page >
+<line >
+<img 0 0 Burglar1 >
+
+
+<color 125 0 7 >Burglar: </color > I'll kill you, old man!</line >
+<we >
+< flip > 
+</page >
+
+<page >
+<line >
+
+
+Use the <color 123 234 50 >arrow keys</color > or <color >W,A,S,D</color > to move. </line >
+< line > Timy attacks automaticaly when near an enemy. </line >
+<we >
+< flip > 
+<we >
+</page >

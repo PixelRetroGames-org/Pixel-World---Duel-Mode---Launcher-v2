@@ -1,0 +1,74 @@
+< bckimg background > <page >
+<line >
+<img 0 0 Burglar1 >
+
+
+<color 125 0 7 >Burglar: </color > No, </line >
+< flip > < sleep 300 >
+</page >
+
+<page >
+<line >
+<img 0 0 Burglar1 >
+
+
+<color 125 0 7 >Burglar: </color > No, no</line >
+< flip > < sleep 300 >
+</page >
+
+<page >
+<line >
+<img 0 0 Burglar1 >
+
+
+<color 125 0 7 >Burglar: </color > No, no, no</line >
+< flip > < sleep 300 >
+</page >
+
+<page >
+<line >
+<img 0 0 Burglar1 >
+
+
+<color 125 0 7 >Burglar: </color > No, no, no, no!</line >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Burglar1 >
+
+
+<color 125 0 7 >Burglar: </color > I swear I won't do it again, don't kill me!</line >
+<we >
+< flip > 
+</page >
+
+<page >
+<line >
+
+
+Timy did something funny to his enemy.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+
+
+The burgler, ashamed, ran crying.</line >
+<we >
+< flip >
+</page >
+
+<page >
+<line >
+<img 0 0 Timy >
+
+
+<color 125 0 7 >Timy: </color > Abandoned castle, huh?! Such a fool!</line >
+<we >
+< flip >
+<we > 
+</page >
